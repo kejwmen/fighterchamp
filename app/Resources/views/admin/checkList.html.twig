@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="col-xs-12">
+    <h3>Zatwierdzono {{ signUpTournamnetCheckedQt }} na {{ registeredUsersQty }} zawodników</h3>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>#</th>
+            <th>Nazwisko i Imię</th>
+            <th>Formuła</th>
+            <th>Płeć</th>
+            <th>Kat. Wagowa</th>
+            <th>Wiek</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in signUpTournamnet %}
+            <tr class={{ user.ready ? "success" : "danger" }}>
+                <td><a href="{{ path('toggleReady', { 'id': user.id }) }}"
+                       class= {{ user.ready ? "'btn btn-warning'>Annuluj"
+                       : "'btn btn-success'>Zatwierdź"  }} </a></td>
+                <td>{{ loop.index }}</td>
+                <td><a href="{{ path('user', {'id': user.User.id }) }}"> {{ user.User.surname }} {{ user.User.name }}</a></td>
+                <td> {{ user.formula }} </td>
+                <td> {{ user.User.male ?  'M' : 'K' }} </td>
+                <td> {{ user.weight }} </td>
+                <td> {{ user.User.birthDay |getAge }} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{%  block head %}
+    {{ parent() }}
+    <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
+
+{% endblock %}
+
+{% block body %}
+
+    <textarea>Easy (and free!) You should check out our premium features.</textarea>
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
+
+
+{% endblock %}

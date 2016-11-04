@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ user.surname }} {{ user.name }} {% endblock %}
+
+{% block body %}
+    {% set win, lose = 0,0 %}
+    {% for fight in fights %}
+        {% if fight.winner %}
+            {% if user.id == fight.winner.id %} {% set win = win + 1 %}
+            {% else %} {% set lose = lose + 1 %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="container">
+    <div class="row">
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
+
+    <div class="col-xs-12 col-sm-6">
+
+        {% include ':fighter:_profile.html.twig' %}
+    </div>
+    <div class="col-xs-12 col-sm-6">
+    {% if win+lose == 0 %} <h4 class="text-center">Brak rekordów walk</h4>
+    {% else %}
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Turniej</th>
+                <th>Przeciwnik</th>
+                <th>Wynik</th>
+            </tr>
+            {% for fight in fights %}
+                {% if fight.winner %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ fight.tournament.name }}</td>
+                        <td>{% if fight.userOne.id == user.id %}
+                            <a href="/zawodnik/{{ fight.userTwo.id }}"> {{ fight.userTwo.surname }} {{ fight.userTwo.name }}</a>
+                        </td>
+                        {% else %} <a
+                                href="/zawodnik/{{ fight.userOne.id }}"> {{ fight.userOne.surname }} {{ fight.userOne.name }}</a>
+                        {% endif %}
+                        <td>{% if user.id == fight.winner.id %} <span class="label label-success">W</span>
+                            {% else %} <span class="label label-danger">L</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

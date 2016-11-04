@@ -1,0 +1,170 @@
+<?php
+
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ruleset
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RulesetRepository")
+ */
+class Ruleset
+{
+    /**
+     * @var integer
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $weight;
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $male;
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $female;
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $junior;
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $senior;
+
+
+    private $boks;
+
+    /**
+     * @return mixed
+     */
+    public function getBoks()
+    {
+        return $this->boks;
+    }
+
+    /**
+     * @param mixed $boks
+     */
+    public function setBoks($boks)
+    {
+        $this->boks = $boks;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param mixed $weight
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMale()
+    {
+        return $this->male;
+    }
+
+    /**
+     * @param mixed $male
+     */
+    public function setMale($male)
+    {
+        $this->male = $male;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFemale()
+    {
+        return $this->female;
+    }
+
+    /**
+     * @param mixed $female
+     */
+    public function setFemale($female)
+    {
+        $this->female = $female;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJunior()
+    {
+        return $this->junior;
+    }
+
+    /**
+     * @param mixed $junior
+     */
+    public function setJunior($junior)
+    {
+        $this->junior = $junior;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSenior()
+    {
+        return $this->senior;
+    }
+
+    /**
+     * @param mixed $senior
+     */
+    public function setSenior($senior)
+    {
+        $this->senior = $senior;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id)
+    {
+        $this->id = $id;
+    }
+
+
+
+}
+

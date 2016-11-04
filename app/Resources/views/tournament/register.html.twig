@@ -1,0 +1,68 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="col-xs-12">
+
+    <h3>11 Edycja B-Fight</h3>
+        <p><b>Data:</b> 23 Październik 2016 (niedziela)</p>
+        <p><b>Miejsce:</b> Ośrodek Sportu i Rekreacji
+            m.st. Warszawy w Dzielnicy Targówek, ul. Łabiszyńska 20</p><br>
+
+        {% if is_granted('ROLE_USER') %}
+        <p>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d')}}.
+            W dniu turnieju {{ tournament.date | date('Y-m-d') }} będziesz miał {{ date_diff }} lat.
+            Więc twoja kategoria wiekowa to - <b>{{ age }}</b></p>
+        <p>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b> </p><br>
+        {% endif %}
+
+        {% if registeredUsersQt >= 110 %}
+            <p><strong>Limit miejsc został wyczerpany</strong></p>
+        {% endif %}
+
+        {% if not is_granted('ROLE_USER') %}
+        <p>Aby wysłać / skasować swoje zgłoszenie na turniej musisz być zalogowany! -> <a href="{{ path ('login') }}">Przejdź do strony logowania</a></p>
+        {% endif %}
+
+
+{% if is_granted('ROLE_USER') and isUserRegister  %}
+   <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Nazwisko i Imię</th>
+            <th>Formuła</th>
+            <th>Płeć</th>
+            <th>Kategoria Wagowa</th>
+            <th>Wiek</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="{{ path('user', {'id': isUserRegister.User.id }) }}"> {{ isUserRegister.User.surname }} {{ isUserRegister.User.name }}</a></td>
+                <td> {{ isUserRegister.formula }} </td>
+                <td> {{ isUserRegister.User.male ?  'M' : 'K' }} </td>
+                <td> {{ isUserRegister.weight }} </td>
+                <td> {{ isUserRegister.User.birthDay |getAge }} </td>
+            </tr>
+        </tbody>
+    </table>
+    {{ form_start(formDelete) }}
+    <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
+    {{ form_end(formDelete)  }}
+    {% endif %}
+
+{% if is_granted('ROLE_USER') and not isUserRegister  %}
+    <p>Wybierz formułe oraz kategorie wagową w której chcesz walczyć:</p>
+
+    {{ form_start(form) }}
+    {{ form_row(form.formula,{ 'label' : 'Formuła', 'placeholder' : 'Wybierz formułę'} ) }}
+    {{ form_row(form.weight, { 'label': 'Kategoria wagowa', 'placeholder':'Wybierz kategorie wagową' }) }}
+
+    <button type="submit" class="btn btn-primary" formnovalidate >Wyślij moje zgłoszenie </button>
+    {{ form_end(form)  }}
+
+{% endif %}
+
+    {{ include('tournament/_listaZapisanych.html.twig') }}
+    </div>
+{%  endblock %}

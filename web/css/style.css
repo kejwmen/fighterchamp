@@ -1,0 +1,278 @@
+.table.table-borderless td,
+.table.table-borderless th {
+    border-top: 0;
+}
+.rules ol {
+    counter-reset: item;
+}
+.rules ol>li {
+    display: block;
+}
+.rules ol>li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+}
+.rules h1 {
+    display: inline-block;
+}
+address {
+    font-size: 200%;
+    padding-top: 5%
+}
+.how-to ol>li {
+    padding: 10px 0;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 20px;
+    text-align: center;
+}
+.news  {
+    padding: 0px;
+    margin: 0px;
+}
+
+.well {
+    margin-top:30px;
+}
+
+/****************** --new-- ************************************/
+
+* {
+    font-family: 'Ubuntu', sans-serif;
+    color: #FBFBFB;
+}
+body, .well, .panel-body {
+    background-color: #292727;
+}
+.panel-heading {
+    background-color: #242222;
+    border-color: #ddd;
+}
+nav {
+    background-color: #242222;
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+.navbar {
+    margin-bottom: 0;
+}
+.navbar-brand {
+    padding: 0 0 0 50px;
+    height: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+}
+nav li, nav a {
+    text-transform: uppercase;
+    color: #FBFBFB;
+    font-size: 25px;
+    font-weight:300;
+    line-height: 1.25;
+}
+nav .glyphicon {
+    color: #DA1D1D;
+    margin-right: 5px;
+    font-size: 20px;;
+}
+.wrapper {
+    background-color: #242222;
+    position: relative;
+}
+.wrapper * {
+    padding: 0;
+    margin: 0;
+}
+.wrapper:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -20px;
+    width: 100vw;
+    height: 20px;
+    background-color: #000000;
+    opacity: .50;
+    z-index: 1;
+}
+.info1, .info2, .info3 {
+    position: relative;
+}
+.wrapper h1 {
+    font-weight: 500;
+    font-size: 60px;
+}
+.info1 span {
+    line-height: 1.2;
+}
+.wrapper h1, .wrapper h2, main h3, main h4 {
+    line-height: 1;
+}
+.info1 span, h2 {
+    font-weight: 400;
+    font-size: 40px;
+}
+.info2 span, .info3 span {
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 1.25;
+}
+.info1 .text-field, .info2 .text-field, .info3 .text-field {
+    position: absolute;
+}
+.info1 .text-field {
+    top: 40px;
+    left: 100px;
+}
+.info2 .text-field, .info3 .text-field {
+    bottom: 20px;
+    right: 40px;
+}
+.info1 .text-field:before {
+    left: -60px;
+    top: 10px;
+    background-color: #DA1D1D;
+}
+.info2 .text-field:after, .info3 .text-field:after {
+    bottom: 7.5px;
+    right: -40px;
+    background-color: #FBFBFB;
+}
+.info1 .text-field:before, .info2 .text-field:after, .info3 .text-field:after, .place:before {
+    content: "";
+    width: 20px;
+    height: 42px;
+    position: absolute;
+}
+.wrapper .fa {
+    font-size: 133px;
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+}
+main>.row {
+    margin-left: -0px;
+    margin-right: -7.5px;
+}
+.title {
+    background-color: #242222;
+    padding-top: 50px;
+    padding-bottom: 100px;
+}
+.title h4 {
+    margin-left: 50px;
+}
+.title h3 {
+    margin-left: 100px;
+}
+main h3 {
+    font-size: 60px;
+    font-weight: 400;
+}
+main h3 strong, main h3 strong span {
+    font-size: 60px;
+    font-weight: 600;
+}
+main h3 strong span{
+    color: #DA1D1D;
+}
+.date, .place {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.date>.row, .place>.row {
+    padding-top: 50px;
+}
+.place:before {
+    background-color: #FBFBFB;
+}
+main h4 {
+    font-size: 40px;
+    font-weight: 300;
+}
+p, p strong, .key-points span, .key-points a {
+    font-size: 25px;
+    font-weight: 300;
+    line-height: 1.5;
+}
+p strong {
+    font-weight: 500;
+}
+.day, .hour {
+    top: 15px;
+}
+.building {
+    top: 20px;
+}
+.hour:before {
+    top: 10px;
+}
+.address:before {
+    top: 25px;
+}
+.hour:before, .address:before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 50px;
+    background-color: #DA1D1D;
+    left: -3px;
+}
+.key-points {
+    background-color: #242222;
+    padding-left: 100px;
+}
+.key-points h4 {
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+.key-points h4:before {
+    height: 40px;
+}
+.key-points h4, .key-points p {
+    position: relative;
+}
+.key-points p:before {
+    height: 20px;
+    top: 9px;
+}
+.key-points h4:before, .key-points p:before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    background-color: #FBFBFB;
+    left: -60px;
+}
+.key-points span {
+    margin: 50px;
+}
+.key-points p span, a {
+    color: #DA1D1D;
+}
+.key-points ul {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.key-points li {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 2.5;
+}
+aside h4 {
+    padding-top: 50px;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #242222;
+}

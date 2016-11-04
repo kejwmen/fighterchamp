@@ -1,0 +1,22 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+contact:
+  path: /kontakt
+  defaults:
+    _controller: FrameworkBundle:Template:template
+    template: contact/contact.html.twig
+    maxAge: 86400
+    sharedAge: 86400
+
+rules:
+  path: /regulamin
+  defaults:
+    _controller: FrameworkBundle:Template:template
+    template: rules/rules.html.twig
+    maxAge: 86400
+    sharedAge: 86400
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

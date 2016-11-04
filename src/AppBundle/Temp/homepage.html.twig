@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {%  endfor %}
+    <div class="col-xs-12 col-md-10 how-to">
+        <img src="{{ asset('img/bfight-banner-glowny-3.jpg') }}"class="img img-responsive">
+        <h2 class="well text-center">Informacje</h2>
+        <strong>Data: </strong> 17.09.2016 (sobota) <br>
+        <strong>Miejsce: </strong> Warszawa OSiR Targówek ul.Łabiszyńska 20 (obok pływalni) <br>
+        <strong>Harmonogram </strong>
+        <ul>
+            <li>8:30 - 11:00 - rejestracja i ważenie zawodników</li>
+            <li>11.00 - 11:30 - losowanie i zestawienie par </li>
+            <li>11:30 - rozpoczęcie ligi B-Fight</li>
+        </ul>
+        <strong>Regulamin w skrócie </strong> (całość <a href="{{ path("rules") }}"> TUTAJ)</a>
+        <ul>
+            <li>WYMAGANE</li>
+            <ul>
+                <li>licencja zawodnicza PZKB (możliwość wykupienia licencji jednorazowej na miejscu - 20zł) </li>
+                <li>opłata startowa 40zł (płatne na miejscu)</li>
+                <li>ubezpieczenie NNW</li>
+                <li>badania lekarskie</li>
+            </ul>
+            <li>obowiązują przepisy PZKB</li>
+            <li>czas walk - 3 rundy po 2 minuty</li>
+            <li>Ubiór i sprzęt zawodników zgodnie z regulaminem PZKB</li>
+                <ul>
+                    <li>rękawice (10oz) zgodne z kolorem narożnika we własnym zakresie</li>
+                    <li>kaski zgodnie z kolorem narożnika we własnym zakresie</li>
+                    <li>napiszczelniki ze stópką w dowolnym kolorze</li>
+                </ul>
+        </ul>
+
+
+        <h2 class="well text-center">Jak zgłosić się na turniej B-Fight</h2>
+        <ol>
+            <li><p><a href="{{ path('login') }}">Zarejestruj się</a> w serwisie</p>
+                <ul>
+                    <li>możesz zarejestrować i logować się przez Facebooka</li>
+                    <li>przed rejestracją zapoznaj się z <strong><a  href="{{ path('rules') }}">regulaminem</a> zawodów</strong></li>
+                    <li>uczestnicy, którzy w dniu turnieju nie mają ukończonych 18 lat, zobowiązani są do okazania w dniu turnieju <strong>pisemnej zgody opiekunów prawnych</strong> -
+                    Załącznik do pobrania <a href="{{ asset('documents/zgoda_opiekunow_prawnych.pdf') }}">tutaj</a></li>
+                </ul>
+            </li>
+            <li><p>Wybierz zakładkę <a href="{{ path('tournament') }}">Turniej</a></p></li>
+            <li><p>Wybierz z listy rozwijanej:</p>
+                <ul>
+                    <li>Formułę w jakiej będziesz startować</li>
+                    <li>Swoją kategorię wagową</li>
+                </ul>
+            </li>
+            <li><p>Kliknij "Wyślij moje zgłoszenie"</p></li>
+        </ol>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Uwagi</h4>
+            </div>
+            <div class="panel-body">
+                <p>Po rejestracji możesz edytować swoje dane w zakładce <a href="{{ path('my_profile') }}">Mój Profil</a></p>
+                <p>Możesz wypisać się z turnieju naciskając przycisk "Skasuj moje zgłoszenie" w zakładce <a href="{{ path('tournament') }}">Turniej</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-10 col-xs-offset-1 col-md-2 col-md-offset-0">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-center">Partnerzy</h4>
+            </div>
+            <div class="panel-body">
+                <a href="http://pzkickboxing.pl/"><img class="img-responsive center-block" src="{{ asset('img/partnerzy/logo-PZKB.png') }}"></a> <br>
+                <a href="http://bmaf.pl/"><img class="img-responsive center-block" src="{{ asset('img/partnerzy/bmaf.png') }}"></a> <br>
+                <a href="http://www.zlotkowski.com/"><img class="img-responsive center-block" src="{{ asset('img/partnerzy/zlotkowski.jpg') }}"></a> <br>
+                <img class="img-responsive center-block" src="{{ asset('img/partnerzy/artur-zajac-trener.jpg') }}"><br>
+            </div>
+        </div>
+    </div>
+{%  endblock %}

@@ -1,0 +1,43 @@
+{%  extends 'base.html.twig' %}
+
+{%  block body %}
+<div class="container">
+    <div class="row">
+        {% for msg in app.session.flashBag.get('access_info') %}
+            <div class="alert alert-danger">
+                {{ msg }}
+            </div>
+        {%  endfor %}
+        {% for msg in app.session.flashBag.get('success_info') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+        {% endfor %}
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+
+
+{% if error %}
+    <div class="alert alert-danger">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+    </div>
+{% endif %}
+            <a class="btn btn-block btn-social btn-facebook" href="{{ path('connect_facebook') }}">
+                <span class="fa fa-facebook"></span> Zaloguj się przez Facebooka
+            </a>
+            <br>
+
+            {{ form_start(form) }}
+                {{form_row(form._username,{ 'label': 'Email' } )}}
+                {{form_row(form._password,{ 'label': 'Hasło' })}}
+
+
+            <button type="submit" class="btn btn-success" formnovalidate>Login
+                <span class="fa fa-lock"></span></button>
+            &nbsp;
+            <a href="{{ path('register') }}">Rejestracja</a>
+            <p class="text-right" ><a href="{{ path('passwordReset') }}">Zapomniałem Hasła</a></p>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
