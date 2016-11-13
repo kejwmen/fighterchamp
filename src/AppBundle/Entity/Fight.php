@@ -7,6 +7,7 @@
  */
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,7 +21,7 @@ class Fight
 
     public function __construct()
     {
-        $this->setReady(false);
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -31,16 +32,10 @@ class Fight
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="fights")
-     * @ORM\JoinColumn(name="user_one_id", nullable=false)
-     * @Assert\NotBlank()
-     */
-    private $userOne;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="additionalFights")
-     */
-    private $userTwo;
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User" , inversedBy="fights", cascade={"persist"})
+     * @ORM\JoinTable(name="user_fight")
+     * */
+    private $users;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
@@ -55,26 +50,49 @@ class Fight
     private $winner;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      */
     private $formula;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      */
     private $weight;
 
-
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $position;
 
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean",nullable=true)
      */
-    private $ready;
+    private $ready = null;
+
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $draw;
+
+
+
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
 
     /**
      * @return mixed
@@ -107,38 +125,6 @@ class Fight
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserOne()
-    {
-        return $this->userOne;
-    }
-
-    /**
-     * @param mixed $userOne
-     */
-    public function setUserOne($userOne)
-    {
-        $this->userOne = $userOne;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserTwo()
-    {
-        return $this->userTwo;
-    }
-
-    /**
-     * @param mixed $userTwo
-     */
-    public function setUserTwo($userTwo)
-    {
-        $this->userTwo = $userTwo;
     }
 
 
@@ -227,6 +213,23 @@ class Fight
     {
         $this->position = $position;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDraw()
+    {
+        return $this->draw;
+    }
+
+    /**
+     * @param mixed $draw
+     */
+    public function setDraw($draw)
+    {
+        $this->draw = $draw;
+    }
+
 
 
     public function __toString()

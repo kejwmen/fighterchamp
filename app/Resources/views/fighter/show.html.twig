@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ user.surname }} {{ user.name }} {% endblock %}
+{% block title %} {{ user.name }} {{ user.surname }} {% endblock %}
 
 {% block body %}
-    {% set win, lose = 0,0 %}
+    {% set win, lose, draw = 0,0,0 %}
+
     {% for fight in fights %}
         {% if fight.winner %}
-            {% if user.id == fight.winner.id %} {% set win = win + 1 %}
-            {% else %} {% set lose = lose + 1 %}
+            {% if user.id == fight.winner.id %} {% set win = win + 1 %} {% else %}{%  set lose = lose + 1 %}
             {% endif %}
+        {% elseif fight.draw %} {%  set draw = draw + 1 %}
         {% endif %}
+
     {% endfor %}
 
     <div class="container">
@@ -25,7 +27,7 @@
         {% include ':fighter:_profile.html.twig' %}
     </div>
     <div class="col-xs-12 col-sm-6">
-    {% if win+lose == 0 %} <h4 class="text-center">Brak rekordów walk</h4>
+    {% if win+lose+draw == 0 %} <h4 class="text-center">Brak rekordów walk</h4>
     {% else %}
         <table class="table">
             <tr>
@@ -35,22 +37,25 @@
                 <th>Wynik</th>
             </tr>
             {% for fight in fights %}
-                {% if fight.winner %}
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ fight.tournament.name }}</td>
-                        <td>{% if fight.userOne.id == user.id %}
-                            <a href="/zawodnik/{{ fight.userTwo.id }}"> {{ fight.userTwo.surname }} {{ fight.userTwo.name }}</a>
-                        </td>
-                        {% else %} <a
-                                href="/zawodnik/{{ fight.userOne.id }}"> {{ fight.userOne.surname }} {{ fight.userOne.name }}</a>
-                        {% endif %}
-                        <td>{% if user.id == fight.winner.id %} <span class="label label-success">W</span>
-                            {% else %} <span class="label label-danger">L</span>
+                        {% for ThisUser in fight.users %}
+                            {% if ThisUser.id != user.id %}
+                                <td><a href='/zawodnik/{{ ThisUser.id }}'>{{ ThisUser.name }} {{ ThisUser.surname }}</a>
+                                    </td>
                             {% endif %}
+                        {% endfor %}
+                        <td>
+                        {% if fight.winner %}
+                            {% if user.id == fight.winner.id %} <span class="label label-success">W</span>
+                                {% else %} <span class="label label-danger">L</span>
+                                {% endif %}
+                        {% elseif fight.draw %}
+                            <span class="label label-warning">D</span>
+                        {% endif %}
                         </td>
                     </tr>
-                {% endif %}
             {% endfor %}
         </table>
         </div>

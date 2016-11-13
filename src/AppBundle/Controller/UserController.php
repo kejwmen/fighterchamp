@@ -47,7 +47,7 @@ class UserController extends Controller
     {
         $fights = $user->getFights();
 
-
+        dump($fights);
 
         return $this->render('fighter/show.html.twig', [
             'user' => $user,

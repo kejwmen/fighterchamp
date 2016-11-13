@@ -1,25 +1,30 @@
 AppBundle\Entity\User:
-  user_{1..90}:
+  user_{1..10}:
     name: <firstname()>
     surname: <lastname()>
     male: <boolean()>
-    plain_password: iliketurtles
+    plain_password: aaa
     email: <email()>
     birth_day: <date()>
     phone: <phoneNumber()>
     club: <company()>
-
 AppBundle\Entity\Tournament:
-  tournament_{1}:
-    name: B-Fight - 11 Edycja
-    date: 17.09.2016
+  tournament_{1..10}:
+    name: <company()>
+    date: <date()>
 
 AppBundle\Entity\SignUpTournament:
-  sign.user_{1..90}:
+  sign.user_{1..10}:
     __construct: ['@user_*','@tournament_*']
     weight: <weight()>
     formula: '50%? boks : k1'
     ready: '50%? 1 : 0'
+
+AppBundle\Entity\Fight:
+  fight_{1..10}:
+    tournament: '@tournament_*'
+    users: ['@user_<current()>','@user_*']
+    winner: <randomElement(array(@user_1,@user_2))>
 
 
 

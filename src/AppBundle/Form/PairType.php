@@ -29,32 +29,7 @@ class PairType extends AbstractType
                 ,'75+' => '75+','81' => '81','61+' => '81+','86' => '86','91' => '91'
                 ,'91+' => '91+')
             ))
-            ->add('UserOne', EntityType::class, array(
-                'class' => 'AppBundle:User',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('user')
-                        ->leftJoin('user.signUpTournament', 'signUpTournament')
-                        ->andWhere('signUpTournament.user is not null')
-                        ->leftJoin('user.fights', 'fights' )
-                        ->andwhere('fights.userOne is null')
-                        ->leftJoin('user.additionalFights', 'fights2' )
-                        ->andwhere('fights2.userTwo is null')
-                        ->andwhere('signUpTournament.ready = 1')
-                        ->orderBy('user.surname');
-                        }))
-            ->add('UserTwo', EntityType::class, array(
-                    'class' => 'AppBundle:User',
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('user')
-                            ->leftJoin('user.signUpTournament', 'signUpTournament')
-                            ->andWhere('signUpTournament.user is not null')
-                            ->leftJoin('user.fights', 'fights' )
-                            ->andwhere('fights.userOne is null')
-                            ->leftJoin('user.additionalFights', 'fights2' )
-                            ->andwhere('fights2.userTwo is null')
-                            ->andwhere('signUpTournament.ready = 1')
-                            ->orderBy('user.surname');
-                    }))
+
             ->add('tournament')
         ;
     }

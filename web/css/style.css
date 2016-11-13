@@ -50,7 +50,7 @@ footer {
 
 /****************** --new-- ************************************/
 
-* {
+body {
     font-family: 'Ubuntu', sans-serif;
     color: #FBFBFB;
 }
@@ -276,3 +276,4 @@ aside h4 {
 .table-striped>tbody>tr:nth-of-type(odd) {
     background-color: #242222;
 }
+

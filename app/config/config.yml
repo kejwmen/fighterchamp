@@ -85,7 +85,7 @@ knpu_oauth2_client:
             # see the controller example below
             redirect_route: connect_facebook_check
             redirect_params: {}
-            graph_api_version: v2.5
+            graph_api_version: v2.8
 
 vich_uploader:
     db_driver: orm

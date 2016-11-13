@@ -6,10 +6,10 @@
             <div class="col-xs-12">
                 <div>
                     <span class="label label-success">W</span> - Win (Wygrana)
+                    <span class="label label-warning">D</span> - Draw (Remis)
                     <span class="label label-danger">L</span> - Loss (Przegrana)
                 </div>
                 <table class="table">
-
                     <thead>
                     <tr>
                         <th>Kolejność</th>
@@ -23,23 +23,14 @@
                     {% for fight in fights %}
                         <tr>
                             <td>{{ fight.position }}</td>
+                        {% for user in fight.users %}
+                            <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }} </a>
                             {% if fight.winner %}
-                                <td>
-                                    <a href="{{ path('user', {'id': fight.UserOne.id }) }}"> {{ fight.UserOne.surname }} {{ fight.UserOne.name }} </a>
-                                    {{ fight.UserOne.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}
-                                </td>
-                                <td>
-                                    <a href="{{ path('user', {'id': fight.UserTwo.id }) }}"> {{ fight.UserTwo.surname }} {{ fight.UserTwo.name }} </a>
-                                    {{ fight.UserTwo.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}
-                                </td>
-                            {% else %}
-                                <td>
-                                    <a href="{{ path('user', {'id': fight.UserOne.id }) }}"> {{ fight.UserOne.surname }} {{ fight.UserOne.name }} </a>
-                                </td>
-                                <td>
-                                    <a href="{{ path('user', {'id': fight.UserTwo.id }) }}"> {{ fight.UserTwo.surname }} {{ fight.UserTwo.name }} </a>
-                                </td>
-                            {% endif %}
+                                {{ user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
+                            {% elseif fight.draw %}
+                                 <span class='label label-warning'>D</span></td>
+                                {% endif %}
+                        {% endfor %}
                             <td>{{ fight.formula }}</td>
                             <td>{{ fight.weight }}</td>
                         </tr>

@@ -24,6 +24,7 @@ class FightController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->fightReadyOrderBy();
 
+
         return $this->render('fight/result.html.twig', [
             'fights' => $fights
         ]);

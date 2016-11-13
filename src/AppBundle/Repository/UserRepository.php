@@ -38,29 +38,12 @@ class UserRepository extends EntityRepository
             ->leftJoin('user.signUpTournament', 'signUpTournament')
             ->andWhere('signUpTournament.user is not null')
             ->leftJoin('user.fights', 'fights' )
-            ->andwhere('fights.userOne is null')
-            ->leftJoin('user.additionalFights', 'fights2' )
-            ->andwhere('fights2.userTwo is null')
             ->andwhere('signUpTournament.ready = 1')
             ->orderBy('user.surname');
         ;
 
         $query = $qb->getQuery();
         return $query->execute();
-    }
-
-    public function showUserFights()
-    {
-        $qb = $this->createQueryBuilder('user')
-        ->leftJoin('user.fights', 'test');
-
-
-
-        ;
-
-        $query = $qb->getQuery();
-        return $query->execute();
-
     }
 
 

@@ -1,32 +1,21 @@
-{% set win, lose = 0,0 %}
-    {% for fight in fights %}
-        {% if fight.winner %}
-            {% if user.id == fight.winner.id %} {% set win = win + 1 %}
-            {% else %} {% set lose = lose + 1 %}
-            {% endif %}
-        {% endif %}
-    {% endfor %}
 <table class="table table-condensed text-center table-borderless">
     <tr>
         <td><h1> {{ user.name }} {{ user.surname }}</h1></td>
     </tr>
     <tr>
         <td><h3><span class="label label-success">W: {{ win }}</span>
+                <span class="label label-warning">D: {{ draw }}</span>
                 <span class="label label-danger">L: {{ lose }}</span>
         </td>
     </tr>
-    </h3>
-    <tr>
-        <td><h3><span class="label label-info">Punkty: {{ 4*win+2*lose }}</span></td>
-    </tr>
-    </h3>
 
     <tr>
         <td><img class='center' style="width: 180px;, height: 180px;"
                     {% if user.male %}
                  src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/male.png') }}"
                     {% else %}
-                 src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}" {% endif %}
+                 src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"
+            {% endif %}
         </td>
     </tr>
     <tr>
