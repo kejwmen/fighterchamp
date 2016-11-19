@@ -11,20 +11,28 @@
 
                 {{ form_start(form) }}
                 {{ form_row(form.email) }}
-                {{ form_row(form.plain_password.first, { 'label': 'Hasło'}) }}
-                {{ form_row(form.plain_password.second, { 'label': 'Powtórz Hasło'}) }}
+                {{ form_row(form.plain_password.first, {
+                    label: 'Hasło'
+                }) }}
+                {{ form_row(form.plain_password.second, {
+                    label: 'Powtórz Hasło'
+                }) }}
                 {{ form_row(form.male) }}
                 {{ form_row(form.name) }}
                 {{ form_row(form.surname) }}
                 {{ form_row(form.birthDay) }}
                 {{ form_row(form.phone) }}
-                {{ form_row(form.imageFile, {'label' : 'Zdjęcie Profilowe (opcjonalnie)'}) }}
+                {{ form_row(form.imageFile, {
+                    label : 'Zdjęcie Profilowe (opcjonalnie)'
+                }) }}
                 {{ form_row(form.club) }}
                 <div>
                     <a href="{{ asset('documents/Regulamin_turnieju_pucharowego_ligii_B-Fight_1.pdf') }}">Regulamin</a>
                 </div>
-                {{ form_row(form.terms, { 'label': 'Oświadczam, że zapoznałem/am się i akceptuję Regulamin
-                         oraz wyrażam zgodę na przetwarzanie moich danych osobowych.'  }) }}
+                {{ form_row(form.terms, {
+                    label: 'Oświadczam, że zapoznałem/am się i akceptuję Regulamin
+                         oraz wyrażam zgodę na przetwarzanie moich danych osobowych.'
+                }) }}
 
                 <button type="submit" class="btn btn-primary" formnovalidate>Zarejestruj się
                     <span class="fa fa-lock"></span></button>

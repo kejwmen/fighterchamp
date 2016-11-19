@@ -4,6 +4,7 @@
     <div class="col-xs-12">
         <div>
             <span class="label label-success">W</span> - Win (Wygrana)
+            <span class="label label-warning">D</span> - Draw (Remis)
             <span class="label label-danger">L</span> - Loss (Przegrana)
         </div>
         <table class="table">
@@ -13,6 +14,7 @@
                 <th>Kolejność</th>
                 <th>Zawodnik 1</th>
                 <th>Zawodnik 2 </th>
+                <th>Wygrany</th>
                 <th>Formuła</th>
                 <th>Kat. wagowa</th>
             </tr>
@@ -27,16 +29,28 @@
                     {% for i in 1..number_of_fights %}
                         <option value="{{ i }}" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>
                     {% endfor %}
-                    </td></select>
-                    {% if fight.winner %}
-                        <td> <a href="{{ path('setWinner', {'id': fight.id, 'user_id': fight.UserOne.id }) }}"> {{ fight.UserOne.surname }} {{ fight.UserOne.name }} </a>
-                            {{ fight.UserOne.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
-                        <td> <a href="{{ path('setWinner', {'id': fight.id, 'user_id': fight.UserTwo.id }) }}"> {{ fight.UserTwo.surname }} {{ fight.UserTwo.name }} </a>
-                            {{ fight.UserTwo.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
-                    {% else %}
-                        <td> <a href="{{ path('setWinner', {'id': fight.id, 'user_id': fight.UserOne.id }) }}"> {{ fight.UserOne.surname }} {{ fight.UserOne.name }} </a></td>
-                        <td> <a href="{{ path('setWinner', {'id': fight.id, 'user_id': fight.UserTwo.id }) }}"> {{ fight.UserTwo.surname }} {{ fight.UserTwo.name }} </a></td>
-                    {% endif %}
+                        </select></td>
+
+                    {% for user in fight.users %}
+                        <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.name }} {{ user.surname }} </a>
+                        {% if fight.winner %}
+                            {{ user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
+                        {% elseif fight.draw %}
+                            <span class='label label-warning'>D</span></td>
+                        {% endif %}
+                    {% endfor %}
+
+                    <td><select class="select_winner">
+                    {% for user in fight.users %}
+                        <option value="{{ user.id }}">{{ user.surname }} {{ user.name }}</option>
+                    {% endfor %}
+                      <option value="null">Remis</option></select></td>
+
+                    {#
+                     <a href="{{ path('setWinner', {'id': fight.id, 'user_id': fight.UserOne.id }) }}"> {{ fight.UserOne.surname }} {{ fight.UserOne.name }} </a>
+                    #}
+
+
                     <td>{{ fight.formula }}</td>
                     <td>{{ fight.weight }}</td>
                 </tr>
@@ -62,6 +76,22 @@
             }
         });
     });
+
+    $( ".select_winner" ).change(function() {
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('changePositionFight') }}",
+            data: {wantedPosition: this.value, position: this.id},
+            success: function () {
+                $(location).attr('href', "{{ path("admin_fight") }}");
+            }
+        });
+    });
+
+
+
+
 </script>
 {% endblock %}
 

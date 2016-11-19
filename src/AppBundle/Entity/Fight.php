@@ -78,7 +78,7 @@ class Fight
 
 
 
-    public function addUser(User $user)
+    public function addUser($user)
     {
         $this->users[] = $user;
 
@@ -92,6 +92,12 @@ class Fight
     {
         return $this->users;
     }
+
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
+
 
 
     /**

@@ -7,15 +7,31 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PairType extends AbstractType
+
+class FightType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
+            ->add('users', CollectionType::class, [
+                'entry_type' => EntityType::class,
+                'entry_options' => array(
+                    'class' => 'AppBundle:User',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('user')
+                            ->leftJoin('user.signUpTournament', 'signUpTournament')
+                            ->andWhere('signUpTournament.user is not null')
+                            ->leftJoin('user.fights', 'fights' )
+                            ->andwhere('signUpTournament.ready = 1')
+                            ->orderBy('user.surname');
+
+                    })
+            ])
+
             ->add('formula', ChoiceType::class, array(
                 'choices' => array(
                     'Boks' => 'Boks',

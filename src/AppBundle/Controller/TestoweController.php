@@ -33,8 +33,10 @@ class TestoweController extends Controller
 
         $fight->addUser($user2);
 
-        $em->persist($fight);
-        $em->flush();
+        dump($fight);
+
+       // $em->persist($fight);
+       // $em->flush();
 
         return $this->render(':testowe:testowe.html.twig', [
 

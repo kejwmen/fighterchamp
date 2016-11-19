@@ -12,7 +12,7 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\User;
-use AppBundle\Form\PairType;
+use AppBundle\Form\FightType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -49,8 +49,17 @@ class FightAdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $fights = $em->getRepository('AppBundle:User')
+            ->findAllSignUpButNotPairYet();
 
-        $form = $this->createForm(PairType::class);
+        dump($fights);
+
+        $fight = new Fight();
+        $fight->getUsers()->add(null);
+        $fight->getUsers()->add(null);
+
+
+        $form = $this->createForm(FightType::class, $fight);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,12 +67,14 @@ class FightAdminController extends Controller
 
             $numberOfFights = count($this->getDoctrine()
                 ->getRepository('AppBundle:Fight')->findAll());
-
             $fight->setPosition($numberOfFights + 1);
 
-            $em->persist($fight);
-            $em->flush();
-        }
+
+                $em->persist($fight);
+                $em->flush();
+            }
+
+
 
         $freeUsers = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet();

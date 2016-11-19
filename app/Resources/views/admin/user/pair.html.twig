@@ -3,11 +3,13 @@
 {% block body %}
 <div class="col-xs-12 col-md-6 col-md-offset-3">
     {{ form_start(form) }}
-        {{ form_row(form.formula, { 'label': 'Formuła'} ) }}
-        {{ form_row(form.weight, { 'label': 'Waga'} ) }}
-        {{ form_row(form.tournament, { 'label': 'Turniej'} ) }}
-        <button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
+    {{ form_row(form.formula, { 'label': 'Formuła'} ) }}
+    {{ form_row(form.weight, { 'label': 'Waga'} ) }}
+    {{ form_row(form.tournament, { 'label': 'Turniej'} ) }}
+    <button type="submit" class="btn btn-primary" formnovalidate>Sparuj</button>
+
     {{ form_end(form) }}
+
 </div>
     <div class="col-xs-12">
         <h3>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</h3>

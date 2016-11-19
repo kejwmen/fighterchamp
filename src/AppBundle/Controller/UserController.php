@@ -46,8 +46,7 @@ class UserController extends Controller
     public function showAction(User $user)
     {
         $fights = $user->getFights();
-
-        dump($fights);
+        
 
         return $this->render('fighter/show.html.twig', [
             'user' => $user,
