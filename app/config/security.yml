@@ -19,12 +19,6 @@ security:
                 admin:
                   password: examplePass
                   roles: 'ROLE_ADMIN'
-                artur:
-                  password: $2y$12$frZiNrGQPwxR7ElAkqITnegXrsYHC5E8hm3I.6GvMvJQJOhcX/h7C
-                  roles: 'ROLE_ADMIN'
-                darek:
-                  password: $2y$12$.TRbZpiQO16bJ6xjaSeImeNKG7eE2sngeunSgzxMwzE.4pIpFo7P2
-                  roles: 'ROLE_ADMIN'
 
         our_users:
                   entity: {class: AppBundle\Entity\User, property: email}
@@ -55,4 +49,4 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+    #    - { path: ^/admin, roles: ROLE_ADMIN }

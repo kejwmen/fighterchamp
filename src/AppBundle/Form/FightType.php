@@ -25,10 +25,12 @@ class FightType extends AbstractType
                         return $er->createQueryBuilder('user')
                             ->leftJoin('user.signUpTournament', 'signUpTournament')
                             ->andWhere('signUpTournament.user is not null')
-                            ->leftJoin('user.fights', 'fights' )
-                            ->andwhere('signUpTournament.ready = 1')
-                            ->orderBy('user.surname');
-
+                            ->andWhere('signUpTournament.ready = 1')
+                            ->andWhere('user.fights is empty' )
+                            ->addOrderBy('user.male')
+                            ->addOrderBy('signUpTournament.formula')
+                            ->addOrderBy('signUpTournament.weight')
+                            ;
                     })
             ])
 

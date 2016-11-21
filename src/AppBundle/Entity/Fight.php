@@ -236,6 +236,11 @@ class Fight
         $this->draw = $draw;
     }
 
+    public function resetDraw()
+    {
+        $this->draw = $this->draw = NULL;
+    }
+
 
 
     public function __toString()

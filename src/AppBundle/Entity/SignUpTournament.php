@@ -88,7 +88,6 @@ class SignUpTournament
     }
 
 
-
     /**
      * @return mixed
      */

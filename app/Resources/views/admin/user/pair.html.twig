@@ -6,6 +6,12 @@
     {{ form_row(form.formula, { 'label': 'Formuła'} ) }}
     {{ form_row(form.weight, { 'label': 'Waga'} ) }}
     {{ form_row(form.tournament, { 'label': 'Turniej'} ) }}
+    {% for user in form.users %}
+        {{ form_row(user,{
+        'label': 'Zawodnik',
+        'label_attr': {'class': 'foo'} })}}
+    {% endfor %}
+
     <button type="submit" class="btn btn-primary" formnovalidate>Sparuj</button>
 
     {{ form_end(form) }}
@@ -14,7 +20,7 @@
     <div class="col-xs-12">
         <h3>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</h3>
         <h3>Liczba zapisanych: {{ registeredUsersQty }}</h3>
-        <table class="table table-striped table-hover">
+        <table class="table table-striped">
             <thead>
             <tr>
                 <th>#</th>
@@ -39,5 +45,26 @@
             </tbody>
         </table>
 </div>
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+<script>
+
+
+    $('select').on('change',function(){
+    var currValue = $(this).attr('data-value');
+    var column = $(this).val();
+    $(this).attr('data-value',column);
+    $('select').find('[value="'+currValue+'"]').removeAttr('disabled');
+    $('select').find('[value="'+currValue+'"]').css('display','inline-block');
+    $('select').not(this).each(function(){
+    if(column===''){
+    return;
+    }
+    $(this).find('[value="'+column+'"]').attr('disabled','disabled');
+    $(this).find('[value="'+column+'"]').css('display','none');
+    });
+    });
+</script>
 {% endblock %}

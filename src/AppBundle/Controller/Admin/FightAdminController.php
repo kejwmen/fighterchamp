@@ -52,8 +52,6 @@ class FightAdminController extends Controller
         $fights = $em->getRepository('AppBundle:User')
             ->findAllSignUpButNotPairYet();
 
-        dump($fights);
-
         $fight = new Fight();
         $fight->getUsers()->add(null);
         $fight->getUsers()->add(null);
@@ -106,15 +104,29 @@ class FightAdminController extends Controller
 
     }
 
-    /**
-     * @Route("/fight/{id}/winner/{user_id}", name="setWinner")
-     * @Method("GET")
-     */
-    public function choseWinner(Fight $fight, User $user_id)
-    {
 
-        $fight->setWinner($user_id);
+    /**
+     * @Route("/fight/set-winner", name="setWinner")
+     */
+    public function setWinnerAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
+
+        $fightId = $request->request->get('fightId');
+        $userId = $request->request->get('userId');
+        $draw = $request->request->get('draw');
+
+
+        $fight = $em->getRepository('AppBundle:Fight')
+            ->findOneBy(['id' => $fightId]);
+
+        $user = $em->getRepository('AppBundle:User')
+            ->findOneBy(['id' => $userId]);
+
+        $user? $fight->setWinner($user) : $fight->resetWinner();
+
+        $draw? $fight->setDraw(true) : $fight->resetDraw();
+
         $em->persist($fight);
         $em->flush();
 

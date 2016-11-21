@@ -40,16 +40,15 @@
                         {% endif %}
                     {% endfor %}
 
-                    <td><select class="select_winner">
+                    <td><select class="select_winner"> <option value="{{ fight.id }}"></option>
                     {% for user in fight.users %}
-                        <option value="{{ user.id }}">{{ user.surname }} {{ user.name }}</option>
-                    {% endfor %}
-                      <option value="null">Remis</option></select></td>
-
-                    {#
-                     <a href="{{ path('setWinner', {'id': fight.id, 'user_id': fight.UserOne.id }) }}"> {{ fight.UserOne.surname }} {{ fight.UserOne.name }} </a>
-                    #}
-
+                            {% if fight.winner %}
+                                <option {{ user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ user.id }}|{{ fight.draw }}">{{ user.surname }} {{ user.name }}</option>
+                            {% else %}
+                                <option value="{{ fight.id }}|{{ user.id }}|{{ fight.draw }}">{{ user.surname }} {{ user.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                      <option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>
 
                     <td>{{ fight.formula }}</td>
                     <td>{{ fight.weight }}</td>
@@ -79,14 +78,18 @@
 
     $( ".select_winner" ).change(function() {
 
+        var values = this.value;
+        var arrValues = values.split("|");
+
         $.ajax({
             type: 'POST',
-            url: "{{ path('changePositionFight') }}",
-            data: {wantedPosition: this.value, position: this.id},
+            url: "{{  path('setWinner') }}",
+            data: {fightId: arrValues[0], userId: arrValues[1], draw: arrValues[2] },
             success: function () {
-                $(location).attr('href', "{{ path("admin_fight") }}");
+                $(location).attr('href', "{{  path("admin_fight") }}");
             }
         });
+
     });
 
 

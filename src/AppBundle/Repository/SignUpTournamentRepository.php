@@ -29,7 +29,7 @@ class SignUpTournamentRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('signUpTournament')
             ->leftJoin('signUpTournament.user', 'user')
-            ->leftJoin('user.fights', 'fights' )
+            ->andWhere('user.fights is empty' )
             ->andwhere('signUpTournament.ready = 1')
             ->addOrderBy('user.male')
             ->addOrderBy('signUpTournament.formula')
