@@ -72,9 +72,24 @@ nav {
 .navbar-brand {
     padding: 0 0 0 50px;
     height: auto;
-    position: relative;
-    top: 50%;
-    transform: translateY(50%);
+    padding: 9px 10px;
+    margin-top: 8px;
+}
+.dot-row, .navbar-toggle .icon-bar {
+    font-size: 0;
+}
+.navbar-toggle .icon-bar {
+    background-color: #FBFBFB;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    margin: 4px;
+}
+.navbar-toggle .icon-bar+.icon-bar {
+    margin-top: 0;
 }
 nav li, nav a {
     text-transform: uppercase;
@@ -295,5 +310,10 @@ select {
         position: relative;
         padding-top: 30%;
         transform: translateY(-20%);
+    }
+}
+@media (min-width: 1171px){
+    .navbar .navbar-nav:nth-of-type(2) {
+        margin-top: -20px;
     }
 }
