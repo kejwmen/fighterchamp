@@ -112,7 +112,7 @@ nav .glyphicon {
 }
 .wrapper h1 {
     font-weight: 500;
-    font-size: 60px;
+    font-size: 48px;
 }
 .info1 span {
     line-height: 1.2;
@@ -122,11 +122,11 @@ nav .glyphicon {
 }
 .info1 span, h2 {
     font-weight: 400;
-    font-size: 40px;
+    font-size: 32px;
 }
 .info2 span, .info3 span {
     font-weight: 300;
-    font-size: 30px;
+    font-size: 24px;
     line-height: 1.25;
 }
 .info1 .text-field, .info2 .text-field, .info3 .text-field {
@@ -159,8 +159,7 @@ nav .glyphicon {
 .wrapper .fa {
     font-size: 133px;
     position: relative;
-    top: 50%;
-    transform: translateY(50%);
+    transform: translateY(25%);
 }
 main>.row {
     margin-left: -0px;
@@ -178,11 +177,11 @@ main>.row {
     margin-left: 100px;
 }
 main h3 {
-    font-size: 60px;
+    font-size: 48px;
     font-weight: 400;
 }
 main h3 strong, main h3 strong span {
-    font-size: 60px;
+    font-size: 48px;
     font-weight: 600;
 }
 main h3 strong span{
@@ -199,11 +198,11 @@ main h3 strong span{
     background-color: #FBFBFB;
 }
 main h4 {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 300;
 }
 p, p strong, .key-points span, .key-points a {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 300;
     line-height: 1.5;
 }
@@ -279,4 +278,22 @@ aside h4 {
 
 select {
     color:black;
+}
+
+@media (max-width: 991px){
+    .info2 .text-field {
+        bottom: 20px;
+        left: 40px;
+    }
+    .info2 .text-field:after {
+        bottom: 7.5px;
+        left: -40px;
+        background-color: #FBFBFB;
+    }
+    .wrapper .fa {
+        font-size: 133px;
+        position: relative;
+        padding-top: 30%;
+        transform: translateY(-20%);
+    }
 }
