@@ -99,18 +99,12 @@ class Fight
     }
 
 
-
-    /**
-     * @return mixed
-     */
-    public function getReady()
+    public function getReady() : boolean
     {
         return $this->ready;
     }
 
-    /**
-     * @param mixed $ready
-     */
+
     public function setReady($ready)
     {
         $this->ready = $ready;
@@ -120,24 +114,7 @@ class Fight
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getTournament()
+    public function getTournament() 
     {
         return $this->tournament;
     }

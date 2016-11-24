@@ -3,10 +3,10 @@
 {% block body %}
     <div class="col-xs-12">
 
-    <h3>11 Edycja B-Fight</h3>
+    <h3>10 Edycja Turnieju Testowego</h3>
         <p><b>Data:</b> 23 Październik 2016 (niedziela)</p>
-        <p><b>Miejsce:</b> Ośrodek Sportu i Rekreacji
-            m.st. Warszawy w Dzielnicy Targówek, ul. Łabiszyńska 20</p><br>
+        <p><b>Miejsce:</b> Legia Fight Club
+            ul. Łazienkowska 6A</p><br>
 
         {% if is_granted('ROLE_USER') %}
         <p>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d')}}.
