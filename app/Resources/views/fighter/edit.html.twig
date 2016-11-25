@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {% set win, lose = 0,0 %}
+
+    {% set win, lose, draw = 0,0,0 %}
+
     {% for fight in fights %}
         {% if fight.winner %}
-            {% if user.id == fight.winner.id %} {% set win = win + 1 %}
-            {% else %} {% set lose = lose + 1 %}
+            {% if user.id == fight.winner.id %} {% set win = win + 1 %} {% else %}{%  set lose = lose + 1 %}
             {% endif %}
+        {% elseif fight.draw %} {%  set draw = draw + 1 %}
         {% endif %}
+
     {% endfor %}
+
 
     <div class="container">
         <div class="row">

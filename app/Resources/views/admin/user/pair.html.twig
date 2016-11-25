@@ -8,8 +8,8 @@
     {{ form_row(form.tournament, { 'label': 'Turniej'} ) }}
     {% for user in form.users %}
         {{ form_row(user,{
-        'label': 'Zawodnik',
-        'label_attr': {'class': 'foo'} })}}
+        'label': 'Zawodnik'
+        })}}
     {% endfor %}
 
     <button type="submit" class="btn btn-primary" formnovalidate>Sparuj</button>
@@ -51,6 +51,13 @@
     {{ parent() }}
 <script>
 
+    $( document ).ready(function() {
+
+        $("#fight_users_1").val($("#fight_users_1 option:eq(1)").val());
+
+        $("select").change();
+
+    });
 
     $('select').on('change',function(){
     var currValue = $(this).attr('data-value');

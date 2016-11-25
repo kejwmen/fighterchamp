@@ -317,3 +317,7 @@ select {
         margin-top: -20px;
     }
 }
+
+.success td {
+    color: black;
+}
