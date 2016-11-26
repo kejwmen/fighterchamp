@@ -5,6 +5,8 @@
  * Date: 2016-06-21
  * Time: 07:13
  */
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -66,62 +68,67 @@ class Fight
 
 
     /**
-     * @ORM\Column(type="boolean",nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $ready = null;
+    private $ready;
 
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $draw;
 
 
+    public function getId() : int
+    {
+        return $this->id;
+    }
 
-    public function addUser($user)
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+    }
+
+
+
+    public function addUser(User $user)
     {
         $this->users[] = $user;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getUsers()
     {
         return $this->users;
     }
 
-    public function setUsers($users)
+    public function setUsers(User $users)
     {
         $this->users = $users;
     }
 
 
-    public function getReady() : boolean
+    public function getReady() : bool
     {
         return $this->ready;
     }
 
 
-    public function setReady($ready)
+    public function setReady(bool $ready)
     {
         $this->ready = $ready;
     }
 
 
-    /**
-     * @return mixed
-     */
-    public function getTournament() 
+    public function getTournament() : Tournament
     {
         return $this->tournament;
     }
 
-    /**
-     * @param mixed $tournament
-     */
+
     public function setTournament($tournament)
     {
         $this->tournament = $tournament;
@@ -132,92 +139,70 @@ class Fight
         $this->winner = NULL;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getWinner()
     {
         return $this->winner;
     }
 
-    /**
-     * @param mixed $winner
-     */
-    public function setWinner($winner)
+
+    public function setWinner(User $winner)
     {
         $this->winner = $winner;
     }
 
 
-    /**
-     * @return mixed
-     */
     public function getFormula()
     {
         return $this->formula;
     }
 
-    /**
-     * @param mixed $formula
-     */
-    public function setFormula($formula)
+
+    public function setFormula(string $formula)
     {
         $this->formula = $formula;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getWeight()
     {
         return $this->weight;
     }
 
-    /**
-     * @param mixed $weight
-     */
-    public function setWeight($weight)
+
+    public function setWeight(string $weight)
     {
         $this->weight = $weight;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPosition()
+
+    public function getPosition() : int
     {
         return $this->position;
     }
 
-    /**
-     * @param mixed $position
-     */
-    public function setPosition($position)
+
+    public function setPosition(int $position)
     {
         $this->position = $position;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDraw()
+
+    public function getDraw() : bool
     {
         return $this->draw;
     }
 
-    /**
-     * @param mixed $draw
-     */
-    public function setDraw($draw)
+
+    public function setDraw(bool $draw)
     {
         $this->draw = $draw;
     }
 
     public function resetDraw()
     {
-        $this->draw = $this->draw = NULL;
+        $this->draw = NULL;
     }
-
 
 
     public function __toString()

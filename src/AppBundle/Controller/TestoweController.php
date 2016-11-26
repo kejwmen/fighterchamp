@@ -24,24 +24,22 @@ class TestoweController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $user1 = new User();
-        $user2 = new User();
 
         $fight = new Fight();
 
-        $fight->addUser($user1);
-
-        $fight->addUser($user2);
-
+        dump($fight->getDraw());
         dump($fight);
 
-       // $em->persist($fight);
-       // $em->flush();
 
         return $this->render(':testowe:testowe.html.twig', [
 
         ]);
 
+
+    }
+
+    public function more($arr = null, $more = null)
+    {
 
     }
 }
