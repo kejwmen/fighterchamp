@@ -22,7 +22,7 @@ class FightType extends AbstractType
                 'entry_type' => EntityType::class,
                 'entry_options' => array(
                     'class' => 'AppBundle:User',
-                  //  'choice_label' =>['name','surname'],
+                    //'choice_label' =>'name',
                     'query_builder' => function(UserRepository $er) {
                         return $er->findAllSignUpButNotPairYet();
                     })

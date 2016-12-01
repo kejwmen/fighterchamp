@@ -133,18 +133,6 @@ class FightAdminController extends Controller
         return $this->redirectToRoute('admin_fight');
     }
 
-    /**
-     * @Route("/fight/{id}/reset", name="resetWinner")
-     */
-    public function resetWinner(Fight $fight)
-    {
-        $fight->resetWinner();
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($fight);
-        $em->flush();
-
-        return $this->redirectToRoute('admin_fight');
-    }
 
     /**
      * @Route("/fight/{id}/remove", name="removeFight")
@@ -201,6 +189,25 @@ class FightAdminController extends Controller
 
         return $this->redirectToRoute('admin_fight');
     }
+
+    /**
+     * @Route("/fight/toggleready", name="toggleFightReady")
+     */
+    public function toggleFightReady(Request $request)
+    {
+
+        $fightId = $request->request->get('fightId');
+        $em = $this->getDoctrine()->getManager();
+        $fight = $em->getRepository('AppBundle:Fight')
+            ->findOneBy(['id' => $fightId]);
+
+        $fight->toggleReady();
+        $em->persist($fight);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_fight');
+    }
+
 
 
 }

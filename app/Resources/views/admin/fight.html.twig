@@ -11,6 +11,7 @@
             <thead>
             <tr>
                 <th></th>
+                <th>Opublikowane?</th>
                 <th>Kolejność</th>
                 <th>Zawodnik 1</th>
                 <th>Zawodnik 2 </th>
@@ -22,9 +23,8 @@
             <tbody>
             {% for fight in fights %}
                 <tr>
-                    <td><a href="{{ path("removeFight", { 'id' : fight.id }) }}" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Skasuj</a>
-                        <a href="{{ path("resetWinner", { 'id': fight.id }) }}" class="btn btn-warning"><i class="fa fa-undo fa-lg"></i> Reset</a>
-                    </td>
+                    <td><a href="{{ path("removeFight", { 'id' : fight.id }) }}" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Skasuj</a></td>
+                    <td><input class="checkbox_ready" type="checkbox" {{ fight.ready? 'checked' : '' }} value="{{ fight.id }}"> </td>
                     <td><select class="select_order" id="{{ loop.index }}">
                     {% for i in 1..number_of_fights %}
                         <option value="{{ i }}" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>
@@ -56,7 +56,7 @@
             {% endfor %}
             </tbody>
         </table>
-        <a href="{{ path('allFightsReady') }}" class="btn btn-primary"> Opublikuj Listę Walk</a>
+        <a href="{{ path('allFightsReady') }}" class="btn btn-primary"> Opublikuj Wszystkie Walki</a>
     </div>
 
 {% endblock %}
@@ -92,9 +92,16 @@
 
     });
 
+    $( ".checkbox_ready" ).change(function() {
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('toggleFightReady') }}",
+            data: {fightId: this.value},
+            success: function () {
 
-
-
+            }
+        });
+    });
 </script>
 {% endblock %}
 

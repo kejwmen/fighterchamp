@@ -98,7 +98,9 @@ class Fight
         return $this;
     }
 
-
+    /**
+     * @return ArrayCollection|User[]
+     */
     public function getUsers()
     {
         return $this->users;
@@ -121,6 +123,11 @@ class Fight
         $this->ready = $ready;
     }
 
+    public function toggleReady()
+    {
+        $this->ready = $this->ready ? false : true;
+    }
+
 
     public function getTournament()
     {
@@ -135,7 +142,7 @@ class Fight
 
     public function resetWinner()
     {
-        $this->winner = NULL;
+        $this->winner = null;
     }
 
 
