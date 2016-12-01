@@ -22,13 +22,15 @@ class TestoweController extends Controller
     public function resultAction()
     {
 
-        $em = $this->getDoctrine()->getManager();
+         $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('AppBundle:User')
+            ->findAllSignUpButNotPairYet();
 
 
-        $fight = new Fight();
+        dump($users);
 
-        dump($fight->getDraw());
-        dump($fight);
+
 
 
         return $this->render(':testowe:testowe.html.twig', [

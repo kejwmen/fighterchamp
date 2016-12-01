@@ -12,7 +12,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class MainController extends Controller
+class HomepageController extends Controller
 {
     /**
      * @Route("/", name="homepage")
@@ -23,7 +23,6 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
         $news = $em->getRepository('AppBundle:News')
             ->findBy(array(), array('date' => 'DESC'));
-
 
         return $this->render(':main:homepage.html.twig', [
             'news' => $news

@@ -4,19 +4,20 @@ namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class SignUpTournamentControllerTest extends WebTestCase
+class TournamentControllerTest extends WebTestCase
 {
-    /*
     public function testCompleteScenario()
     {
         // Create a new client to browse the application
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/signuptournament/');
+        $crawler = $client->request('GET', '/turniej');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /signuptournament/");
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
+        //$crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
+
+        /*
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
             'appbundle_signuptournament[field_name]'  => 'Test',
@@ -49,7 +50,8 @@ class SignUpTournamentControllerTest extends WebTestCase
 
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+
+        */
     }
 
-    */
 }

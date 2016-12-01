@@ -321,3 +321,8 @@ select {
 .success td {
     color: black;
 }
+
+a.deco-none {
+    color: inherit;
+    text-decoration:none;
+}

@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Fight;
+use AppBundle\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,16 +22,9 @@ class FightType extends AbstractType
                 'entry_type' => EntityType::class,
                 'entry_options' => array(
                     'class' => 'AppBundle:User',
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('user')
-                            ->leftJoin('user.signUpTournament', 'signUpTournament')
-                            ->andWhere('signUpTournament.user is not null')
-                            ->andWhere('signUpTournament.ready = 1')
-                            ->andWhere('user.fights is empty' )
-                            ->addOrderBy('user.male')
-                            ->addOrderBy('signUpTournament.formula')
-                            ->addOrderBy('signUpTournament.weight')
-                            ;
+                  //  'choice_label' =>['name','surname'],
+                    'query_builder' => function(UserRepository $er) {
+                        return $er->findAllSignUpButNotPairYet();
                     })
             ])
 

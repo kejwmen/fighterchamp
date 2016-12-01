@@ -10,7 +10,6 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -32,7 +31,7 @@ class SignUpTournament
      * @ORM\Column(type="integer")
      */
     private $id;
-    
+
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string")
@@ -79,9 +78,7 @@ class SignUpTournament
         $this->ready = $ready;
     }
 
-    /**
-     * @param mixed $ready
-     */
+
     public function toggleReady()
     {
         $this->ready = $this->ready ? false : true;
@@ -171,7 +168,7 @@ class SignUpTournament
 
     public function __toString()
     {
-        return (string) $this->user->getSurname() . " " . $this->user->getName();
+        return (string)$this->user->getSurname() . " " . $this->user->getName();
     }
 
 }

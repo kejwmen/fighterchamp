@@ -2,7 +2,7 @@ imports:
     - { resource: config_dev.yml }
 
 framework:
-    test: ~
+    test: true
     session:
         storage_id: session.storage.mock_file
     profiler:
@@ -14,3 +14,8 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        dbname:   "%database_name%_test"
+

@@ -419,11 +419,6 @@ class User implements UserInterface, Serializable
         $this->facebook_id = $facebook_id;
     }
 
-    public function __toString()
-    {
-        return (string)$this->getSurname() . " " . $this->getName();
-    }
-
     /**
      * @return mixed
      */
@@ -438,6 +433,11 @@ class User implements UserInterface, Serializable
     public function setSignUpTournament($signUpTournament)
     {
         $this->signUpTournament = $signUpTournament;
+    }
+
+    public function __toString()
+    {
+        return $this->name .' '. $this->surname;
     }
 
 }

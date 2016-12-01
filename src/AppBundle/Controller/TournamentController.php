@@ -8,22 +8,18 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Ruleset;
-use AppBundle\Entity\Tournament;
 use AppBundle\Form\SignUpTournamentType;
 use AppBundle\Entity\SignUpTournament;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Entity\User;
+
 
 class TournamentController extends Controller
 {
     /**
      * @Route("turniej", name="tournament")
      */
-
     public function tournamentRegisterAction(Request $request)
     {
 
@@ -71,7 +67,7 @@ class TournamentController extends Controller
                 $arr = $arr + array($value->getWeight() => $value->getWeight());
             }
 
-            $signuptournament = new SignUpTournament($user,$tournament[0]);
+            $signuptournament = new SignUpTournament($user, $tournament[0]);
 
 
             $form = $this->createForm(SignUpTournamentType::class, $signuptournament,

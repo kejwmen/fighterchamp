@@ -5,7 +5,7 @@
  * Date: 2016-06-21
  * Time: 07:13
  */
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace AppBundle\Entity;
 
@@ -70,16 +70,16 @@ class Fight
     /**
      * @ORM\Column(type="boolean")
      */
-    private $ready;
+    private $ready = false;
 
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $draw;
+    private $draw = false;
 
 
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -89,7 +89,6 @@ class Fight
     {
         $this->id = $id;
     }
-
 
 
     public function addUser(User $user)
@@ -111,7 +110,7 @@ class Fight
     }
 
 
-    public function getReady() : bool
+    public function getReady(): bool
     {
         return $this->ready;
     }
@@ -123,7 +122,7 @@ class Fight
     }
 
 
-    public function getTournament() : Tournament
+    public function getTournament()
     {
         return $this->tournament;
     }
@@ -176,7 +175,7 @@ class Fight
     }
 
 
-    public function getPosition() : int
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -188,7 +187,7 @@ class Fight
     }
 
 
-    public function getDraw() : bool
+    public function getDraw(): bool
     {
         return $this->draw;
     }
@@ -201,7 +200,7 @@ class Fight
 
     public function resetDraw()
     {
-        $this->draw = NULL;
+        $this->draw = false;
     }
 
 
