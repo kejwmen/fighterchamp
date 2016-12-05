@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7d9195e47cc625876b6fc676b5279daa",
-    "content-hash": "7b68b91f29d4750287f995ceccf6fdd2",
+    "hash": "f8d3cac0f8fece7ed3118c7aa8ad5862",
+    "content-hash": "e43b2bb334a0322e8e7e9a46ddccfd92",
     "packages": [
         {
             "name": "behat/behat",
@@ -2542,6 +2542,126 @@
                 "random"
             ],
             "time": "2016-10-17 15:23:22"
+        },
+        {
+            "name": "petkopara/crud-generator-bundle",
+            "version": "v3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/petkopara/PetkoparaCrudGeneratorBundle.git",
+                "reference": "19d59b0638d36a1972285f919e8bdccea2369833"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/petkopara/PetkoparaCrudGeneratorBundle/zipball/19d59b0638d36a1972285f919e8bdccea2369833",
+                "reference": "19d59b0638d36a1972285f919e8bdccea2369833",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "^1.6",
+                "lexik/form-filter-bundle": "~5.0",
+                "pagerfanta/pagerfanta": "1.0.*@dev",
+                "petkopara/multi-search-bundle": "~1.0",
+                "sensio/generator-bundle": "~3.0",
+                "symfony/symfony": "~2.8|~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Petkopara\\CrudGeneratorBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Petko Petkov",
+                    "email": "petkopara@gmail.com"
+                }
+            ],
+            "description": "Symfony3 bundle for CRUD generation with pagination, filtering, sorting, page size, bulk delete and bootstrap3 markup. This Generator supports Doctrine association mapping.",
+            "keywords": [
+                "bootstrap3",
+                "bulk",
+                "crud",
+                "doctrine",
+                "filter",
+                "generator",
+                "page size",
+                "pagination",
+                "sorting",
+                "symfony3"
+            ],
+            "time": "2016-11-18 15:16:12"
+        },
+        {
+            "name": "petkopara/multi-search-bundle",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/petkopara/PetkoparaMultiSearchBundle.git",
+                "reference": "17c8e9d7cc7b9ca44ae80cad085083433181bd01"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/petkopara/PetkoparaMultiSearchBundle/zipball/17c8e9d7cc7b9ca44ae80cad085083433181bd01",
+                "reference": "17c8e9d7cc7b9ca44ae80cad085083433181bd01",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "^1.6",
+                "symfony/form": "~2.8|~3.0",
+                "symfony/symfony": "~2.8|~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Petkopara\\MultiSearchBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Petko Petkov",
+                    "email": "petkopara@gmail.com"
+                }
+            ],
+            "description": "Symfony3 bundle that provides multi search doctrine query builder for forms and entities .",
+            "homepage": "https://github.com/petkopara/PetkoparaMultiSearchBundle",
+            "keywords": [
+                "doctrine",
+                "multi-search",
+                "query-builder",
+                "symfony3"
+            ],
+            "time": "2016-10-24 20:35:09"
         },
         {
             "name": "phpdocumentor/reflection-common",

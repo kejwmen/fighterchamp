@@ -63,7 +63,7 @@
                 -->
            {#     {% if is_granted('ROLE_ADMIN') %} #}
                 <li {{ (app.request.attributes.get('_route') == 'admin_user_list') ? 'class="active"' }}><a
-                            href="{{ path ('admin_menu') }}">Admin</a></li>
+                            href="{{ path ('admin') }}">Admin</a></li>
            {#     {% endif %} #}
             </ul>
             <div class="clearfix"></div>
@@ -107,6 +107,7 @@
             data-close-text="Rozumiem">
     </script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ asset('bundles/petkoparacrudgenerator/js/petkopara-crud-generator.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% endblock %}
 </body>

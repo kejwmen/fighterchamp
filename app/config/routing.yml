@@ -18,5 +18,15 @@ rules:
     maxAge: 86400
     sharedAge: 86400
 
+admin:
+  path: /admin
+  defaults:
+    _controller: FrameworkBundle:Template:template
+    template: admin/index.html.twig
+    maxAge: 86400
+    sharedAge: 86400
+
+
+
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

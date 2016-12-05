@@ -17,7 +17,7 @@
         <p>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b> </p><br>
         {% endif %}
 
-        {% if registeredUsersQt >= 110 %}
+        {% if registeredUsersQt >= tournament.capacity %}
             <p><strong>Limit miejsc został wyczerpany</strong></p>
         {% endif %}
 

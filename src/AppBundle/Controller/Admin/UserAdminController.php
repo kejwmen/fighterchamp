@@ -26,17 +26,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserAdminController extends Controller
 {
 
-    /**
-     * @Route("/", name="admin_menu")
-     */
-    public function menuAction()
-    {
-        return $this->render('admin/main.html.twig');
-    }
-
-
-
-
 
     /**
      * @Route("/zawodnik", name="admin_user_list")

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-right" style="margin-bottom: 10px; margin-top: 20px;">
+                <a href="{{ path('admin_tournament_new') }}" class="btn btn-primary pull-right">Dodaj Nowy <span class="fa fa-plus-circle"></span></a>
+            </div>
+    <h1>Lista Turniejów</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nazwa</th>
+                <th>Liczba Uczestników</th>
+                <th>Data</th>
+                <th>Miasto</th>
+                <th>Miejsce</th>
+                <th>Ulica</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tournament in tournaments %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.capacity }}</td>
+                <td>{% if tournament.date %}{{ tournament.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ tournament.city }}</td>
+                <td>{{ tournament.placeName }}</td>
+                <td>{{ tournament.street }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_tournament_show', { 'id': tournament.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_tournament_edit', { 'id': tournament.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

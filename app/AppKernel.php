@@ -22,7 +22,8 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
-            new Petkopara\TritonCrudBundle\PetkoparaTritonCrudBundle(),
+            new Petkopara\MultiSearchBundle\PetkoparaMultiSearchBundle(),
+            new Petkopara\CrudGeneratorBundle\PetkoparaCrudGeneratorBundle(),
 
 
         ];

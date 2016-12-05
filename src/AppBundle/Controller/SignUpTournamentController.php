@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
-class TournamentController extends Controller
+class SignUpTournamentController extends Controller
 {
     /**
      * @Route("turniej", name="tournament")

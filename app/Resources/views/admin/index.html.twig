@@ -1,10 +1,11 @@
 {%  extends 'base.html.twig' %}
 
 {% block body %}
-    <h2 class="text-center"><a href="{{ path('admin_ready_List') }}">Zatwierdzenie Rejestracji Zawodników</a></h2>
+    <h2 class="text-center"><a href="{{ path('admin_tournament_index') }}">Dodaj, Edytuj Turniej</a></h2>
+    <h2 class="text-center"><a href="{{ path('admin_user_list') }}">Dodaj, Edytuj Zawodnika</a></h2>
+    <h2 class="text-center"><a href="{{ path('admin_ready_List') }}">Zatwierdzenie Rejestracji Zawodnika w Turnieju</a></h2>
     <h2 class="text-center"><a href="{{ path('admin_pair') }}">Parowanie</a></h2>
     <h2 class="text-center"><a href="{{ path('admin_fight') }}">Walki - Wygrał / Przegrał</a></h2>
-    <h2 class="text-center"><a href="{{ path('admin_user_list') }}">Edycja Zawodników / Utworzenie Nowych</a></h2>
     <h2 class="text-center"><a href="{{ path('admin_mail') }}">Mail</a></h2>
     <h2 class="text-center"><a href="{{ path('news') }}">News</a></h2>
 {% endblock %}
