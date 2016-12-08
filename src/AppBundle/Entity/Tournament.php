@@ -117,7 +117,7 @@ class Tournament
     /**
      * @param mixed $capacity
      */
-    public function setCapacity(int $capacity)
+    public function setCapacity($capacity)
     {
         $this->capacity = $capacity;
     }
@@ -133,7 +133,7 @@ class Tournament
     /**
      * @param mixed $city
      */
-    public function setCity(string $city)
+    public function setCity($city)
     {
         $this->city = $city;
     }
@@ -149,7 +149,7 @@ class Tournament
     /**
      * @param mixed $street
      */
-    public function setStreet(string $street)
+    public function setStreet($street)
     {
         $this->street = $street;
     }
@@ -165,7 +165,7 @@ class Tournament
     /**
      * @param mixed $placeName
      */
-    public function setPlaceName(string $placeName)
+    public function setPlaceName($placeName)
     {
         $this->placeName = $placeName;
     }

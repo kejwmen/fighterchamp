@@ -41,6 +41,9 @@ class UserController extends Controller
     }
 
     /**
+     * @param User $user
+     * @return Response
+     *
      * @Route("/zawodnik/{id}", name="user")
      */
     public function showAction(User $user)

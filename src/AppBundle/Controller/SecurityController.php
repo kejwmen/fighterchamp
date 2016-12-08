@@ -17,7 +17,9 @@ use AppBundle\Form\RegistrationAfterFbType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SecurityController extends Controller
 {
@@ -36,16 +38,18 @@ class SecurityController extends Controller
             '_username' => $lastUsername
         ]);
 
-        return $this->render(
-            'security/login.html.twig',
-            array(
+        return $this->render('security/login.html.twig',
+            [
                 'form' => $form->createView(),
                 'error' => $error,
-            )
+            ]
         );
     }
 
     /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     *
      * @Route("/rejestracja", name="register")
      */
     public function registerAction(Request $request)
@@ -61,8 +65,6 @@ class SecurityController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $user_id = $user->getId();
-
             $this->addFlash('success', 'Sukces! Twój profil został utworzony! Jesteś zalogowany!');
 
             $this->get('security.authentication.guard_handler')
@@ -72,7 +74,9 @@ class SecurityController extends Controller
                     $this->get('app.security.login_form_authenticator'),
                     'main'
                 );
-            return $this->redirectToRoute('user', ['id' => $user_id]);
+            return $this->redirectToRoute('user', [
+                'id' => $user->getId()
+            ]);
         }
         return $this->render('security/register.html.twig',
             array(
