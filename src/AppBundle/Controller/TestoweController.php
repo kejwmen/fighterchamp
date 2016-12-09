@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Fight;
+use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,11 +25,16 @@ class TestoweController extends Controller
 
          $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('AppBundle:User')
-            ->findAllSignUpButNotPairYet();
+        $user1 = $em->getRepository('AppBundle:User')
+            ->findOneBy(['id' => 1]);
 
+        $tour = new Tournament($user1);
+        $tour->setName('Zapis');
+        $tour->setCapacity(11);
 
-        dump($users);
+        $em->persist($tour);
+
+        $em->flush();
 
 
 
@@ -40,8 +46,4 @@ class TestoweController extends Controller
 
     }
 
-    public function more($arr = null, $more = null)
-    {
-
-    }
 }

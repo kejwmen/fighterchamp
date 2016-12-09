@@ -28,6 +28,7 @@ class User implements UserInterface, Serializable
         $this->signUpTournament = new ArrayCollection();
         $this->fights = new ArrayCollection();
         $this->create_time = new \DateTime('now');
+        $this->tournament = new ArrayCollection();
     }
 
     /**
@@ -196,6 +197,11 @@ class User implements UserInterface, Serializable
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="users")
      * */
     private $fights;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Tournament", mappedBy="user")
+     */
+    private $tournament;
 
     /**
      * @ORM\Column(type="datetime")
@@ -434,6 +440,25 @@ class User implements UserInterface, Serializable
     {
         $this->signUpTournament = $signUpTournament;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
+    }
+
+    /**
+     * @param mixed $tournament
+     */
+    public function setTournament($tournament)
+    {
+        $this->tournament = $tournament;
+    }
+
+
+
 
     public function __toString()
     {

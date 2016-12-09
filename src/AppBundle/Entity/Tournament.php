@@ -18,6 +18,11 @@ use DateTime;
 class Tournament
 {
 
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -32,30 +37,35 @@ class Tournament
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $capacity;
 
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $street;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $placeName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $user;
 
 
     /**
@@ -169,6 +179,7 @@ class Tournament
     {
         $this->placeName = $placeName;
     }
+
 
 
 
