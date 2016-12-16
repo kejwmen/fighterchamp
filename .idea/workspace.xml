@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2621ae1-e2d6-46cb-9d14-4381a1fc1b03" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/TestController.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/fighterchamp.iml" afterPath="$PROJECT_DIR$/.idea/fighterchamp.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/admin/tournament/new.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/admin/tournament/new.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/FightAdminController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Admin/FightAdminController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/TestoweController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/TestoweController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Tournament.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Tournament.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/style.css" afterPath="$PROJECT_DIR$/web/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Form/TournamentType.php" afterPath="$PROJECT_DIR$/src/AppBundle/Form/TournamentType.php" />
     </list>
     <ignored path="fighterchamp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,28 +41,55 @@
       <file leaf-file-name="Tournament.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Tournament.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="21" column="5" lean-forward="false" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-              <folding />
+            <state relative-caret-position="233">
+              <caret line="196" column="0" lean-forward="false" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+              <folding>
+                <element signature="e#119#167#0#PHP" expanded="true" />
+                <element signature="e#393#498#0#PHP" expanded="false" />
+                <element signature="e#521#566#0#PHP" expanded="false" />
+                <element signature="e#591#652#0#PHP" expanded="false" />
+                <element signature="e#681#739#0#PHP" expanded="false" />
+                <element signature="e#764#824#0#PHP" expanded="false" />
+                <element signature="e#849#909#0#PHP" expanded="false" />
+                <element signature="e#936#996#0#PHP" expanded="false" />
+                <element signature="e#1026#1058#0#PHP" expanded="false" />
+                <element signature="e#1063#1128#0#PHP" expanded="false" />
+                <element signature="e#1134#1171#0#PHP" expanded="false" />
+                <element signature="e#1176#1247#0#PHP" expanded="false" />
+                <element signature="e#1253#1285#0#PHP" expanded="false" />
+                <element signature="e#1290#1351#0#PHP" expanded="false" />
+                <element signature="e#1357#1392#0#PHP" expanded="false" />
+                <element signature="e#1397#1460#0#PHP" expanded="false" />
+                <element signature="e#1466#1498#0#PHP" expanded="false" />
+                <element signature="e#1503#1568#0#PHP" expanded="false" />
+                <element signature="e#1574#1611#0#PHP" expanded="false" />
+                <element signature="e#1616#1696#0#PHP" expanded="false" />
+                <element signature="e#1702#1734#0#PHP" expanded="false" />
+                <element signature="e#1739#1812#0#PHP" expanded="false" />
+                <element signature="e#1818#1859#0#PHP" expanded="false" />
+                <element signature="e#1864#1951#0#PHP" expanded="false" />
+                <element signature="e#1957#1989#0#PHP" expanded="false" />
+                <element signature="e#1994#2059#0#PHP" expanded="false" />
+                <element signature="e#2065#2102#0#PHP" expanded="false" />
+                <element signature="e#2107#2178#0#PHP" expanded="false" />
+                <element signature="e#2184#2216#0#PHP" expanded="false" />
+                <element signature="e#2221#2290#0#PHP" expanded="false" />
+                <element signature="e#2296#2335#0#PHP" expanded="false" />
+                <element signature="e#2340#2419#0#PHP" expanded="false" />
+                <element signature="e#2425#2457#0#PHP" expanded="false" />
+                <element signature="e#2462#2537#0#PHP" expanded="false" />
+                <element signature="e#2543#2585#0#PHP" expanded="false" />
+                <element signature="e#2590#2681#0#PHP" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
+      <file leaf-file-name="UserTournamentAdmin.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/UserTournamentAdmin.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7596">
-              <caret line="430" column="33" lean-forward="false" selection-start-line="430" selection-start-column="33" selection-end-line="430" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SignUpTournament.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/SignUpTournament.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1008">
-              <caret line="62" column="17" lean-forward="false" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+            <state relative-caret-position="448">
+              <caret line="48" column="31" lean-forward="false" selection-start-line="48" selection-start-column="31" selection-end-line="48" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -67,28 +98,8 @@
       <file leaf-file-name="TestoweController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/TestoweController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="32" column="31" lean-forward="false" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FightController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/FightController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="12" column="57" lean-forward="false" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="testowe.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/testowe/testowe.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="665">
+              <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,8 +108,8 @@
       <file leaf-file-name="Fight.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Fight.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1638">
-              <caret line="98" column="5" lean-forward="false" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="5" />
+            <state relative-caret-position="395">
+              <caret line="94" column="5" lean-forward="false" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -122,7 +133,6 @@
       <find>Sp</find>
       <find>limit</find>
       <find>zapis</find>
-      <find>tournament</find>
       <find>tournament_index</find>
       <find>tournament_new</find>
       <find>tournament_show</find>
@@ -136,6 +146,7 @@
       <find>tour</find>
       <find>[]</find>
       <find>add</find>
+      <find>tournament</find>
     </findStrings>
     <replaceStrings>
       <replace>turniej</replace>
@@ -147,8 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/tests/AppBundle/Controller/DefaultControllerTest.php" />
-        <option value="$PROJECT_DIR$/tests/AppBundle/Controller/FightControllerTest.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/MainController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/HomepageController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Tests/Controller/HomepageControllerTest.php" />
@@ -171,7 +180,6 @@
         <option value="$PROJECT_DIR$/app/Resources/views/tournament/register.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/tournament/_listaZapisanych.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/tournament.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/TournamentType.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/SignUpTournamentController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/NewsController.php" />
         <option value="$PROJECT_DIR$/app/AppKernel.php" />
@@ -183,7 +191,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/TournamentController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/main.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/tournament/show.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/admin/tournament/new.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/tournament/index.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Admin/UserAdminController.php" />
         <option value="$PROJECT_DIR$/app/config/routing.yml" />
@@ -195,9 +202,13 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/SecurityController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
         <option value="$PROJECT_DIR$/web/css/style.css" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/Resources/views/admin/tournament/new.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/TournamentType.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Tournament.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/UserTournamentAdmin.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/TestoweController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Tournament.php" />
       </list>
     </option>
   </component>
@@ -533,6 +544,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -542,38 +554,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="FighterChamp" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FighterChamp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FighterChamp" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FighterChamp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FighterChamp" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -662,14 +642,9 @@
               <option name="myItemId" value="Resources" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -881,6 +856,9 @@
       <workItem from="1481147842694" duration="2855000" />
       <workItem from="1481219468174" duration="6105000" />
       <workItem from="1481227639930" duration="448000" />
+      <workItem from="1481399476730" duration="10240000" />
+      <workItem from="1481449160548" duration="8292000" />
+      <workItem from="1481575387554" duration="460000" />
     </task>
     <servers />
   </component>
@@ -917,11 +895,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="220937000" />
+    <option name="totallyTimeSpent" value="239929000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1215" height="776" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2798354" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -930,7 +908,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32524964" sideWeight="0.490535" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34236804" sideWeight="0.490535" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -967,32 +945,11 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="5" />
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/main/homepage.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="42" column="28" lean-forward="false" selection-start-line="42" selection-start-column="28" selection-end-line="42" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/FightType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/user/pair.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="66" lean-forward="false" selection-start-line="17" selection-start-column="66" selection-end-line="17" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/features/ls.feature">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1073,13 +1030,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/tournament/register.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="39" lean-forward="false" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/petkopara/crud-generator-bundle/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1088,13 +1038,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/TournamentFilterType.php" />
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/TournamentType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/contact/contact.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1120,13 +1063,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="536">
           <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/tournament/new.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="31" lean-forward="false" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1264,46 +1200,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/News.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-324">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Tournament.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" column="5" lean-forward="false" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7596">
-          <caret line="430" column="33" lean-forward="false" selection-start-line="430" selection-start-column="33" selection-end-line="430" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/SignUpTournament.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1008">
-          <caret line="62" column="17" lean-forward="false" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Fight.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1638">
-          <caret line="98" column="5" lean-forward="false" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5976">
@@ -1315,22 +1211,220 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/SignUpTournament.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="62" column="17" lean-forward="false" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/TestController.php" />
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="14" lean-forward="true" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/tournament/register.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="39" lean-forward="false" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/TournamentType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="17" column="29" lean-forward="true" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/News.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/tournament/new.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="439" column="0" lean-forward="false" selection-start-line="439" selection-start-column="0" selection-end-line="439" selection-end-column="0" />
+          <folding>
+            <element signature="e#1008#1113#0#PHP" expanded="false" />
+            <element signature="e#1138#1250#0#PHP" expanded="false" />
+            <element signature="e#1280#1371#0#PHP" expanded="false" />
+            <element signature="e#1401#1492#0#PHP" expanded="false" />
+            <element signature="e#1522#2023#0#PHP" expanded="false" />
+            <element signature="e#2028#2402#0#PHP" expanded="false" />
+            <element signature="e#2408#2444#0#PHP" expanded="false" />
+            <element signature="e#2449#2524#0#PHP" expanded="false" />
+            <element signature="e#2530#2600#0#PHP" expanded="false" />
+            <element signature="e#2605#2719#0#PHP" expanded="false" />
+            <element signature="e#2725#2763#0#PHP" expanded="false" />
+            <element signature="e#2768#2843#0#PHP" expanded="false" />
+            <element signature="e#2849#3010#0#PHP" expanded="false" />
+            <element signature="e#3016#3203#0#PHP" expanded="false" />
+            <element signature="e#3209#3316#0#PHP" expanded="false" />
+            <element signature="e#3342#3413#0#PHP" expanded="false" />
+            <element signature="e#3438#3509#0#PHP" expanded="false" />
+            <element signature="e#3537#3628#0#PHP" expanded="false" />
+            <element signature="e#3657#3717#0#PHP" expanded="false" />
+            <element signature="e#3742#3828#0#PHP" expanded="false" />
+            <element signature="e#3854#3940#0#PHP" expanded="false" />
+            <element signature="e#3965#4025#0#PHP" expanded="false" />
+            <element signature="e#4095#4155#0#PHP" expanded="false" />
+            <element signature="e#4184#4244#0#PHP" expanded="false" />
+            <element signature="e#4279#4379#0#PHP" expanded="false" />
+            <element signature="e#4416#4509#0#PHP" expanded="false" />
+            <element signature="e#4536#4583#0#PHP" expanded="false" />
+            <element signature="e#4615#4647#0#PHP" expanded="false" />
+            <element signature="e#4652#4721#0#PHP" expanded="false" />
+            <element signature="e#4727#4766#0#PHP" expanded="false" />
+            <element signature="e#4771#4850#0#PHP" expanded="false" />
+            <element signature="e#4856#4926#0#PHP" expanded="false" />
+            <element signature="e#4932#5000#0#PHP" expanded="false" />
+            <element signature="e#5006#5079#0#PHP" expanded="false" />
+            <element signature="e#5085#5167#0#PHP" expanded="false" />
+            <element signature="e#5173#5257#0#PHP" expanded="false" />
+            <element signature="e#5263#5353#0#PHP" expanded="false" />
+            <element signature="e#5359#5391#0#PHP" expanded="false" />
+            <element signature="e#5396#5463#0#PHP" expanded="false" />
+            <element signature="e#5469#5507#0#PHP" expanded="false" />
+            <element signature="e#5512#5587#0#PHP" expanded="false" />
+            <element signature="e#5593#5625#0#PHP" expanded="false" />
+            <element signature="e#5630#5691#0#PHP" expanded="false" />
+            <element signature="e#5697#5732#0#PHP" expanded="false" />
+            <element signature="e#5737#5800#0#PHP" expanded="false" />
+            <element signature="e#5806#5838#0#PHP" expanded="false" />
+            <element signature="e#5843#5908#0#PHP" expanded="false" />
+            <element signature="e#5914#5951#0#PHP" expanded="false" />
+            <element signature="e#5956#6027#0#PHP" expanded="false" />
+            <element signature="e#6033#6065#0#PHP" expanded="false" />
+            <element signature="e#6070#6141#0#PHP" expanded="false" />
+            <element signature="e#6147#6187#0#PHP" expanded="false" />
+            <element signature="e#6192#6275#0#PHP" expanded="false" />
+            <element signature="e#6281#6313#0#PHP" expanded="false" />
+            <element signature="e#6318#6391#0#PHP" expanded="false" />
+            <element signature="e#6397#6438#0#PHP" expanded="false" />
+            <element signature="e#6443#6539#0#PHP" expanded="false" />
+            <element signature="e#6545#6577#0#PHP" expanded="false" />
+            <element signature="e#6582#6647#0#PHP" expanded="false" />
+            <element signature="e#6653#6690#0#PHP" expanded="false" />
+            <element signature="e#6695#6766#0#PHP" expanded="false" />
+            <element signature="e#6772#6804#0#PHP" expanded="false" />
+            <element signature="e#6809#6876#0#PHP" expanded="false" />
+            <element signature="e#6882#6920#0#PHP" expanded="false" />
+            <element signature="e#6925#7000#0#PHP" expanded="false" />
+            <element signature="e#7006#7038#0#PHP" expanded="false" />
+            <element signature="e#7043#7108#0#PHP" expanded="false" />
+            <element signature="e#7114#7151#0#PHP" expanded="false" />
+            <element signature="e#7156#7227#0#PHP" expanded="false" />
+            <element signature="e#7233#7274#0#PHP" expanded="false" />
+            <element signature="e#7279#7366#0#PHP" expanded="false" />
+            <element signature="e#7372#7404#0#PHP" expanded="false" />
+            <element signature="e#7409#7493#0#PHP" expanded="false" />
+            <element signature="e#7499#7546#0#PHP" expanded="false" />
+            <element signature="e#7551#7693#0#PHP" expanded="false" />
+            <element signature="e#7699#7731#0#PHP" expanded="false" />
+            <element signature="e#7736#7814#0#PHP" expanded="false" />
+            <element signature="e#7820#7864#0#PHP" expanded="false" />
+            <element signature="e#7869#7967#0#PHP" expanded="false" />
+            <element signature="e#7973#8005#0#PHP" expanded="false" />
+            <element signature="e#8010#8099#0#PHP" expanded="false" />
+            <element signature="e#8105#8154#0#PHP" expanded="false" />
+            <element signature="e#8159#8278#0#PHP" expanded="false" />
+            <element signature="e#8556#8645#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/FightController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="12" column="57" lean-forward="false" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
+        <state relative-caret-position="90">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Fight.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="94" column="5" lean-forward="false" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Tournament.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="196" column="0" lean-forward="false" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+          <folding>
+            <element signature="e#119#167#0#PHP" expanded="true" />
+            <element signature="e#393#498#0#PHP" expanded="false" />
+            <element signature="e#521#566#0#PHP" expanded="false" />
+            <element signature="e#591#652#0#PHP" expanded="false" />
+            <element signature="e#681#739#0#PHP" expanded="false" />
+            <element signature="e#764#824#0#PHP" expanded="false" />
+            <element signature="e#849#909#0#PHP" expanded="false" />
+            <element signature="e#936#996#0#PHP" expanded="false" />
+            <element signature="e#1026#1058#0#PHP" expanded="false" />
+            <element signature="e#1063#1128#0#PHP" expanded="false" />
+            <element signature="e#1134#1171#0#PHP" expanded="false" />
+            <element signature="e#1176#1247#0#PHP" expanded="false" />
+            <element signature="e#1253#1285#0#PHP" expanded="false" />
+            <element signature="e#1290#1351#0#PHP" expanded="false" />
+            <element signature="e#1357#1392#0#PHP" expanded="false" />
+            <element signature="e#1397#1460#0#PHP" expanded="false" />
+            <element signature="e#1466#1498#0#PHP" expanded="false" />
+            <element signature="e#1503#1568#0#PHP" expanded="false" />
+            <element signature="e#1574#1611#0#PHP" expanded="false" />
+            <element signature="e#1616#1696#0#PHP" expanded="false" />
+            <element signature="e#1702#1734#0#PHP" expanded="false" />
+            <element signature="e#1739#1812#0#PHP" expanded="false" />
+            <element signature="e#1818#1859#0#PHP" expanded="false" />
+            <element signature="e#1864#1951#0#PHP" expanded="false" />
+            <element signature="e#1957#1989#0#PHP" expanded="false" />
+            <element signature="e#1994#2059#0#PHP" expanded="false" />
+            <element signature="e#2065#2102#0#PHP" expanded="false" />
+            <element signature="e#2107#2178#0#PHP" expanded="false" />
+            <element signature="e#2184#2216#0#PHP" expanded="false" />
+            <element signature="e#2221#2290#0#PHP" expanded="false" />
+            <element signature="e#2296#2335#0#PHP" expanded="false" />
+            <element signature="e#2340#2419#0#PHP" expanded="false" />
+            <element signature="e#2425#2457#0#PHP" expanded="false" />
+            <element signature="e#2462#2537#0#PHP" expanded="false" />
+            <element signature="e#2543#2585#0#PHP" expanded="false" />
+            <element signature="e#2590#2681#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/UserTournamentAdmin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="48" column="31" lean-forward="false" selection-start-line="48" selection-start-column="31" selection-end-line="48" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/TestoweController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="32" column="31" lean-forward="false" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+        <state relative-caret-position="665">
+          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
           <folding />
         </state>
       </provider>

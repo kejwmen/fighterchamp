@@ -13,7 +13,14 @@ class TournamentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('capacity')->add('date')->add('city')->add('street')->add('placeName')        ;
+        $builder
+            ->add('name')
+            ->add('capacity')
+            ->add('date')
+            ->add('city')
+            ->add('street')
+            ->add('placeName')
+        ;
     }
     
     /**

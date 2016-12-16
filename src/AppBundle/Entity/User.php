@@ -28,7 +28,7 @@ class User implements UserInterface, Serializable
         $this->signUpTournament = new ArrayCollection();
         $this->fights = new ArrayCollection();
         $this->create_time = new \DateTime('now');
-        $this->tournament = new ArrayCollection();
+        $this->tournamentAdmin = new ArrayCollection();
     }
 
     /**
@@ -109,7 +109,6 @@ class User implements UserInterface, Serializable
         return $this->imageName;
     }
 
-
     public function serialize()
     {
         return serialize(array(
@@ -127,7 +126,6 @@ class User implements UserInterface, Serializable
             $this->password,
             ) = unserialize($serialized);
     }
-
 
     /**
      * @Assert\NotBlank()
@@ -199,11 +197,6 @@ class User implements UserInterface, Serializable
     private $fights;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Tournament", mappedBy="user")
-     */
-    private $tournament;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $create_time;
@@ -224,7 +217,6 @@ class User implements UserInterface, Serializable
         $this->fights = $fights;
     }
 
-
     public function getUsername()
     {
         return $this->email;
@@ -244,7 +236,6 @@ class User implements UserInterface, Serializable
     {
         // TODO: Implement getSalt() method.
     }
-
 
     public function eraseCredentials()
     {
@@ -441,22 +432,19 @@ class User implements UserInterface, Serializable
         $this->signUpTournament = $signUpTournament;
     }
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTournamentAdmin", mappedBy="user")
+     */
+    private $tournamentAdmin;
+
     /**
      * @return mixed
      */
-    public function getTournament()
+    public function getTournamentAdmin()
     {
-        return $this->tournament;
+        return $this->tournamentAdmin;
     }
-
-    /**
-     * @param mixed $tournament
-     */
-    public function setTournament($tournament)
-    {
-        $this->tournament = $tournament;
-    }
-
 
 
 

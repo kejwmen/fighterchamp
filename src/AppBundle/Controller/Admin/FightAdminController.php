@@ -136,6 +136,7 @@ class FightAdminController extends Controller
 
     /**
      * @Route("/fight/{id}/remove", name="removeFight")
+     * @Method("DELETE")
      */
     public function removeFight(Fight $fight)
     {

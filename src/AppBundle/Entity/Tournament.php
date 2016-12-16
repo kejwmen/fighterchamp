@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 
@@ -18,9 +19,9 @@ use DateTime;
 class Tournament
 {
 
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+        $this->userAdmin = new ArrayCollection();
     }
 
     /**
@@ -35,12 +36,10 @@ class Tournament
      */
     private $name;
 
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $capacity;
-
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -61,12 +60,6 @@ class Tournament
      * @ORM\Column(type="string", nullable=true)
      */
     private $placeName;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     */
-    private $user;
-
 
     /**
      * @return mixed
@@ -180,9 +173,34 @@ class Tournament
         $this->placeName = $placeName;
     }
 
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="AppBundle\Entity\UserTournamentAdmin",
+     *     cascade={"persist"},
+     *     mappedBy="tournament")
+     */
+    private $userAdmin;
 
+    /**
+     * @return mixed
+     */
+    public function getUserAdmin()
+    {
+        return $this->userAdmin;
+    }
 
+///coś tu jest pokręcone trzeba to zmienić
+    public function addUserAdmin(UserTournamentAdmin $userTournamentAdmin)
+    {
 
+        if ($this->userAdmin->contains($userTournamentAdmin)) {
+            return;
+        }
+
+        $this->userAdmin[] = $userTournamentAdmin;
+        // needed to update the owning side of the relationship!
+        $userTournamentAdmin->setUser($this);
+    }
 
 
     public function __toString()
