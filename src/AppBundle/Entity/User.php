@@ -434,7 +434,7 @@ class User implements UserInterface, Serializable
 
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTournamentAdmin", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserAdminTournament", mappedBy="user")
      */
     private $tournamentAdmin;
 

@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
 class SignUpTournamentRepository extends EntityRepository
 {
 
-    public function signUpUserOrder()
+    public function signUpUserOrder($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
             ->leftJoin('signUpTournament.user', 'user')
             ->addSelect('user')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->setParameter('tournament', $tournament)
             ->addOrderBy('user.male')
             ->addOrderBy('signUpTournament.formula')
             ->addOrderBy('signUpTournament.weight');
@@ -40,10 +42,12 @@ class SignUpTournamentRepository extends EntityRepository
         return $query->execute();
     }
 
-    public function findAllSortByReady()
+    public function findAllSortByReady($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
             ->leftJoin('signUpTournament.user', 'user')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->setParameter('tournament', $tournament)
             ->addSelect('user')
             ->addOrderBy('signUpTournament.ready')
             ->addOrderBy('user.surname');

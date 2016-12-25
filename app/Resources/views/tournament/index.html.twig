@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                {% if adminTournaments %}
+                <h1 class="text-center">Moje Turnieje</h1>
+                <div class="pull-left" style="margin-bottom: 10px; margin-top: 20px;">
+                    <a href="{{ path('tournament_new') }}" class="btn btn-primary pull-right">Dodaj <span class="fa fa-plus-circle"></span></a>
+                </div>
+                {% include 'tournament/_tournaments.twig' with {'tournaments': adminTournaments } %}
+                {% endif %}
+                <h1 class="text-center">Lista Turniejów</h1>
+                {% include 'tournament/_tournaments.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

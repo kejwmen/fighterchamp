@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Nazwa</th>
+        <th>Liczba Uczestników</th>
+        <th>Data</th>
+        <th>Miasto</th>
+        <th>Miejsce</th>
+        <th>Ulica</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for tournament in tournaments %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td><a href="{{ path('tournament_show', {'id': tournament.id }) }}">{{ tournament.name }}</a></td>
+            <td>{{ tournament.capacity }}</td>
+            <td>{% if tournament.date %}{{ tournament.date|date('Y-m-d') }}{% endif %}</td>
+            <td>{{ tournament.city }}</td>
+            <td>{{ tournament.placeName }}</td>
+            <td>{{ tournament.street }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

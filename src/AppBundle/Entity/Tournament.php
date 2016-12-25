@@ -19,8 +19,9 @@ use DateTime;
 class Tournament
 {
 
-    public function __construct()
+    public function __construct($userAdmin)
     {
+        $this->userAdmin = $userAdmin;
         $this->userAdmin = new ArrayCollection();
     }
 
@@ -175,7 +176,7 @@ class Tournament
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity="AppBundle\Entity\UserTournamentAdmin",
+     *     targetEntity="UserAdminTournament",
      *     cascade={"persist"},
      *     mappedBy="tournament")
      */
@@ -190,7 +191,7 @@ class Tournament
     }
 
 ///coś tu jest pokręcone trzeba to zmienić
-    public function addUserAdmin(UserTournamentAdmin $userTournamentAdmin)
+    public function addUserAdmin(UserAdminTournament $userTournamentAdmin)
     {
 
         if ($this->userAdmin->contains($userTournamentAdmin)) {

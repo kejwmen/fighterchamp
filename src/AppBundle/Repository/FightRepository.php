@@ -23,11 +23,13 @@ class FightRepository extends EntityRepository
 
     }
 
-    public function fightReadyOrderBy()
+    public function fightReadyOrderBy($tournament)
     {
         $qb = $this->createQueryBuilder('fight')
             ->andWhere('fight.ready = :ready')
+            ->andWhere('fight.tournament = :tournament')
             ->setParameter('ready', true)
+            ->setParameter('tournament', $tournament)
             ->addOrderBy('fight.position')
         ;
 

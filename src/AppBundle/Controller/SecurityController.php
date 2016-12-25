@@ -163,8 +163,6 @@ class SecurityController extends Controller
 
                 return $this->redirectToRoute('login');
             }
-
-
         }
         return $this->render('security/password_reset.html.twig', [
             'form' => $form->createView(),

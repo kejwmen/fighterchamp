@@ -4,18 +4,17 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-    <h1>Tournament creation</h1>
+    <h1>Nowy Turniej</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" class='btn btn-primary' value="Create" />
+            {{ form_row(form.name,{'label' : 'Nazwa'}) }}
+            {{ form_row(form.capacity,{'label' : 'Maksymalna Liczba Uczestników'}) }}
+            {{ form_row(form.date,{'label' : 'Data'}) }}
+            {{ form_row(form.city,{'label' : 'Miasto'}) }}
+            {{ form_row(form.placeName,{'label' : 'Nazwa Obiektu'}) }}
+            {{ form_row(form.street,{'label' : 'Adress'})  }}
+            <input type="submit" class='btn btn-primary' value="Zapisz" />
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('admin_tournament_index') }}">Back to the list</a>
-        </li>
-    </ul>
         </div>
     </div>
 </div>
