@@ -74,7 +74,7 @@
             url: "{{ path('changePositionFight') }}",
             data: {wantedPosition: this.value, position: this.id},
             success: function () {
-                 $(location).attr('href', "{{ path("admin_fight") }}");
+                 $(location).attr('href', "{{ path("tournament_fights", {'id': tournament.id }) }}");
             }
         });
     });
@@ -89,7 +89,7 @@
             url: "{{  path('setWinner') }}",
             data: {fightId: arrValues[0], userId: arrValues[1], draw: arrValues[2] },
             success: function () {
-                $(location).attr('href', "{{  path("admin_fight") }}");
+                $(location).attr('href', "{{  path("tournament_fights", {'id': tournament.id }) }}");
             }
         });
 

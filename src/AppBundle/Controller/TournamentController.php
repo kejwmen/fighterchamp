@@ -8,8 +8,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Fight;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
+use AppBundle\Form\FightType;
 use AppBundle\Form\SignUpTournamentType;
 use AppBundle\Entity\SignUpTournament;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -244,6 +246,7 @@ class TournamentController extends Controller
                     'delete_form' => $deleteForm->createView(),
                 ));
             }
+
         }else{
             return new AccessDeniedException();
         }
@@ -287,7 +290,7 @@ class TournamentController extends Controller
     }
 
     /**
-     * @Route("/{id}/lista", name="ready_List")
+     * @Route("/{id}/zgloszenia", name="ready_List")
      */
     public function checkUser(Tournament $tournament)
     {
@@ -312,5 +315,70 @@ class TournamentController extends Controller
         ]);
 
     }
+
+
+    /**
+     * @Route("/{id}/parowanie", name="tournament_match")
+     */
+    public function pairAction(Request $request, Tournament $tournament)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $fights = $em->getRepository('AppBundle:User')
+            ->findAllSignUpButNotPairYet($tournament);
+
+        dump($fights);
+
+        $fight = new Fight();
+        $fight->getUsers()->add(null);
+        $fight->getUsers()->add(null);
+
+        $form = $this->createForm(FightType::class, $fight,['tournament' => $tournament]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $fight = $form->getData();
+
+            $numberOfFights = count($this->getDoctrine()
+                ->getRepository('AppBundle:Fight')->findAll());
+            $fight->setPosition($numberOfFights + 1);
+
+            $fight->setTournament($tournament);
+
+            $em->persist($fight);
+            $em->flush();
+        }
+
+        $freeUsers = $this->getDoctrine()
+            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
+
+        $registeredUsersQty = count($freeUsers);
+
+        return $this->render('admin/user/pair.html.twig', array(
+            'form' => $form->createView(),
+            'freeUsers' => $freeUsers,
+            'registeredUsersQty' => $registeredUsersQty
+        ));
+    }
+
+    /**
+     * @Route("/{id}/toggle-ready", name="toggleReady")
+     * @Method("GET")
+     */
+    public function toggleReady(SignUpTournament $signUpTournament)
+    {
+
+        $signUpTournament->toggleReady();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($signUpTournament);
+        $em->flush();
+
+        $tournament = $signUpTournament->getTournament();
+
+        return $this->redirectToRoute('ready_List',['id'=>$tournament->getId()]);
+    }
+
+
+
 
 }

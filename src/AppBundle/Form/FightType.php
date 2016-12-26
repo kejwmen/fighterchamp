@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Fight;
+use AppBundle\Entity\Tournament;
 use AppBundle\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -17,14 +18,16 @@ class FightType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $tournament = $options['tournament'];
+
         $builder
             ->add('users', CollectionType::class, [
                 'entry_type' => EntityType::class,
                 'entry_options' => array(
                     'class' => 'AppBundle:User',
                     //'choice_label' =>'name',
-                    'query_builder' => function(UserRepository $er) {
-                        return $er->findAllSignUpButNotPairYet();
+                    'query_builder' => function(UserRepository $er) use ($tournament) {
+                        return $er->findAllSignUpButNotPairYet($tournament);
                     })
             ])
 
@@ -41,8 +44,6 @@ class FightType extends AbstractType
                 ,'75+' => '75+','81' => '81','61+' => '81+','86' => '86','91' => '91'
                 ,'91+' => '91+')
             ))
-
-            ->add('tournament')
         ;
     }
 
@@ -50,6 +51,7 @@ class FightType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Fight::class,
+            'tournament' => null
         ]);
     }
 }

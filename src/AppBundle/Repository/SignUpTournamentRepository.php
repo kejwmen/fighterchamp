@@ -27,12 +27,14 @@ class SignUpTournamentRepository extends EntityRepository
         return $query->execute();
     }
 
-    public function findAllSignUpButNotPairYet()
+    public function findAllSignUpButNotPairYet($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
             ->leftJoin('signUpTournament.user', 'user')
             ->andWhere('user.fights is empty' )
             ->andwhere('signUpTournament.ready = 1')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->setParameter('tournament', $tournament)
             ->addOrderBy('user.male')
             ->addOrderBy('signUpTournament.formula')
             ->addOrderBy('signUpTournament.weight');

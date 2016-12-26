@@ -2,45 +2,8 @@
 
 {% block body %}
     {% if isAdmin %}
-    <div class="container-fluid">
-        <nav class="navbar navbar-inverse">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <div class="dot-row">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </div>
-                    <div class="dot-row">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </div>
-                    <div class="dot-row">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </div>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li {{ (app.request.attributes.get('_route') == 'tournament') ? 'class="active"' }}><a
-                                href="{{ path ('tournament_edit', {'id': tournament.id } ) }}">Edytuj turniej</a></li>
-                    <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a
-                                href="{{ path ('ready_List', {'id': tournament.id } ) }}">Zgłoszenia zawodnika</a></li>
-                    <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a
-                                href="{{ path ('rules') }}">Parowanie zawodników</a></li>
-                    <li {{ (app.request.attributes.get('_route') == 'contact') ? 'class="active"' }}><a
-                                href="{{ path ('contact') }}">Wynik walki</a></li>
-                    <li {{ (app.request.attributes.get('_route') == 'contact') ? 'class="active"' }}><a
-                                href="{{ path ('contact') }}">mailing</a></li>
-                    <li {{ (app.request.attributes.get('_route') == 'contact') ? 'class="active"' }}><a
-                                href="{{ path ('contact') }}">news</a></li>
-                </ul>
-        </nav>
-    </div>
-        {% endif %}
+        {{ include('tournament/admin/_adminPanel.twig') }}
+    {% endif %}
 
     <div class="container">
     <div class="row">

@@ -12,10 +12,12 @@ use Doctrine\ORM\EntityRepository;
 class FightRepository extends EntityRepository
 {
 
-    public function fightAllOrderBy()
+    public function fightAllOrderBy($tournament)
     {
         $qb = $this->createQueryBuilder('fight')
             ->addOrderBy('fight.position')
+            ->andWhere('fight.tournament = :tournament')
+            ->setParameter('tournament', $tournament)
         ;
 
         $query = $qb->getQuery();

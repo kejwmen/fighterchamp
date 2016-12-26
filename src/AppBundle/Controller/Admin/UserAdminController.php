@@ -117,20 +117,20 @@ class UserAdminController extends Controller
 
     }
 
-    /**
-     * @Route("/{id}/toggle-ready", name="toggleReady")
-     * @Method("GET")
-     */
-    public function toggleReady(SignUpTournament $signUpTournament)
-    {
-
-        $signUpTournament->toggleReady();
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($signUpTournament);
-        $em->flush();
-
-        return $this->redirectToRoute('admin_ready_List');
-    }
+//    /**
+//     * @Route("/{id}/toggle-ready", name="admin_toggleReady")
+//     * @Method("GET")
+//     */
+//    public function toggleReady(SignUpTournament $signUpTournament)
+//    {
+//
+//        $signUpTournament->toggleReady();
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($signUpTournament);
+//        $em->flush();
+//
+//        return $this->redirectToRoute('admin_ready_List');
+//    }
 
 
     /**
@@ -140,10 +140,10 @@ class UserAdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $this->getDoctrine()
+        $signUpTournament = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')->find($id);
 
-        $editForm = $this->createForm(new SignUpTournamentType(), $entity);
+        $editForm = $this->createForm(new SignUpTournamentType(), $signUpTournament);
     }
 
 
