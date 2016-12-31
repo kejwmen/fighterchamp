@@ -1,0 +1,110 @@
+{%  extends 'base.html.twig' %}
+{%  block body %}
+    {{ include('tournament/admin/_adminPanel.twig') }}
+<div class="container">
+    <div class="row">
+    <div class="col-xs-12">
+        <div>
+            <span class="label label-success">W</span> - Win (Wygrana)
+            <span class="label label-warning">D</span> - Draw (Remis)
+            <span class="label label-danger">L</span> - Loss (Przegrana)
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Opublikowane ?</th>
+                <th>Kolejność</th>
+                <th>Zawodnik 1</th>
+                <th>Zawodnik 2 </th>
+                <th>Wygrany</th>
+                <th>Formuła</th>
+                <th>Kat. wagowa</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for fight in fights %}
+                <tr>
+                    <td><a href="{{ path("removeFight", { 'fight_id' : fight.id, 'id' : tournament.id }) }}" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Skasuj</a></td>
+                    <td><input class="checkbox_ready" type="checkbox" {{ fight.ready? 'checked' : '' }} value="{{ fight.id }}"> </td>
+                    <td><select class="select_order" id="{{ loop.index }}">
+                    {% for i in 1..number_of_fights %}
+                        <option value="{{ i }}" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>
+                    {% endfor %}
+                        </select></td>
+
+                    {% for user in fight.users %}
+                        <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.name }} {{ user.surname }} </a>
+                        {% if fight.winner %}
+                            {{ user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
+                        {% elseif fight.draw %}
+                            <span class='label label-warning'>D</span></td>
+                        {% endif %}
+                    {% endfor %}
+
+                    <td><select class="select_winner"> <option value="{{ fight.id }}"></option>
+                    {% for user in fight.users %}
+                            {% if fight.winner %}
+                                <option {{ user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ user.id }}|{{ fight.draw }}">{{ user.surname }} {{ user.name }}</option>
+                            {% else %}
+                                <option value="{{ fight.id }}|{{ user.id }}|{{ fight.draw }}">{{ user.surname }} {{ user.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                      <option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>
+
+                    <td>{{ fight.formula }}</td>
+                    <td>{{ fight.weight }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('allFightsReady') }}" class="btn btn-primary"> Opublikuj Wszystkie Walki</a>
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $( ".select_order" ).change(function() {
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('changePositionFight', {'id': tournament.id }) }}",
+            data: {wantedPosition: this.value, position: this.id},
+            success: function () {
+                 $(location).attr('href', "{{ path("tournament_fights", {'id': tournament.id }) }}");
+            }
+        });
+    });
+
+    $( ".select_winner" ).change(function() {
+
+        var values = this.value;
+        var arrValues = values.split("|");
+
+        $.ajax({
+            type: 'POST',
+            url: "{{  path('setWinner') }}",
+            data: {fightId: arrValues[0], userId: arrValues[1], draw: arrValues[2] },
+            success: function () {
+                $(location).attr('href', "{{  path("tournament_fights", {'id': tournament.id }) }}");
+            }
+        });
+
+    });
+
+    $( ".checkbox_ready" ).change(function() {
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('toggleFightReady') }}",
+            data: {fightId: this.value},
+            success: function () {
+
+            }
+        });
+    });
+</script>
+{% endblock %}
+

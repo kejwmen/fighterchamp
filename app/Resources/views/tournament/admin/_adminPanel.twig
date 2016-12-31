@@ -22,6 +22,8 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li {{ (app.request.attributes.get('_route') == 'tournament') ? 'class="active"' }}><a
+                            href="{{ path ('tournament_show', {'id': tournament.id }) }}">Turniej</a></li>
+                <li {{ (app.request.attributes.get('_route') == 'tournament') ? 'class="active"' }}><a
                             href="{{ path ('tournament_edit', {'id': tournament.id }) }}">Edytuj</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a
                             href="{{ path ('ready_List', {'id': tournament.id }) }}">Zgłoszenia</a></li>

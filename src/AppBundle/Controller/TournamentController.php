@@ -56,9 +56,6 @@ class TournamentController extends Controller
 
         }
 
-        dump($adminTournaments);
-
-        dump($tournaments);
 
 
         return $this->render('tournament/index.html.twig', array(
@@ -106,6 +103,10 @@ class TournamentController extends Controller
 
         $users = $em->getRepository('AppBundle:SignUpTournament')
             ->signUpUserOrder($tournament);
+
+
+
+
 
         $fights = $em->getRepository('AppBundle:Fight')
             ->fightReadyOrderBy($tournament);
@@ -182,6 +183,13 @@ class TournamentController extends Controller
             $isAdmin = $em->getRepository('AppBundle:UserAdminTournament')
                 ->findOneBy(['tournament' => $tournament, 'user' => $user]);
 
+            foreach($tournament->getSignuptournament() as $boo) {
+
+                dump($boo);
+            }
+
+            dump($tournament);
+
 
 
 
@@ -240,7 +248,7 @@ class TournamentController extends Controller
 
                 dump($user);
 
-                return $this->render('admin/tournament/edit.html.twig', array(
+                return $this->render('tournament/edit.html.twig', array(
                     'tournament' => $tournament,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -302,7 +310,7 @@ class TournamentController extends Controller
 
         $signUpTournamnetChecked = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')
-            ->findBy(['ready' => true], ['ready' => 'ASC']);
+            ->findBy(['ready' => true, 'tournament' => $tournament], ['ready' => 'ASC']);
 
         $registeredUsersQty = count($signUpTournamnet);
         $signUpTournamnetCheckedQt = count($signUpTournamnetChecked);
@@ -311,7 +319,8 @@ class TournamentController extends Controller
             'signUpTournamnet' => $signUpTournamnet,
             'registeredUsersQty' => $registeredUsersQty,
             'signUpTournamnetChecked' => $signUpTournamnetChecked,
-            'signUpTournamnetCheckedQt' => $signUpTournamnetCheckedQt
+            'signUpTournamnetCheckedQt' => $signUpTournamnetCheckedQt,
+            'tournament' => $tournament
         ]);
 
     }
@@ -354,10 +363,11 @@ class TournamentController extends Controller
 
         $registeredUsersQty = count($freeUsers);
 
-        return $this->render('admin/user/pair.html.twig', array(
+        return $this->render('tournament/admin/user/match.html.twig', array(
             'form' => $form->createView(),
             'freeUsers' => $freeUsers,
-            'registeredUsersQty' => $registeredUsersQty
+            'registeredUsersQty' => $registeredUsersQty,
+            'tournament' => $tournament
         ));
     }
 

@@ -23,6 +23,7 @@ class Tournament
     {
         $this->userAdmin = $userAdmin;
         $this->userAdmin = new ArrayCollection();
+        $this->signUpTournament = new ArrayCollection();
     }
 
     /**
@@ -61,6 +62,12 @@ class Tournament
      * @ORM\Column(type="string", nullable=true)
      */
     private $placeName;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SignUpTournament", mappedBy="tournament")
+     */
+    private $signUpTournament;
+
 
     /**
      * @return mixed
@@ -208,6 +215,27 @@ class Tournament
     {
         return (string) $this->getName();
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getSignUpTournament()
+    {
+        return $this->signUpTournament;
+    }
+
+    /**
+     * @param mixed $signUpTournament
+     */
+    public function setSignUpTournament($signUpTournament)
+    {
+        $this->signUpTournament = $signUpTournament;
+    }
+
+
+
+
 
 
 }

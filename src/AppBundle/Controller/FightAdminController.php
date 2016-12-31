@@ -13,12 +13,14 @@ use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
-use AppBundle\Form\FightType;
+use Doctrine\ORM\Mapping\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -27,7 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FightAdminController extends Controller
 {
     /**
-     * @Route("/{id}/walki", name="tournament_fights", options={"expose"=true})
+     * @Route("/{id}/walki", name="tournament_fights")
      */
     public function resultAction(Tournament $tournament)
     {
@@ -37,10 +39,10 @@ class FightAdminController extends Controller
 
         $numberOfFights = count($fights);
 
-        return $this->render('admin/fight.html.twig', [
+        return $this->render('tournament/admin/fights.html.twig', [
             'fights' => $fights,
             'tournament' => $tournament,
-            'number_of_fights' => $numberOfFights
+            'number_of_fights' => $numberOfFights,
         ]);
     }
 
@@ -87,27 +89,27 @@ class FightAdminController extends Controller
         $em->persist($fight);
         $em->flush();
 
-        return $this->redirectToRoute('admin_fight');
+        return new Response(200);
     }
 
 
     /**
-     * @Route("/fight/{id}/remove", name="removeFight")
-     * @Method("DELETE")
+     * @Route("/{id}/fight/{fight_id}/remove", name="removeFight")
+     * @ParamConverter("fight", options={"id" = "fight_id"})
      */
-    public function removeFight(Fight $fight)
+    public function removeFight(Fight $fight, Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($fight);
         $em->flush();
 
-        return $this->redirectToRoute('admin_fight');
+        return $this->redirectToRoute('tournament_fights',['id' => $tournament->getId()]);
     }
 
     /**
-     * @Route("/fight/change-position-fight", name="changePositionFight")
+     * @Route("/{id}/fight/change-position-fight", name="changePositionFight")
      */
-    public function changeOrderFight(Request $request)
+    public function changeOrderFight(Request $request, Tournament $tournament)
     {
 
         $position_to_insert = $request->request->get('wantedPosition');
@@ -115,7 +117,7 @@ class FightAdminController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $fights = $em->getRepository('AppBundle:Fight')
-            ->fightAllOrderBy();
+            ->fightAllOrderBy($tournament);
 
         $taken_element = array_splice($fights, $position_element_to_take -1 , 1);
 
@@ -123,18 +125,15 @@ class FightAdminController extends Controller
 
         $i = 1;
 
-        $em = $this->getDoctrine()->getManager();
-
         foreach($fights as $fight) {
 
             /**@var Fight $fight */
             $fight->setPosition($i);
-            $em->persist($fight);
             $em->flush();
             $i++;
         }
 
-        return $this->redirectToRoute('admin_fight');
+        return new Response(200);
     }
 
     /**
@@ -145,7 +144,7 @@ class FightAdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('AppBundle:Fight')->setAllFightsReady();
 
-        return $this->redirectToRoute('admin_fight');
+        return new Response(200);
     }
 
     /**
@@ -155,15 +154,15 @@ class FightAdminController extends Controller
     {
 
         $fightId = $request->request->get('fightId');
+
         $em = $this->getDoctrine()->getManager();
         $fight = $em->getRepository('AppBundle:Fight')
             ->findOneBy(['id' => $fightId]);
 
         $fight->toggleReady();
-        $em->persist($fight);
         $em->flush();
 
-        return $this->redirectToRoute('admin_fight');
+        return new Response(200);
     }
 
 

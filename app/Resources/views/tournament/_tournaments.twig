@@ -15,7 +15,7 @@
         <tr>
             <td>{{ loop.index }}</td>
             <td><a href="{{ path('tournament_show', {'id': tournament.id }) }}">{{ tournament.name }}</a></td>
-            <td>{{ tournament.capacity }}</td>
+            <td>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</td>
             <td>{% if tournament.date %}{{ tournament.date|date('Y-m-d') }}{% endif %}</td>
             <td>{{ tournament.city }}</td>
             <td>{{ tournament.placeName }}</td>

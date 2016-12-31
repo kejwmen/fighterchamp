@@ -103,9 +103,6 @@ vich_uploader:
             namer:
                             service: vich_uploader.namer_uniqid
 
-fos_js_routing:
-    routes_to_expose: [ 'ajax' ]
-
 monolog:
     handlers:
         # this "file_log" key could be anything

@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
-            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             new Petkopara\MultiSearchBundle\PetkoparaMultiSearchBundle(),
             new Petkopara\CrudGeneratorBundle\PetkoparaCrudGeneratorBundle(),

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ include('tournament/admin/_adminPanel.twig') }}
 <div class="col-xs-12">
     <h3>Zatwierdzono {{ signUpTournamnetCheckedQt }} na {{ registeredUsersQty }} zawodników</h3>
     <table class="table table-striped">
