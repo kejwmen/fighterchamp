@@ -1,31 +1,37 @@
-<div class="row">
-    <div class="col-xs-12">
-<h3>Liczba zapisanych: {{ registeredUsersQt }} / {{ tournament.capacity }}</h3>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Nazwisko i Imię</th>
-        <th>Formuła</th>
-        <th>Płeć</th>
-        <th>Kat. Wagowa</th>
-        <th>Wiek</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for user in users %}
-        <tr {% if loop.index > 100 %} {{ "class='danger'" }} {%  endif %}
-            {% if is_granted('ROLE_USER') %} {{ user.User.id == app.user.id ? "class='success'" }}{%  endif %}
-        >
-            <td>{{ loop.index }}</td>
-            <td><a href="{{ path('user', {'id': user.User.id }) }}"> {{ user.User.surname }} {{ user.User.name }}</a></td>
-            <td> {{ user.formula }} </td>
-            <td> {{ user.User.male ?  'M' : 'K' }} </td>
-            <td> {{ user.weight }} </td>
-            <td> {{ user.User.birthDay |getAge }} </td>
+<div class="col-xs-12">
+    <h3>
+        {% if isAdmin %}
+            Zatwierdzono {{ signUpTournamentChecked| length }} na {{ signUpTournament| length }} zawodników
+        {% else %}
+            Liczba zapisanych: {{ signUpTournamentChecked| length }} / {{ tournament.capacity }}
+        {% endif %}
+    </h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            {% if isAdmin %} <th></th> {% endif %}
+            <th>#</th>
+            <th>Nazwisko i Imię</th>
+            <th>Formuła</th>
+            <th>Płeć</th>
+            <th>Kat. Wagowa</th>
+            <th>Wiek</th>
         </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div>
+        </thead>
+        <tbody>
+        {% for user in signUpTournament %}
+            <tr {% if is_granted('ROLE_USER') %} {{ user.User.id == app.user.id ? "class='success'" }}{%  endif %}>
+                {% if isAdmin %} <td><a href="{{ path('toggleReady', { 'id': user.id }) }}"
+                                        class={{ user.ready ? "'btn btn-warning'>Annuluj"
+                                        : "'btn btn-success'>Zatwierdź"  }} ></a></td> {% endif %}
+                <td>{{ loop.index }}</td>
+                <td><a href="{{ path('user', {'id': user.User.id }) }}"> {{ user.User.surname }} {{ user.User.name }}</a></td>
+                <td> {{ user.formula }} </td>
+                <td> {{ user.User.male ?  'M' : 'K' }} </td>
+                <td> {{ user.weight }} </td>
+                <td> {{ user.User.birthDay |getAge }} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>

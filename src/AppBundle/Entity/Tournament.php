@@ -10,7 +10,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use DateTime;
 
 /**
  * @ORM\Entity
@@ -24,6 +23,7 @@ class Tournament
         $this->userAdmin = $userAdmin;
         $this->userAdmin = new ArrayCollection();
         $this->signUpTournament = new ArrayCollection();
+        $this->schedule = new ArrayCollection();
     }
 
     /**
@@ -44,11 +44,6 @@ class Tournament
     private $capacity;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $date;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $city;
@@ -67,6 +62,53 @@ class Tournament
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\SignUpTournament", mappedBy="tournament")
      */
     private $signUpTournament;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Schedule", mappedBy="tournament")
+     */
+    private $schedule;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $start;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $end;
+
+    /**
+     * @return mixed
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param mixed $start
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * @param mixed $end
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+    }
 
 
     /**
@@ -99,22 +141,6 @@ class Tournament
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param mixed $date
-     */
-    public function setDate(DateTime $date)
-    {
-        $this->date = $date;
     }
 
     /**
@@ -232,6 +258,17 @@ class Tournament
     {
         $this->signUpTournament = $signUpTournament;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSchedule()
+    {
+        return $this->schedule;
+    }
+
+
+
 
 
 

@@ -12,27 +12,27 @@
         <table class="table">
             <thead>
             <tr>
-                <th></th>
-                <th>Opublikowane ?</th>
+             {% if isAdmin %}   <th></th>
+                <th>Opublikowane ?</th> {% endif %}
                 <th>Kolejność</th>
                 <th>Zawodnik 1</th>
                 <th>Zawodnik 2 </th>
-                <th>Wygrany</th>
+             {% if isAdmin %}<th>Wygrany</th> {% endif %}
                 <th>Formuła</th>
                 <th>Kat. wagowa</th>
             </tr>
             </thead>
             <tbody>
+            {% if isAdmin %}
             {% for fight in fights %}
                 <tr>
                     <td><a href="{{ path("removeFight", { 'fight_id' : fight.id, 'id' : tournament.id }) }}" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Skasuj</a></td>
                     <td><input class="checkbox_ready" type="checkbox" {{ fight.ready? 'checked' : '' }} value="{{ fight.id }}"> </td>
                     <td><select class="select_order" id="{{ loop.index }}">
-                    {% for i in 1..number_of_fights %}
+                    {% for i in 1..fights| length %}
                         <option value="{{ i }}" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>
                     {% endfor %}
                         </select></td>
-
                     {% for user in fight.users %}
                         <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.name }} {{ user.surname }} </a>
                         {% if fight.winner %}
@@ -51,11 +51,26 @@
                             {% endif %}
                             {% endfor %}
                       <option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>
-
                     <td>{{ fight.formula }}</td>
                     <td>{{ fight.weight }}</td>
                 </tr>
             {% endfor %}
+                {% else %}
+            {% for fight in fights %}
+            <tr>
+                <td>{{ fight.position }}</td>
+                {% for user in fight.users %}
+                    <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }} </a>
+                    {% if fight.winner %}
+                        {{ user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
+                    {% elseif fight.draw %}
+                        <span class='label label-warning'>D</span></td>
+                    {% endif %}
+                {% endfor %}
+                <td>{{ fight.formula }}</td>
+                <td>{{ fight.weight }}</td>
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
         <a href="{{ path('allFightsReady') }}" class="btn btn-primary"> Opublikuj Wszystkie Walki</a>
@@ -66,6 +81,7 @@
 
 {% block javascripts %}
 {{ parent() }}
+    {% if isAdmin %}
 <script>
     $( ".select_order" ).change(function() {
 
@@ -106,5 +122,6 @@
         });
     });
 </script>
+    {% endif %}
 {% endblock %}
 

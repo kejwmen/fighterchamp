@@ -5,8 +5,7 @@
         <div class="alert alert-success">
             {{ msg }}
         </div>
-    {%  endfor %}
-
+{% endfor %}
 
 <div class="container-fluid">
     <section class="wrapper text-uppercase">
@@ -32,7 +31,7 @@
                     </div></a>
 
                     <div class="info3 col-xs-12 col-sm-6 text-right">
-                        <a href="{{ path('tournament') }}" class='deco-none'>
+                        <a href="{{ path('tournament_list') }}" class='deco-none'>
                         <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
                         <div class="text-field">
                             <h2>informacje</h2>
@@ -65,7 +64,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="info3 col-md-6 text-right">
-                        <a href="{{ path('tournament') }}" class='deco-none'>
+                        <a href="{{ path('tournament_list') }}" class='deco-none'>
                         <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
                         <div class="text-field">
                             <h2>informacje</h2>

@@ -43,8 +43,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li {{ (app.request.attributes.get('_route') == 'tournament') ? 'class="active"' }}><a
-                            href="{{ path ('tournament') }}">Turniej</a></li>
+                <li {{ (app.request.attributes.get('_route') == 'tournament_list') ? 'class="active"' }}><a
+                            href="{{ path ('tournament_list') }}">Turniej</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a
                             href="{{ path ('fighter_all_show') }}">Zawodnicy</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a
@@ -85,7 +85,6 @@
 </div>
 
 
-
         {% block body %}{% endblock %}
 
 
@@ -104,7 +103,6 @@
             data-position="bottom"
             data-close-text="Rozumiem">
     </script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ asset('bundles/petkoparacrudgenerator/js/petkopara-crud-generator.js') }}"></script>
 {% endblock %}
 </body>

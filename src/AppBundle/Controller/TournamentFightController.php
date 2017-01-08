@@ -13,8 +13,6 @@ use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
-use Doctrine\ORM\Mapping\Entity;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Route("/turniej")
  */
-class FightAdminController extends Controller
+class TournamentFightController extends Controller
 {
     /**
      * @Route("/{id}/walki", name="tournament_fights")
@@ -37,12 +35,19 @@ class FightAdminController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->fightAllOrderBy($tournament);
 
-        $numberOfFights = count($fights);
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+
+            $user = $this->getUser();
+
+            $isAdmin = $em->getRepository('AppBundle:UserAdminTournament')
+                ->findOneBy(['tournament' => $tournament, 'user' => $user]);
+        }
+
 
         return $this->render('tournament/admin/fights.html.twig', [
             'fights' => $fights,
             'tournament' => $tournament,
-            'number_of_fights' => $numberOfFights,
+            'isAdmin' => $isAdmin ?? null
         ]);
     }
 

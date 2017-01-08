@@ -16,7 +16,8 @@ class TournamentType extends AbstractType
         $builder
             ->add('name')
             ->add('capacity')
-            ->add('date')
+            ->add('start')
+            ->add('end')
             ->add('city')
             ->add('street')
             ->add('placeName')
