@@ -126,6 +126,11 @@ class Fight
     public function toggleReady()
     {
         $this->ready = $this->ready ? false : true;
+
+        if (!$this->ready){
+            $this->position = null;
+        }
+
     }
 
 
@@ -182,7 +187,7 @@ class Fight
     }
 
 
-    public function getPosition(): int
+    public function getPosition()
     {
         return $this->position;
     }

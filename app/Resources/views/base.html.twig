@@ -44,7 +44,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li {{ (app.request.attributes.get('_route') == 'tournament_list') ? 'class="active"' }}><a
-                            href="{{ path ('tournament_list') }}">Turniej</a></li>
+                            href="{{ path ('tournament_list') }}">Turnieje</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a
                             href="{{ path ('fighter_all_show') }}">Zawodnicy</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a
@@ -59,10 +59,10 @@
                                                                                       style="font-size:30px"></span></a>
                 </li>
                 -->
-           {#     {% if is_granted('ROLE_ADMIN') %} #}
+                {% if is_granted('ROLE_ADMIN') %}
                 <li {{ (app.request.attributes.get('_route') == 'admin_user_list') ? 'class="active"' }}><a
                             href="{{ path ('admin') }}">Admin</a></li>
-           {#     {% endif %} #}
+                {% endif %}
             </ul>
             <div class="clearfix"></div>
             <ul class="nav navbar-nav navbar-right">

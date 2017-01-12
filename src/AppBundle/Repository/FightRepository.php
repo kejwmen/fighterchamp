@@ -39,14 +39,15 @@ class FightRepository extends EntityRepository
         return $query->execute();
     }
 
-    public function setAllFightsReady()
+    public function setAllFightsReady($tournament)
     {
 
         $em = $this->getEntityManager();
 
-        $q = $em->createQuery('update AppBundle:Fight fight set fight.ready = ?1 where fight.ready = ?2')
+        $q = $em->createQuery('update AppBundle:Fight fight set fight.ready = ?1 where fight.ready = ?2 and fight.tournament = ?3')
             ->setParameter(1, true)
-            ->setParameter(2, false);
+            ->setParameter(2, false)
+            ->setParameter(3, $tournament);
 
         $q->execute();
     }

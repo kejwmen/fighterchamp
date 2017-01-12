@@ -33,7 +33,7 @@ class TournamentController extends Controller
      *
      * @Route("/", name="tournament_list")
      */
-    public function tournamentAction()
+    public function tournamentListAction()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -68,7 +68,7 @@ class TournamentController extends Controller
      * @Route("/new", name="tournament_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function TournamentNewAction(Request $request)
     {
         $userAdmin = $this->getUser();
         $tournament = new Tournament($userAdmin);
@@ -93,33 +93,24 @@ class TournamentController extends Controller
     /**
      * @Route("/{id}", name="tournament_show")
      */
-    public function tournamentShowAction(Request $request, Tournament $tournament)
+    public function tournamentShowAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
 
         $users = $em->getRepository('AppBundle:SignUpTournament')
             ->signUpUserOrder($tournament);
 
-
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->fightReadyOrderBy($tournament);
-
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-
             $user = $this->getUser();
-
             $isAdmin = $em->getRepository('AppBundle:UserAdminTournament')
                 ->findOneBy(['tournament' => $tournament, 'user' => $user]);
         }
 
-
-            return $this->render('tournament/register.html.twig', array(
+            return $this->render('tournament/show.twig', array(
                 'tournament' => $tournament,
                 'users' => $users,
                 'isAdmin' => $isAdmin ?? null,
-                'fights' => $fights,
             ));
-
     }
 
     /**
@@ -128,7 +119,7 @@ class TournamentController extends Controller
      * @Route("/{id}/edytuj", name="tournament_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Tournament $tournament)
+    public function TournamentEditAction(Request $request, Tournament $tournament)
     {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
 
@@ -150,7 +141,6 @@ class TournamentController extends Controller
                     return $this->redirectToRoute('tournament_edit', array('id' => $tournament->getId()));
                 }
 
-                dump($user);
 
                 return $this->render('tournament/edit.html.twig', array(
                     'tournament' => $tournament,
@@ -183,7 +173,7 @@ class TournamentController extends Controller
             $em->flush($tournament);
         }
 
-        return $this->redirectToRoute('admin_tournament_index');
+        return $this->redirectToRoute('tournament_list');
     }
 
     /**
@@ -196,7 +186,7 @@ class TournamentController extends Controller
     private function createDeleteForm(Tournament $tournament)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_tournament_delete', array('id' => $tournament->getId())))
+            ->setAction($this->generateUrl('tournament_delete', array('id' => $tournament->getId())))
             ->setMethod('DELETE')
             ->getForm()
             ;
@@ -220,13 +210,9 @@ class TournamentController extends Controller
         $users = $em->getRepository('AppBundle:SignUpTournament')
             ->signUpUserOrder($tournament);
 
-
         $fights = $em->getRepository('AppBundle:Fight')
             ->fightReadyOrderBy($tournament);
 
-
-
-        $isAdmin = null;
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
 
@@ -293,9 +279,11 @@ class TournamentController extends Controller
                 return $this->redirectToRoute("tournament");
             }
 
+            $isAdmin = $em->getRepository('AppBundle:UserAdminTournament')
+                ->findOneBy(['tournament' => $tournament, 'user' => $user]);
 
 
-            return $this->render('tournament/admin/checkList.html.twig', array(
+            return $this->render('tournament/sign_up.twig', array(
                 'form' => $form->createView(),
                 'formDelete' => $formDelete->createView(),
                 'age' => $age,
@@ -310,6 +298,16 @@ class TournamentController extends Controller
             ));
 
         }
+
+        return $this->render('tournament/sign_up.twig', array(
+            'tournament' => $tournament,
+            'users' => $users,
+            'fights' => $fights,
+            'isAdmin' => $isAdmin ?? null,
+            'signUpTournament' => $signUpTournament,
+            'signUpTournamentChecked' => $signUpTournamentChecked,
+        ));
+
     }
 
 
@@ -320,6 +318,12 @@ class TournamentController extends Controller
     public function pairAction(Request $request, Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            $user = $this->getUser();
+            $isAdmin = $em->getRepository('AppBundle:UserAdminTournament')
+                ->findOneBy(['tournament' => $tournament, 'user' => $user]);
+        }
 
         $fights = $em->getRepository('AppBundle:User')
             ->findAllSignUpButNotPairYet($tournament);
@@ -348,13 +352,12 @@ class TournamentController extends Controller
         $freeUsers = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
 
-        $registeredUsersQty = count($freeUsers);
 
         return $this->render('tournament/admin/user/match.html.twig', array(
             'form' => $form->createView(),
             'freeUsers' => $freeUsers,
-            'registeredUsersQty' => $registeredUsersQty,
-            'tournament' => $tournament
+            'tournament' => $tournament,
+            'isAdmin' => $isAdmin ?? null
         ));
     }
 

@@ -124,9 +124,9 @@ class TournamentFightController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->fightAllOrderBy($tournament);
 
-        $taken_element = array_splice($fights, $position_element_to_take -1 , 1);
+        $taken_element = array_splice($fights, $position_element_to_take -1, 1);
 
-        array_splice($fights, $position_to_insert -1, 0, $taken_element );
+        array_splice($fights, $position_to_insert -1, 0, $taken_element);
 
         $i = 1;
 
@@ -142,14 +142,14 @@ class TournamentFightController extends Controller
     }
 
     /**
-     * @Route("/setwalki", name="allFightsReady")
+     * @Route("/{id}/setwalki", name="allFightsReady")
      */
-    public function publishFights()
+    public function publishFights(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->getRepository('AppBundle:Fight')->setAllFightsReady();
+        $em->getRepository('AppBundle:Fight')->setAllFightsReady($tournament);
 
-        return new Response(200);
+        return $this->redirectToRoute('tournament_fights',['id' => $tournament->getId()]);
     }
 
     /**

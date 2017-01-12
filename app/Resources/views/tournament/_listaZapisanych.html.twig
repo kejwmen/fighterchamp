@@ -3,7 +3,7 @@
         {% if isAdmin %}
             Zatwierdzono {{ signUpTournamentChecked| length }} na {{ signUpTournament| length }} zawodników
         {% else %}
-            Liczba zapisanych: {{ signUpTournamentChecked| length }} / {{ tournament.capacity }}
+            Liczba zapisanych: {{ signUpTournament| length }} / {{ tournament.capacity }}
         {% endif %}
     </h3>
     <table class="table table-striped">
