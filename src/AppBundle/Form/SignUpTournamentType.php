@@ -24,10 +24,9 @@ class SignUpTournamentType extends AbstractType
         $builder
             ->add('formula', ChoiceType::class, [
                 'choices'  => [
-                    'Boks' => 'Boks',
-                    'K1' => 'K1',
-                    'Kick Boxing Low-Kick' => 'Kick Boxing Low-Kick',
-                    'Kick Boxing Oriental Rules' => 'Kick Boxing Oriental Rules'
+                    'A' => 'A',
+                    'B' => 'B',
+                    'C' => 'C'
                 ]])
             ->add('weight', ChoiceType::class, [
                 'choices'  => $trait

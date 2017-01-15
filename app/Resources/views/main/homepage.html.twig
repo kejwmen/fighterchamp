@@ -10,41 +10,40 @@
 <div class="container-fluid">
     <section class="wrapper text-uppercase">
         <div class="row">
-            <a href="{{ path('fighter_all_show') }}" class="deco-none">
+            <a href="{{ path('tournament_sign_up', {'id' : 1} ) }}" class="deco-none">
                 <div class="info1 col-xs-12 col-md-6">
                 <img src="{{ asset('img/komunikat.jpg') }}" class="img-responsive center-block">
                 <div class="text-field">
-                    <h1>zawodnicy</h1>
+                    <h1>zapisy</h1>
                 </div>
             </div>
             </a>
 
             <div class="col-xs-12 hidden-md hidden-lg">
                 <div class="row">
-                    <a href="{{ path('tournament_list') }}" class='deco-none'>
+                    <a href="{{ path('tournament_show', {'id' : 1} ) }}" class='deco-none'>
                         <div class="info2 col-xs-12 col-sm-6 text-left">
                         <img src="{{ asset('img/wyniki.jpg') }}" class="img-responsive pull-left">
                         <div class="text-field">
-                            <h2>Turnieje</h2>
+                            <h2>Turniej</h2>
                         </div>
 
                     </div></a>
 
                     <div class="info3 col-xs-12 col-sm-6 text-right">
-                        <a href="{{ path('tournament_list') }}" class='deco-none'>
+                        <a href="{{ path('fighter_all_show') }}" class='deco-none'>
                         <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
                         <div class="text-field">
-                            <h2>informacje</h2>
-                            <span>jak zapisać się na turniej</span>
+                            <h2>Zawodnicy</h2>
                         </div>
                         </a>
                     </div>
                     <div class="clearfix"></div>
                     <div class="youtube col-xs-6 text-center">
-                        <i class="fa fa-youtube-play"></i>
+                        <a href="https://www.youtube.com/channel/UCMu8BYMJ8SkgTm14YGA2pxA"><i class="fa fa-youtube-play"></i></a>
                     </div>
                     <div class="facebook col-xs-6 text-center">
-                        <i class="fa fa-facebook-square"></i>
+                        <a href="https://www.facebook.com/events/1204812769587531/"><i class="fa fa-facebook-square"></i></a>
                     </div>
                 </div>
             </div>
@@ -52,28 +51,27 @@
             <div class="hidden-xs hidden-sm col-md-6">
                 <div class="row">
                     <div class="info2 col-md-6 text-right">
-                        <a href="{{ path('tournament_list') }}" class='deco-none'>
+                        <a href="{{ path('tournament_show', {'id' : 1} ) }}" class='deco-none'>
                         <img src="{{ asset('img/wyniki.jpg') }}" class="img-responsive pull-right">
                         <div class="text-field">
-                            <h2>Turnieje</h2>
+                            <h2>Turniej</h2>
                         </div>
                         </a>
                     </div>
                     <div class="youtube col-md-6 text-center">
-                        <i class="fa fa-youtube-play"></i>
+                     <a href="https://www.youtube.com/channel/UCMu8BYMJ8SkgTm14YGA2pxA"><i class="fa fa-youtube-play"></i></a>
                     </div>
                     <div class="clearfix"></div>
                     <div class="info3 col-md-6 text-right">
-                        <a href="{{ path('tournament_list') }}" class='deco-none'>
+                        <a href="{{ path('fighter_all_show') }}" class='deco-none'>
                         <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
                         <div class="text-field">
-                            <h2>informacje</h2>
-                            <span>jak zapisać się na turniej</span>
+                            <h2>zawodnicy</h2>
                         </div>
                         </a>
                     </div>
                     <div class="facebook col-md-6 text-center">
-                        <i class="fa fa-facebook-square"></i>
+                       <a href="https://www.facebook.com/events/1204812769587531/"><i class="fa fa-facebook-square"></i></a>
                     </div>
                 </div>
             </div>

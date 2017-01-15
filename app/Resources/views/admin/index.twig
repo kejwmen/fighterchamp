@@ -1,0 +1,8 @@
+{%  extends 'base.html.twig' %}
+{% block body %}
+    <h2 class="text-center"><a href="{{ path('admin_user_list') }}">Zawodnicy</a></h2>
+    <h2 class="text-center"><a href="{{ path('admin_tournament_sign_up', { 'id' : 1}) }}">Zatwierdzenie Rejestracji</a></h2>
+    <h2 class="text-center"><a href="{{ path('admin_tournament_pair', { 'id' : 1}) }}">Parowanie</a></h2>
+    <h2 class="text-center"><a href="{{ path('admin_tournament_fights', { 'id' : 1}) }}">Walki - Wygrał / Przegrał</a></h2>
+    <h2 class="text-center"><a href="{{ path('admin_mail') }}">Mail</a></h2>
+{% endblock %}

@@ -39,12 +39,16 @@
                     <span class="icon-bar"></span>
                 </div>
             </button>
-            <a href="{{ path('homepage') }}"><img src="{{ asset('img/logo.png') }}" class='navbar-brand center'></a>
+            <a href="{{ path('homepage') }}"><img src="{{ asset('img/logo/logo_blackbg.svg') }}" class='navbar-brand center logo'></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li {{ (app.request.attributes.get('_route') == 'tournament_list') ? 'class="active"' }}><a
-                            href="{{ path ('tournament_list') }}">Turnieje</a></li>
+
+
+                <li {{ (app.request.attributes.get('_route') == 'tournament_show') ? 'class="active"' }}><a
+                            href="{{ path ('tournament_show', {'id' : 1} ) }}">Turniej</a></li>
+                <li {{ (app.request.attributes.get('_route') == 'tournament_sign_up') ? 'class="active"' }}><a
+                            href="{{ path ('tournament_sign_up', {'id' : 1} ) }}">Zapisy</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a
                             href="{{ path ('fighter_all_show') }}">Zawodnicy</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a

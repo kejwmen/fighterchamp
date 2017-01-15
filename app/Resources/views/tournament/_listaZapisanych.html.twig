@@ -1,18 +1,12 @@
 <div class="col-xs-12">
     <h3>
-        {% if isAdmin %}
-            Zatwierdzono {{ signUpTournamentChecked| length }} na {{ signUpTournament| length }} zawodników
-        {% else %}
             Liczba zapisanych: {{ signUpTournament| length }} / {{ tournament.capacity }}
-        {% endif %}
     </h3>
     <table class="table table-striped">
         <thead>
-        <tr>
-            {% if isAdmin %} <th></th> {% endif %}
             <th>#</th>
             <th>Nazwisko i Imię</th>
-            <th>Formuła</th>
+            <th>Klasa</th>
             <th>Płeć</th>
             <th>Kat. Wagowa</th>
             <th>Wiek</th>
@@ -21,9 +15,6 @@
         <tbody>
         {% for user in signUpTournament %}
             <tr {% if is_granted('ROLE_USER') %} {{ user.User.id == app.user.id ? "class='success'" }}{%  endif %}>
-                {% if isAdmin %} <td><a href="{{ path('toggleReady', { 'id': user.id }) }}"
-                                        class={{ user.ready ? "'btn btn-warning'>Annuluj"
-                                        : "'btn btn-success'>Zatwierdź"  }} ></a></td> {% endif %}
                 <td>{{ loop.index }}</td>
                 <td><a href="{{ path('user', {'id': user.User.id }) }}"> {{ user.User.surname }} {{ user.User.name }}</a></td>
                 <td> {{ user.formula }} </td>

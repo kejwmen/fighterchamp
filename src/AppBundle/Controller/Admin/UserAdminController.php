@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Fight;
+use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
 use AppBundle\Form\EditUser;
 use AppBundle\Form\FightType;
@@ -90,32 +91,7 @@ class UserAdminController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/lista", name="admin_ready_List")
-     */
-    public function checkUser()
-    {
-        $em = $this->getDoctrine()->getManager();
 
-        $signUpTournamnet = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')
-            ->findAllSortByReady();
-
-        $signUpTournamnetChecked = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')
-            ->findBy(['ready' => true], ['ready' => 'ASC']);
-
-        $registeredUsersQty = count($signUpTournamnet);
-        $signUpTournamnetCheckedQt = count($signUpTournamnetChecked);
-
-        return $this->render('admin/checkList.html.twig', [
-            'signUpTournamnet' => $signUpTournamnet,
-            'registeredUsersQty' => $registeredUsersQty,
-            'signUpTournamnetChecked' => $signUpTournamnetChecked,
-            'signUpTournamnetCheckedQt' => $signUpTournamnetCheckedQt
-        ]);
-
-    }
 
 //    /**
 //     * @Route("/{id}/toggle-ready", name="admin_toggleReady")

@@ -22,6 +22,6 @@ admin:
   path: /admin
   defaults:
     _controller: FrameworkBundle:Template:template
-    template: admin/index.html.twig
+    template: admin/index.twig
     maxAge: 86400
     sharedAge: 86400

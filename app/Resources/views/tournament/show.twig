@@ -1,15 +1,12 @@
 {%  extends 'base.html.twig' %}
 
 {% block body %}
-        {{ include('tournament/admin/_adminPanel.twig') }}
-
-
     <div class="container-fluid">
     <div class="row">
     <div class="col-xs-12">
         <section class="content">
             <div class="row">
-                <main class="col-xs-12 col-md-9">
+                <main class="col-xs-12">
                     <div class="row">
                         <div class="title col-xs-12 text-uppercase text-center">
                             <h3>{{ tournament.name }}</h3>
@@ -51,27 +48,38 @@
 
                         <h4 class="text-uppercase">harmonogram</h4>
 
-                        {% for schedule in tournament.schedule %}
-                            <p><strong>{{ schedule.datetime| date('H:i') }}</strong><span>&mdash;</span>{{ schedule.description }}</p>
-                        {%  endfor %}
+                        <strong>Sobota (11.02.2017)</strong> <br>
+                        14:30 - 15:30 - WAGA ZAWODNIKÓW <br>
+                        15:30 - 16 - konferencja ustalanie par <br>
+                        16:00 - 20:00 - walki sparingowe kadetów, juniorów, zawodników kategorii A
+                        i walki meczowe między klubami Legia Fight Club i UniQ Fight Club <br><br>
 
-                        <h4 class="text-uppercase">regulamin<span class="text-lowercase">To jest skrócona wersja regulaminu : <a>zobacz całość</a></span>
+                        <strong>Niedziela (12.02.2017)</strong><br>
+                        9:30 - 10:30 waga zawodników <br>
+                        10:30 - 11 - konferencja i ustalanie par <br>
+                        11:00 - 17:00 - sparingi w klasach B i C, także walki kobiet <br>
+
+                        {#{% for schedule in tournament.schedule %}#}
+                            {#<p><strong>{{ schedule.datetime| date('H:i') }}</strong><span>&mdash;</span>{{ schedule.description }}</p>#}
+                        {#{%  endfor %}#}
+
+                        <a href="{{ path('rules') }}"><h4 class="text-uppercase">regulamin</h4></a>
                         </h4>
                         <p>Wymagane:</p>
                         <ul>
-                            <li>licencja zawodnicza PZKB albo wykupienia jednorazowej licencji na miejscu - 20zł</li>
-                            <li>opłata startowa 40zł (płatne na miejscu)</li>
-                            <li>ubezpieczenie NNW</li>
-                            <li>badania lekarskie</li>
+                            <li>opłata startowa 35zł (płatne na miejscu albo przedpłata przelewem)</li>
+                            <li>niepełnoletni muszą posiadać badania sportowo - lekarskie oraz
+                                <a href="{{ asset('documents/oświadczenie-Granda-dziecko.docx') }}">oświadczenie podpisane przez
+                                    prawnego opiekuna</a></li>
+                            <li>podpisane oświadczenie <a href="{{ asset('documents/oświadczenie-Granda.docx') }}"> wersja dla
+                            kobiet</a> oraz <a href="{{ asset('documents/oświadczenie-Granda-kobiety.docx') }}"> wersja dla
+                                        mężczyzn</a> </li>
                         </ul>
-                        <p>Podczas losowania zawodnicy będą łączeni w pary w oparciu o staż i umiejętności</p>
-                        <p>Obowiązują przepisy PZKB</p>
-                        <p>Czas walk - 3 rundy po 2 minuty</p>
                     </div>
                 </main>
-                <aside class="col-xs-12 col-md-3">
-                    <h4 class="text-uppercase text-center">wiadomości</h4>
-                </aside>
+                {#<aside class="col-xs-12 col-md-3">#}
+                    {#<h4 class="text-uppercase text-center">wiadomości</h4>#}
+                {#</aside>#}
             </div>
         </section>
     </div>

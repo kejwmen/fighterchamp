@@ -48,24 +48,10 @@ class Ruleset
     private $senior;
 
 
-    private $boks;
-
     /**
-     * @return mixed
+     * @ORM\Column(type="boolean")
      */
-    public function getBoks()
-    {
-        return $this->boks;
-    }
-
-    /**
-     * @param mixed $boks
-     */
-    public function setBoks($boks)
-    {
-        $this->boks = $boks;
-    }
-
+    private $kadet;
 
 
     /**

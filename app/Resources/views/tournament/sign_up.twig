@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {{ include('tournament/admin/_adminPanel.twig') }}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
 
     {% if is_granted('ROLE_USER') %}
         <p>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d')}}.
             W dniu turnieju {{ tournament.start | date('Y-m-d') }} będziesz miał {{ date_diff }} lat.
-            Więc twoja kategoria wiekowa to - <b>??</b></p>
+            Więc twoja kategoria wiekowa to - <b>{{ age }}</b></p>
         <p>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b> </p><br>
     {% endif %}
 
@@ -22,7 +24,7 @@
             <thead>
             <tr>
                 <th>Nazwisko i Imię</th>
-                <th>Formuła</th>
+                <th>Klasa</th>
                 <th>Płeć</th>
                 <th>Kategoria Wagowa</th>
                 <th>Wiek</th>
@@ -44,10 +46,16 @@
     {% endif %}
 
     {% if is_granted('ROLE_USER') and not isUserRegister  %}
-        <p>Wybierz formułe oraz kategorie wagową w której chcesz walczyć:</p>
+        <p>Wybierz klasę oraz kategorię wagową w której chcesz walczyć:</p>
+        Klasy zawodników wg. stopnia zaawansowania:<br>
+        <ul>
+            <li>A – zawodnicy z występami na zawodach rangi Mistrzostw Polski lub aspirujący do nich. Conajmniej kilkanaście występów amatorskich. Prezentujący wysokie wyszkolenie techniczne i motoryczne. W klasie tej na odpowiedzialność trenera wystąpić może zawodnik z klasy B.</li>
+            <li>B – zawodnicy średniej klasy. 3 lub więcej pojedynków amatorskich bez występów na zawodach ogólnopolskich. W klasie tej na odpowiedzialność trenera wystąpić może zawodnik z klasy C.</li>
+            <li>C – osoby początkujące i trenujące rekreacyjnie. Góra kilka walk amatorskich. Dodatkowo uwzględniamy w zgłoszeniu staż treningowy.</li>
+        </ul>
         <div class="col-md-6">
             {{ form_start(form) }}
-            {{ form_row(form.formula,{ 'label' : 'Formuła', 'placeholder' : 'Wybierz formułę'} ) }}
+            {{ form_row(form.formula,{ 'label' : 'Klasa', 'placeholder' : 'Wybierz klasę'} ) }}
             {{ form_row(form.weight, { 'label': 'Kategoria wagowa', 'placeholder':'Wybierz kategorie wagową' }) }}
             <button type="submit" class="btn btn-primary" formnovalidate >Wyślij moje zgłoszenie </button>
             {{ form_end(form)  }}
@@ -55,5 +63,8 @@
     {% endif %}
 
     {{ include('tournament/_listaZapisanych.html.twig') }}
+        </div>
+    </div>
+</div>
 {% endblock %}
 
