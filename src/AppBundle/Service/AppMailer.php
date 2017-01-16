@@ -21,7 +21,7 @@ class AppMailer
     {
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setFrom('kontakt@b-fight.pl', 'B-Fight')
+            ->setFrom('automat@fighterchamp.pl', 'FighterChamp')
             ->setTo($to)
             ->setBody($text, 'text/html')
         ;
