@@ -15,4 +15,4 @@
 /vendor/
 /web/bundles/
 /src/AppBundle/Controller/TestoweController.php
-/.idea
+/.idea/
