@@ -11,7 +11,7 @@
                         <div class="title col-xs-12 text-uppercase text-center">
                             <h3>{{ tournament.name }}</h3>
                         </div>
-                        <div class="date col-xs-6 text-uppercase">
+                        <div class="date col-xs-12 col-sm-6 text-uppercase">
                             <h4 class="text-center">data</h4>
                             <div class="row">
                                 <div class="day col-xs-6 text-right">
@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="place col-xs-6">
+                        <div class="place col-xs-12 col-sm-6">
                             <h4 class="text-uppercase text-center">miejsce</h4>
                             <div class="row">
                                 <div class="building col-xs-6 text-right">
@@ -48,24 +48,28 @@
 
                         <h4 class="text-uppercase">harmonogram</h4>
 
-                        <strong>Sobota (11.02.2017)</strong> <br>
-                        14:30 - 15:30 - WAGA ZAWODNIKÓW <br>
-                        15:30 - 16 - konferencja ustalanie par <br>
-                        16:00 - 20:00 - walki sparingowe kadetów, juniorów, zawodników kategorii A
-                        i walki meczowe między klubami Legia Fight Club i UniQ Fight Club <br><br>
+                        <p><span>Sobota (11.02.2017)</span></p>
+                        <ul class="list-unstyled">
+                            <li>14:30 - 15:30 - WAGA ZAWODNIKÓW </li>
+                            <li>15:30 - 16 - konferencja ustalanie par </li>
+                            <li>16:00 - 20:00 - walki sparingowe kadetów, juniorów, zawodników kategorii A
+                                i walki meczowe między klubami Legia Fight Club i UniQ Fight Club</li>
+                        </ul>
 
-                        <strong>Niedziela (12.02.2017)</strong><br>
-                        9:30 - 10:30 waga zawodników <br>
-                        10:30 - 11 - konferencja i ustalanie par <br>
-                        11:00 - 17:00 - sparingi w klasach B i C, także walki kobiet <br>
+                        <p><span>Niedziela (12.02.2017)</span></p>
+                        <ul class="list-unstyled">
+                            <li>9:30 - 10:30 waga zawodników</li>
+                            <li>10:30 - 11 - konferencja i ustalanie par</li>
+                            <li>11:00 - 17:00 - sparingi w klasach B i C, także walki kobiet</li>
+                        </ul>
 
                         {#{% for schedule in tournament.schedule %}#}
                             {#<p><strong>{{ schedule.datetime| date('H:i') }}</strong><span>&mdash;</span>{{ schedule.description }}</p>#}
                         {#{%  endfor %}#}
 
                         <a href="{{ path('rules') }}"><h4 class="text-uppercase">regulamin</h4></a>
-                        </h4>
-                        <p>Wymagane:</p>
+
+                        <h4>Wymagane:</h4>
                         <ul>
                             <li>opłata startowa 35zł (płatne na miejscu albo przedpłata przelewem)</li>
                             <li>niepełnoletni muszą posiadać badania sportowo - lekarskie oraz

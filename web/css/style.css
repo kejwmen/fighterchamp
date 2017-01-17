@@ -265,14 +265,10 @@ p strong {
 .key-points h4:before {
     height: 40px;
 }
-.key-points h4, .key-points p {
+.key-points h4 {
     position: relative;
 }
-.key-points p:before {
-    height: 20px;
-    top: 9px;
-}
-.key-points h4:before, .key-points p:before {
+.key-points h4:before {
     content: "";
     position: absolute;
     width: 20px;
