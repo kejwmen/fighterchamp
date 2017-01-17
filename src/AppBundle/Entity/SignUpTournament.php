@@ -62,6 +62,34 @@ class SignUpTournament
      */
     private $ready;
 
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 100
+     * )
+     */
+    private $trainingTime;
+
+    /**
+     * @return mixed
+     */
+    public function getTrainingTime()
+    {
+        return $this->trainingTime;
+    }
+
+    /**
+     * @param mixed $trainingTime
+     */
+    public function setTrainingTime($trainingTime)
+    {
+        $this->trainingTime = $trainingTime;
+    }
+
+
+
     /**
      * @return mixed
      */

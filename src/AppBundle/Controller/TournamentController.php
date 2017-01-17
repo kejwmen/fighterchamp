@@ -179,10 +179,9 @@ class TournamentController extends Controller
         $users = $em->getRepository('AppBundle:SignUpTournament')
             ->signUpUserOrder($tournament);
 
-
             return $this->render('tournament/show.twig', array(
                 'tournament' => $tournament,
-                'users' => $users,
+                'users' => $users
             ));
     }
 

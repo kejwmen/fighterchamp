@@ -57,6 +57,9 @@
             {{ form_start(form) }}
             {{ form_row(form.formula,{ 'label' : 'Klasa', 'placeholder' : 'Wybierz klasę'} ) }}
             {{ form_row(form.weight, { 'label': 'Kategoria wagowa', 'placeholder':'Wybierz kategorie wagową' }) }}
+            {{ form_row(form.trainingTime, {
+                'label': 'Staż treningowy (opcjonalnie) - liczba miesięcy - widoczna tylko dla Organizatora',
+                'attr': {'min': 0, 'max' : 99}}) }}
             <button type="submit" class="btn btn-primary" formnovalidate >Wyślij moje zgłoszenie </button>
             {{ form_end(form)  }}
         </div>
