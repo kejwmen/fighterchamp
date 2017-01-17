@@ -25,6 +25,7 @@
             <tr>
                 <th>Nazwisko i Imię</th>
                 <th>Klasa</th>
+                <th>Staż Treningowy</th>
                 <th>Płeć</th>
                 <th>Kategoria Wagowa</th>
                 <th>Wiek</th>
@@ -34,6 +35,7 @@
             <tr>
                 <td><a href="{{ path('user', {'id': isUserRegister.User.id }) }}"> {{ isUserRegister.User.surname }} {{ isUserRegister.User.name }}</a></td>
                 <td> {{ isUserRegister.formula }} </td>
+                <td> {{ isUserRegister.trainingTime }} </td>
                 <td> {{ isUserRegister.User.male ?  'M' : 'K' }} </td>
                 <td> {{ isUserRegister.weight }} </td>
                 <td> {{ isUserRegister.User.birthDay |getAge }} </td>
