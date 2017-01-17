@@ -45,8 +45,8 @@ footer {
     text-align: center;
 }
 .news  {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 .well {
@@ -74,14 +74,23 @@ nav {
 .navbar {
     margin-bottom: 0;
 }
+.navbar-inverse {
+    background-color: transparent;
+    border-color: transparent;
+}
 .navbar-brand {
-    padding: 0 0 0 50px;
     height: auto;
     padding: 9px 10px;
     margin-top: 8px;
 }
 .dot-row, .navbar-toggle .icon-bar {
     font-size: 0;
+}
+.navbar-inverse .navbar-nav>.active>a {
+    text-shadow: 1px 1px #9d9d9d;
+}
+.navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    background-color: transparent;
 }
 .navbar-toggle .icon-bar {
 
@@ -162,11 +171,11 @@ nav .glyphicon {
 }
 .info1 .text-field:before {
     left: -60px;
-    top: 10px;
+    top: 0;
     background-color: #DA1D1D;
 }
 .info2 .text-field:after, .info3 .text-field:after {
-    bottom: 7.5px;
+    bottom: 3px;
     right: -40px;
     background-color: #FBFBFB;
 }
@@ -175,6 +184,12 @@ nav .glyphicon {
     width: 20px;
     height: 42px;
     position: absolute;
+}
+.facebook a, .youtube a {
+    color: #FBFBFB;
+}
+.facebook a:hover, .youtube a:hover {
+    color: #DA1D1D;
 }
 .wrapper .fa {
     font-size: 133px;
@@ -260,14 +275,10 @@ p strong {
 .key-points h4:before {
     height: 40px;
 }
-.key-points h4, .key-points p {
+.key-points h4 {
     position: relative;
 }
-.key-points p:before {
-    height: 20px;
-    top: 9px;
-}
-.key-points h4:before, .key-points p:before {
+.key-points h4:before {
     content: "";
     position: absolute;
     width: 20px;
