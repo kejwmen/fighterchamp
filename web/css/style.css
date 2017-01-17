@@ -45,8 +45,8 @@ footer {
     text-align: center;
 }
 .news  {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 .well {
@@ -75,7 +75,6 @@ nav {
     margin-bottom: 0;
 }
 .navbar-brand {
-    padding: 0 0 0 50px;
     height: auto;
     padding: 9px 10px;
     margin-top: 8px;
@@ -162,11 +161,11 @@ nav .glyphicon {
 }
 .info1 .text-field:before {
     left: -60px;
-    top: 10px;
+    top: 0;
     background-color: #DA1D1D;
 }
 .info2 .text-field:after, .info3 .text-field:after {
-    bottom: 7.5px;
+    bottom: 3px;
     right: -40px;
     background-color: #FBFBFB;
 }
@@ -175,6 +174,12 @@ nav .glyphicon {
     width: 20px;
     height: 42px;
     position: absolute;
+}
+.facebook a, .youtube a {
+    color: #FBFBFB;
+}
+.facebook a:hover, .youtube a:hover {
+    color: #DA1D1D;
 }
 .wrapper .fa {
     font-size: 133px;
