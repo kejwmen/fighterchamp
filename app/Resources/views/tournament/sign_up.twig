@@ -16,7 +16,7 @@
     {% endif %}
 
     {% if not is_granted('ROLE_USER') %}
-        <p>Aby wysłać / skasować swoje zgłoszenie na turniej musisz być zalogowany! -> <a href="{{ path ('login') }}">Przejdź do strony logowania</a></p>
+        <p>Aby wysłać / skasować swoje zgłoszenie na turniej musisz być zalogowany! &#8594; <a href="{{ path ('login') }}">Przejdź do strony logowania</a></p>
     {% endif %}
     {% if is_granted('ROLE_USER') and isUserRegister  %}
         <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>

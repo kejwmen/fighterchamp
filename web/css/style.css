@@ -66,8 +66,21 @@ body, .well, .panel-body {
     background-color: #242222;
     border-color: #ddd;
 }
-nav {
+p, p strong {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.5;
+}
+p strong {
+    font-weight: 500;
+}
+a {
+    color: #DA1D1D;
+}
 
+/*--base--*/
+
+nav {
     padding-top: 75px;
     padding-bottom: 75px;
 }
@@ -117,6 +130,9 @@ nav .glyphicon {
     margin-right: 5px;
     font-size: 20px;;
 }
+
+/*--homepage--*/
+
 .wrapper {
     background-color: #242222;
     position: relative;
@@ -146,7 +162,7 @@ nav .glyphicon {
 .info1 span {
     line-height: 1.2;
 }
-.wrapper h1, .wrapper h2, main h3, main h4 {
+.wrapper h1, .wrapper h2 {
     line-height: 1;
 }
 .info1 span, h2 {
@@ -196,27 +212,17 @@ nav .glyphicon {
     position: relative;
     transform: translateY(25%);
 }
+
+/*--show--*/
+
 .title {
     background-color: #242222;
     padding-top: 50px;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
 }
-.title h4 {
-    margin-left: 50px;
-}
-.title h3 {
-    margin-left: 100px;
-}
-main h3 {
+.title h1 {
     font-size: 48px;
     font-weight: 400;
-}
-main h3 strong, main h3 strong span {
-    font-size: 48px;
-    font-weight: 600;
-}
-main h3 strong span{
-    color: #DA1D1D;
 }
 .date, .place {
     padding-top: 50px;
@@ -229,26 +235,12 @@ main h3 strong span{
     background-color: #FBFBFB;
     left: -10px;
 }
-main h4 {
+main h3 {
     font-size: 32px;
     font-weight: 300;
 }
-p, p strong, .key-points span, .key-points a {
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 1.5;
-}
-p strong {
-    font-weight: 500;
-}
 .building {
     top: 20px;
-}
-.hour:before {
-    top: 10px;
-}
-.address:before {
-    top: 10px;
 }
 .hour:before, .address:before {
     content: "";
@@ -257,33 +249,37 @@ p strong {
     height: 50px;
     background-color: #DA1D1D;
     left: -3px;
+    top: 10px;
+}
+.limits {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.limits h2 {
+    font-size: 34px;
+    color: #DA1D1D;
 }
 .key-points {
     background-color: #242222;
     padding-left: 100px;
 }
-.key-points h4 {
-    padding-top: 100px;
-    padding-bottom: 50px;
-}
-.key-points h4:before {
-    height: 40px;
-}
-.key-points h4 {
+.key-points h3 {
+    padding-top: 25px;
+    padding-bottom: 25px;
     position: relative;
 }
-.key-points h4:before {
+.key-points h3:before {
     content: "";
     position: absolute;
     width: 20px;
+    height: 40px;
     background-color: #FBFBFB;
     left: -60px;
 }
-.key-points span {
-    margin: 50px;
-}
-.key-points p span, a {
+.key-points h4 {
+    font-size: 24px;
     color: #DA1D1D;
+    margin-left: 40px;
 }
 .key-points ul {
     padding-top: 25px;
@@ -292,11 +288,11 @@ p strong {
 .key-points li {
     font-weight: 400;
     font-size: 20px;
-    line-height: 2.5;
+    line-height: 1.8;
+    margin-bottom: 10px;
 }
-aside h4 {
-    padding-top: 50px;
-}
+
+/*--other--*/
 .table-striped>tbody>tr:nth-of-type(odd) {
     background-color: #242222;
 }
@@ -304,7 +300,24 @@ aside h4 {
 select {
     color:black;
 }
+.success td {
+    color: black;
+}
+a.deco-none {
+    color: inherit;
+    text-decoration:none;
+}
+.navbar .navbar-nav>.active>a {
+    background-color: transparent;
+}
 
+/*--media queries--*/
+
+@media (max-width: 768px) {
+    .key-points {
+        padding-left: 15px;
+    }
+}
 @media (max-width: 991px){
     .info2 .text-field {
         bottom: 20px;
@@ -326,17 +339,4 @@ select {
     .navbar .navbar-nav:nth-of-type(2) {
         margin-top: -20px;
     }
-}
-
-.success td {
-    color: black;
-}
-
-a.deco-none {
-    color: inherit;
-    text-decoration:none;
-}
-
-.navbar .navbar-nav>.active>a {
-    background-color: transparent;
 }
