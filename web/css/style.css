@@ -314,6 +314,9 @@ a.deco-none {
 /*--media queries--*/
 
 @media (max-width: 768px) {
+    .place:before {
+        left: -20px;
+    }
     .key-points {
         padding-left: 15px;
     }
