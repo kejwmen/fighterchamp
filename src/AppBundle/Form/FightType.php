@@ -34,9 +34,10 @@ class FightType extends AbstractType
             ->add('formula', ChoiceType::class, array(
                 'choices' => array(
                     'Boks' => 'Boks',
-                    'K1' => 'K1',
-                    'Kick Boxing Low-Kick' => 'Kick Boxing Low-Kick',
-                    'Kick Boxing Oriental Rules' => 'Kick Boxing Oriental Rules')
+              //      'K1' => 'K1',
+               //     'Kick Boxing Low-Kick' => 'Kick Boxing Low-Kick',
+               //     'Kick Boxing Oriental Rules' => 'Kick Boxing Oriental Rules'
+                    )
             ))
             ->add('weight', ChoiceType::class, array(
                 'choices' => array('51.0' => '51.0', '54.0' => '54.0','60' => '60',

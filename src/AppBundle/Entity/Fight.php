@@ -34,10 +34,10 @@ class Fight
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User" , inversedBy="fights", cascade={"persist"})
-     * @ORM\JoinTable(name="user_fight")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\SignUpTournament", inversedBy="fights")
+     * @ORM\JoinTable(name="signuptournament_fight")
      * */
-    private $users;
+    private $signuptournament;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
