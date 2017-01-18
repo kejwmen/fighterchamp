@@ -32,8 +32,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('AppBundle:User')
-            ->findBy(array(),array('surname' => 'ASC'));
-
+            ->findBy(array(),['club' => 'ASC']);
 
         return $this->render('fighter/list.html.twig', [
            'users' => $users,

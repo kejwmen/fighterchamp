@@ -52,7 +52,11 @@ class SignUpTournamentRepository extends EntityRepository
             ->setParameter('tournament', $tournament)
             ->addSelect('user')
             ->addOrderBy('signUpTournament.ready')
-            ->addOrderBy('user.surname');
+            ->addOrderBy('signUpTournament.formula')
+            ->addOrderBy('user.male')
+            ->addOrderBy('signUpTournament.weight')
+            ->addOrderBy('user.birthDay')
+        ;
 
         $query = $qb->getQuery();
         return $query->execute();
