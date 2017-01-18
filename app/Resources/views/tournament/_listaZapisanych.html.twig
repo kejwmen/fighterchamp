@@ -6,10 +6,10 @@
         <thead>
             <th>#</th>
             <th>Nazwisko i Imię</th>
-            <th>Klasa</th>
-            <th>Płeć</th>
-            <th>Kat. Wagowa</th>
-            <th>Wiek</th>
+            <th class="text-center">Klasa</th>
+            <th class="text-center">Płeć</th>
+            <th class="text-center">Kat. Wagowa</th>
+            <th class="text-center">Wiek</th>
         </tr>
         </thead>
         <tbody>
@@ -17,10 +17,10 @@
             <tr {% if is_granted('ROLE_USER') %} {{ user.User.id == app.user.id ? "class='success'" }}{%  endif %}>
                 <td>{{ loop.index }}</td>
                 <td><a href="{{ path('user', {'id': user.User.id }) }}"> {{ user.User.surname }} {{ user.User.name }}</a></td>
-                <td> {{ user.formula }} </td>
-                <td> {{ user.User.male ?  'M' : 'K' }} </td>
-                <td> {{ user.weight }} </td>
-                <td> {{ user.User.birthDay |getAge }} </td>
+                <td class="text-center"> {{ user.formula }} </td>
+                <td class="text-center"> {{ user.User.male ?  'M' : 'K' }} </td>
+                <td class="text-center"> {{ user.weight }} </td>
+                <td class="text-center"> {{ user.User.birthDay |getAge }} </td>
             </tr>
         {% endfor %}
         </tbody>
