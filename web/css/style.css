@@ -196,10 +196,6 @@ nav .glyphicon {
     position: relative;
     transform: translateY(25%);
 }
-main>.row {
-    margin-left: -0px;
-    margin-right: -7.5px;
-}
 .title {
     background-color: #242222;
     padding-top: 50px;
@@ -231,6 +227,7 @@ main h3 strong span{
 }
 .place:before {
     background-color: #FBFBFB;
+    left: -10px;
 }
 main h4 {
     font-size: 32px;
@@ -244,9 +241,6 @@ p, p strong, .key-points span, .key-points a {
 p strong {
     font-weight: 500;
 }
-.day, .hour {
-    top: 15px;
-}
 .building {
     top: 20px;
 }
@@ -254,7 +248,7 @@ p strong {
     top: 10px;
 }
 .address:before {
-    top: 25px;
+    top: 10px;
 }
 .hour:before, .address:before {
     content: "";
@@ -317,7 +311,7 @@ select {
         left: 40px;
     }
     .info2 .text-field:after {
-        bottom: 7.5px;
+        bottom: 3px;
         left: -40px;
         background-color: #FBFBFB;
     }
