@@ -98,6 +98,7 @@
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript"
             id="cookieinfo"
@@ -108,6 +109,21 @@
             data-close-text="Rozumiem">
     </script>
     <script src="{{ asset('bundles/petkoparacrudgenerator/js/petkopara-crud-generator.js') }}"></script>
+    <script type="text/javascript">
+        function initMap(){
+            var map = new google.maps.Map(document.getElementById('google-map'), {
+                center: {lat: 52.2232, lng: 21.0425},
+                zoom: 16
+            });
+            var marker = new google.maps.Marker({
+                position: {lat: 52.222320, lng: 21.041749},
+                map: map
+            });
+        }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGtu16D8pKTbgxy9dEIQwkONpcInDkufc&callback=initMap"
+            async defer></script>
 {% endblock %}
 </body>
 </html>

@@ -292,7 +292,15 @@ main h3 {
     margin-bottom: 10px;
 }
 
+/*--contact--*/
+.google-map {
+    height: 45vh;
+}
+
 /*--other--*/
+.poster {
+    padding-top: 25px;
+}
 .table-striped>tbody>tr:nth-of-type(odd) {
     background-color: #242222;
 }
