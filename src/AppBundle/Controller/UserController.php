@@ -63,20 +63,20 @@ class UserController extends Controller
      */
     public function showMyProfile(Request $request)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')){
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
 
             return $this->redirectToRoute("login");
         }
 
         $user_id = $this->getUser()->getId();
-        
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')
-            ->findOneBy(['id'=>$user_id]);
+            ->findOneBy(['id' => $user_id]);
 
         $fights = $user->getFights();
 
-        $form = $this->createForm(EditUser::class, $user);
+        $form = $this->createForm(EditUser::class,$user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,14 +88,27 @@ class UserController extends Controller
         }
 
 
-        return $this->render('fighter/edit.html.twig', [
-            'user' => $user,
-            'fights' => $fights,
-            'form' => $form->createView()
-        ]);
-
-
+        return $this->render(
+            'fighter/edit.html.twig',
+            [
+                'user' => $user,
+                'fights' => $fights,
+                'form' => $form->createView()
+            ]
+        );
 
     }
+
+    /**
+     * @Route("/mojprofil/setnullonimage", name="setNullOnImage")
+     */
+        public function setNullOnImageFile()
+        {
+            $em = $this->getDoctrine()->getManager();
+            $user = $this->getUser()->removeFile();
+            $em->flush($user);
+
+            return new Response(200);
+        }
 
 }

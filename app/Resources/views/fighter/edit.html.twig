@@ -34,13 +34,32 @@
                             {% else %}
                          src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"> {% endif %}
                     >
+                    {% if user.imageName %}
+                    <button class="btn btn-danger setNullOnImage">Usuń Zdjęcie</button>
+                    {% endif %}
                     {{ form_row(form.imageFile, {'label' : 'Zdjęcie Profilowe (opcjonalnie)'}) }}
                     {{ form_row(form.club) }}
 
-                    <button type="submit" class="btn btn-primary" formnovalidate>Zapisz
+                        <button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
                         {{ form_end(form) }}
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $(".setNullOnImage").click(function() {
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('setNullOnImage') }}",
+            success: function () {
+                $(location).attr('href', "{{ path("my_profile") }}");
+            }
+        });
+    });
+</script>
 {% endblock %}

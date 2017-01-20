@@ -23,6 +23,7 @@ class SignUpTournament
     {
         $this->user = $user;
         $this->tournament = $tournament;
+        $this->create_time = new \DateTime('now');
     }
 
     /**
@@ -71,6 +72,16 @@ class SignUpTournament
      * )
      */
     private $trainingTime;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $create_time;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="signuptournament")
+     * */
+    private $fights;
 
     /**
      * @return mixed

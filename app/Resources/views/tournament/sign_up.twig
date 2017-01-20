@@ -29,6 +29,7 @@
                 <th>Płeć</th>
                 <th>Kategoria Wagowa</th>
                 <th>Wiek</th>
+                <th>Klub</th>
             </tr>
             </thead>
             <tbody>
@@ -39,6 +40,7 @@
                 <td> {{ isUserRegister.User.male ?  'M' : 'K' }} </td>
                 <td> {{ isUserRegister.weight }} </td>
                 <td> {{ isUserRegister.User.birthDay |getAge }} </td>
+                <td> {{ isUserRegister.User.club }} </td>
             </tr>
             </tbody>
         </table>

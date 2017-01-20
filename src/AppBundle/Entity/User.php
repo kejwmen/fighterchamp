@@ -109,6 +109,11 @@ class User implements UserInterface, Serializable
         return $this->imageName;
     }
 
+    public function removeFile()
+    {
+        $this->imageName = null;
+    }
+
     public function serialize()
     {
         return serialize(array(
@@ -191,31 +196,31 @@ class User implements UserInterface, Serializable
      */
     private $signUpTournament;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="users")
-     * */
-    private $fights;
+//    /**
+//     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="users")
+//     * */
+//    private $fights;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $create_time;
 
-    /**
-     * @return mixed
-     */
-    public function getFights()
-    {
-        return $this->fights;
-    }
-
-    /**
-     * @param mixed $fights
-     */
-    public function setFights($fights)
-    {
-        $this->fights = $fights;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getFights()
+//    {
+//        return $this->fights;
+//    }
+//
+//    /**
+//     * @param mixed $fights
+//     */
+//    public function setFights($fights)
+//    {
+//        $this->fights = $fights;
+//    }
 
     public function getUsername()
     {
