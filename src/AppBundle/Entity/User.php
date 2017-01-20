@@ -109,6 +109,11 @@ class User implements UserInterface, Serializable
         return $this->imageName;
     }
 
+    public function removeFile()
+    {
+        $this->imageName = null;
+    }
+
     public function serialize()
     {
         return serialize(array(

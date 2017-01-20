@@ -10,6 +10,7 @@
             <th class="text-center">Płeć</th>
             <th class="text-center">Kat. Wagowa</th>
             <th class="text-center">Wiek</th>
+            <th class="text-center">Klub</th>
         </tr>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
                 <td class="text-center"> {{ user.User.male ?  'M' : 'K' }} </td>
                 <td class="text-center"> {{ user.weight }} </td>
                 <td class="text-center"> {{ user.User.birthDay |getAge }} </td>
+                <td class="text-center"> {{ user.User.club }} </td>
             </tr>
         {% endfor %}
         </tbody>
