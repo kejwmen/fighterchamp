@@ -195,7 +195,7 @@ nav .glyphicon {
     right: -40px;
     background-color: #FBFBFB;
 }
-.info1 .text-field:before, .info2 .text-field:after, .info3 .text-field:after, .place:before {
+.info1 .text-field:before, .info2 .text-field:after, .info3 .text-field:after {
     content: "";
     width: 20px;
     height: 42px;
@@ -215,6 +215,10 @@ nav .glyphicon {
 
 /*--show--*/
 
+main h3 {
+    font-size: 32px;
+    font-weight: 300;
+}
 .title {
     background-color: #242222;
     padding-top: 50px;
@@ -231,24 +235,24 @@ nav .glyphicon {
 .date>.row, .place>.row {
     padding-top: 50px;
 }
-.place:before {
-    background-color: #FBFBFB;
-    left: -10px;
-}
-main h3 {
-    font-size: 32px;
-    font-weight: 300;
-}
-.building {
-    top: 20px;
-}
-.hour:before, .address:before {
+.place h3:before, .hour:before, .address:before, .key-points h3:before {
     content: "";
     position: absolute;
+}
+.place h3:before {
+    background-color: #FBFBFB;
+    width: 20px;
+    height: 42px;
+    left: -10px;
+}
+.building {
+    top: 16px;
+}
+.hour:before, .address:before {
     width: 3px;
     height: 50px;
     background-color: #DA1D1D;
-    left: -3px;
+    left: -1.5px;
     top: 10px;
 }
 .limits {
@@ -269,8 +273,6 @@ main h3 {
     position: relative;
 }
 .key-points h3:before {
-    content: "";
-    position: absolute;
     width: 20px;
     height: 40px;
     background-color: #FBFBFB;
@@ -322,7 +324,7 @@ a.deco-none {
 /*--media queries--*/
 
 @media (max-width: 768px) {
-    .place:before {
+    .place h3:before {
         left: -20px;
     }
     .key-points {
@@ -340,8 +342,6 @@ a.deco-none {
         background-color: #FBFBFB;
     }
     .wrapper .fa {
-        font-size: 133px;
-        position: relative;
         padding-top: 30%;
         transform: translateY(-20%);
     }
