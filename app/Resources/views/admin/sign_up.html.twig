@@ -22,11 +22,11 @@
                 <tr>
                     <td><select class="select_isPaid">
                             {% if signUp.isPaid %}
-                                <option selected value="{{ signUp.id }}|true">Tak</option>
-                                <option value="{{ signUp.id }}|false">Nie</option>
+                                <option selected value="{{ signUp.id }}|1">Tak</option>
+                                <option value="{{ signUp.id }}|0">Nie</option>
                             {% else %}
-                                <option value="{{ signUp.id }}|true">Tak</option>
-                                <option selected value="{{ signUp.id }}|false">Nie</option>
+                                <option value="{{ signUp.id }}|1">Tak</option>
+                                <option selected value="{{ signUp.id }}|0">Nie</option>
                             {% endif %}
                         </select>
                     </td>
@@ -59,10 +59,9 @@
             $.ajax({
                 type: 'POST',
                 url: "{{ path('set_is_paid') }}",
-                data: {signUpId: arrValues[0], userId: arrValues[1]},
-                success: function (response) {
-                    console.log(response);
-                }
+                data: {signUpId: arrValues[0], isPaid: arrValues[1]},
+                success: function () {
+                    location.reload();                 }
             });
 
         });

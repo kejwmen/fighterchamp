@@ -72,7 +72,7 @@ class AdminTournamentSignUp extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $signUpId = $request->request->get('signUpId');
-        $isPaid = $request->request->get('isPaid');
+        $isPaid =  $request->request->get('isPaid');
 
         $signUp = $em->getRepository('AppBundle:SignUpTournament')
             ->findOneBy(['id' => $signUpId]);
