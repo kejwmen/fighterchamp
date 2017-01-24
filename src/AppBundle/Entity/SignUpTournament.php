@@ -23,7 +23,7 @@ class SignUpTournament
     {
         $this->user = $user;
         $this->tournament = $tournament;
-        $this->create_time = new \DateTime('now');
+        $this->create_at = new \DateTime('now');
     }
 
     /**
