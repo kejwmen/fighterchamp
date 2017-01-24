@@ -89,21 +89,6 @@ class AdminTournamentFightController extends Controller
         ));
     }
 
-    /**
-     * @Route("/{id}/toggle-ready", name="toggleReady")
-     * @Method("GET")
-     */
-    public function toggleReady(SignUpTournament $signUpTournament)
-    {
-        $signUpTournament->toggleReady();
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        $tournament = $signUpTournament->getTournament();
-
-        return $this->redirectToRoute('admin_tournament_sign_up',['id'=>$tournament->getId()]);
-    }
-
 
     /**
      * @Route("/{id}/fight/{fight_id}/remove", name="admin_remove_fight")
@@ -117,9 +102,6 @@ class AdminTournamentFightController extends Controller
 
         return $this->redirectToRoute('admin_tournament_sign_up',['id' => $tournament->getId()]);
     }
-
-
-
 
 
 

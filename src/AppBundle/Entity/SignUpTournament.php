@@ -59,9 +59,21 @@ class SignUpTournament
 
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $ready = false;
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPaid = false;
+
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $ready;
+    private $delete_at;
 
 
     /**
@@ -76,7 +88,7 @@ class SignUpTournament
     /**
      * @ORM\Column(type="datetime")
      */
-    private $create_time;
+    private $create_at;
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="signuptournament")
@@ -122,6 +134,23 @@ class SignUpTournament
     {
         $this->ready = $this->ready ? false : true;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIsPaid()
+    {
+        return $this->isPaid;
+    }
+
+    /**
+     * @param mixed $isPaid
+     */
+    public function setIsPaid($isPaid)
+    {
+        $this->isPaid = $isPaid;
+    }
+
 
 
     /**
@@ -203,6 +232,8 @@ class SignUpTournament
     {
         $this->user = $user;
     }
+
+
 
 
     public function __toString()
