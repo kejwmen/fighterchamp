@@ -39,9 +39,9 @@ body {
 footer {
     position: absolute;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    right:0;
     /* Set the fixed height of the footer here */
-    height: 20px;
     text-align: center;
 }
 .news  {
@@ -145,13 +145,16 @@ nav .glyphicon {
     content: "";
     position: absolute;
     top: 0;
-    left: -20px;
-    width: 100vw;
+    left: -15px;
+    right: -15px;
     height: 20px;
     background-color: #000000;
     opacity: .50;
     z-index: 1;
 }
+
+
+
 .info1, .info2, .info3 {
     position: relative;
 }
