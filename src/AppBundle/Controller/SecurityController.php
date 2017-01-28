@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Club;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserModel;
 use AppBundle\Form\LoginForm;
@@ -54,16 +55,32 @@ class SecurityController extends Controller
      */
     public function registerAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $form = $this->createForm(RegistrationType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            /** @var User $user */
+
+
+
             $user = $form->getData();
-            $em = $this->getDoctrine()->getManager();
+            $clubName = $form->get('club')->getData();
+
+            $club = $em->getRepository('AppBundle:Club')->findOneBy(['name'=>$clubName]);
+            if(!$club) {
+                $club = new Club();
+                $club->setName($clubName);
+                $em->persist($club);
+                $em->flush();
+
+                $club = $em->getRepository('AppBundle:Club')->findOneBy(['name' => $clubName]);
+                $user->setClub($club);
+            }
             $em->persist($user);
             $em->flush();
+
 
             $this->addFlash('success', 'Sukces! Twój profil został utworzony! Jesteś zalogowany!');
 

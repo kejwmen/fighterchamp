@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/Entity/User.php
+
 
 namespace AppBundle\Entity;
 
@@ -27,7 +27,7 @@ class User implements UserInterface, Serializable
     {
         $this->signUpTournament = new ArrayCollection();
         $this->fights = new ArrayCollection();
-        $this->create_time = new \DateTime('now');
+        $this->createdAt = new \DateTime('now');
         $this->tournamentAdmin = new ArrayCollection();
     }
 
@@ -159,7 +159,7 @@ class User implements UserInterface, Serializable
     private $birthDay;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Club", inversedBy="users")
      */
     private $club;
 
@@ -204,7 +204,7 @@ class User implements UserInterface, Serializable
     /**
      * @ORM\Column(type="datetime")
      */
-    private $create_time;
+    private $createdAt;
 
 //    /**
 //     * @return mixed

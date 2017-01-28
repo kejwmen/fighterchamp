@@ -23,7 +23,7 @@ class SignUpTournament
     {
         $this->user = $user;
         $this->tournament = $tournament;
-        $this->create_at = new \DateTime('now');
+        $this->created_at = new \DateTime('now');
     }
 
     /**
@@ -73,7 +73,7 @@ class SignUpTournament
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $delete_at;
+    private $deleteAt;
 
 
     /**
@@ -88,7 +88,7 @@ class SignUpTournament
     /**
      * @ORM\Column(type="datetime")
      */
-    private $create_at;
+    private $createdAt;
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="signuptournament")
