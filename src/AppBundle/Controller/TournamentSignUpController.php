@@ -55,7 +55,11 @@ class TournamentSignUpController extends Controller
 
 
             $isUserRegister = $em->getRepository('AppBundle:SignUpTournament')
-                ->findOneBy(['user' => $user->getId()]);
+                ->findOneBy([
+                    'user' => $user->getId(),
+                    'tournament' => $tournament,
+                    'deleted_at' => null
+                ]);
 
             $birthDay = $user->getBirthDay();
             $tournamentDay = $tournament->getStart();
@@ -100,7 +104,12 @@ class TournamentSignUpController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $isAlreadySignUp = $em->getRepository('AppBundle:SignUpTournament')
-                    ->findOneBy(['tournament' => $tournament, 'user' => $user]);
+                    ->findOneBy(
+                        [
+                            'tournament' => $tournament,
+                            'user' => $user,
+                            'deleted_at' => null
+                        ]);
 
                 if(!$isAlreadySignUp) {
                     $tournament_register = $form->getData();
@@ -121,10 +130,11 @@ class TournamentSignUpController extends Controller
             $formDelete->handleRequest($request);
 
             if ($formDelete->isValid()) {
-                $em->remove($isUserRegister);
+                $isUserRegister->delete();
                 $em->flush();
                 return $this->redirectToRoute("tournament_sign_up", ['id' => $tournament->getId()]);
             }
+
 
             if ($date_diff <=14) {
                 $age = 'młodzik';
