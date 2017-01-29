@@ -57,27 +57,16 @@ class SecurityController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(RegistrationType::class);
+        $form = $this->createForm(RegistrationType::class, null, array(
+            'entity_manager' => $this->get('doctrine.orm.entity_manager')
+        ));
+
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-
-
             $user = $form->getData();
-            $clubName = $form->get('club')->getData();
-
-            $club = $em->getRepository('AppBundle:Club')->findOneBy(['name'=>$clubName]);
-            if(!$club) {
-                $club = new Club();
-                $club->setName($clubName);
-                $em->persist($club);
-                $em->flush();
-
-                $club = $em->getRepository('AppBundle:Club')->findOneBy(['name' => $clubName]);
-                $user->setClub($club);
-            }
             $em->persist($user);
             $em->flush();
 

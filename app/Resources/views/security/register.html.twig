@@ -41,7 +41,6 @@
             </div>
         </div>
     </div>
-    <select class="select2"><option>Testowe</option></select>
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
@@ -51,7 +50,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.select2').select2({placeholder: "Select TAG or type a new one",tags: true});
+            $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy",tags: true});
         });
     </script>
 {% endblock %}

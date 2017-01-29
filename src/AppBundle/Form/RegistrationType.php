@@ -3,6 +3,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Club;
 use AppBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -25,6 +26,10 @@ class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var \Doctrine\ORM\EntityManager $em */
+        $em = $options['entity_manager'];
+
+
         $builder
             ->add('email', EmailType::class)
             ->add('plain_password', RepeatedType::class, [
@@ -44,9 +49,6 @@ class RegistrationType extends AbstractType
             ->add('phone', TextType::class, ['label' => 'Telefon'])
             ->add('imageFile', FileType::class,
                 ['required' => false])
-
-
-
             ->add('club', EntityType::class, [
                 'label' => 'Klub (opcjonalnie)',
                 'required' => false,
@@ -58,32 +60,31 @@ class RegistrationType extends AbstractType
                 'label' => ""))
         ;
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            $data = $event->getData();
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($em) {
 
+            $data = $event->getData();
 
             if (!$data) {
                 return;
             }
 
-            $categoryId = $data['category'];
+            $clubId = $data['club'];
 
-            // Do nothing if the category with the given ID exists
-            if ($this->em->getRepository(Category::class)->find($categoryId)) {
+
+            if ($em->getRepository('AppBundle:Club')->find($clubId)) {
                 return;
             }
 
-            // Create the new category
-            $category = new Category();
-            $category->setName($categoryId);
-            $this->em->persist($category);
-            $this->em->flush();
+            $clubName = $clubId;
 
-            $data['category'] = $category->getId();
+            $club = new Club();
+            $club->setName($clubName);
+            $em->persist($club);
+            $em->flush();
+
+            $data['club'] = $club->getId();
             $event->setData($data);
         });
-
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -92,6 +93,8 @@ class RegistrationType extends AbstractType
             'data_class' => User::class,
             'validation_groups' => ['Default', 'Registration']
         ]);
+
+        $resolver->setRequired('entity_manager');
     }
 
 
