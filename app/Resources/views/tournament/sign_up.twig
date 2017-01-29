@@ -26,12 +26,13 @@
         {{ form_start(formDelete) }}
         <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
         {{ form_end(formDelete)  }}
+            {#<button type="submit" class="btn btn-primary align-left" formnovalidate >Edytuj </button>#}
             {% if not isUserRegister.isPaid %}
         <br>
         <p><small>
             Pamiętaj aby twoje zgłoszenie było ważne musisz dokonać płatności. Kwota 35 zł (opłata zawiera dyplomy i medale dla zawodników).
             Można wpłacać w klubie Legia Fight Club, lub na numer konta: 97 2490 0005 0000 4000 8002 2034
-            (do wpłaty dołączamy swoje dane, nazwisko odbiorcy Paweł Michalik)<br> Uwaga! Jeżeli ktoś po zgłoszeniu nie będzie mógł wziąć udziału w zawodach, prosimy o poinformowanie organizatora w ciągu 7 dni do zawodów.
+            (do wpłaty dołączamy swoje dane, nazwisko odbiorcy Paweł Michalik)<br> Uwaga! Jeżeli ktoś po zgłoszeniu nie będzie mógł wziąć udziału w zawodach, prosimy o skasowanie zgłoszenia na 7 dni przed dniem turnieju.
             Jeżeli informacja będzie po terminie, NIE ZWRACAMY wpisowego.<br>
             Zgłoszenia i wpłaty są przyjmowane do 6 lutego 2017r.
         </p></small>

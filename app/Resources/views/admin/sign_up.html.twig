@@ -42,6 +42,47 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <h3>Liczba zgłoszeń zapłaconych ale zawodnik później się wycofał {{ signUpsPaidBuTDeleted|length }}</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                {#<th>Zapłacone?</th>#}
+                <th>#</th>
+                <th>Nazwisko i Imię</th>
+                <th>Klasa</th>
+                <th>Staż [miesiące]</th>
+                <th>Płeć</th>
+                <th>Kat. Wagowa</th>
+                <th>Wiek</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for signUp in signUpsPaidBuTDeleted %}
+                <tr>
+                    {#<td><select class="select_isPaid">#}
+                            {#{% if signUp.isPaid %}#}
+                                {#<option selected value="{{ signUp.id }}|1">Tak</option>#}
+                                {#<option value="{{ signUp.id }}|0">Nie</option>#}
+                            {#{% else %}#}
+                                {#<option value="{{ signUp.id }}|1">Tak</option>#}
+                                {#<option selected value="{{ signUp.id }}|0">Nie</option>#}
+                            {#{% endif %}#}
+                        {#</select>#}
+                    </td>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ path('user', {'id': signUp.User.id }) }}">
+                            {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
+                    <td> {{ signUp.formula }} </td>
+                    <td> {{ signUp.trainingTime }}</td>
+                    <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
+                    <td> {{ signUp.weight }} </td>
+                    <td> {{ signUp.User.birthDay |getAge }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
     </div>
 {% endblock %}
 

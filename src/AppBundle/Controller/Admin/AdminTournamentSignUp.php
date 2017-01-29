@@ -39,13 +39,18 @@ class AdminTournamentSignUp extends Controller
 
         $signUpsPaid = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')
-            ->findBy(['isPaid' => true], ['ready' => 'ASC']);
+            ->findAllSignUpsPaid($tournament);
+
+        $signUpsPaidBuTDeleted = $this->getDoctrine()
+            ->getRepository('AppBundle:SignUpTournament')
+            ->findAllSignUpsPaidButDeleted($tournament);
 
 
         return $this->render('admin/sign_up.html.twig', [
             'signUpsTournament' => $signUpsTournament,
            // 'signUpsTournamentReady' => $signUpsTournamentReady,
-            'signUpsPaid' => $signUpsPaid
+            'signUpsPaid' => $signUpsPaid,
+            'signUpsPaidBuTDeleted' => $signUpsPaidBuTDeleted
         ]);
     }
 
