@@ -23,7 +23,7 @@ class SignUpTournament
     {
         $this->user = $user;
         $this->tournament = $tournament;
-        $this->create_at = new \DateTime('now');
+        $this->created_at = new \DateTime('now');
     }
 
     /**
@@ -61,7 +61,7 @@ class SignUpTournament
     /**
      * @ORM\Column(type="boolean")
      */
-    private $ready = false;
+    private $isReady = false;
 
 
     /**
@@ -71,9 +71,9 @@ class SignUpTournament
 
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $delete_at;
+    private $deleted_at;
 
 
     /**
@@ -88,7 +88,7 @@ class SignUpTournament
     /**
      * @ORM\Column(type="datetime")
      */
-    private $create_at;
+    private $created_at;
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="signuptournament")
@@ -111,29 +111,22 @@ class SignUpTournament
         $this->trainingTime = $trainingTime;
     }
 
-
-
     /**
      * @return mixed
      */
-    public function getReady()
+    public function getDeletedAt()
     {
-        return $this->ready;
+        return $this->deleted_at;
     }
 
     /**
-     * @param mixed $ready
+     * @param mixed $deleted_at
      */
-    public function setReady($ready)
+    public function delete()
     {
-        $this->ready = $ready;
+        $this->deleted_at = new \DateTime('now');
     }
 
-
-    public function toggleReady()
-    {
-        $this->ready = $this->ready ? false : true;
-    }
 
     /**
      * @return mixed
