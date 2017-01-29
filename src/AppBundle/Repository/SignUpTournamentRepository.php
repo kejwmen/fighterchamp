@@ -12,12 +12,38 @@ use Doctrine\ORM\EntityRepository;
 class SignUpTournamentRepository extends EntityRepository
 {
 
+    public function findAllSignUpsPaidButDeleted($tournament)
+    {
+        $qb = $this->createQueryBuilder('signUpTournament')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->andWhere('signUpTournament.deleted_at is not null')
+            ->andWhere('signUpTournament.isPaid = true')
+            ->setParameter('tournament', $tournament);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
+    public function findAllSignUpsPaid($tournament)
+    {
+        $qb = $this->createQueryBuilder('signUpTournament')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->andWhere('signUpTournament.deleted_at is null')
+            ->andWhere('signUpTournament.isPaid = true')
+            ->setParameter('tournament', $tournament);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
+
     public function signUpUserOrder($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
             ->leftJoin('signUpTournament.user', 'user')
             ->addSelect('user')
             ->andWhere('signUpTournament.tournament = :tournament')
+            ->andWhere('signUpTournament.deleted_at is null')
             ->setParameter('tournament', $tournament)
             ->addOrderBy('user.male')
             ->addOrderBy('signUpTournament.formula')
@@ -49,6 +75,7 @@ class SignUpTournamentRepository extends EntityRepository
         $qb = $this->createQueryBuilder('signUpTournament')
             ->leftJoin('signUpTournament.user', 'user')
             ->andWhere('signUpTournament.tournament = :tournament')
+            ->andWhere('signUpTournament.deleted_at is null')
             ->setParameter('tournament', $tournament)
             ->addSelect('user')
         //    ->addOrderBy('signUpTournament.ready')
