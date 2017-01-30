@@ -9,16 +9,16 @@
                         <th>#</th>
                         <th>Nazwa</th>
                         <th>Liczba Zawodników</th>
-                        <th>Miasto</th>
+                        {#<th>Miasto</th>#}
                     </tr>
                     </thead>
                     <tbody>
                     {% for club in clubs %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td><a href="{{ path('app_club_show', {'id': club.id }) }}">{{ club.name }}</a></td>
+                            <td><a href="{{ path('club_show', {'id': club.id }) }}">{{ club.name }}</a></td>
                             <td>{{ club.users |length }}</td>
-                            <td>{{ club.city }}</td>
+                            {#<td>{{ club.city }}</td>#}
                         </tr>
                     {% endfor %}
                     </tbody>
