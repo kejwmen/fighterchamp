@@ -73,6 +73,9 @@ class EditUser extends AbstractType
                 return;
             }
 
+            if(!$clubId) {
+                return;
+            }
             $clubName = $clubId;
 
             $club = new Club();
