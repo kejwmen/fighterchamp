@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Club;
 use AppBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -50,8 +51,11 @@ class EditUser extends AbstractType
             ->add('club', EntityType::class, [
                 'label' => 'Klub (opcjonalnie)',
                 'required' => false,
-                'class' => 'AppBundle:Club'
-            ])
+                'class' => 'AppBundle:Club',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.name', 'ASC');
+                }])
         ;
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($em) {

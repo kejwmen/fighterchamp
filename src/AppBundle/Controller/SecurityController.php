@@ -101,7 +101,11 @@ class SecurityController extends Controller
     {
 
         $regiFB = new UserModel();
-        $form = $this->createForm(RegistrationAfterFbType::class, $regiFB);
+        $form = $this->createForm(RegistrationAfterFbType::class, $regiFB,
+         [
+             'entity_manager' => $this->get('doctrine.orm.entity_manager')
+         ]
+        );
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

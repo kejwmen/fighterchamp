@@ -15,6 +15,7 @@
                  src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/male.png') }}"
                     {% else %}
                  src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"
+             >
             {% endif %}
         </td>
     </tr>
@@ -25,6 +26,10 @@
         <td><b>Płeć:</b> {{ user.male ?  'mężczyzna' : 'kobieta' }}</td>
     </tr>
     <tr>
-        <td><b>Klub:</b><a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}</td>
+        <td>
+            <b>Klub:</b>{% if user.club %}
+            <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}
+                {% endif %}
+        </td>
     </tr>
 </table>

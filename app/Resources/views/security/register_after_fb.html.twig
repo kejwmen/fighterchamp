@@ -9,7 +9,7 @@
 
                 {{ form_row(userForm.birthDay,{ 'label': 'Data Urodzenia'}) }}
                 {{ form_row(userForm.phone, { 'label': 'Telefon'}) }}
-                {{ form_row(userForm.club,{ 'label': 'Klub (opcjonalnie)'}) }}
+                {{ form_row(userForm.club,{ 'label': 'Klub (opcjonalnie)','attr': {'class': 'select2'} }) }}
                 <div>
                     <a href="{{ path('rules') }}">Regulamin</a>
                 </div>
@@ -22,4 +22,16 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy",tags: true});
+        });
+    </script>
 {% endblock %}
