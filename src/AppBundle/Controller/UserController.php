@@ -76,7 +76,12 @@ class UserController extends Controller
 
         $fights = $user->getFights();
 
-        $form = $this->createForm(EditUser::class,$user);
+        $form = $this->createForm(EditUser::class, $user,
+            [
+                'entity_manager' => $this->get('doctrine.orm.entity_manager')
+            ]
+        );
+
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -57,9 +57,11 @@ class SecurityController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(RegistrationType::class, null, array(
+        $form = $this->createForm(RegistrationType::class, null,
+            [
             'entity_manager' => $this->get('doctrine.orm.entity_manager')
-        ));
+            ]
+        );
 
 
         $form->handleRequest($request);

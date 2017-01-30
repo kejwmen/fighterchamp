@@ -25,6 +25,6 @@
         <td><b>Płeć:</b> {{ user.male ?  'mężczyzna' : 'kobieta' }}</td>
     </tr>
     <tr>
-        <td><b>Klub:</b> {{ user.club }}</td>
+        <td><b>Klub:</b><a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}</td>
     </tr>
 </table>

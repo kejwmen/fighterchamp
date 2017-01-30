@@ -38,7 +38,8 @@
                     <button class="btn btn-danger setNullOnImage">Usuń Zdjęcie</button>
                     {% endif %}
                     {{ form_row(form.imageFile, {'label' : 'Zdjęcie Profilowe (opcjonalnie)'}) }}
-                    {{ form_row(form.club) }}
+
+                    {{ form_row(form.club, {'attr': {'class': 'select2'}}) }}
 
                         <button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
                         {{ form_end(form) }}
@@ -47,10 +48,17 @@
         </div>
     </div>
 {% endblock %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
+{% endblock %}
 {% block javascripts %}
 {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy",tags: true});
+
+
     $(".setNullOnImage").click(function() {
 
         $.ajax({
@@ -60,6 +68,8 @@
                 $(location).attr('href', "{{ path("my_profile") }}");
             }
         });
+    });
+
     });
 </script>
 {% endblock %}

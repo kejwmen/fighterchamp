@@ -28,7 +28,7 @@ class ClubController extends Controller
     }
 
     /**
-     * @Route("/{id}")
+     * @Route("/{id}", name="club_show")
      */
     public function showAction(Club $club)
     {

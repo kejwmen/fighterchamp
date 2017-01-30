@@ -27,7 +27,7 @@ class User implements UserInterface, Serializable
     {
         $this->signUpTournament = new ArrayCollection();
         $this->fights = new ArrayCollection();
-        $this->createdAt = new \DateTime('now');
+        $this->create_time = new \DateTime('now');
         $this->tournamentAdmin = new ArrayCollection();
     }
 
@@ -204,7 +204,7 @@ class User implements UserInterface, Serializable
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private $create_time;
 
 //    /**
 //     * @return mixed

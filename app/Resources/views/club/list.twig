@@ -17,7 +17,7 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td><a href="{{ path('app_club_show', {'id': club.id }) }}">{{ club.name }}</a></td>
-                            <td>10</td>
+                            <td>{{ club.users |length }}</td>
                             <td>{{ club.city }}</td>
                         </tr>
                     {% endfor %}

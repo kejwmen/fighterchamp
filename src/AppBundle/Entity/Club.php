@@ -16,7 +16,7 @@ class Club
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime('now');
+        $this->created_at = new \DateTime('now');
     }
 
     /**
@@ -59,7 +59,7 @@ class Club
      *
      * @ORM\Column(name="create_time", type="datetime")
      */
-    private $createdAt;
+    private $created_at;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
