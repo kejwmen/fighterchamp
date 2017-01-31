@@ -88,40 +88,43 @@ class TournamentSignUpController extends Controller
             $arr = [];
 
             foreach ($traitChoices as $key => $value) {
-                $arr = $arr + array($value->getWeight() => $value->getWeight());
+                $arr = $arr + [$value->getWeight() => $value->getWeight()];
             }
 
-            $signuptournament = new SignUpTournament($user, $tournament);
+            $isAlreadySignUp = $em->getRepository('AppBundle:SignUpTournament')
+                ->findOneBy(
+                    [
+                        'tournament' => $tournament,
+                        'user' => $user,
+                        'deleted_at' => null
+                    ]);
 
+            if($isAlreadySignUp){
+                $form = $this->createForm(SignUpTournamentType::class,$isAlreadySignUp,
+                    ['trait_choices' => $arr]
+                );
+            }else{
+                $form = $this->createForm(SignUpTournamentType::class, new SignUpTournament($user, $tournament),
+                    ['trait_choices' => $arr]
+                );
+            }
 
-            $form = $this->createForm(SignUpTournamentType::class, $signuptournament,
-                ['trait_choices' => $arr]
-            );
 
             $form->handleRequest($request);
 
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                $isAlreadySignUp = $em->getRepository('AppBundle:SignUpTournament')
-                    ->findOneBy(
-                        [
-                            'tournament' => $tournament,
-                            'user' => $user,
-                            'deleted_at' => null
-                        ]);
+                $signUpTournament = $form->getData();
 
                 if(!$isAlreadySignUp) {
-                    $tournament_register = $form->getData();
 
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($tournament_register);
-                    $em->flush();
+                    $em->persist($signUpTournament);
+
                 }
+                    $em->flush();
 
                 return $this->redirectToRoute("tournament_sign_up", ['id' => $tournament->getId()]);
-
-
             }
 
             $formDelete = $this->createFormBuilder($isUserRegister)
