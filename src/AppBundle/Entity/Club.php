@@ -7,9 +7,8 @@ use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * Club
- *
  * @ORM\Table(name="club")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ClubRepository")
  */
 class Club
 {

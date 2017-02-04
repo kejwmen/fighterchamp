@@ -1,27 +1,42 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <h3>Uzupełnij swoje dane</h3>
-                {{ form_start(userForm) }}
+                <div class="col-xs-12 col-md-6 col-md-offset-3">
+                    {{ form_start(form) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.male) }}
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.surname) }}
+                    {{ form_row(form.birthDay) }}
+                    {{ form_row(form.phone) }}
 
-                {{ form_row(userForm.birthDay,{ 'label': 'Data Urodzenia'}) }}
-                {{ form_row(userForm.phone, { 'label': 'Telefon'}) }}
-                {{ form_row(userForm.club,{ 'label': 'Klub (opcjonalnie)','attr': {'class': 'select2'} }) }}
-                <div>
-                    <a href="{{ path('rules') }}">Regulamin</a>
-                </div>
-                {{ form_row(userForm.terms, { 'label': 'Oświadczam, że zapoznałem/am się i akceptuję Regulamin
+                    <img class='center' style="width: 180px;, height: 180px;"
+                         {% if imageName %}
+                         src="{{ imageName }}"
+                            {% elseif user.male %}
+                         src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/male.png') }}"
+                            {% else %}
+                         src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"> {% endif %}
+                    >
+                    {% if imageName %}
+                        <button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>
+                    {% endif %}
+                    {{ form_row(form.imageFile, {'label' : 'Zdjęcie Profilowe (opcjonalnie)'}) }}
+
+                    {{ form_row(form.club, {'attr': {'class': 'select2'}}) }}
+                    <div>
+                        <a href="{{ path('rules') }}">Regulamin</a>
+                    </div>
+                    {{ form_row(form.terms, { 'label': 'Oświadczam, że zapoznałem/am się i akceptuję Regulamin
                          oraz wyrażam zgodę na przetwarzanie moich danych osobowych.'  }) }}
 
-
-                <button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
-                {{ form_end(userForm) }}
+                    <button type="submit" class="btn btn-primary" formnovalidate>Zarejestruj się
+                        <span class="fa fa-lock"></span></button>
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
-    </div>
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
@@ -32,6 +47,21 @@
     <script>
         $(document).ready(function() {
             $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy",tags: true});
+
+
+            $(".setNullOnImage").click(function() {
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ path('setNullOnImage') }}",
+                    success: function () {
+                        location.reload();
+                    }
+                });
+            });
+
         });
     </script>
 {% endblock %}
+
+

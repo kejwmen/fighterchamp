@@ -21,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends Controller
 {
@@ -105,13 +106,24 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/mojprofil/setnullonimage", name="setNullOnImage")
+     * @Route("/setnullonimage", name="setNullOnImage")
      */
         public function setNullOnImageFile()
         {
-            $em = $this->getDoctrine()->getManager();
-            $user = $this->getUser()->removeFile();
-            $em->flush($user);
+            $session = new Session();
+            $session->set('imageName', null);
+
+            if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+
+                $em = $this->getDoctrine()->getManager();
+                $user = $this->getUser()->removeFile();
+                $em->flush($user);
+
+            }
+
+
+
+
 
             return new Response(200);
         }

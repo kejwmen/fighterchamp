@@ -8,6 +8,7 @@
                 <a class="btn btn-block btn-social btn-facebook" href="{{ path('connect_facebook') }}">
                     <span class="fa fa-facebook"></span> Zarejestruj się przez Facebooka
                 </a>
+                <br>
 
                 {{ form_start(form) }}
                 {{ form_row(form.email) }}
@@ -22,7 +23,6 @@
                 {{ form_row(form.surname) }}
                 {{ form_row(form.birthDay) }}
                 {{ form_row(form.phone) }}
-                <img src="{{ imageName }}">
                 {{ form_row(form.imageFile, {
                     label : 'Zdjęcie Profilowe (opcjonalnie)'
                 }) }}

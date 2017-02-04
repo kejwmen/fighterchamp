@@ -12,12 +12,17 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Club;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserModel;
+use AppBundle\Form\EditUser;
 use AppBundle\Form\LoginForm;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationAfterFbType;
+use AppBundle\Form\RegistrationFacebookForm;
+use AppBundle\Form\RegistrationFacebookType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,21 +62,7 @@ class SecurityController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-
-        $session = $this->get('session');
-
-
-        $user = new User();
-        $user->setFacebookId($session->get('facebookId'));
-        $user->setName($session->get('name'));
-        $user->setSurname($session->get('surname'));
-        $user->setMale($session->get('male'));
-        $imageName = $session->get('imageName');
-        $user->setEmail($session->get('email'));
-
-        $session->clear();
-
-        $form = $this->createForm(RegistrationType::class, $user,
+        $form = $this->createForm(RegistrationType::class, new User(),
             [
             'entity_manager' => $this->get('doctrine.orm.entity_manager')
             ]
@@ -96,27 +87,38 @@ class SecurityController extends Controller
                     $this->get('app.security.login_form_authenticator'),
                     'main'
                 );
+
             return $this->redirectToRoute('user', [
                 'id' => $user->getId()
             ]);
         }
         return $this->render('security/register.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-                'imageName' => $imageName
-            )
+            ]
         );
 
     }
 
     /**
-     * @Route("/rejestracja_fb", name="regi")
+     * @Route("/rejestracja-facebook", name="register_fb")
      */
-    public function registerAfterFBAction(Request $request)
+    public function registerFBAction(Request $request)
     {
 
-        $regiFB = new UserModel();
-        $form = $this->createForm(RegistrationAfterFbType::class, $regiFB,
+        $session = $this->get('session');
+
+        $user = new User();
+        $user->setFacebookId($session->get('facebookId'));
+        $user->setName($session->get('name'));
+        $user->setSurname($session->get('surname'));
+        $user->setMale($session->get('male'));
+        $imageName = $session->get('imageName');
+        $user->setEmail($session->get('email'));
+
+        // $session->clear();
+
+        $form = $this->createForm(RegistrationFacebookType::class, $user,
          [
              'entity_manager' => $this->get('doctrine.orm.entity_manager')
          ]
@@ -124,16 +126,41 @@ class SecurityController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $regiFB = $form->getData();
-            $user = $this->getUser();
-            $user_id = $user->getId();
 
-            /** @var User $user
-             * @var UserModel $regiFB
-             */
-            $user->setPhone($regiFB->getPhone());
-            $user->setClub($regiFB->getClub());
-            $user->setBirthDay($regiFB->getBirthDay());
+            $user = $form->getData();
+
+            function download_image1($image_url, $image_file){
+                $fp = fopen ($image_file, 'w+');              // open file handle
+
+                $ch = curl_init($image_url);
+                // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // enable if you want
+                curl_setopt($ch, CURLOPT_FILE, $fp);          // output to file
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 1000);      // some large value to allow curl to run for a long time
+                curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+                // curl_setopt($ch, CURLOPT_VERBOSE, true);   // Enable this line to see debug prints
+                curl_exec($ch);
+
+                curl_close($ch);                              // closing curl handle
+                fclose($fp);                                  // closing file handle
+            }
+
+            if($imageName){
+
+                $file_name = 'fb_temp';
+
+                download_image1($imageName,$file_name);
+
+                $file = new File($file_name,true);
+                $ext = $file->getExtension();
+
+                $image_file = new UploadedFile($file_name.$ext, $file_name.$ext, null, null, null, true);
+
+                $user->setImageFile($image_file);
+            }
+
+
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -141,11 +168,22 @@ class SecurityController extends Controller
 
             $this->addFlash('success', 'Sukces! Twój profil został utworzony! Jesteś zalogowany!');
 
-            return $this->redirectToRoute('user', ['id' => $user_id]);
+            $this->get('security.authentication.guard_handler')
+                ->authenticateUserAndHandleSuccess(
+                    $user,
+                    $request,
+                    $this->get('app.security.login_form_authenticator'),
+                    'main'
+                );
+
+
+            return $this->redirectToRoute('user', ['id' => $user->getId()]);
         }
 
-        return $this->render('security/register_after_fb.html.twig', [
-            'userForm' => $form->createView()
+        return $this->render('security/register_facebook.html.twig', [
+            'form' => $form->createView(),
+            'imageName' => $imageName,
+            'user' => $user
         ]);
     }
 

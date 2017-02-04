@@ -35,7 +35,7 @@
                          src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"> {% endif %}
                     >
                     {% if user.imageName %}
-                    <button class="btn btn-danger setNullOnImage">Usuń Zdjęcie</button>
+                    <button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>
                     {% endif %}
                     {{ form_row(form.imageFile, {'label' : 'Zdjęcie Profilowe (opcjonalnie)'}) }}
 
