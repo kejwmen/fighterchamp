@@ -57,7 +57,21 @@ class SecurityController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(RegistrationType::class, null,
+
+        $session = $this->get('session');
+
+
+        $user = new User();
+        $user->setFacebookId($session->get('facebookId'));
+        $user->setName($session->get('name'));
+        $user->setSurname($session->get('surname'));
+        $user->setMale($session->get('male'));
+        $imageName = $session->get('imageName');
+        $user->setEmail($session->get('email'));
+
+        $session->clear();
+
+        $form = $this->createForm(RegistrationType::class, $user,
             [
             'entity_manager' => $this->get('doctrine.orm.entity_manager')
             ]
@@ -89,6 +103,7 @@ class SecurityController extends Controller
         return $this->render('security/register.html.twig',
             array(
                 'form' => $form->createView(),
+                'imageName' => $imageName
             )
         );
 

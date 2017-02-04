@@ -179,8 +179,7 @@ class User implements UserInterface, Serializable
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $facebook_id;
-    //private $facebook_access_token;
+    private $facebookId;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -411,15 +410,15 @@ class User implements UserInterface, Serializable
      */
     public function getFacebookId()
     {
-        return $this->facebook_id;
+        return $this->facebookId;
     }
 
     /**
-     * @param mixed $facebook_id
+     * @param mixed $facebookId
      */
-    public function setFacebookId($facebook_id)
+    public function setFacebookId($facebookId)
     {
-        $this->facebook_id = $facebook_id;
+        $this->facebookId = $facebookId;
     }
 
     /**

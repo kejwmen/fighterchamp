@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
 use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
@@ -60,7 +61,7 @@ class FacebookAuthenticator extends SocialAuthenticator
         $facebookUser = $this->getFacebookClient()->fetchUserFromToken($credentials);
 
         $user = $this->em->getRepository('AppBundle:User')
-                    ->findOneBy(['facebook_id' => $facebookUser->getId()]);
+                    ->findOneBy(['facebookId' => $facebookUser->getId()]);
 
 //        if(!$user) {
 //
@@ -91,31 +92,20 @@ class FacebookAuthenticator extends SocialAuthenticator
 //
 //            $image_file = new UploadedFile($file_name.$ext, $file_name.$ext, null, null, null, true);
 //
-//            $user = new User();
-//            //$user->setEmail($email);
-////            $user->setName($facebookUser->getFirstName());
-////            $user->setSurname($facebookUser->getLastName());
-////            $male = $facebookUser->getGender() == 'male' ? true : false;
-////            $user->setMale($male);
-////            $user->setImageFile($image_file);
-////            $user->setFacebookId($facebookUser->getId());
-////            $this->em->persist($user);
-////            $this->em->flush();
-//
-//            return new RedirectResponse($this->router->generate('login'));
-//
-//        }else{
-//            $existingUser = $this->em->getRepository('AppBundle:User')
-//                ->findOneBy(['facebook_id' => $facebookUser->getId()]);
-//
-//            if ($existingUser) {
-//                return $existingUser;
-//            }
-//        }
 
         if(!$user){
-            $session = $this->container->get('request')->getRequest()->getSession();
-            $session->set('data' => $_POST);
+
+            /** @var $session Session **/
+            $session = $this->container->get('session');
+
+            $session->set('facebookId', $facebookUser->getId());
+            $session->set('name', $facebookUser->getFirstName());
+            $session->set('surname', $facebookUser->getLastName());
+            $session->set('male', $facebookUser->getGender() == 'male' ? true : false);
+            $session->set('imageName', $facebookUser->getPictureUrl());
+            $session->set('email', $facebookUser->getEmail());
+
+            $session->save();
 
             throw new AuthenticationException();
         }
@@ -139,8 +129,7 @@ class FacebookAuthenticator extends SocialAuthenticator
     {
 
         return new RedirectResponse($this->container->get('router')
-            ->generate('homepage'));
-
+            ->generate('register'));
 
     }
 
@@ -148,12 +137,7 @@ class FacebookAuthenticator extends SocialAuthenticator
     {
         $user = $token->getUser();
 
-        if($user->getbirtDate() OR $user->getphone() == null){
-            return new RedirectResponse($this->router->generate('regi'));
-        }else {
             return new RedirectResponse($this->router->generate('homepage'));
-        }
-
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
