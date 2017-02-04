@@ -20,7 +20,6 @@ class ClubController extends Controller
         $clubs = $em->getRepository('AppBundle:Club')
             ->findAllOrderByNumberOfUsers();
 
-        dump($clubs);
 
         return $this->render('club/list.twig',
             [
