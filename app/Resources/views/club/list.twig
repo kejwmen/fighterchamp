@@ -13,12 +13,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for club in clubs %}
+                    {% for arr in clubs %}
                         <tr>
                             <td>{{ loop.index }}</td>
-                            <td><a href="{{ path('club_show', {'id': club.id }) }}">{{ club.name }}</a></td>
-                            <td>{{ club.users |length }}</td>
-                            {#<td>{{ club.city }}</td>#}
+                            <td><a href="{{ path('club_show', {'id': arr[0].id }) }}">{{ arr[0].name }}</a></td>
+                            <td>{{ arr[0].users |length }}</td>
+                            {#<td>{{ arr[0].club.city }}</td>#}
                         </tr>
                     {% endfor %}
                     </tbody>

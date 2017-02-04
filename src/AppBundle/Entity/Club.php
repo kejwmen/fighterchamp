@@ -2,13 +2,12 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OrderBy;
 
 /**
- * Club
- * @ORM\Table(name="club")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ClubRepository")
+ * @ORM\Table(name="club")
  */
 class Club
 {
@@ -16,6 +15,7 @@ class Club
     public function __construct()
     {
         $this->created_at = new \DateTime('now');
+        $this->users = new ArrayCollection();
     }
 
     /**

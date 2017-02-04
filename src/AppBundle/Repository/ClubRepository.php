@@ -11,16 +11,18 @@ use Doctrine\ORM\EntityRepository;
 
 class ClubRepository extends EntityRepository
 {
-//    public function findAllOrderByNumberOfUsers()
-//    {
-//        $qb = $this->createQueryBuilder('club')
-//            ->leftJoin('signUpTournament.user', 'user')
-//            ->orderBy('')
-//        ;
-//
-//        $query = $qb->getQuery();
-//        return $query->execute();
-//
-//    }
+    public function findAllOrderByNumberOfUsers()
+    {
+        $qb = $this->createQueryBuilder('club')
+            ->leftJoin('club.users', 'user')
+            ->addSelect('COUNT(user.id) as userCount')
+            ->groupBy('club.id')
+            ->orderBy('userCount' ,'DESC')
+        ;
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
 
 }

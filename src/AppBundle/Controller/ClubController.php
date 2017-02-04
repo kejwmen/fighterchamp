@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class ClubController extends Controller
 {
-
     /**
      * @Route("/", name="club_list")
      */
@@ -19,7 +18,9 @@ class ClubController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $clubs = $em->getRepository('AppBundle:Club')
-            ->findAll();
+            ->findAllOrderByNumberOfUsers();
+
+        dump($clubs);
 
         return $this->render('club/list.twig',
             [
