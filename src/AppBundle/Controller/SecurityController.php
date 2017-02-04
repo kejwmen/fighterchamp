@@ -108,6 +108,29 @@ class SecurityController extends Controller
 
         $session = $this->get('session');
 
+        $facebookId = $session->get('facebookId');
+
+        if(!$facebookId){
+            return $this->redirectToRoute('login');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->findOneBy(['facebookId' => $facebookId]);
+
+        if($user){
+            $this->get('security.authentication.guard_handler')
+                ->authenticateUserAndHandleSuccess(
+                    $user,
+                    $request,
+                    $this->get('app.security.login_form_authenticator'),
+                    'main'
+                );
+            return $this->redirectToRoute('homepage');
+        }
+
         $user = new User();
         $user->setFacebookId($session->get('facebookId'));
         $user->setName($session->get('name'));
@@ -116,7 +139,6 @@ class SecurityController extends Controller
         $imageName = $session->get('imageName');
         $user->setEmail($session->get('email'));
 
-        // $session->clear();
 
         $form = $this->createForm(RegistrationFacebookType::class, $user,
          [
