@@ -30,12 +30,5 @@ class JustRenderViewController extends Controller
         return $this->render('rules/rules.html.twig');
     }
 
-    /**
-     * @Route("/admin", name="admin_index")
-     */
-    public function adminController()
-    {
-        return $this->render('admin/index.twig');
-    }
 }
 

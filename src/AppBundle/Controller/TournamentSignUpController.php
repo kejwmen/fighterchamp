@@ -36,7 +36,7 @@ class TournamentSignUpController extends Controller
 
         $signUpTournament = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')
-            ->findAllSortByReady($tournament);
+            ->findAllSortByMaleClassWeightSurname($tournament);
 
         $users = $em->getRepository('AppBundle:SignUpTournament')
             ->signUpUserOrder($tournament);

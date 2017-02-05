@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityRepository;
 class SignUpTournamentRepository extends EntityRepository
 {
 
+
+
     public function findAllSignUpsPaidButDeleted($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
@@ -64,6 +66,25 @@ class SignUpTournamentRepository extends EntityRepository
             ->addOrderBy('user.male')
             ->addOrderBy('signUpTournament.formula')
             ->addOrderBy('signUpTournament.weight');
+        ;
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
+    public function findAllSortByMaleClassWeightSurname($tournament)
+    {
+        $qb = $this->createQueryBuilder('signUpTournament')
+            ->leftJoin('signUpTournament.user', 'user')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->andWhere('signUpTournament.deleted_at is null')
+            ->setParameter('tournament', $tournament)
+            ->addSelect('user')
+            ->addOrderBy('user.male')
+            ->addOrderBy('signUpTournament.formula')
+            ->addOrderBy('signUpTournament.weight')
+            ->addOrderBy('user.surname')
+
         ;
 
         $query = $qb->getQuery();

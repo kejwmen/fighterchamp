@@ -54,8 +54,8 @@ class AdminTournamentFightController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $fights = $em->getRepository('AppBundle:User')
-            ->findAllSignUpButNotPairYet($tournament);
+//        $fights = $em->getRepository('AppBundle:User')
+//            ->findAllSignUpButNotPairYet($tournament);
 
 
         $fight = new Fight();
@@ -78,13 +78,13 @@ class AdminTournamentFightController extends Controller
             $em->flush();
         }
 
-        $freeUsers = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
+//        $freeUsers = $this->getDoctrine()
+//            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
 
 
         return $this->render('admin/user/pair.twig', array(
             'form' => $form->createView(),
-            'freeUsers' => $freeUsers,
+//            'freeUsers' => $freeUsers,
             'tournament' => $tournament,
         ));
     }

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include 'admin/base.html.twig' %}
     <div class="col-xs-12">
         <div class="pull-left" style="margin-bottom: 10px; margin-top: 20px;">
             <a href="{{ path('admin_user_new') }}" class="btn btn-primary pull-right">Dodaj <span

@@ -67,7 +67,7 @@
                 -->
                 {% if is_granted('ROLE_ADMIN') %}
                 <li {{ (app.request.attributes.get('_route') == 'admin_user_list') ? 'class="active"' }}><a
-                            href="{{ path ('admin_index') }}">Admin</a></li>
+                            href="{{ path('admin_tournament_sign_up', { 'id' : 1}) }}">Admin</a></li>
                 {% endif %}
             </ul>
             <div class="clearfix"></div>

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include 'admin/base.html.twig' %}
     <div class="col-xs-12">
         {#<h3>Zatwierdzono {{ signUpsTournamentReady|length }} na {{ signUpsTournament|length }} zawodników</h3>#}
         <h3>Zapłaciło {{ signUpsPaid|length }} na {{ signUpsTournament|length }} zawodników</h3>
