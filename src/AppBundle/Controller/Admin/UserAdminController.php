@@ -37,9 +37,10 @@ class UserAdminController extends Controller
         $users = $this->getDoctrine()->getRepository('AppBundle:User')
             ->findBy(array(), array('surname' => 'ASC'));
 
-        return $this->render('admin/user/list.html.twig', array(
+        return $this->render('admin/user/list.html.twig', [
             'genuses' => $users
-        ));
+        ]
+        );
     }
 
     /**
@@ -58,7 +59,7 @@ class UserAdminController extends Controller
             $em->flush();
 
 
-            return $this->redirectToRoute('admin_user_list');
+            return $this->redirectToRoute('admin_user_lis');
         }
 
         return $this->render('admin/user/new.html.twig', [
@@ -71,7 +72,12 @@ class UserAdminController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-        $form = $this->createForm(EditUser::class, $user);
+
+        $form = $this->createForm(EditUser::class, $user,
+            [
+                'entity_manager' => $this->get('doctrine.orm.entity_manager')
+            ]
+        );
 
 
         $form->handleRequest($request);
@@ -87,7 +93,8 @@ class UserAdminController extends Controller
 
         return $this->render('admin/user/edit.html.twig', [
             'user' => $user,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'fights' => null
         ]);
     }
 
