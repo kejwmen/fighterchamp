@@ -1,1 +1,64 @@
 {% extends 'base.html.twig'%}
+
+{% block body %}
+    {% include 'admin/base.html.twig' %}
+    <div class="col-xs-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Zmiana kat. wagowej</th>
+                <th>Kat. Wagowa</th>
+                <th>Nazwisko i Imię</th>
+                <th>Klasa</th>
+                <th>Staż [miesiące]</th>
+                <th>Płeć</th>
+                <th>Wiek</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for signUp in signUpsTournament %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><select class="select_weight">
+                                <option selected value="{{ signUp.id }}|1">{{ signUp.weight }}</option>
+                                <option value="{{ signUp.id }}|0">Nie</option>
+                        </select>
+                    </td>
+                    <td> {{ signUp.weight }} </td>
+                    <td><a href="{{ path('user', {'id': signUp.User.id }) }}">
+                            {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
+                    <td> {{ signUp.formula }} </td>
+                    <td> {{ signUp.trainingTime }}</td>
+                    <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
+
+                    <td> {{ signUp.User.birthDay |getAge }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+    <script>
+
+        $(".select_isPaid").change(function () {
+
+            var values = this.value;
+            var arrValues = values.split("|");
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('set_is_paid') }}",
+                data: {signUpId: arrValues[0], isPaid: arrValues[1]},
+                success: function () {
+                    location.reload();                 }
+            });
+
+        });
+    </script>
+{% endblock %}

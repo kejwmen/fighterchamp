@@ -22,13 +22,14 @@ class AdminTournamentWeight extends Controller
      */
     public function weightAction(Tournament $tournament)
     {
-        $em = $this->getDoctrine()->getManager();
+
 
         $signUpsTournament = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')
             ->findAllSortByReady($tournament);
 
         return $this->render('admin/weight.html.twig', [
+            'signUpsTournament' => $signUpsTournament
            
         ]);
 
