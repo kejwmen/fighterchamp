@@ -31,23 +31,18 @@ class TournamentFightController extends Controller
      */
     public function resultAction(Tournament $tournament)
     {
+
         $em = $this->getDoctrine()->getManager();
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->fightAllOrderBy($tournament);
+        $fightsSobota = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsByDay($tournament, 'Sobota');
 
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-
-            $user = $this->getUser();
-
-            $isAdmin = $em->getRepository('AppBundle:UserAdminTournament')
-                ->findOneBy(['tournament' => $tournament, 'user' => $user]);
-        }
+        $fightsNiedziela = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsByDay($tournament, 'Niedziela');
 
 
-        return $this->render('tournament/admin/fights.html.twig', [
-            'fights' => $fights,
-            'tournament' => $tournament,
-            'isAdmin' => $isAdmin ?? null
+        return $this->render('tournament/fights.html.twig', [
+            'fightsSobota' => $fightsSobota,
+            'fightsNiedziela' => $fightsNiedziela
         ]);
     }
 }

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+ <div class="row">
+     <h1>Sobota (11.02.2017)</h1>
+           {%  include 'tournament/_fights.html.twig' with {fights : fightsSobota} %}
+     <h1>Niedziela (12.02.2017)</h1>
+           {%  include 'tournament/_fights.html.twig' with {fights : fightsNiedziela} %}
+        </div>
+</div>
+{% endblock %}
+

@@ -47,6 +47,8 @@
 
                 <li {{ (app.request.attributes.get('_route') == 'tournament_show') ? 'class="active"' }}><a
                             href="{{ path ('tournament_show', {'id' : 1} ) }}">Turniej</a></li>
+                <li {{ (app.request.attributes.get('_route') == 'tournament_fights') ? 'class="active"' }}><a
+                            href="{{ path ('tournament_fights', {'id' : 1} ) }}">Walki</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'tournament_sign_up') ? 'class="active"' }}><a
                             href="{{ path ('tournament_sign_up', {'id' : 1} ) }}">Zapisy</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a

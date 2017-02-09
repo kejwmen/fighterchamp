@@ -1,37 +1,35 @@
- <div class="row">
-            <div class="col-xs-12">
-                <div>
-                    <span class="label label-success">W</span> - Win (Wygrana)
-                    <span class="label label-warning">D</span> - Draw (Remis)
-                    <span class="label label-danger">L</span> - Loss (Przegrana)
-                </div>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Kolejność</th>
-                        <th>Zawodnik 1</th>
-                        <th>Zawodnik 2</th>
-                        <th>Formuła</th>
-                        <th>Kat. wagowa</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for fight in fights %}
-                        <tr>
-                            <td>{{ fight.position }}</td>
-                        {% for user in fight.users %}
-                            <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }} </a>
-                            {% if fight.winner %}
-                                {{ user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
-                            {% elseif fight.draw %}
-                                 <span class='label label-warning'>D</span></td>
-                                {% endif %}
-                        {% endfor %}
-                            <td>{{ fight.formula }}</td>
-                            <td>{{ fight.weight }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<div class="col-xs-12">
+    <div>
+        <span class="label label-success">W</span> - Win (Wygrana)
+        <span class="label label-warning">D</span> - Draw (Remis)
+        <span class="label label-danger">L</span> - Loss (Przegrana)
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="text-center">Kolejność</th>
+            <th>Zawodnik 1</th>
+            <th>Zawodnik 2</th>
+            <th class="text-center">Formuła</th>
+            <th class="text-center">Kat. wagowa</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for fight in fights %}
+            <tr>
+                <td class="text-center">{{ loop.index }}</td>
+                {% for signUp in fight.signuptournament %}
+                    <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.surname }} {{ signUp.user.name }} </a>
+                    {% if fight.winner %}
+                        {{ signUp.user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
+                    {% elseif fight.draw %}
+                        <span class='label label-warning'>D</span></td>
+                    {% endif %}
+                {% endfor %}
+                <td class="text-center">{{ fight.formula }}</td>
+                <td class="text-center">{{ fight.weight }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

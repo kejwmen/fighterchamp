@@ -25,6 +25,37 @@ class FightRepository extends EntityRepository
         return $query->execute();
     }
 
+    public function findAllFightsByDay($tournament, $day)
+    {
+        $qb = $this->createQueryBuilder('fight')
+            ->addOrderBy('fight.position')
+            ->andWhere('fight.tournament = :tournament')
+            ->andWhere('fight.day = :day')
+            ->andWhere('fight.ready = 1')
+            ->setParameter('tournament', $tournament)
+            ->setParameter('day', $day)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
+
+    public function findAllFightByDayAdmin($tournament,$day)
+    {
+        $qb = $this->createQueryBuilder('fight')
+            ->addOrderBy('fight.position')
+            ->andWhere('fight.tournament = :tournament')
+            ->andWhere('fight.day = :day')
+            ->setParameter('tournament', $tournament)
+            ->setParameter('day', $day)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
+
     public function fightAllInDayOrderBy($tournament)
     {
         $qb = $this->createQueryBuilder('fight')

@@ -34,14 +34,19 @@ class AdminTournamentFightController extends Controller
     public function resultAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->fightAllInDayOrderBy($tournament);
+        $fightsSobota = $em->getRepository('AppBundle:Fight')
+            ->findAllFightByDayAdmin($tournament,'Sobota');
 
-        $number_of_fights = count($fights);
+        $number_of_fights_sobota = count($fightsSobota);
+
+        $fightsNiedziela = $em->getRepository('AppBundle:Fight')
+            ->findAllFightByDayAdmin($tournament,'Niedziela');
+
+        $number_of_fights_niedziela = count($fightsNiedziela);
 
         return $this->render('admin/fight.html.twig', [
-            'fights' => $fights,
-            'number_of_fights' => $number_of_fights,
+            'fightsSobota' => $fightsSobota,
+            'fightsNiedziela' => $fightsNiedziela,
             'tournament' => $tournament
         ]);
     }
@@ -103,8 +108,7 @@ class AdminTournamentFightController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $fights = $em->getRepository('AppBundle:Fight')
-            ->fightAllInDayOrderBy($tournament);
-
+            ->findAllFightByDayAdmin($tournament, 'Sobota');
 
         $i = 1;
         foreach($fights as $fight) {
@@ -114,6 +118,21 @@ class AdminTournamentFightController extends Controller
             $em->flush();
             $i++;
         }
+
+        $fights = $em->getRepository('AppBundle:Fight')
+            ->findAllFightByDayAdmin($tournament, 'Niedziela');
+
+        $i = 1;
+        foreach($fights as $fight) {
+
+            /**@var Fight $fight */
+            $fight->setPosition($i);
+            $em->flush();
+            $i++;
+        }
+
+
+
 
 
         return $this->redirectToRoute('admin_tournament_fights',['id' => $tournament->getId()]);
@@ -179,7 +198,7 @@ class AdminTournamentFightController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $fights = $em->getRepository('AppBundle:Fight')
-            ->fightAllInDayOrderBy($tournament);
+            ->findAllFightByDayAdmin($tournament,$day);
 
         $taken_element = array_splice($fights, $position_element_to_take -1, 1);
 
@@ -197,6 +216,9 @@ class AdminTournamentFightController extends Controller
 
         return new Response(200);
     }
+
+
+
 
     /**
      * @Route("/{id}/setwalki", name="allFightsReady")
@@ -236,15 +258,47 @@ class AdminTournamentFightController extends Controller
     public function setDayAction(Request $request)
     {
         $fightId = $request->request->get('fightId');
-
         $day = $request->request->get('day');
 
         $em = $this->getDoctrine()->getManager();
+
+        $tournament = $em->getRepository('AppBundle:Tournament')
+            ->findOneBy(['id' => 1]);
+
         $fight = $em->getRepository('AppBundle:Fight')
             ->findOneBy(['id' => $fightId]);
 
         $fight->setDay($day);
+        $fight->setPosition(100);
+
         $em->flush();
+
+        $fightsSobota = $em->getRepository('AppBundle:Fight')
+            ->findAllFightByDayAdmin($tournament,'Sobota');
+
+        $i = 1;
+
+        foreach($fightsSobota as $fight) {
+
+            /**@var Fight $fight */
+            $fight->setPosition($i);
+            $em->flush();
+            $i++;
+        }
+
+
+        $fightsNiedziela = $em->getRepository('AppBundle:Fight')
+            ->findAllFightByDayAdmin($tournament,'Niedziela');
+
+        $i = 1;
+
+        foreach($fightsNiedziela as $fight) {
+
+            /**@var Fight $fight */
+            $fight->setPosition($i);
+            $em->flush();
+            $i++;
+        }
 
         return new Response(200);
     }
