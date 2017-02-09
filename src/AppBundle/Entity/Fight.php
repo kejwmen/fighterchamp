@@ -23,6 +23,7 @@ class Fight
 
     public function __construct()
     {
+        $this->created_at = new \DateTime('now');
         $this->signuptournament = new ArrayCollection();
     }
 
@@ -83,6 +84,13 @@ class Fight
      * @ORM\Column(type="string", nullable=true)
      */
     private $day;
+
+
+    /**
+     *
+     * @ORM\Column(name="create_time", type="datetime", nullable=true)
+     */
+    private $created_at;
 
 
     public function getId(): int
