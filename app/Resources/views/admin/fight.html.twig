@@ -1,6 +1,7 @@
 {%  extends 'base.html.twig' %}
 
 {%  block body %}
+    {% include 'admin/base.html.twig' %}
 <div class="container">
     <div class="row">
     <div class="col-xs-12">
@@ -14,6 +15,7 @@
             <tr>
                 <th></th>
                 <th>Opublikowane?</th>
+                <th>Dzień</th>
                 <th>Kolejność</th>
                 <th>Zawodnik 1</th>
                 <th>Zawodnik 2 </th>
@@ -27,27 +29,31 @@
                 <tr>
                     <td><a href="{{ path("admin_remove_fight", { 'fight_id' : fight.id, 'id' : tournament.id }) }}" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Skasuj</a></td>
                     <td><input class="checkbox_ready" type="checkbox" {{ fight.ready? 'checked' : '' }} value="{{ fight.id }}"> </td>
+                    <td><select class="select_day">
+                            <option value="{{ fight.id }}|Sobota" {{ fight.day == 'Sobota'? 'selected' }}>Sobota</option>
+                            <option value="{{ fight.id }}|Niedziela"{{ fight.day == 'Niedziela'? 'selected' }} >Niedziela</option>
+                        </select></td>
                     <td><select class="select_order" id="{{ loop.index }}">
                     {% for i in 1..number_of_fights %}
                         <option value="{{ i }}" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>
                     {% endfor %}
                         </select></td>
 
-                    {% for user in fight.users %}
-                        <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.name }} {{ user.surname }} </a>
+                    {% for signUp in fight.signuptournament %}
+                        <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.name }} {{ signUp.user.surname }} </a>
                         {% if fight.winner %}
-                            {{ user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
+                            {{ signUp.user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
                         {% elseif fight.draw %}
                             <span class='label label-warning'>D</span></td>
                         {% endif %}
                     {% endfor %}
 
                     <td><select class="select_winner"> <option value="{{ fight.id }}"></option>
-                    {% for user in fight.users %}
+                   {% for signUp in fight.signuptournament %}
                             {% if fight.winner %}
-                                <option {{ user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ user.id }}|{{ fight.draw }}">{{ user.surname }} {{ user.name }}</option>
+                                <option {{ signUp.user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ signUp.user.id }}|{{ fight.draw }}">{{ signUp.user.surname }} {{ signUp.user.name }}</option>
                             {% else %}
-                                <option value="{{ fight.id }}|{{ user.id }}|{{ fight.draw }}">{{ user.surname }} {{ user.name }}</option>
+                                <option value="{{ fight.id }}|{{ signUp.user.id }}|{{ fight.draw }}">{{ signUp.user.surname }} {{ signUp.user.name }}</option>
                             {% endif %}
                             {% endfor %}
                       <option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>
@@ -67,6 +73,22 @@
 {% block javascripts %}
 {{ parent() }}
 <script>
+
+    $( ".select_day" ).change(function() {
+
+        var values = this.value;
+        var arrValues = values.split("|");
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('setDay') }}",
+            data: {fightId: arrValues[0], day: arrValues[1]},
+            success: function () {
+            }
+        });
+    });
+
+
     $( ".select_order" ).change(function() {
 
         $.ajax({
@@ -74,7 +96,7 @@
             url: "{{ path('changePositionFight', {'id': tournament.id }) }}",
             data: {wantedPosition: this.value, position: this.id},
             success: function () {
-                 $(location).attr('href', "{{ path("admin_tournament_fights", {'id': tournament.id }) }}");
+                 location.reload();
             }
         });
     });
@@ -89,7 +111,7 @@
             url: "{{  path('setWinner') }}",
             data: {fightId: arrValues[0], userId: arrValues[1], draw: arrValues[2] },
             success: function () {
-                $(location).attr('href', "{{  path("admin_tournament_fights", {'id': tournament.id }) }}");
+                location.reload();
             }
         });
 
@@ -105,6 +127,7 @@
             }
         });
     });
+
 </script>
 {% endblock %}
 

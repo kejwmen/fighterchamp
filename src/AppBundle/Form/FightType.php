@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\Tournament;
+use AppBundle\Repository\SignUpTournamentRepository;
 use AppBundle\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,30 +22,59 @@ class FightType extends AbstractType
         $tournament = $options['tournament'];
 
         $builder
-            ->add('users', CollectionType::class, [
-                'entry_type' => EntityType::class,
-                'entry_options' => array(
-                    'class' => 'AppBundle:User',
-                    //'choice_label' =>'name',
-                    'query_builder' => function(UserRepository $er) use ($tournament) {
-                        return $er->findAllSignUpButNotPairYet($tournament);
-                    })
+            ->add('day', ChoiceType::class,[
+                'choices' => [
+                'Sobota' => 'Sobota',
+                'Niedziela' => 'Niedziela'
+            ]
             ])
 
-            ->add('formula', ChoiceType::class, array(
-                'choices' => array(
-                    'Boks' => 'Boks',
-              //      'K1' => 'K1',
-               //     'Kick Boxing Low-Kick' => 'Kick Boxing Low-Kick',
-               //     'Kick Boxing Oriental Rules' => 'Kick Boxing Oriental Rules'
-                    )
-            ))
-            ->add('weight', ChoiceType::class, array(
-                'choices' => array('51.0' => '51.0', '54.0' => '54.0','60' => '60',
-                    '57' => '57','63,5' => '63,5','67' => '67','71' => '71','75' => '75'
-                ,'75+' => '75+','81' => '81','61+' => '81+','86' => '86','91' => '91'
-                ,'91+' => '91+')
-            ))
+            ->add('signuptournament', CollectionType::class, [
+                'entry_type' => EntityType::class,
+                'entry_options' => [
+                    'class' => 'AppBundle:SignUpTournament',
+                    'query_builder' => function(SignUpTournamentRepository $er) use ($tournament) {
+                        return $er->findAllSignUpButNotPairYetQB($tournament);
+                    }]
+            ])
+
+
+            ->add('formula', ChoiceType::class, [
+                'choices' => [
+                    'A' => 'A',
+                    'B' => 'B',
+                    'C' => 'C',
+                ]
+            ]
+            )
+
+            ->add('weight', ChoiceType::class, [
+                'choices' => [
+                    '44' => '44',
+                    '46' => '46',
+		            '48' => '48',
+		            '49' => '49',
+		            '50' => '50',
+		            '51' => '51',
+		            '52' => '52',
+                    '54' => '54',
+		            '56' => '56',
+  		            '57' => '57',
+                    '60' => '60',
+                    '63' => '63',
+			        '64'=> '64',
+			        '66' => '66',
+                    '69' => '69',
+                    '70' => '70',
+                    '75' => '75',
+                    '80' => '80',
+                    '80+' => '80+',
+                    '81' => '81',
+                    '91' => '91',
+                    '91+' => '91+'
+                ]
+            ]
+            )
         ;
     }
 

@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<div class="col-xs-12 col-md-6 col-md-offset-3">
+    {% include 'admin/base.html.twig' %}
+<div class="col-xs-12 col-md-10 col-md-offset-1">
     {{ form_start(form) }}
-    {{ form_row(form.formula, { 'label': 'Formuła'} ) }}
+    {{ form_row(form.day,{'label': 'Dzień'} ) }}
+    {{ form_row(form.formula, { 'label': 'Klasa'} ) }}
     {{ form_row(form.weight, { 'label': 'Waga'} ) }}
-    {% for user in form.users %}
+    {% for signup in form.signuptournament %}
         <div class="col-xs-6">
-        {{ form_errors(user) }}
-        {{ form_row(user,{
+        {{ form_errors(signup) }}
+        {{ form_row(signup,{
         'label': 'Zawodnik'
         })}}
         </div>
@@ -20,16 +22,18 @@
 </div>
     <div class="col-xs-12">
         <h3>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</h3>
-        <h3>Liczba zapisanych: {{ freeUsers| length }}</h3>
+        <h3>Ilość: {{ freeUsers| length }}</h3>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>#</th>
                 <th>Nazwisko i Imię</th>
-                <th>Formuła</th>
                 <th>Płeć</th>
+                <th>Formuła</th>
                 <th>Kat. Wagowa</th>
+                <th>Staż [miesiące]</th>
                 <th>Wiek</th>
+                <th>Klub</th>
             </tr>
             </thead>
             <tbody>
@@ -37,10 +41,14 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td><a href="{{ path('user', {'id': user.User.id }) }}"> {{ user.User.surname }} {{ user.User.name }}</a></td>
-                    <td> {{ user.formula }} </td>
                     <td> {{ user.User.male ?  'M' : 'K' }} </td>
+                    <td> {{ user.formula }} </td>
                     <td> {{ user.weight }} </td>
+                    <td> {{ user.trainingTime }} </td>
                     <td> {{ user.User.birthDay |getAge }} </td>
+                    <td> {% if user.User.club %}
+                        <a href="{{ path('club_show', {'id': user.User.club.id }) }}"> {{ user.User.getClub() }}</a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
@@ -54,7 +62,7 @@
 
     $( document ).ready(function() {
 
-        $("#fight_users_1").val($("#fight_users_1 option:eq(1)").val());
+        $("#fight_signuptournament_1").val($("#fight_signuptournament_1 option:eq(1)").val());
 
         $("select").change();
 

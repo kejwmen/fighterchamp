@@ -451,6 +451,11 @@ class User implements UserInterface, Serializable
         return $this->tournamentAdmin;
     }
 
+    public function getPlec()
+    {
+       return ($this->getMale()) ? 'M' : 'K';
+    }
+
 
 
     public function __toString()

@@ -224,12 +224,33 @@ class SignUpTournament
         $this->user = $user;
     }
 
+    public function howOldUserIs()
+    {
+        $birthDay = $this->user->getBirthDay();
+        $tournamentDay = $this->tournament->getStart();
+
+        $date_diff =  date_diff($birthDay, $tournamentDay);
+
+        return $date_diff->format("%y");
+    }
+
+    public function getStazTreningowy()
+    {
+        if($this->getTrainingTime()){
+            return '(staż ' . $this->getTrainingTime() . "miesiące) ";
+        }
+        return null;
+    }
 
 
 
     public function __toString()
     {
-        return (string)$this->user->getSurname() . " " . $this->user->getName();
+        return (string) $this->user->getPlec() . "  ". $this->user->getSurname() . " " . $this->user->getName() .
+             " " . $this->getFormula() . " " . $this->getWeight() . "kg" .
+            " " . $this->getStazTreningowy() . $this->howOldUserIs() . 'lat';
+
+
     }
 
 }

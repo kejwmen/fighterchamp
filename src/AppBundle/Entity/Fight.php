@@ -23,7 +23,7 @@ class Fight
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->signuptournament = new ArrayCollection();
     }
 
     /**
@@ -79,6 +79,12 @@ class Fight
     private $draw = false;
 
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $day;
+
+
     public function getId(): int
     {
         return $this->id;
@@ -91,24 +97,24 @@ class Fight
     }
 
 
-    public function addUser(User $user)
+    public function addUser(SignUpTournament $signUpTournament)
     {
-        $this->users[] = $user;
+        $this->signuptournament[] = $signUpTournament;
 
         return $this;
     }
 
     /**
-     * @return ArrayCollection|User[]
+     * @return ArrayCollection|SignUpTournament[]
      */
-    public function getUsers()
+    public function getSignuptournament()
     {
-        return $this->users;
+        return $this->signuptournament;
     }
 
-    public function setUsers(User $users)
+    public function setsignuptournament(SignUpTournament $signuptournament)
     {
-        $this->users = $users;
+        $this->signuptournament = $signuptournament;
     }
 
 
@@ -127,9 +133,9 @@ class Fight
     {
         $this->ready = $this->ready ? false : true;
 
-        if (!$this->ready){
-            $this->position = null;
-        }
+//        if (!$this->ready){
+//            $this->position = null;
+//        }
 
     }
 
@@ -220,6 +226,27 @@ class Fight
     {
         return (string)$this->getFormula();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDay()
+    {
+        return $this->day;
+    }
+
+    /**
+     * @param mixed $day
+     */
+    public function setDay($day)
+    {
+        $this->day = $day;
+    }
+
+
+
+
+
 
 
 }

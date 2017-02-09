@@ -55,22 +55,55 @@ class SignUpTournamentRepository extends EntityRepository
         return $query->execute();
     }
 
+    public function findAllSignUpButNotPairYetQB($tournament)
+    {
+        $qb = $this->createQueryBuilder('signUpTournament')
+            ->leftJoin('signUpTournament.user', 'user')
+            ->andWhere('signUpTournament.fights is empty' )
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->setParameter('tournament', $tournament)
+            ->andWhere('signUpTournament.isPaid = true')
+            ->addOrderBy('user.male')
+            ->addOrderBy('signUpTournament.formula')
+            ->addOrderBy('signUpTournament.weight')
+            ->addOrderBy('signUpTournament.trainingTime')
+            ->addOrderBy('user.birthDay', 'DESC')
+            ->addOrderBy('user.surname')
+        ;
+
+//        $query = $qb->getQuery();
+//        return $query->execute();
+
+        return $qb;
+    }
+
+
     public function findAllSignUpButNotPairYet($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
             ->leftJoin('signUpTournament.user', 'user')
-            ->andWhere('user.fights is empty' )
-          //  ->andwhere('signUpTournament.ready = 1')
+            ->andWhere('signUpTournament.fights is empty' )
             ->andWhere('signUpTournament.tournament = :tournament')
             ->setParameter('tournament', $tournament)
+            ->andWhere('signUpTournament.isPaid = true')
             ->addOrderBy('user.male')
             ->addOrderBy('signUpTournament.formula')
-            ->addOrderBy('signUpTournament.weight');
+            ->addOrderBy('signUpTournament.weight')
+            ->addOrderBy('signUpTournament.trainingTime')
+            ->addOrderBy('user.birthDay', 'DESC')
+            ->addOrderBy('user.surname')
         ;
+
 
         $query = $qb->getQuery();
         return $query->execute();
+
+
     }
+
+
+
+
 
     public function findAllSortByMaleClassWeightSurname($tournament)
     {

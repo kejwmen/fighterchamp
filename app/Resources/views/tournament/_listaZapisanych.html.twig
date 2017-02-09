@@ -2,8 +2,8 @@
         <thead>
             <th>#</th>
             <th>Nazwisko i Imię</th>
-            <th class="text-center">Klasa</th>
             <th class="text-center">Płeć</th>
+            <th class="text-center">Klasa</th>
             <th class="text-center">Kat. Wagowa</th>
             <th class="text-center">Wiek</th>
             <th class="text-center">Klub</th>
@@ -15,8 +15,8 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td><a href="{{ path('user', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
-                <td class="text-center"> {{ signUp.formula }} </td>
                 <td class="text-center"> {{ signUp.User.male ?  'M' : 'K' }} </td>
+                <td class="text-center"> {{ signUp.formula }} </td>
                 <td class="text-center"> {{ signUp.weight }} </td>
                 <td class="text-center"> {{ signUp.User.birthDay |getAge }} </td>
                 <td class="text-center"> {% if signUp.User.club %}
