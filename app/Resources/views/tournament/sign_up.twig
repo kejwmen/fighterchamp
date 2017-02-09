@@ -3,52 +3,53 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            <h3>Termin rejestracji na turniej minął dnia 9 lutego 2017r. Brak możliwość rejestracji.</h3>
 
-    {% if is_granted('ROLE_USER') %}
-        <p><small>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d')}}.
-            W dniu turnieju {{ tournament.start | date('Y-m-d') }} będziesz miał {{ date_diff }} lat.
-                Więc twoja kategoria wiekowa to - <b>{{ age }}</b></small></p>
-        <p><small>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b></small></p><br>
-    {% endif %}
+    {#{% if is_granted('ROLE_USER') %}#}
+        {#<p><small>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d')}}.#}
+            {#W dniu turnieju {{ tournament.start | date('Y-m-d') }} będziesz miał {{ date_diff }} lat.#}
+                {#Więc twoja kategoria wiekowa to - <b>{{ age }}</b></small></p>#}
+        {#<p><small>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b></small></p><br>#}
+    {#{% endif %}#}
 
-    {% if signUpTournament| length >= tournament.capacity %}
-        <p><strong>Limit miejsc został wyczerpany</strong></p>
-    {% endif %}
+    {#{% if signUpTournament| length >= tournament.capacity %}#}
+        {#<p><strong>Limit miejsc został wyczerpany</strong></p>#}
+    {#{% endif %}#}
 
-    {% if not is_granted('ROLE_USER') %}
-        <p>Aby wysłać / skasować swoje zgłoszenie na turniej musisz być zalogowany! &#8594; <a href="{{ path ('login') }}">Przejdź do strony logowania</a></p>
-    {% endif %}
-    {% if is_granted('ROLE_USER') and isUserRegister  %}
-        <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>
+    {#{% if not is_granted('ROLE_USER') %}#}
+        {#<p>Aby edytować / skasować swoje zgłoszenie na turniej musisz być zalogowany! &#8594; <a href="{{ path ('login') }}">Przejdź do strony logowania</a></p>#}
+    {#{% endif %}#}
+    {#{% if is_granted('ROLE_USER') and isUserRegister  %}#}
+        {#<p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>#}
 
-            {% include 'tournament/_listaZapisanych.html.twig' with {signUpTournament : [isUserRegister]} only %}
+            {#{% include 'tournament/_listaZapisanych.html.twig' with {signUpTournament : [isUserRegister]} only %}#}
 
-        {{ form_start(formDelete) }}
-        <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
-        {{ form_end(formDelete)  }}
-            <br>
-            <button id="showSignUp" class="btn btn-primary align-left" >Edytuj</button> <br>
+        {#{{ form_start(formDelete) }}#}
+        {#<button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>#}
+        {#{{ form_end(formDelete)  }}#}
+            {#<br>#}
+            {#<button id="showSignUp" class="btn btn-primary align-left" >Edytuj</button> <br>#}
 
-            <div id="editSignUp" class="hide col-xs-12">{% include 'tournament/_sign_up_form.html.twig' %}</div>
-            {% if not isUserRegister.isPaid %}
-        <br>
-        <p><small>
-            Pamiętaj aby twoje zgłoszenie było ważne musisz dokonać płatności. Kwota 35 zł (opłata zawiera dyplomy i medale dla zawodników).
-            Można wpłacać w klubie Legia Fight Club, lub na numer konta: 97 2490 0005 0000 4000 8002 2034
-            (do wpłaty dołączamy swoje dane, nazwisko odbiorcy Paweł Michalik)<br> Uwaga! Jeżeli ktoś po zgłoszeniu nie będzie mógł wziąć udziału w zawodach, prosimy o skasowanie zgłoszenia na 7 dni przed dniem turnieju.
-            Jeżeli informacja będzie po terminie, NIE ZWRACAMY wpisowego.<br>
-            Zgłoszenia i wpłaty są przyjmowane do 6 lutego 2017r (przedłużone do 09 lutego 2017r).
-        </small></p>
-            {% endif %}
-        </div>
+            {#<div id="editSignUp" class="hide col-xs-12">{% include 'tournament/_sign_up_form.html.twig' %}</div>#}
+            {#{% if not isUserRegister.isPaid %}#}
+        {#<br>#}
+        {#<p><small>#}
+            {#Pamiętaj aby twoje zgłoszenie było ważne musisz dokonać płatności. Kwota 35 zł (opłata zawiera dyplomy i medale dla zawodników).#}
+            {#Można wpłacać w klubie Legia Fight Club, lub na numer konta: 97 2490 0005 0000 4000 8002 2034#}
+            {#(do wpłaty dołączamy swoje dane, nazwisko odbiorcy Paweł Michalik)<br> Uwaga! Jeżeli ktoś po zgłoszeniu nie będzie mógł wziąć udziału w zawodach, prosimy o skasowanie zgłoszenia na 7 dni przed dniem turnieju.#}
+            {#Jeżeli informacja będzie po terminie, NIE ZWRACAMY wpisowego.<br>#}
+            {#Zgłoszenia i wpłaty są przyjmowane do 6 lutego 2017r (przedłużone do 09 lutego 2017r).#}
+        {#</small></p>#}
+            {#{% endif %}#}
+        {#</div>#}
 
-    {% endif %}
+    {#{% endif %}#}
 
-    {% if is_granted('ROLE_USER') and not isUserRegister  %}
+    {#{% if is_granted('ROLE_USER') and not isUserRegister  %}#}
 
-        {% include 'tournament/_sign_up_form.html.twig' %}
+        {#{% include 'tournament/_sign_up_form.html.twig' %}#}
 
-    {% endif %}
+    {#{% endif %}#}
 
         <div class="col-xs-12">
             <h3>
