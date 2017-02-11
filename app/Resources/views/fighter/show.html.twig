@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
-
-{% block title %} {{ user.name }} {{ user.surname }} {% endblock %}
-
-{% block body %}
-    {% set win, lose, draw = 0,0,0 %}
+{% set win, lose, draw = 0,0,0 %}
 
     {% for fight in fights %}
         {% if fight.winner %}
@@ -11,9 +7,11 @@
             {% endif %}
         {% elseif fight.draw %} {%  set draw = draw + 1 %}
         {% endif %}
-
     {% endfor %}
 
+{% block title %} {{ user.name }} {{ user.surname }} {% endblock %}
+
+{% block body %}
     <div class="container">
     <div class="row">
     {% for msg in app.session.flashBag.get('success') %}
@@ -27,8 +25,7 @@
         {% include ':fighter:_profile.html.twig' %}
     </div>
     <div class="col-xs-12 col-sm-6">
-    {% if win+lose+draw == 0 %} <h4 class="text-center">Brak rekordów walk</h4>
-    {% else %}
+    {% if win+lose+draw == 0 %} <h4 class="text-center">Brak rekordów walk</h4>{% else %}
         <table class="table">
             <tr>
                 <th>#</th>
@@ -40,9 +37,9 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ fight.tournament.name }}</td>
-                        {% for ThisUser in fight.users %}
-                            {% if ThisUser.id != user.id %}
-                                <td><a href='/zawodnik/{{ ThisUser.id }}'>{{ ThisUser.name }} {{ ThisUser.surname }}</a>
+                        {% for signUp in fight.signuptournament %}
+                            {% if signUp.user.id != user.id %}
+                                <td><a href='/zawodnik/{{ signUp.user.id  }}'>{{ signUp.user.name }} {{ signUp.user.surname }}</a>
                                     </td>
                             {% endif %}
                         {% endfor %}

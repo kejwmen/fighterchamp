@@ -58,8 +58,6 @@ class AdminTournamentFightController extends Controller
     public function pairAction(Request $request, Tournament $tournament)
     {
 
-
-
         $fight = new Fight();
         $fight->getSignuptournament()->add(null);
         $fight->getSignuptournament()->add(null);

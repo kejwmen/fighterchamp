@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Brawl;
 use AppBundle\Entity\Fight;
+use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Fighter;
 use AppBundle\Entity\Tournament;
@@ -48,8 +49,12 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        $fights = $user->getFights();
-        
+
+        $em = $this->get('doctrine.orm.default_entity_manager');
+
+        $fights = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsForUser($user);
+
 
         return $this->render('fighter/show.html.twig', [
             'user' => $user,
@@ -72,14 +77,16 @@ class UserController extends Controller
         $user_id = $this->getUser()->getId();
 
         $em = $this->getDoctrine()->getManager();
+
         $user = $em->getRepository('AppBundle:User')
             ->findOneBy(['id' => $user_id]);
 
-        $fights = $user->getFights();
+        $fights = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsForUser($user);
 
         $form = $this->createForm(EditUser::class, $user,
             [
-                'entity_manager' => $this->get('doctrine.orm.entity_manager')
+                'entity_manager' => $em
             ]
         );
 
