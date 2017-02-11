@@ -16,9 +16,13 @@ class RulesetRepository extends EntityRepository
     public function getWeight()
     {
 
-     $dql = 'SELECT rule FROM AppBundle\Entity\Ruleset rule';
+        $qb = $this->createQueryBuilder('rules')
+            ->select('rules.weight')
+            ->distinct()
+            ->orderBy('rules.weight' ,'ASC')
+        ;
 
-        $query = $this->getEntityManager()->createQuery($dql);
+        $query = $qb->getQuery();
         return $query->execute();
     }
 

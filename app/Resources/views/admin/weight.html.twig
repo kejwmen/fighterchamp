@@ -23,15 +23,21 @@
                     <td><a href="{{ path('user', {'id': signUp.User.id }) }}">
                             {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
                     <td> {{ signUp.weight }} </td>
-                    <td><select class="select_weight">
-                                <option selected value="{{ signUp.id }}|1">{{ signUp.weight }}</option>
-                                {#<option value="{{ signUp.id }}|0">Nie</option>#}
+                    <td>
+
+                        <select class="select_weighted">
+                            <option value="{{ signUp.id }}"></option>
+                            {% for weight in weights %}
+                                <option value="{{ signUp.id }}|{{ weight.weight }}"
+                                        {{ signUp.weighted == weight.weight ? 'selected' }}
+                                >{{ weight.weight }}
+                                    </option>
+                            {% endfor %}
                         </select>
                     </td>
                     <td> {{ signUp.formula }} </td>
                     <td> {{ signUp.trainingTime }}</td>
                     <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
-
                     <td> {{ signUp.User.birthDay |getAge }} </td>
                 </tr>
             {% endfor %}
@@ -45,20 +51,22 @@
 
 
     <script>
-
-        $(".select_isPaid").change(function () {
+        $( ".select_weighted" ).change(function() {
 
             var values = this.value;
             var arrValues = values.split("|");
 
             $.ajax({
                 type: 'POST',
-                url: "{{ path('set_is_paid') }}",
-                data: {signUpId: arrValues[0], isPaid: arrValues[1]},
+                url: "{{ path('set_weighted') }}",
+                data: {signUpId: arrValues[0], weighted: arrValues[1]},
                 success: function () {
-                    location.reload();                 }
-            });
 
+                    location.reload();
+                }
+            });
         });
+
+
     </script>
 {% endblock %}

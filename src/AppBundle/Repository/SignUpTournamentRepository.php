@@ -132,6 +132,7 @@ class SignUpTournamentRepository extends EntityRepository
             ->andWhere('signUpTournament.deleted_at is null')
             ->setParameter('tournament', $tournament)
             ->addSelect('user')
+            ->addOrderBy('signUpTournament.weighted')
             ->addOrderBy('user.surname')
         ;
 

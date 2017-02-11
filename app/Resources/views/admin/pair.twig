@@ -45,7 +45,7 @@
                     </td>
                     <td> {{ user.User.male ?  'M' : 'K' }} </td>
                     <td> {{ user.formula }} </td>
-                    <td> {{ user.weight }} </td>
+                    <td> {{ user.weighted ?: user.weight }} </td>
                     <td> {{ user.trainingTime }} </td>
                     <td> {{ user.User.birthDay |getAge }} </td>
                     <td> {% if user.User.club %}

@@ -48,18 +48,24 @@ class UserAdminController extends Controller
      */
     public function newAction(Request $request)
     {
-        $form = $this->createForm(RegistrationType::class);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $genus = $form->getData();
-
             $em = $this->getDoctrine()->getManager();
-            $em->persist($genus);
-            $em->flush();
+
+            $form = $this->createForm(RegistrationType::class, new User(),
+                [
+                    'entity_manager' => $this->get('doctrine.orm.entity_manager')
+                ]
+            );
 
 
-            return $this->redirectToRoute('admin_user_lis');
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+
+
+                $user = $form->getData();
+                $em->persist($user);
+                $em->flush();
+
+            return $this->redirectToRoute('admin_user_list');
         }
 
         return $this->render('admin/user/new.html.twig', [

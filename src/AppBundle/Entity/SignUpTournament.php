@@ -40,6 +40,11 @@ class SignUpTournament
     private $weight;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $weighted;
+
+    /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
@@ -242,12 +247,34 @@ class SignUpTournament
         return null;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getWeighted()
+    {
+        return $this->weighted;
+    }
+
+    /**
+     * @param mixed $weighted
+     */
+    public function setWeighted($weighted)
+    {
+        $this->weighted = $weighted;
+    }
+
+    public function getFinallWeight()
+    {
+        return $this->weighted ?? $this->weight;
+    }
+
+
 
 
     public function __toString()
     {
         return (string) $this->user->getPlec() . "  ". $this->user->getSurname() . " " . $this->user->getName() .
-             " " . $this->getFormula() . " " . $this->getWeight() . "kg" .
+             " " . $this->getFormula() . " " . $this->getFinallWeight() . "kg" .
             " " . $this->getStazTreningowy() . $this->howOldUserIs() . 'lat';
 
 

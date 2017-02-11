@@ -37,7 +37,7 @@
                     <td> {{ signUp.formula }} </td>
                     <td> {{ signUp.trainingTime }}</td>
                     <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
-                    <td> {{ signUp.weight }} </td>
+                    <td> {{ signUp.getFinallWeight() }} </td>
                     <td> {{ signUp.User.birthDay |getAge }} </td>
                 </tr>
             {% endfor %}
