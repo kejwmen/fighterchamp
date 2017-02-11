@@ -29,14 +29,36 @@ class SignUpTournamentRepository extends EntityRepository
     public function findAllSignUpsPaid($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
+            ->leftJoin('signUpTournament.user', 'user')
             ->andWhere('signUpTournament.tournament = :tournament')
             ->andWhere('signUpTournament.deleted_at is null')
             ->andWhere('signUpTournament.isPaid = true')
-            ->setParameter('tournament', $tournament);
+            ->setParameter('tournament', $tournament)
+            ->addOrderBy('user.surname')
+    ;
 
         $query = $qb->getQuery();
         return $query->execute();
     }
+
+    public function findAllSignUpsPaidAndWeightedOrder($tournament)
+    {
+        $qb = $this->createQueryBuilder('signUpTournament')
+            ->leftJoin('signUpTournament.user', 'user')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->andWhere('signUpTournament.deleted_at is null')
+            ->andWhere('signUpTournament.isPaid = true')
+            ->andWhere('signUpTournament.fights is empty' )
+            ->setParameter('tournament', $tournament)
+            ->addOrderBy('signUpTournament.weighted')
+            ->addOrderBy('user.surname')
+        ;
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
+
 
 
     public function signUpUserOrder($tournament)

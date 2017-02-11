@@ -27,7 +27,7 @@ class AdminTournamentWeight extends Controller
 
         $signUpsTournament = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')
-            ->findAllSortByReady($tournament);
+            ->findAllSignUpsPaidAndWeightedOrder($tournament);
 
 
         $weights = $this->getDoctrine()

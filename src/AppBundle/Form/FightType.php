@@ -24,7 +24,6 @@ class FightType extends AbstractType
         $builder
             ->add('day', ChoiceType::class,[
                 'choices' => [
-                'Sobota' => 'Sobota',
                 'Niedziela' => 'Niedziela'
             ]
             ])
