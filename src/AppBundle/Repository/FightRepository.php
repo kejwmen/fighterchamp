@@ -101,10 +101,12 @@ class FightRepository extends EntityRepository
     }
 
 
-    public function findAllUserSignUpTournamnet()
+    public function findAllFightsForUser($user)
     {
         $qb = $this->createQueryBuilder('fight')
-            ->leftJoin('fight.UserOne', 'fc');
+            ->leftJoin('fight.signuptournament', 'signuptournament')
+            ->andWhere('signuptournament.user = :user')
+            ->setParameter('user', $user);
 
         $query = $qb->getQuery();
         return $query->execute();
