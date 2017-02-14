@@ -1,0 +1,27 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Nazwisko i Imię</th>
+        <th>Klasa</th>
+        <th>Staż [miesiące]</th>
+        <th>Płeć</th>
+        <th>Kat. Wagowa</th>
+        <th>Wiek</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for signUp in signUps %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td><a href="{{ path('user', {'id': signUp.User.id }) }}">
+                    {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
+            <td> {{ signUp.formula }} </td>
+            <td> {{ signUp.trainingTime }}</td>
+            <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
+            <td> {{ signUp.weight }} </td>
+            <td> {{ signUp.User.birthDay |getAge }} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
