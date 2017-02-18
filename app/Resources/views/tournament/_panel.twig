@@ -1,3 +1,5 @@
+{% extends 'base.html.twig' %}
+{% block body %}
 <div class="container-fluid">
     <nav class="navbar-admin">
         <div class="navbar-header">
@@ -21,20 +23,67 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li {{ (app.request.attributes.get('_route') == 'tournament') ? 'class="active"' }}><a
-                            href="{{ path ('tournament_show', {'id': tournament.id }) }}">Turniej</a></li>
-                <li {{ (app.request.attributes.get('_route') == 'tournament') ? 'class="active"' }}><a
-                            href="{{ path ('tournament_edit', {'id': tournament.id }) }}">Edytuj</a></li>
-                <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a
-                            href="{{ path ('ready_List', {'id': tournament.id }) }}">Zgłoszenia</a></li>
-                <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a
-                            href="{{ path ('tournament_match', {'id': tournament.id }) }}">Parowanie</a></li>
-                <li {{ (app.request.attributes.get('_route') == 'contact') ? 'class="active"' }}><a
-                            href="{{  path('tournament_fights', {'id': tournament.id }) }}">Walki</a></li>
-                <li {{ (app.request.attributes.get('_route') == 'contact') ? 'class="active"' }}><a
-                            href="{{ path ('contact') }}">Mailing</a></li>
-                <li {{ (app.request.attributes.get('_route') == 'contact') ? 'class="active"' }}><a
-                            href="{{ path ('contact') }}">News</a></li>
+                <li id="tournament_show">Info</li><br>
+                <li id="tournament_sign_ups">Zgłoszenia</li><br>
+                <li id="tournament_fights">Walki</li>
             </ul>
+        </div>
     </nav>
 </div>
+
+<div class="main"></div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+<script>
+    $(document).ready(function () {
+
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ path('tournament_show', {id: tournament.id}) }}",
+                success: function (data) {
+                    $(".main").html(data);
+                }
+            });
+
+
+
+    });
+
+    $( "#tournament_show" ).click(function() {
+        $.ajax({
+            type: 'GET',
+            url: "{{ path('tournament_show', {id: tournament.id}) }}",
+            success: function (data) {
+                $(".main").html(data);
+            }
+        });
+    });
+
+
+
+    $( "#tournament_fights" ).click(function() {
+        $.ajax({
+            type: 'GET',
+            url: "{{ path('tournament_fights', {id: tournament.id}) }}",
+            success: function (data) {
+                $(".main").html(data);
+            }
+        });
+    });
+
+    $( "#tournament_sign_ups" ).click(function() {
+        $.ajax({
+            type: 'GET',
+            url: "{{ path('tournament_sign_up', {id: tournament.id}) }}",
+            success: function (data) {
+                $(".main").html(data);
+            }
+        });
+    });
+</script>
+{% endblock %}

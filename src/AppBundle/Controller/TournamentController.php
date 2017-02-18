@@ -28,39 +28,52 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class TournamentController extends Controller
 {
 
-//    /**
-//     * List all tournaments.
-//     *
-//     * @Route("/", name="tournament_list")
-//     */
-//    public function tournamentListAction()
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $tournaments = $em->getRepository('AppBundle:Tournament')
-//            ->findAll();
-//
-//        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-//
-//            $user = $this->getUser();
-//
-//            $userAdminTournaments = $em->getRepository('AppBundle:UserAdminTournament')
-//                ->findBy((['user' => $user]));
-//
-//            $adminTournaments = [];
-//
-//            foreach ($userAdminTournaments as $item){
-//
-//                $adminTournaments [] = $item->getTournament();
-//            }
-//        }
-//
-//
-//        return $this->render('tournament/list.twig', array(
-//            'tournaments' => $tournaments,
-//            'adminTournaments'=> $adminTournaments ?? null
-//        ));
-//    }
+    /**
+     * List all tournaments.
+     *
+     * @Route("/", name="tournament_list")
+     */
+    public function tournamentListAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tournaments = $em->getRepository('AppBundle:Tournament')
+            ->findAll();
+
+
+        return $this->render('tournament/list.twig', array(
+            'tournaments' => $tournaments,
+            'adminTournaments'=> $adminTournaments ?? null
+        ));
+    }
+
+    /**
+     * @Route("/show/{id}", name="tournament_show", condition="request.isXmlHttpRequest()")
+     */
+    public function tournamentShowAction(Tournament $tournament)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('AppBundle:SignUpTournament')
+            ->signUpUserOrder($tournament);
+
+        return $this->render('tournament/show.twig', array(
+            'tournament' => $tournament,
+            'users' => $users
+        ));
+    }
+
+    /**
+     * @Route("/{id}", name="tournament_panel")
+     */
+    public function tournamentPanelAction(Tournament $tournament)
+    {
+
+        return $this->render('tournament/_panel.twig', array(
+            'tournament' => $tournament,
+        ));
+    }
+
 //
 //    /**
 //     * Creates a new tournament entity.
@@ -167,19 +180,5 @@ class TournamentController extends Controller
 //            ;
 //    }
 
-    /**
-     * @Route("/{id}", name="tournament_show")
-     */
-    public function tournamentShowAction(Tournament $tournament)
-    {
-        $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('AppBundle:SignUpTournament')
-            ->signUpUserOrder($tournament);
-
-            return $this->render('tournament/show.twig', array(
-                'tournament' => $tournament,
-                'users' => $users
-            ));
-    }
 }

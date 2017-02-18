@@ -51,12 +51,27 @@ class Tournament
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    private $postalCode;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $street;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $placeName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $contactGuy;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\SignUpTournament", mappedBy="tournament")

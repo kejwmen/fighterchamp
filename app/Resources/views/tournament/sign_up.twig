@@ -1,5 +1,3 @@
-{% extends 'base.html.twig' %}
-{% block body %}
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
@@ -60,14 +58,11 @@
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
+
+
     <script>
         $("#showSignUp").click(function(){
             $("#editSignUp").removeClass('hide');
         });
     </script>
-
-{% endblock %}
