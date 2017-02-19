@@ -57,10 +57,10 @@ class TournamentController extends Controller
         $users = $em->getRepository('AppBundle:SignUpTournament')
             ->signUpUserOrder($tournament);
 
-        return $this->render('tournament/show.twig', array(
+        return $this->render('tournament/show.twig', [
             'tournament' => $tournament,
             'users' => $users
-        ));
+        ]);
     }
 
     /**
@@ -69,10 +69,34 @@ class TournamentController extends Controller
     public function tournamentPanelAction(Tournament $tournament)
     {
 
-        return $this->render('tournament/_panel.twig', array(
+        return $this->render('tournament/_panel.twig', [
             'tournament' => $tournament,
-        ));
+        ]);
     }
+
+    /**
+     * @Route("/{id}/regulamin", name="tournament_rules", condition="request.isXmlHttpRequest()")
+     */
+    public function tournamentRulesAction(Tournament $tournament)
+    {
+
+        return $this->render('tournament/rules.html.twig', [
+            'tournament' => $tournament,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/kontakt", name="tournament_contact", condition="request.isXmlHttpRequest()")
+     */
+    public function tournamentContactAction(Tournament $tournament)
+    {
+
+        return $this->render('tournament/contact.html.twig', [
+            'tournament' => $tournament,
+        ]);
+    }
+
+
 
 //
 //    /**

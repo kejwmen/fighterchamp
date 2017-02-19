@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<div class="container-fluid">
+<div class="container-fluid" xmlns="http://www.w3.org/1999/html">
     <nav class="navbar-admin">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -23,9 +23,11 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li id="tournament_show">Info</li><br>
-                <li id="tournament_sign_ups">Zgłoszenia</li><br>
-                <li id="tournament_fights">Walki</li>
+                <a href="#"><li id="tournament_show">Info</li></a>
+                <a href="#"><li id="tournament_sign_ups">Zgłoszenia</li></a>
+                <a href="#"><li id="tournament_fights">Walki</li></a>
+                <a href="#"><li id="tournament_rules">Regulamin</li></a>
+                <a href="#"> <li id="tournament_contact">Kontakt</li></a>
             </ul>
         </div>
     </nav>
@@ -50,9 +52,30 @@
                 }
             });
 
-
-
     });
+
+    $( "#tournament_rules" ).click(function() {
+        $.ajax({
+            type: 'GET',
+            url: "{{ path('tournament_rules', {id: tournament.id}) }}",
+            success: function (data) {
+                $(".main").html(data);
+            }
+        });
+    });
+
+    $( "#tournament_contact" ).click(function() {
+        $.ajax({
+            type: 'GET',
+            url: "{{ path('tournament_contact', {id: tournament.id}) }}",
+            success: function (data) {
+                $(".main").html(data);
+            }
+        });
+    });
+
+
+
 
     $( "#tournament_show" ).click(function() {
         $.ajax({
