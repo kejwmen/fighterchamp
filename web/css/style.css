@@ -151,6 +151,16 @@ nav .glyphicon {
     font-size: 20px;;
 }
 
+/*--tournament navbar--*/
+.navbar-admin {
+    background-color: #242222;
+}
+.navbar-admin h1 {
+    font-size: 48px;
+    font-weight: 400;
+    padding-bottom: 30px;
+}
+
 /*--homepage--*/
 
 .wrapper {
@@ -238,18 +248,13 @@ nav .glyphicon {
 
 /*--show--*/
 
-main h3 {
+.tournament-data h3 {
     font-size: 32px;
     font-weight: 300;
 }
 .title {
     background-color: #242222;
-    padding-top: 50px;
     padding-bottom: 50px;
-}
-.title h1 {
-    font-size: 48px;
-    font-weight: 400;
 }
 .date, .place {
     padding-top: 50px;
