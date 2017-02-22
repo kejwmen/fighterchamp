@@ -10,32 +10,32 @@
     <div class="container-fluid">
         <section class="wrapper text-uppercase">
             <div class="row">
-                <a href="{{ path('tournament_fights', {'id' : 1} ) }}" class="deco-none">
+                <a href="{{ path('tournament_list') }}" class="deco-none">
                     <div class="info1 col-xs-12 col-md-6">
                         <img src="{{ asset('img/komunikat.jpg') }}" class="img-responsive center-block">
                         <div class="text-field">
-                            <h1>walki</h1>
+                            <h1>turnieje</h1>
                         </div>
                     </div>
                 </a>
 
                 <div class="col-xs-12 hidden-md hidden-lg">
                     <div class="row">
-                        <a href="{{ path('tournament_show', {'id' : 1} ) }}" class='deco-none'>
+                        <a href="{{ path('fighter_all_show') }}" class='deco-none'>
                             <div class="info2 col-xs-12 col-sm-6 text-left">
                                 <img src="{{ asset('img/wyniki.jpg') }}" class="img-responsive pull-left">
                                 <div class="text-field">
-                                    <h2>Turniej</h2>
+                                    <h2>zawodnicy</h2>
                                 </div>
 
                             </div>
                         </a>
 
                         <div class="info3 col-xs-12 col-sm-6 text-right">
-                            <a href="{{ path('tournament_sign_up', {'id' : 1} ) }}" class='deco-none'>
+                            <a href="{{ path('club_list' ) }}" class='deco-none'>
                                 <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
                                 <div class="text-field">
-                                    <h2>Zapisy</h2>
+                                    <h2>kluby</h2>
                                 </div>
                             </a>
                         </div>
@@ -54,10 +54,10 @@
                 <div class="hidden-xs hidden-sm col-md-6">
                     <div class="row">
                         <div class="info2 col-md-6 text-right">
-                            <a href="{{ path('tournament_show', {'id' : 1} ) }}" class='deco-none'>
+                            <a href="{{ path('fighter_all_show') }}" class='deco-none'>
                                 <img src="{{ asset('img/wyniki.jpg') }}" class="img-responsive pull-right">
                                 <div class="text-field">
-                                    <h2>Turniej</h2>
+                                    <h2>zawodnicy</h2>
                                 </div>
                             </a>
                         </div>
@@ -67,10 +67,10 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="info3 col-md-6 text-right">
-                            <a href="{{ path('tournament_sign_up', {'id' : 1} ) }}" class='deco-none'>
+                            <a href="{{ path('club_list' ) }}" class='deco-none'>
                                 <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
                                 <div class="text-field">
-                                    <h2>zapisy</h2>
+                                    <h2>kluby</h2>
                                 </div>
                             </a>
                         </div>
