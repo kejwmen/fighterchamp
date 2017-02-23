@@ -24,11 +24,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+
+/**
+ * @Route("/zawodnicy")
+ */
 class UserController extends Controller
 {
 
     /**
-     * @Route("/zawodnik", name="fighter_all_show")
+     * @Route("/", name="fighter_all_show")
      */
     public  function showFighters()
     {
@@ -45,7 +49,7 @@ class UserController extends Controller
      * @param User $user
      * @return Response
      *
-     * @Route("/zawodnik/{id}", name="user")
+     * @Route("/{id}", name="user")
      */
     public function showAction(User $user)
     {
@@ -127,11 +131,6 @@ class UserController extends Controller
                 $em->flush($user);
 
             }
-
-
-
-
-
             return new Response(200);
         }
 

@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 /**
- * @Route("/turniej")
+ * @Route("/turnieje")
  */
 class TournamentController extends Controller
 {

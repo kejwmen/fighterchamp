@@ -44,7 +44,6 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
 
-
                 <li {{ (app.request.attributes.get('_route') == 'tournament_list') ? 'class="active"' }}><a
                             href="{{ path ('tournament_list' ) }}">Turnieje</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a
@@ -55,21 +54,6 @@
                             href="{{ path ('rules') }}">Regulamin</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'contact') ? 'class="active"' }}><a
                             href="{{ path ('contact') }}">Kontakt</a></li>
-                <!--
-                <li><a href="https://www.youtube.com/channel/UCVzYun_4r9KEOunDI4OChrQ"><span class="fa fa-youtube"
-                                                                                             style="font-size:30px"></span></a>
-                </li>
-                <li><a href="https://www.facebook.com/B-Fight-429966393808905/"><span class="fa fa-facebook-official"
-                                                                                      style="font-size:30px"></span></a>
-                </li>
-                -->
-                {% if is_granted('ROLE_ADMIN') %}
-                <li {{ (app.request.attributes.get('_route') == 'admin_user_list') ? 'class="active"' }}><a
-                            href="{{ path('admin_tournament_sign_up', { 'id' : 1}) }}">Admin</a></li>
-                {% endif %}
-            </ul>
-            <div class="clearfix"></div>
-            <ul class="nav navbar-nav navbar-right">
                 {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')  %}
                     {% if is_granted('ROLE_USER') %}
                     <li {{ (app.request.attributes.get('_route') == 'my_profile') ? 'class="active"' }}><a
@@ -84,7 +68,6 @@
                     </li>
                 {% endif %}
             </ul>
-        </div>
     </nav>
 </div>
 
