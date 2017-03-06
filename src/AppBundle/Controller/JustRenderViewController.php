@@ -28,7 +28,9 @@ class JustRenderViewController extends Controller
             if($form->isValid()){
 
                 $this->get('appmailer')
-                    ->sendEmail($form['email']->getData(),'Kontakt','Chcę współpracować');
+                    ->sendEmail('slawomir.grochowski@gmail.com','Kontakt',$form['email']->getData());
+
+                $this->addFlash('success', 'Sukces! Twój twój adres email został wysłany! Sławek niebawem się do Ciebię odezwie ;)');
 
                     return $this->redirect($request->getUri());
                 }

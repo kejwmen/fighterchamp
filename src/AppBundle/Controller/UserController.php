@@ -128,7 +128,7 @@ class UserController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $user = $this->getUser()->removeFile();
-                $em->flush($user);
+                $em->flush();
 
             }
             return new Response(200);
