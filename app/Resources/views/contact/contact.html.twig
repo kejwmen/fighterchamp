@@ -12,7 +12,7 @@
         
         <div class="row">
             <div class="text-center col-xs-12">
-                <h1>OUR TEAM</h1>
+                <h1>NASZ ZESPÓŁ</h1>
             </div>
         </div>
         
@@ -32,7 +32,16 @@
                 <h4>Rafał Zieliński</h4>
                 <h5>Graphic Designer</h5>
             </div>
-
+        </div>
+        <div class="row">
+            <div class="text-center col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+                <p>Jeśli chciałbyś pomóc w rozwoju serwisu. Dołącz do nas!</p>
+                <p>Podaj swój email a z pewnością odezwiemy się do Ciebie!</p>
+            {{ form_start(form) }}
+               {{ form_row(form.email) }}
+            <input type="submit" class="btn btn-primary" value="Wyślij" formnovalidate>
+            {{ form_end(form) }}
+            </div>
         </div>
 {% endblock %}
 

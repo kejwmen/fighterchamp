@@ -9,18 +9,36 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Form\ContactType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class JustRenderViewController extends Controller
 {
     /**
      * @Route("/kontakt", name="contact")
      */
-    public function contactController()
+    public function contactController(Request $request)
     {
-        return $this->render('contact/contact.html.twig');
+        $form = $this->createForm(ContactType::class, null);
+
+            $form->handleRequest($request);
+
+            if($form->isValid()){
+
+                $this->get('appmailer')
+                    ->sendEmail($form['email']->getData(),'Kontakt','Chcę współpracować');
+
+                    return $this->redirect($request->getUri());
+                }
+
+
+        return $this->render('contact/contact.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
+
 
     /**
      * @Route("/regulamin", name="rules")
