@@ -130,8 +130,6 @@ nav {
     display: inline-block;
     width: 8px;
     height: 8px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
     border-radius: 50%;
     margin: 4px;
 }
@@ -243,6 +241,7 @@ nav .glyphicon {
 .wrapper .fa {
     font-size: 133px;
     position: relative;
+    -webkit-transform: translateY(25%);
     transform: translateY(25%);
 }
 
@@ -327,6 +326,23 @@ nav .glyphicon {
     height: 45vh;
 }
 
+.team {
+    margin-top: 2em;
+}
+
+.team .member {
+    margin-bottom: 2em;
+}
+
+.team .member img {
+    width: 100%;
+    height: auto;
+    
+    border-radius: 50%;
+    
+    margin-bottom: 2em; 
+}
+
 /*--other--*/
 .poster {
     padding-top: 25px;
@@ -371,6 +387,7 @@ a.deco-none {
     }
     .wrapper .fa {
         padding-top: 30%;
+        -webkit-transform: translateY(-20%);
         transform: translateY(-20%);
     }
 }
