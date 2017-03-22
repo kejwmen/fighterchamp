@@ -45,7 +45,7 @@
         </table>
         <h3>Liczba zgłoszeń zapłaconych ale zawodnik później się wycofał {{ signUpsPaidBuTDeleted|length }}</h3>
 
-        {% include 'admin/_sign_ups.html.twig' with signUps : signUpsPaidBuTDeleted %}
+        {% include 'admin/_sign_ups.html.twig' with {signUps : signUpsPaidBuTDeleted} %}
 
 
     </div>

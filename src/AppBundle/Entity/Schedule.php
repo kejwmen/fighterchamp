@@ -36,7 +36,12 @@ class Schedule
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datetime;
+    private $start;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $end;
 
     /**
      * @return mixed
@@ -89,18 +94,36 @@ class Schedule
     /**
      * @return mixed
      */
-    public function getDatetime()
+    public function getStart()
     {
-        return $this->datetime;
+        return $this->start;
     }
 
     /**
-     * @param mixed $datetime
+     * @param mixed $start
      */
-    public function setDatetime($datetime)
+    public function setStart($start)
     {
-        $this->datetime = $datetime;
+        $this->start = $start;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * @param mixed $end
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+    }
+
+
 
 
 

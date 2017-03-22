@@ -44,43 +44,31 @@
                 <div class="key-points col-xs-12 col-md-9">
                     <h3 class="text-uppercase">harmonogram</h3>
 
-                    <h4>Sobota (11.02.2017)</h4>
-                    <ul class="list-unstyled">
-                        <li>14:30 - 15:30 &#8211; waga zawodników</li>
-                        <li>15:30 - 16:00 &#8211; konferencja i ustalanie par</li>
-                        <li>16:00 - 20:00 &#8211; walki sparingowe kadetów, juniorów, zawodników kategorii A
-                            i walki meczowe między klubami Legia Fight Club a UniQ Fight Club
-                        </li>
-                    </ul>
-                    <h4>Niedziela (12.02.2017)</h4>
+                    <h4>Sobota (22.04.2017)</h4>
                     <ul class="list-unstyled">
                         <li>09:30 - 10:30 &#8211; waga zawodników</li>
-                        <li>10:30 - 11:00 &#8211; konferencja i ustalanie par</li>
-                        <li>11:00 - 17:00 &#8211; sparingi w klasach B i C, także walki kobiet</li>
+                        <li>10:30 - 11:00 &#8211; ustalanie par</li>
+                        <li>11:00 - 17:00 &#8211; walki</li>
                     </ul>
-
-                    {#{% for schedule in tournament.schedule %}#}
-                    {#<p><strong>{{ schedule.datetime| date('H:i') }}</strong><span>&mdash;</span>{{ schedule.description }}</p>#}
-                    {#{%  endfor %}#}
 
                     <h3>Wymagane:</h3>
                     <ul>
-                        <li>opłata startowa 35zł (płatne w siedzibie klubu albo przedpłata przelewem), opłata musi
-                            zostać
-                            uiszczona do dnia 06.02.2017 (przedłużone do 09.02.2017)
+                        <li>opłata startowa 30 zł do końca marca, póżniej 35 zł (płatne w siedzibie klubu albo przedpłata przelewem), opłata musi
+                            zostać uiszczona do {{ tournament.signUpTill | date('Y-m-d') }} ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})
+                        </li>
+                        <li>
+                            zaświadczenie lekarskie (może być od lekarza pierwszego kontaktu), że nie ma przeciwskazań do uprawiania dyscypliny jaką jest boks.
                         </li>
                         <li>niepełnoletni muszą posiadać badania sportowo - lekarskie oraz
                             <a href="{{ asset('documents/oświadczenie-Granda-dziecko.docx') }}">oświadczenie podpisane
-                                przez
-                                prawnego opiekuna</a></li>
-                        <li>podpisane oświadczenie <a href="{{ asset('documents/oświadczenie-Granda.docx') }}"> wersja
-                                dla
-                                kobiet</a> oraz <a href="{{ asset('documents/oświadczenie-Granda-kobiety.docx') }}">
+                                przez prawnego opiekuna</a></li>
+                        <li>oświadczenie <a href="{{ asset('documents/oświadczenie-Granda.docx') }}"> wersja
+                                dla kobiet</a> oraz <a href="{{ asset('documents/oświadczenie-Granda-kobiety.docx') }}">
                                 wersja dla mężczyzn</a></li>
                     </ul>
                 </div>
                 <aside class="col-xs-12 col-md-3">
-                    <img src="{{ asset('img/plakatXXI.jpg') }}" class="img-responsive center-block">
+                    {#<img src="{{ asset('img/plakatXXI.jpg') }}" class="img-responsive center-block">#}
                 </aside>
             </div>
         </section>

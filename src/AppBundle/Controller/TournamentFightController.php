@@ -40,7 +40,7 @@ class TournamentFightController extends Controller
             ->findAllFightsByDay($tournament, 'Niedziela');
 
 
-        return $this->render('tournament/fights.html.twig', [
+        return $this->render(($tournament->getId() != 2)? 'tournament/fights.html.twig': 'tournament/fights2.html.twig', [
             'fightsSobota' => $fightsSobota,
             'fightsNiedziela' => $fightsNiedziela
         ]);

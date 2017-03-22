@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 /**
- * @Route("/turniej")
+ * @Route("/turnieje")
  */
 class TournamentSignUpController extends Controller
 {
@@ -48,11 +48,6 @@ class TournamentSignUpController extends Controller
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
 
             $user = $this->getUser();
-
-            if ($user->getBirthDay() == null) {
-                return $this->redirectToRoute("regi");
-            }
-
 
             $isUserRegister = $em->getRepository('AppBundle:SignUpTournament')
                 ->findOneBy([
@@ -143,7 +138,7 @@ class TournamentSignUpController extends Controller
                 $age = 'młodzik';
             }
 
-            return $this->render('tournament/sign_up.twig', array(
+            return $this->render('tournament/sign_up2.twig', array(
                 'form' => $form->createView(),
                 'formDelete' => $formDelete->createView(),
                 'age' => $age,
@@ -157,7 +152,7 @@ class TournamentSignUpController extends Controller
 
         }
 
-        return $this->render('tournament/sign_up.twig', array(
+        return $this->render('tournament/sign_up2.twig', array(
             'tournament' => $tournament,
             'users' => $users,
             'fights' => $fights,

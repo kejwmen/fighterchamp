@@ -3,7 +3,7 @@
     <tr>
         <th>#</th>
         <th>Nazwa</th>
-        <th>Liczba Uczestników</th>
+        {#<th>Liczba Uczestników</th>#}
         <th>Data</th>
         <th>Miasto</th>
         <th>Miejsce</th>
@@ -15,7 +15,7 @@
         <tr>
             <td>{{ loop.index }}</td>
             <td><a href="{{ path('tournament_panel', {'id': tournament.id }) }}">{{ tournament.name }}</a></td>
-            <td>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</td>
+            {#<td>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</td>#}
             <td>{{ tournament.start|date('Y-m-d') }}</td>
             <td>{{ tournament.city }}</td>
             <td>{{ tournament.placeName }}</td>

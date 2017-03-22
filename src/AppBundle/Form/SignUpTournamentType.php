@@ -41,7 +41,8 @@ class SignUpTournamentType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\SignUpTournament',
             'trait_choices' => null,
-            'user_id' => null
+            'user_id' => null,
+            'csrf_protection'   => false,
         ));
     }
 }

@@ -33,7 +33,7 @@ class TournamentController extends Controller
      *
      * @Route("/", name="tournament_list")
      */
-    public function tournamentListAction()
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -50,14 +50,15 @@ class TournamentController extends Controller
     /**
      * @Route("/show/{id}", name="tournament_show", condition="request.isXmlHttpRequest()")
      */
-    public function tournamentShowAction(Tournament $tournament)
+    public function showAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
 
         $users = $em->getRepository('AppBundle:SignUpTournament')
             ->signUpUserOrder($tournament);
 
-        return $this->render('tournament/show.twig', [
+        return $this->render(($tournament->getId() != 2)? 'tournament/show.twig': 'tournament/show2.twig',
+            [
             'tournament' => $tournament,
             'users' => $users
         ]);
@@ -66,7 +67,7 @@ class TournamentController extends Controller
     /**
      * @Route("/{id}", name="tournament_panel")
      */
-    public function tournamentPanelAction(Tournament $tournament)
+    public function panelAction(Tournament $tournament)
     {
 
         return $this->render('tournament/_panel.twig', [
@@ -77,10 +78,15 @@ class TournamentController extends Controller
     /**
      * @Route("/{id}/regulamin", name="tournament_rules", condition="request.isXmlHttpRequest()")
      */
-    public function tournamentRulesAction(Tournament $tournament)
+    public function rulesAction(Tournament $tournament)
     {
+        if($tournament->getId() == 2){
 
-        return $this->render('tournament/rules.html.twig', [
+        }
+
+
+        return $this->render(($tournament->getId() != 2)? 'tournament/rules.html.twig': 'tournament/rules2.html.twig',
+            [
             'tournament' => $tournament,
         ]);
     }
@@ -88,7 +94,7 @@ class TournamentController extends Controller
     /**
      * @Route("/{id}/kontakt", name="tournament_contact", condition="request.isXmlHttpRequest()")
      */
-    public function tournamentContactAction(Tournament $tournament)
+    public function contactAction(Tournament $tournament)
     {
 
         return $this->render('tournament/contact.html.twig', [

@@ -93,6 +93,12 @@ class Tournament
      */
     private $end;
 
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $signUpTill;
+
     /**
      * @return mixed
      */
@@ -281,6 +287,24 @@ class Tournament
     {
         return $this->schedule;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSignUpTill()
+    {
+        return $this->signUpTill;
+    }
+
+    /**
+     * @param mixed $signUpTill
+     */
+    public function setSignUpTill($signUpTill)
+    {
+        $this->signUpTill = $signUpTill;
+    }
+
+
 
 
 
