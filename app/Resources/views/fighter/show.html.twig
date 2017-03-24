@@ -36,11 +36,14 @@
             {% for fight in fights %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>{{ fight.tournament.name }}</td>
+                        <td>
+                            <a href="{{ path('tournament_panel', {'id' : fight.tournament.id  }) }}"> {{ fight.tournament.name }} </a>
+                        </td>
                         {% for signUp in fight.signuptournament %}
                             {% if signUp.user.id != user.id %}
-                                <td><a href='/zawodnik/{{ signUp.user.id  }}'>{{ signUp.user.name }} {{ signUp.user.surname }}</a>
-                                    </td>
+                                <td>
+                                    <a href="{{ path('user', {'id' : signUp.user.id  }) }}">{{ signUp.user.name }} {{ signUp.user.surname }}</a>
+                                </td>
                             {% endif %}
                         {% endfor %}
                         <td>

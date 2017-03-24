@@ -38,7 +38,7 @@ class TournamentController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $tournaments = $em->getRepository('AppBundle:Tournament')
-            ->findAll();
+            ->findBy([],['id' => 'DESC']);
 
 
         return $this->render('tournament/list.twig', array(
