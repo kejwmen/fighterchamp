@@ -78,19 +78,20 @@
             </div>
         </div>
     </div>
-    <script>
-        $("#showSignUp").click(function(){
-            $("#editSignUp").removeClass('hide');
-        });
-    </script>
-    </div>
 {% endblock %}
 
 {% block javascripts %}
 
     {{ parent() }}
 
+
+
     <script>
+
+        $("#showSignUp").click(function(){
+            $("#editSignUp").removeClass('hide');
+        });
+
         $( "#tournament_rules" ).click(function() {
             $.ajax({
                 type: 'GET',
