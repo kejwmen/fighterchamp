@@ -24,19 +24,6 @@
 .table.table-borderless th {
     border-top: 0;
 }
-.rules ol {
-    counter-reset: item;
-}
-.rules ol>li {
-    display: block;
-}
-.rules ol>li:before {
-    content: counters(item, ".") " ";
-    counter-increment: item;
-}
-.rules h1 {
-    display: inline-block;
-}
 address {
     font-size: 200%;
     padding-top: 5%
@@ -343,6 +330,37 @@ nav .glyphicon {
     margin-bottom: 2em; 
 }
 
+/*--rules--*/
+.rules h3 {
+    display: inline-block;
+}
+.rules dl, .rules dd {
+    margin-left: 40px;
+}
+.rules ol, .rules dl {
+    counter-reset: item;
+}
+.rules ol>li {
+    display: block;
+}
+.rules ol>li:before, .rules dl>dt:before {
+    content: counters(item, ".");
+    counter-increment: item;
+    padding-right: 1em;
+    font-weight: 400;
+}
+
+.rules ol.lower-latin {
+    counter-reset: letter;
+}
+.rules ol.lower-latin>li::before {
+    counter-increment: letter;
+    content: counter(letter, lower-latin) ")";
+}
+.rules p {
+    margin-top: 40px;
+    font-size: 14px;
+}
 /*--other--*/
 .poster {
     padding-top: 25px;
