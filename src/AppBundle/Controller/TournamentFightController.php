@@ -13,6 +13,7 @@ use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 /**
- * @Route("/turniej")
+ * @Route("/turnieje")
  */
 class TournamentFightController extends Controller
 {
@@ -31,18 +32,19 @@ class TournamentFightController extends Controller
      */
     public function resultAction(Tournament $tournament)
     {
-
         $em = $this->getDoctrine()->getManager();
-        $fightsSobota = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsByDay($tournament, 'Sobota');
+        $old_arr = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsForTournament($tournament);
 
-        $fightsNiedziela = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsByDay($tournament, 'Niedziela');
+        $arr = array();
 
+        foreach($old_arr as $item)
+        {
+            $arr[$item->getDay()->format('Y-m-d')][]= $item;
+        }
 
-        return $this->render(($tournament->getId() != 2)? 'tournament/fights.html.twig': 'tournament/fights2.html.twig', [
-            'fightsSobota' => $fightsSobota,
-            'fightsNiedziela' => $fightsNiedziela
+        return $this->render('tournament/fights.html.twig', [
+            'fightsByDay' => $arr
         ]);
     }
 }

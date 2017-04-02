@@ -1,9 +1,22 @@
 <div class="container">
  <div class="row">
-     <h1>Sobota (11.02.2017)</h1>
-           {%  include 'tournament/_fights.html.twig' with {fights : fightsSobota} %}
-     <h1>Niedziela (12.02.2017)</h1>
-           {%  include 'tournament/_fights.html.twig' with {fights : fightsNiedziela} %}
-        </div>
+
+     {% if not fightsByDay %}
+         <p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>
+     {% endif %}
+
+     {%  for fightByDay in fightsByDay %}
+
+         <h1>{{ fightByDay[0].day  |localizeddate('none', 'full', app.request.locale, null, 'cccc') }} {{ fightByDay[0].day | date('d-m-Y') }}</h1>
+
+     {%  include 'tournament/_fights.html.twig' with { fights : fightByDay } %}
+
+     {% endfor %}
+
+ </div>
 </div>
+
+
+
+
 

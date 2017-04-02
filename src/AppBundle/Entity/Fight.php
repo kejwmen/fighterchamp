@@ -81,7 +81,7 @@ class Fight
 
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $day;
 
@@ -250,6 +250,8 @@ class Fight
     {
         $this->day = $day;
     }
+
+
 
 
 
