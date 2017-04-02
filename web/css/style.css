@@ -361,6 +361,29 @@ nav .glyphicon {
     margin-top: 40px;
     font-size: 14px;
 }
+
+/*--error 404--*/
+.error {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+}
+.error h1 {
+    font-size: 50px;
+    line-height: 1.5em;
+    color: #DA1D1D;
+    margin: 50px;
+}
+.error p {
+    line-height: 2.25em;
+}
+.error p small {
+    font-size: .75em;
+}
+
+
 /*--other--*/
 .poster {
     padding-top: 25px;
