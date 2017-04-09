@@ -29,19 +29,24 @@ class Schedule
     private $tournament;
 
     /**
-     * @ORM\Column(type="string",  nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $start;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $end;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $type;
 
     /**
      * @return mixed
@@ -123,7 +128,21 @@ class Schedule
         $this->end = $end;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
 
 
