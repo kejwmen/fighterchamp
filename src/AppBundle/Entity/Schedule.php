@@ -29,7 +29,7 @@ class Schedule
     private $tournament;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",  nullable=true)
      */
     private $description;
 
