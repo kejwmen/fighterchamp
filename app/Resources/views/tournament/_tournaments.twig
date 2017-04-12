@@ -19,8 +19,8 @@
             {% for schedule in tournament.schedule %}
                 {% if schedule.type == 'final' %}
                <td>{{ schedule.start|date('d-m-Y') }}</td>
-                {% elseif schedule.type == 'month' %}
-               <td>{{ schedule.start|date('m-Y') }}</td>
+                {#{% elseif schedule.type == 'month' %}#}
+               {#<td>{{ schedule.start|date('m-Y') }} month</td>#}
                 {% endif %}
             {% endfor %}
             <td>{{ tournament.city }}</td>
