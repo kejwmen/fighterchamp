@@ -9,11 +9,9 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\Brawl;
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Fighter;
 use AppBundle\Entity\Tournament;
 use AppBundle\Form\EditUser;
 use AppBundle\Form\RegistrationType;
