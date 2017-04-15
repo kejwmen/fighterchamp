@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -264,21 +265,15 @@ class Tournament
     }
 
 
-    /**
-     * @return mixed
-     */
     public function getSignUpTournament()
     {
-        return $this->signUpTournament;
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('deleted_at', null));
+
+        return $this->signUpTournament->matching($criteria);
     }
 
-    /**
-     * @param mixed $signUpTournament
-     */
-    public function setSignUpTournament($signUpTournament)
-    {
-        $this->signUpTournament = $signUpTournament;
-    }
+
 
     /**
      * @return mixed

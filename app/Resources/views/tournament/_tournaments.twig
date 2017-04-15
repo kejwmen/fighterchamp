@@ -1,13 +1,13 @@
-<table class="table table-striped">
+<table class="table table-striped text-center">
     <thead>
     <tr>
-        <th>#</th>
-        <th>Nazwa</th>
-        {#<th>Liczba Uczestników</th>#}
-        <th>Data</th>
-        <th>Miasto</th>
-        <th>Miejsce</th>
-        <th>Ulica</th>
+        <th class="text-center">#</th>
+        <th class="text-center">Nazwa</th>
+        <th class="text-center">Liczba Uczestników</th>
+        <th class="text-center">Data</th>
+        <th class="text-center">Miasto</th>
+        <th class="text-center">Miejsce</th>
+        <th class="text-center">Ulica</th>
     </tr>
     </thead>
     <tbody>
@@ -15,7 +15,7 @@
         <tr>
             <td>{{ loop.revindex }}</td>
             <td><a href="{{ path('tournament_panel', {'id': tournament.id }) }}">{{ tournament.name }}</a></td>
-            {#<td>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</td>#}
+            <td>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</td>
             {% for schedule in tournament.schedule %}
                 {% if schedule.type == 'final' %}
                <td>{{ schedule.start|date('d-m-Y') }}</td>
