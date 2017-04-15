@@ -43,7 +43,6 @@ class TournamentController extends Controller
 
         return $this->render('tournament/list.twig', array(
             'tournaments' => $tournaments,
-            //'adminTournaments'=> $adminTournaments ?? null
         ));
     }
 
