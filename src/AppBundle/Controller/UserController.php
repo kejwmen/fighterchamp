@@ -70,8 +70,6 @@ class UserController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForUser($user);
 
-        dump($user->getClub()->getName()?? null);
-
 
         return $this->render('fighter/show.html.twig', [
             'user' => $user,
