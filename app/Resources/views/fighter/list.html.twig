@@ -3,10 +3,9 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <table class="table table-striped text-center">
+                <table id="table" class="table table-striped text-center">
                     <thead>
                     <tr>
-                        <th class="text-center">#</th>
                         <th>Nazwisko i Imię</th>
                         <th class="text-center">Płeć</th>
                         <th class="text-center">Wiek</th>
@@ -16,13 +15,12 @@
                     <tbody>
                     {% for user in users %}
                         <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
-                            <td>{{ loop.index }}</td>
                             <td class="text-left"><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}</a>
                             </td>
                             <td> {{ user.male ?  'M' : 'K' }}</td>
                             <td> {{ user.birthDay |getAge }} </td>
                             <td> {% if user.club %}
-                                <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}</a>
+                                    <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}</a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -33,4 +31,3 @@
         </div>
     </div>
 {% endblock %}
-

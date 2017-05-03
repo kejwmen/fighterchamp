@@ -11,7 +11,11 @@
           integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <script src="{{ asset('vue.js') }}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <meta property="og:image" content=""/>
     <meta property="og:title" content="Fighter Champ | Amatorska liga turniejów sportów walki"/>
     <meta property="og:description" content="Fighter Champ | Amatorska liga turniejów sportów walki"/>
@@ -50,6 +54,8 @@
                             href="{{ path ('fighter_all_show') }}">Zawodnicy</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'club_list') ? 'class="active"' }}><a
                             href="{{ path ('club_list') }}">Kluby</a></li>
+                {#<li {{ (app.request.attributes.get('_route') == 'tqm_nowosci') ? 'class="active"' }}><a#}
+                            {#href="{{ path ('tqm_nowosci') }}">TQM</a></li>#}
                 <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a
                             href="{{ path ('rules') }}">Regulamin</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'contact') ? 'class="active"' }}><a
@@ -94,7 +100,17 @@
             data-position="bottom"
             data-close-text="Rozumiem">
     </script>
-    <script src="{{ asset('bundles/petkoparacrudgenerator/js/petkopara-crud-generator.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#table').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+                },
+                "bPaginate": false
+            });
+        });
+    </script>
 {% endblock %}
 </body>
 </html>

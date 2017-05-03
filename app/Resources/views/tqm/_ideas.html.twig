@@ -1,0 +1,63 @@
+<div id="app">
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>opis</th>
+        <th>strona</th>
+        <th>pomysłodawcy</th>
+        <th>wykonawcy</th>
+        <th>czas wykonania (godziny:minuty)</th>
+        <th>data</th>
+    </tr>
+    {% for idea in ideas %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ idea.description }}</td>
+        <td><a href="{{ idea.www }}">{{ idea.www }}</a></td>
+        <td>
+        {% for userTask in idea.userTasks %}
+            {{ userTask.idea ? userTask.User }}
+        {%  endfor %}
+        </td>
+        <td>
+        {% for userTask in idea.userTasks %}
+            {{ userTask.idea ? '' : userTask.User }}
+        {%  endfor %}
+            <button v-if="help" class="btn-success">Pomogę!</button>
+                <button v-else class="btn-danger">Niepomogę</button>
+        </td>
+        <td>{{ idea.minutes|hoursToMins }}</td>
+        <td>{{ idea.createdAt|date('d-m-Y') }}</td>
+        <th></th>
+    </tr>
+    {% endfor %}
+</table>
+<button type="button" @click="test()" class="btn btn-primary">Dodaj nowy pomysł</button>
+</div>
+{% block javascripts %}
+    <script>
+        new Vue({
+            el: '#app',
+            delimiters: ['${', '}'],
+            data: {
+                help: {{ test|json_encode() }},
+                title: "",
+                userId: {{ app.user.id|json_encode }},
+                message: 'Siema'
+            },
+            methods: {
+                test (arg){
+                    this.help = !this.help;
+                }
+            }
+        });
+
+        axios.post('{{ path('tqm_i_will_help', {'id' : 1 }) }}')
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    </script>
+{% endblock %}

@@ -134,6 +134,11 @@ class User implements UserInterface, Serializable
     }
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTask", mappedBy="user")
+     */
+    private $userTasks;
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Email()
      * @ORM\Column(type="string", unique=true)
@@ -196,31 +201,12 @@ class User implements UserInterface, Serializable
      */
     private $signUpTournament;
 
-//    /**
-//     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="users")
-//     * */
-//    private $fights;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $create_time;
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getFights()
-//    {
-//        return $this->fights;
-//    }
-//
-//    /**
-//     * @param mixed $fights
-//     */
-//    public function setFights($fights)
-//    {
-//        $this->fights = $fights;
-//    }
 
     public function getUsername()
     {
@@ -454,6 +440,15 @@ class User implements UserInterface, Serializable
     public function getPlec()
     {
        return ($this->getMale()) ? 'M' : 'K';
+    }
+
+    public function getAge()
+    {
+        $referenceDateTimeObject = new \DateTime('now');
+
+        $diff = $referenceDateTimeObject->diff($this->getBirthDay());
+
+        return $diff->y;
     }
 
 

@@ -3,21 +3,19 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <table class="table table-striped">
+                <table id="table" class="table">
                     <thead>
                     <tr>
-                        <th>#</th>
                         <th>Nazwa</th>
-                        <th>Liczba Zawodników</th>
+                        <th class="text-center">Liczba Zawodników</th>
                         {#<th>Miasto</th>#}
                     </tr>
                     </thead>
                     <tbody>
                     {% for arr in clubs %}
                         <tr>
-                            <td>{{ loop.index }}</td>
                             <td><a href="{{ path('club_show', {'id': arr[0].id }) }}">{{ arr[0].name }}</a></td>
-                            <td>{{ arr[0].users |length }}</td>
+                            <td class="text-center">{{ arr[0].users |length }}</td>
                             {#<td>{{ arr[0].club.city }}</td>#}
                         </tr>
                     {% endfor %}

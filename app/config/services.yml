@@ -8,6 +8,22 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+  normalizer.user:
+        class: AppBundle\Serializer\Normalizer\UserNormalizer
+        autowire: true
+
+  normalizer.club:
+        class: AppBundle\Serializer\Normalizer\ClubNormalizer
+        autowire: true
+
+  serializer_club:
+        class: Symfony\Component\Serializer\Serializer
+        arguments: [["@normalizer.club"], ["@serializer.encoder.json"]]
+
+  serializer_user:
+        class: Symfony\Component\Serializer\Serializer
+        arguments: [["@normalizer.user"], ["@serializer.encoder.json"]]
+
   app.security.login_form_authenticator:
     class: AppBundle\Security\LoginFormAuthenticator
     autowire: true

@@ -15,6 +15,7 @@ class AppExtension extends Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('getAge', array($this, 'getAgefilter')),
+            new \Twig_SimpleFilter('hoursToMins', array($this, 'hoursToMins')),
         );
     }
 
@@ -32,6 +33,17 @@ class AppExtension extends Twig_Extension
 
         return $diff->y;
     }
+
+
+    function hoursToMins($time, $format = '%2d:%02d') {
+        if ($time < 1) {
+            return;
+        }
+        $hours = floor($time / 60);
+        $minutes = ($time % 60);
+        return sprintf($format, $hours, $minutes);
+    }
+
 
     public function getName()
     {

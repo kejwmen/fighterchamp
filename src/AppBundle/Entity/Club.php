@@ -4,8 +4,11 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
+ *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ClubRepository")
  * @ORM\Table(name="club")
  */
@@ -19,7 +22,6 @@ class Club
     }
 
     /**
-     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -28,15 +30,11 @@ class Club
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="city", type="string", length=255, nullable=true)
      */
     private $city;
@@ -62,7 +60,6 @@ class Club
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string
      */
     private $imageName;
 

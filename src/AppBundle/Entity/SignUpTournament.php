@@ -131,6 +131,13 @@ class SignUpTournament
     }
 
 
+    public function getName()
+    {
+        return "Siema";
+    }
+
+
+
     /**
      * @return mixed
      */

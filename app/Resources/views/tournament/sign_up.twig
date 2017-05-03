@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12" id="app">
 {% if date('now') < tournament.signUpTill %}
             <p class="text-center">Zgłoszenia przyjmowane są do {{ tournament.signUpTill | date('Y-m-d') }}
                 ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})</p>
@@ -27,9 +27,9 @@
         <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
         {{ form_end(formDelete)  }}
             <br>
-            <button id="showSignUp" class="btn btn-primary align-left" >Edytuj</button> <br>
+            <button @click="show = !show" class="btn btn-primary align-left" >Edytuj</button> <br>
 
-            <div id="editSignUp" class="hide col-xs-12">{% include 'tournament/_sign_up_form.html.twig' %}</div>
+            <div v-if="show" class="hide col-xs-12">{% include 'tournament/_sign_up_form.html.twig' %}</div>
             {% if not isUserRegister.isPaid %}
         <br>
         <p><small>
@@ -58,8 +58,4 @@
         </div>
     </div>
 </div>
-    <script>
-        $("#showSignUp").click(function(){
-            $("#editSignUp").removeClass('hide');
-        });
-    </script>
+

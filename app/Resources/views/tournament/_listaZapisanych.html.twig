@@ -1,6 +1,5 @@
- <table class="table table-striped">
+ <table id="table" class="table table-striped">
         <thead>
-            <th>#</th>
             <th>Nazwisko i Imię</th>
             <th class="text-center">Płeć</th>
             <th class="text-center">Klasa</th>
@@ -13,7 +12,6 @@
         <tbody>
         {% for signUp in signUpTournament %}
             <tr>
-                <td>{{ loop.index }}</td>
                 <td><a href="{{ path('user', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
                 <td class="text-center"> {{ signUp.User.male ?  'M' : 'K' }} </td>
                 <td class="text-center"> {{ signUp.formula }} </td>
@@ -22,7 +20,6 @@
                 <td class="text-center"> {% if signUp.User.club %}
                     <a href="{{ path('club_show', {'id': signUp.User.club.id }) }}"> {{ signUp.User.getClub() }}</a></td>
                 {% endif %}
-
                 <td class="text-center"> {{ signUp.isPaid ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' }} </td>
             </tr>
         {% endfor %}

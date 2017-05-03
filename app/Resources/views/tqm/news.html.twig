@@ -3,8 +3,13 @@
 {% block body %}
     <div class="container">
         <div class="row">
-Sławomir Grochowski  - dodanie kolumny "Liczba uczestników", wycentrowanie treści w kolumnach - http://fighterchamp.pl/turnieje/ 2h
-
+            <div class="col-xs-12">
+                <h1>Nowe Pomysły:</h1>
+                {% include 'tqm/_ideas.html.twig' %}
+                <h1>Zrobione:</h1>
+                {% include 'tqm/_tasks.html.twig' %}
+            </div>
         </div>
     </div>
 {% endblock %}
+

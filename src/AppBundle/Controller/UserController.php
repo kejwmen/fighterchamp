@@ -9,18 +9,15 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\Fight;
-use AppBundle\Entity\SignUpTournament;
+
 use AppBundle\Entity\User;
-use AppBundle\Entity\Tournament;
 use AppBundle\Form\EditUser;
-use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Session\Session;
+
 
 
 /**
@@ -44,6 +41,22 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/json", name="fighters_json")
+     */
+    public function FightersJson()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $club = $em->getRepository('AppBundle:User')
+            ->findAll();
+
+        $serializer = $this->get('serializer_user');
+        $club = $serializer->serialize($club, 'json');
+
+        return new Response($club, 200, ['Content-Type' => 'application/json']);
+    }
+
+
+    /**
      * @param User $user
      * @return Response
      *
@@ -56,6 +69,8 @@ class UserController extends Controller
 
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForUser($user);
+
+        dump($user->getClub()->getName()?? null);
 
 
         return $this->render('fighter/show.html.twig', [

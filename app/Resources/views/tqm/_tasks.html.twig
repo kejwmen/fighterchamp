@@ -1,0 +1,32 @@
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>opis</th>
+        <th>strona</th>
+        <th>pomysłodawcy</th>
+        <th>wykonawcy</th>
+        <th>czas wykonania (godziny:minuty)</th>
+        <th>data</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ task.description }}</td>
+        <td><a href="{{ task.www }}">{{ task.www }}</a></td>
+        <td>
+        {% for userTask in task.userTasks %}
+            {{ userTask.idea ? userTask.User }}
+        {%  endfor %}
+        </td>
+        <td>
+        {% for userTask in task.userTasks %}
+            {{ userTask.idea ? '' : userTask.User }}
+        {%  endfor %}
+        </td>
+        <td>{{ task.minutes|hoursToMins }}</td>
+        <td>{{ task.createdAt|date('d-m-Y') }}</td>
+        <th></th>
+    </tr>
+    {% endfor %}
+</table>
+

@@ -1,4 +1,9 @@
 /*slawek*/
+
+button, input, optgroup, select, textarea {
+    color: black;
+}
+
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
     color: grey;
 }
