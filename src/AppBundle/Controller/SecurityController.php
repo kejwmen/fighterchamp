@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class SecurityController extends Controller
 {
@@ -263,6 +264,72 @@ class SecurityController extends Controller
     public function logoutAction()
     {
 
+    }
+
+    /**
+     * @Route("/mojprofil", name="my_profile")
+     */
+    public function showMyProfile(Request $request)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+
+            return $this->redirectToRoute("login");
+        }
+
+        $user_id = $this->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:User')
+            ->findOneBy(['id' => $user_id]);
+
+        $fights = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsForUser($user);
+
+        $form = $this->createForm(EditUser::class, $user,
+            [
+                'entity_manager' => $em
+            ]
+        );
+
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+        }
+
+
+        return $this->render(
+            'fighter/edit.html.twig',
+            [
+                'user' => $user,
+                'fights' => $fights,
+                'form' => $form->createView()
+            ]
+        );
+
+    }
+
+    /**
+     * @Route("/setnullonimage", name="setNullOnImage", options={"expose"=true})
+     */
+    public function setNullOnImageFile()
+    {
+        $session = new Session();
+        $session->set('imageName', null);
+
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+
+            $em = $this->getDoctrine()->getManager();
+            $this->getUser()->removeFile();
+            $em->flush();
+
+        }
+        return new Response(200);
     }
 
 
