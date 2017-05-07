@@ -41,7 +41,7 @@
                     {% if is_granted('ROLE_USER') and isUserRegister  %}
                     <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>
 
-                    {% include 'tournament/_listaZapisanych.html.twig' with {signUpTournament : [isUserRegister]} only %}
+                    {% include 'tournament/_twojeZgloszeniehtml.twig' with {signUpTournament : [isUserRegister]} only %}
 
                     {{ form_start(formDelete) }}
                     <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
@@ -88,9 +88,6 @@
 {% block javascripts %}
 
     {{ parent() }}
-
-
-
     <script>
         new Vue({
             el: '#app',
