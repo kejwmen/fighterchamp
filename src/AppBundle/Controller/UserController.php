@@ -40,20 +40,20 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/json", name="fighters_json")
-     */
-    public function FightersJson()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $club = $em->getRepository('AppBundle:User')
-            ->findAll();
-
-        $serializer = $this->get('serializer_user');
-        $club = $serializer->serialize($club, 'json');
-
-        return new Response($club, 200, ['Content-Type' => 'application/json']);
-    }
+//    /**
+//     * @Route("/json", name="fighters_json")
+//     */
+//    public function FightersJson()
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//        $club = $em->getRepository('AppBundle:User')
+//            ->findAll();
+//
+//        $serializer = $this->get('serializer_user');
+//        $club = $serializer->serialize($club, 'json');
+//
+//        return new Response($club, 200, ['Content-Type' => 'application/json']);
+//    }
 
 
     /**

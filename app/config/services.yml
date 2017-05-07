@@ -16,9 +16,17 @@ services:
         class: AppBundle\Serializer\Normalizer\ClubNormalizer
         autowire: true
 
+  normalizer.task:
+        class: AppBundle\Serializer\Normalizer\TaskNormalizer
+        autowire: true
+
   serializer_club:
         class: Symfony\Component\Serializer\Serializer
         arguments: [["@normalizer.club"], ["@serializer.encoder.json"]]
+
+  serializer_task:
+        class: Symfony\Component\Serializer\Serializer
+        arguments: [["@normalizer.task"], ["@serializer.encoder.json"]]
 
   serializer_user:
         class: Symfony\Component\Serializer\Serializer

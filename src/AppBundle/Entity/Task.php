@@ -30,7 +30,6 @@ class Task
      */
     private $id;
 
-
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTask", mappedBy="task")
      */

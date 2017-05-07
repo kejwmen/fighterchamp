@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
+use AppBundle\Entity\UserTask;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,32 +25,47 @@ class TQMController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $tasks = $em->getRepository('AppBundle:Task')->findAllTasks();
+        $tasksDone = $em->getRepository('AppBundle:Task')->findAllTasks();
 
-        $ideas = $em->getRepository('AppBundle:Task')->findAllIdeas();
+        $tasks = $em->getRepository('AppBundle:Task')->findAllIdeas();
 
+        $serializer = $this->get('serializer_task');
+        $json = $serializer->serialize($tasks,'json');
+
+        dump($json);
 
 
         return $this->render('tqm/news.html.twig', [
-            'tasks' => $tasks,
-            'ideas' => $ideas,
-            'test' => true
+            'tasks' => $json,
+            'ideas' => $tasks,
+            'test' => true,
         ]);
     }
 
-///condition="request.isXmlHttpRequest()
-
     /**
-     * @Route("/tqm/task/{id}", name="tqm_i_will_help")
+     * @Route("/tqm/task/{id}", options={"expose"=true}, name="tqm_i_will_help", condition="request.isXmlHttpRequest()")
      */
     public function iWillHelpAction(Task $task)
     {
-        $user = null;
+
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
             $user = $this->getUser();
+
+            $taskUser = new UserTask();
+            $taskUser->setUser($user);
+            $taskUser->setIdea(false);
+            $taskUser->setTask($task);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($taskUser);
+            $em->flush();
+
+            return new Response(200);
         }
 
-        return new Response('Siema');
+
+
+        return new Response(403);
 
 
     }

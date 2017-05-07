@@ -9,30 +9,29 @@
         <th>czas wykonania (godziny:minuty)</th>
         <th>data</th>
     </tr>
-    {% for idea in ideas %}
-    <tr>
-        <td>{{ loop.index }}</td>
-        <td>{{ idea.description }}</td>
-        <td><a href="{{ idea.www }}">{{ idea.www }}</a></td>
+    <tr v-for="task in tasks">
+        <td>${ task.id }</td>
+        <td>${ task.description} </td>
+        <td><a :href="task.www">${ task.www }</a></td>
         <td>
-        {% for userTask in idea.userTasks %}
-            {{ userTask.idea ? userTask.User }}
-        {%  endfor %}
+            <template v-for="user in task.usersInventors">
+                ${ user }
+            </template>
         </td>
         <td>
-        {% for userTask in idea.userTasks %}
-            {{ userTask.idea ? '' : userTask.User }}
-        {%  endfor %}
-            <button v-if="help" class="btn-success">Pomogę!</button>
+            <template v-for="user in task.usersWorkers">
+                ${ user }
+            </template>
+
+            <button v-if="help" @click="iWillHelp(task.id)" class="btn-success">Pomogę!</button>
                 <button v-else class="btn-danger">Niepomogę</button>
         </td>
-        <td>{{ idea.minutes|hoursToMins }}</td>
-        <td>{{ idea.createdAt|date('d-m-Y') }}</td>
+        <td>${ task.minutes}</td>
+        <td>${ task.createdAt}</td>
         <th></th>
     </tr>
-    {% endfor %}
 </table>
-<button type="button" @click="test()" class="btn btn-primary">Dodaj nowy pomysł</button>
+<button type="button" @click="addIdea()" class="btn btn-primary">Dodaj nowy pomysł</button>
 </div>
 {% block javascripts %}
     <script>
@@ -40,24 +39,31 @@
             el: '#app',
             delimiters: ['${', '}'],
             data: {
-                help: {{ test|json_encode() }},
+                NameSurname: "{{ app.user.name}} {{ app.user.surname }}",
                 title: "",
-                userId: {{ app.user.id|json_encode }},
-                message: 'Siema'
+                message: 'Siema',
+                help: {{ test|json_encode() }},
+                tasks: {{ tasks|raw }}
             },
             methods: {
-                test (arg){
+                addIdea (){
                     this.help = !this.help;
+                },
+                iWillHelp(id){
+                    this.tasks.forEach(function (item){
+                        if(item.id === id){
+                            item.usersInventors.push("test");
+                        }
+                    });
+//                    axios.post(Routing.generate('tqm_i_will_help', {id: id}))
+//                        .then(function (response) {
+//                            location.reload();
+//                        })
+//                        .catch(function (error) {
+//                            console.log(error);
+//                        });
                 }
             }
         });
-
-        axios.post('{{ path('tqm_i_will_help', {'id' : 1 }) }}')
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     </script>
 {% endblock %}
