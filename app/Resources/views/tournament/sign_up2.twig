@@ -14,26 +14,29 @@
             </div>
         </nav>
     </div>
-
-
     <div class="main">
-
         <div class="container">
             <div class="row">
                 <div class="col-xs-12" id="app">
-                    {% if date('now') < tournament.signUpTill %}
+
+                    {% if "now"|date('Y-m-d') <= tournament.signUpTill|date('Y-m-d') %}
                     <p class="text-center">Zgłoszenia przyjmowane są do {{ tournament.signUpTill | date('Y-m-d') }}
                         ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})</p>
-                    {% if is_granted('ROLE_USER') %}
-                        <p><small>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d')}}.
-                                W dniu turnieju {{ tournament.start | date('Y-m-d') }} będziesz miał {{ date_diff }} lat.
-                                Więc twoja kategoria wiekowa to - <b>{{ age }}</b></small></p>
-                        <p><small>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b></small></p><br>
-                    {% endif %}
+                        {% if is_granted('ROLE_USER') %}
+                            <p>
+                                <small>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d') }}.
+                                    W dniu turnieju {{ tournament.start | date('Y-m-d') }} będziesz miał {{ date_diff }}
+                                    lat.
+                                    Więc twoja kategoria wiekowa to - <b>{{ age }}</b></small>
+                            </p>
+                            <p>
+                                <small>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b></small>
+                            </p><br>
+                        {% endif %}
 
-                    {% if signUpTournament| length >= tournament.capacity %}
-                        <p><strong>Limit miejsc został wyczerpany</strong></p>
-                    {% endif %}
+                        {% if signUpTournament| length >= tournament.capacity %}
+                            <p><strong>Limit miejsc został wyczerpany</strong></p>
+                        {% endif %}
 
                     {% if not is_granted('ROLE_USER') %}
                         <p>Aby edytować / skasować swoje zgłoszenie na turniej musisz być zalogowany! &#8594; <a href="{{ path ('login') }}">Przejdź do strony logowania</a></p>
@@ -62,7 +65,6 @@
                                 prosimy o skasowanie zgłoszenia. Jeżeli informacja będzie po {{ tournament.signUpTill | date('d-m-Y') }}
                                 ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}),
                                 NIE ZWRACAMY wpisowego.<br>
-
                             </small></p>
                     {% endif %}
                 </div>
@@ -72,6 +74,9 @@
                 {% if is_granted('ROLE_USER') and not isUserRegister  %}
                     {% include 'tournament/_sign_up_form.html.twig' %}
                 {% endif %}
+                {% else %}
+                    <p class="text-center">Termin przyjmowania zgłoszeń minął {{ tournament.signUpTill | date('Y-m-d') }}
+                        ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})</p>
                 {% endif %}
                 <div class="col-xs-12">
                     <h3>
