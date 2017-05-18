@@ -5,11 +5,10 @@
     <div class="col-xs-12">
         {#<h3>Zatwierdzono {{ signUpsTournamentReady|length }} na {{ signUpsTournament|length }} zawodników</h3>#}
         <h3>Zapłaciło {{ signUpsPaid|length }} na {{ signUpsTournament|length }} zawodników</h3>
-        <table class="table table-striped">
+        <table id="table" class="table table-striped">
             <thead>
             <tr>
                 <th>Zapłacone?</th>
-                <th>#</th>
                 <th>Nazwisko i Imię</th>
                 <th>Klasa</th>
                 <th>Staż [miesiące]</th>
@@ -31,7 +30,6 @@
                             {% endif %}
                         </select>
                     </td>
-                    <td>{{ loop.index }}</td>
                     <td><a href="{{ path('user', {'id': signUp.User.id }) }}">
                             {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
                     <td> {{ signUp.formula }} </td>

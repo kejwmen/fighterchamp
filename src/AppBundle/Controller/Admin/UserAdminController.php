@@ -27,7 +27,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserAdminController extends Controller
 {
 
-
     /**
      * @Route("/zawodnik", name="admin_user_list")
      */
@@ -35,10 +34,10 @@ class UserAdminController extends Controller
     {
 
         $users = $this->getDoctrine()->getRepository('AppBundle:User')
-            ->findBy(array(), array('surname' => 'ASC'));
+            ->findAll();
 
         return $this->render('admin/user/list.html.twig', [
-            'genuses' => $users
+            'users' => $users
         ]
         );
     }

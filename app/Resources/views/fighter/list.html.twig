@@ -3,6 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
+
                 <table id="table" class="table table-striped text-center">
                     <thead>
                     <tr>
@@ -15,8 +16,7 @@
                     <tbody>
                     {% for user in users %}
                         <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
-                            <td class="text-left"><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}</a>
-                            </td>
+                            <td class="text-left"><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}</a></td>
                             <td> {{ user.male ?  'M' : 'K' }}</td>
                             <td> {{ user.birthDay |getAge }} </td>
                             <td> {% if user.club %}
@@ -27,6 +27,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

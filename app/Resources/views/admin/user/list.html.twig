@@ -10,11 +10,10 @@
 
         <h1 class="text-center">Zawodnicy</h1>
 
-        <table class="table table-striped">
+        <table id="table" class="table table-striped">
             <thead>
             <tr>
                 <th></th>
-                <th>#</th>
                 <th>Nazwisko i Imię</th>
                 <th>Płeć</th>
                 <th>Wiek</th>
@@ -23,23 +22,22 @@
                 <th>Email</th>
             </tr>
             </thead>
-            {% for genus in genuses %}
-                <tbody>
+        <tbody>
+            {% for user in users %}
                 <tr>
                     <td>
-                        <a href="{{ path('admin_user_edit', {'id': genus.id}) }}"
+                        <a href="{{ path('admin_user_edit', {'id': user.id}) }}"
                            class="btn btn-success">Edytuj</a>
                     </td>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ genus.surname }} {{ genus.name }} </td>
-                    <td>{{ genus.male ?  'M' : 'K' }}</td>
-                    <td>{{ genus.birthDay |getAge }}</td>
-                    <td>{{ genus.club }}</td>
-                    <td>{{ genus.phone }}</td>
-                    <td>{{ genus.email }}</td>
+                    <td>{{ user.surname }} {{ user.name }} </td>
+                    <td>{{ user.male ?  'M' : 'K' }}</td>
+                    <td>{{ user.birthDay |getAge }}</td>
+                    <td>{{ user.club }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.email }}</td>
                 </tr>
-                </tbody>
             {% endfor %}
+        </tbody>
         </table>
     </div>
 {% endblock %}
