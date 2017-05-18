@@ -282,7 +282,7 @@ class SignUpTournament
     {
         return (string) $this->user->getPlec() . "  ". $this->user->getSurname() . " " . $this->user->getName() .
              " " . $this->getFormula() . " " . $this->getFinallWeight() . "kg" .
-            " " . $this->getStazTreningowy() . $this->howOldUserIs() . 'lat';
+            " " . $this->getStazTreningowy() . $this->howOldUserIs() . 'lat ' . $this->user->getClub();
 
 
     }

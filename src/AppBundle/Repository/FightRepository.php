@@ -35,11 +35,27 @@ class FightRepository extends EntityRepository
             ->setParameter('tournament', $tournament)
 
         ;
-
         $query = $qb->getQuery();
         return $query->execute();
 
     }
+
+    public function findAllFightsForTournamentAdmin($tournament)
+    {
+        $qb = $this->createQueryBuilder('fight')
+            ->addOrderBy('fight.day')
+            ->addOrderBy('fight.position')
+            ->andWhere('fight.tournament = :tournament')
+            ->setParameter('tournament', $tournament)
+
+        ;
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
+
+
+
 
     public function findAllFightByDayAdmin($tournament,$day)
     {

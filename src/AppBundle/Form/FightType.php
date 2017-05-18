@@ -22,12 +22,6 @@ class FightType extends AbstractType
         $tournament = $options['tournament'];
 
         $builder
-            ->add('day', ChoiceType::class,[
-                'choices' => [
-                'Niedziela' => 'Niedziela'
-            ]
-            ])
-
             ->add('signuptournament', CollectionType::class, [
                 'entry_type' => EntityType::class,
                 'entry_options' => [

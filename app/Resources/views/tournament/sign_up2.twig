@@ -77,6 +77,20 @@
                 {% else %}
                     <p class="text-center">Termin przyjmowania zgłoszeń minął {{ tournament.signUpTill | date('Y-m-d') }}
                         ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})</p>
+
+                {% if is_granted('ROLE_USER') and isUserRegister %}
+                    <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>
+
+                    {% include 'tournament/_twojeZgloszeniehtml.twig' with {signUpTournament : [isUserRegister]} only %}
+
+                    {{ form_start(formDelete) }}
+                    <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
+                    {{ form_end(formDelete)  }}
+                    <small>Jeśli skasujesz swoje zgłoszenie, nie będziesz mógł ponownie się zapisać!</small>
+                    {% endif %}
+
+
+
                 {% endif %}
                 <div class="col-xs-12">
                     <h3>

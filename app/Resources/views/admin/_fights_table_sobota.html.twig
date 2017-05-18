@@ -9,7 +9,7 @@
         <tr>
             <th></th>
             <th>Opublikowane?</th>
-            <th>Dzień</th>
+            {#<th>Dzień</th>#}
             <th>Kolejność</th>
             <th>Zawodnik 1</th>
             <th>Zawodnik 2 </th>
@@ -23,10 +23,10 @@
             <tr>
                 <td><a href="{{ path("admin_remove_fight", { 'fight_id' : fight.id, 'id' : tournament.id }) }}" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Skasuj</a></td>
                 <td><input class="checkbox_ready" type="checkbox" {{ fight.ready? 'checked' : '' }} value="{{ fight.id }}"> </td>
-                <td><select class="select_day">
-                        <option value="{{ fight.id }}|Sobota" {{ fight.day == 'Sobota'? 'selected' }}>Sobota</option>
-                        <option value="{{ fight.id }}|Niedziela"{{ fight.day == 'Niedziela'? 'selected' }} >Niedziela</option>
-                    </select></td>
+                {#<td><select class="select_day">#}
+                        {#<option value="{{ fight.id }}|Sobota" {{ fight.day == 'Sobota'? 'selected' }}>Sobota</option>#}
+                        {#<option value="{{ fight.id }}|Niedziela"{{ fight.day == 'Niedziela'? 'selected' }} >Niedziela</option>#}
+                    {#</select></td>#}
                 <td><select class="select_order" id="{{ loop.index }}">
                         {% for i in 1..fights|length %}
                             <option value="{{ i }}|Sobota" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>

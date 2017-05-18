@@ -34,19 +34,12 @@ class AdminTournamentFightController extends Controller
     public function resultAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $fightsSobota = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament,'Sobota');
+        $fights = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsForTournamentAdmin($tournament);
 
-        $number_of_fights_sobota = count($fightsSobota);
-
-        $fightsNiedziela = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament,'Niedziela');
-
-        $number_of_fights_niedziela = count($fightsNiedziela);
 
         return $this->render('admin/fight.html.twig', [
-            'fightsSobota' => $fightsSobota,
-            'fightsNiedziela' => $fightsNiedziela,
+            'fights' => $fights,
             'tournament' => $tournament
         ]);
     }
@@ -196,7 +189,7 @@ class AdminTournamentFightController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament,$day);
+            ->findAllFightsForTournamentAdmin($tournament);
 
         $taken_element = array_splice($fights, $position_element_to_take -1, 1);
 
