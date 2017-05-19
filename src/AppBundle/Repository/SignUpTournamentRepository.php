@@ -48,7 +48,7 @@ class SignUpTournamentRepository extends EntityRepository
             ->andWhere('signUpTournament.tournament = :tournament')
             ->andWhere('signUpTournament.deleted_at is null')
             ->andWhere('signUpTournament.isPaid = true')
-            ->andWhere('signUpTournament.fights is empty' )
+//            ->andWhere('signUpTournament.fights is empty' )
             ->setParameter('tournament', $tournament)
             ->addOrderBy('signUpTournament.weighted')
             ->addOrderBy('user.surname')
