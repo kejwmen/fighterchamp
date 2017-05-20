@@ -70,6 +70,8 @@ class AdminTournamentFightController extends Controller
             $fight->setPosition($numberOfFights + 1);
 
             $fight->setTournament($tournament);
+            $fight->setDay(new \DateTime('now'));
+
 
             $em->persist($fight);
             $em->flush();

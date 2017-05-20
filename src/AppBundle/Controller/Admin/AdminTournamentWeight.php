@@ -29,16 +29,24 @@ class AdminTournamentWeight extends Controller
             ->getRepository('AppBundle:SignUpTournament')
             ->findAllSignUpsPaidAndWeightedOrder($tournament);
 
+        $howManyWeighted = 0;
+        foreach($signUpsTournament as $signUp){
+           if($signUp->getWeighted() != null)
+           {
+               $howManyWeighted++;
+           }
+        }
+
 
         $weights = $this->getDoctrine()
             ->getRepository('AppBundle:Ruleset')
             ->getWeight();
 
 
-
         return $this->render('admin/weight.html.twig', [
             'signUpsTournament' => $signUpsTournament,
-            'weights' => $weights
+            'weights' => $weights,
+            'howManyWeighted' => $howManyWeighted
            
         ]);
     }

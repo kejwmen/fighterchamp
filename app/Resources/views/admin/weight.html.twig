@@ -3,6 +3,7 @@
 {% block body %}
     {% include 'admin/base.html.twig' %}
     <div class="col-xs-12">
+        <h3>Zważono {{ howManyWeighted }} na {{ signUpsTournament|length }} zawodników</h3>
         <table id="table" class="table table-striped text-center">
             <thead>
             <tr>
@@ -22,7 +23,6 @@
                             {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
                     <td> {{ signUp.weight }} </td>
                     <td>
-
                         <select class="select_weighted">
                             <option value="{{ signUp.id }}"></option>
                             {% for weight in weights %}

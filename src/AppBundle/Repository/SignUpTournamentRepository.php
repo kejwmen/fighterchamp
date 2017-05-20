@@ -109,6 +109,7 @@ class SignUpTournamentRepository extends EntityRepository
             ->andWhere('signUpTournament.tournament = :tournament')
             ->setParameter('tournament', $tournament)
             ->andWhere('signUpTournament.isPaid = true')
+            ->andWhere('signUpTournament.deleted_at is null')
 //            ->andWhere('signUpTournament.weighted is not null')
             ->addOrderBy('user.male')
             ->addOrderBy('signUpTournament.formula')
