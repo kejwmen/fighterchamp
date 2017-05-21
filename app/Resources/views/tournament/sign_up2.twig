@@ -78,7 +78,7 @@
                     <p class="text-center">Termin przyjmowania zgłoszeń minął {{ tournament.signUpTill | date('Y-m-d') }}
                         ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})</p>
 
-                {% if is_granted('ROLE_USER') and isUserRegister %}
+                {% if is_granted('ROLE_USER') and isUserRegister and tournament.end|date('Y-m-d') > "now"|date('Y-m-d')  %}
                     <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>
 
                     {% include 'tournament/_twojeZgloszeniehtml.twig' with {signUpTournament : [isUserRegister]} only %}
