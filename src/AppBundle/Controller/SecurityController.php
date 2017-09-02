@@ -19,6 +19,7 @@ use AppBundle\Form\RegistrationAfterFbType;
 use AppBundle\Form\RegistrationFacebookForm;
 use AppBundle\Form\RegistrationFacebookType;
 use AppBundle\Form\RegistrationType;
+use AppBundle\Service\AppMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
@@ -239,7 +240,7 @@ class SecurityController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                $appmailer = $this->get('appmailer');
+                $appmailer = $this->get(AppMailer::class);
 
                 $text = "Nowe Hasło: " . $new_password;
                 $appmailer->sendEmail(

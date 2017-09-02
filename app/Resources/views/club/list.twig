@@ -3,12 +3,14 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
+                <span>Nie wszystkie kluby mają wpisane miasta, jeśli chciałbyś pomóc i je
+                    wpisać został swój email w dziale <a href="{{ path('contact') }}">{{ path('contact') }}</a> </span>
                 <table id="table" class="table">
                     <thead>
                     <tr>
                         <th>Nazwa</th>
                         <th class="text-center">Liczba Zawodników</th>
-                        {#<th>Miasto</th>#}
+                        <th>Miasto</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -16,7 +18,7 @@
                         <tr>
                             <td><a href="{{ path('club_show', {'id': arr[0].id }) }}">{{ arr[0].name }}</a></td>
                             <td class="text-center">{{ arr[0].users |length }}</td>
-                            {#<td>{{ arr[0].club.city }}</td>#}
+                            <td>{{ arr[0].city }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

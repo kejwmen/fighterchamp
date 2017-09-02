@@ -160,7 +160,6 @@ class User implements UserInterface, Serializable
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="date", nullable=true)
-     *
      */
     private $birthDay;
 
@@ -206,6 +205,8 @@ class User implements UserInterface, Serializable
      * @ORM\Column(type="datetime")
      */
     private $create_time;
+
+
 
 
     public function getUsername()

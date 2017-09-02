@@ -16,13 +16,14 @@
             <td>{{ loop.revindex }}</td>
             <td><a href="{{ path('tournament_panel', {'id': tournament.id }) }}">{{ tournament.name }}</a></td>
             <td>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</td>
-            {% for schedule in tournament.schedule %}
-                {% if schedule.type == 'final' %}
-               <td>{{ schedule.start|date('d-m-Y') }}</td>
+            <td>{{ tournament.start|date('d-m-Y') }}</td>
+            {#{% for schedule in tournament.schedule %}#}
+                {#{% if schedule.type == 'final' %}#}
+               {#<td>{{ schedule.start|date('d-m-Y') }}</td>#}
                 {#{% elseif schedule.type == 'month' %}#}
                {#<td>{{ schedule.start|date('m-Y') }} month</td>#}
-                {% endif %}
-            {% endfor %}
+                {#{% endif %}#}
+            {#{% endfor %}#}
             <td>{{ tournament.city }}</td>
             <td>{{ tournament.placeName }}</td>
             <td>{{ tournament.street }}</td>

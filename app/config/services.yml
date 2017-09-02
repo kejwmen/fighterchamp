@@ -4,21 +4,17 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  _defaults:
+    autowire: true
+    autoconfigure: true
 
-  normalizer.user:
-        class: AppBundle\Serializer\Normalizer\UserNormalizer
-        autowire: true
+  AppBundle\Serializer\Normalizer\UserNormalizer: ~
 
   normalizer.club:
         class: AppBundle\Serializer\Normalizer\ClubNormalizer
-        autowire: true
 
   normalizer.task:
         class: AppBundle\Serializer\Normalizer\TaskNormalizer
-        autowire: true
 
   serializer_club:
         class: Symfony\Component\Serializer\Serializer
@@ -30,32 +26,26 @@ services:
 
   serializer_user:
         class: Symfony\Component\Serializer\Serializer
-        arguments: [["@normalizer.user"], ["@serializer.encoder.json"]]
+        arguments: [["UserNormalizer"], ["@serializer.encoder.json"]]
 
   app.security.login_form_authenticator:
     class: AppBundle\Security\LoginFormAuthenticator
-    autowire: true
 
   app.security.facebook_authenticator:
     class: AppBundle\Security\FacebookAuthenticator
-    autowire: true
 
   app.doctrine.hash_password_listener:
     class: AppBundle\Doctrine\HashPasswordListener
-    autowire: true
     tags:
         - {name: doctrine.event_subscriber}
 
   app.twig_extension:
           class: AppBundle\Twig\AppExtension
           public: false
-          tags:
-              - { name: twig.extension }
-  appmailer:
-    class: AppBundle\Service\AppMailer
+
+  AppBundle\Service\AppMailer:
     arguments: ["@mailer"]
 
   twig.extension.intl:
     class: Twig_Extensions_Extension_Intl
-    tags:
-      - { name: twig.extension }
+

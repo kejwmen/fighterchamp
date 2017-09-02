@@ -1,3 +1,12 @@
+.table-center{
+    margin: 0 auto;
+}
+
+.youtube-icon {
+    width: 22px;
+    height:auto;
+}
+
 /*slawek*/
 
 button, input, optgroup, select, textarea {

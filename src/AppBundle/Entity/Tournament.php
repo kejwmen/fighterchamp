@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: slk500
@@ -19,9 +20,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Tournament
 {
 
-    public function __construct($userAdmin)
+    public function __construct()
     {
-        $this->userAdmin = $userAdmin;
         $this->userAdmin = new ArrayCollection();
         $this->signUpTournament = new ArrayCollection();
         $this->schedule = new ArrayCollection();
@@ -99,6 +99,17 @@ class Tournament
      * @ORM\Column(type="date", nullable=true)
      */
     private $signUpTill;
+
+    /**
+     * @var $logo string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $logo;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $poster;
 
     /**
      * @return mixed
@@ -297,6 +308,27 @@ class Tournament
     public function setSignUpTill($signUpTill)
     {
         $this->signUpTill = $signUpTill;
+    }
+
+
+    public function getLogo(): string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(string $logo)
+    {
+        $this->logo = $logo;
+    }
+
+    public function getPoster(): string
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(string $poster)
+    {
+        $this->poster = $poster;
     }
 
 

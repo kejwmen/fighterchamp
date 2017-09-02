@@ -87,6 +87,12 @@ class Fight
 
 
     /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    private $youtubeId;
+
+
+    /**
      *
      * @ORM\Column(name="create_time", type="datetime", nullable=true)
      */
@@ -250,6 +256,25 @@ class Fight
     {
         $this->day = $day;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getYoutubeId()
+    {
+        return $this->youtubeId;
+    }
+
+    /**
+     * @param mixed $youtubeId
+     */
+    public function setYoutubeId($youtubeId)
+    {
+        $this->youtubeId = $youtubeId;
+    }
+
+
+
 
 
 

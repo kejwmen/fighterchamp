@@ -1,0 +1,5 @@
+{% if fight.winner %}
+    {{ fight.signuptournament[0].user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}
+{% elseif fight.draw %}
+    <span class='label label-warning'>D</span>
+{% endif %}

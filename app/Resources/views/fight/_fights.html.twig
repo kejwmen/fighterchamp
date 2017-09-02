@@ -7,7 +7,7 @@
     <table id="table" class="table">
         <thead>
         <tr>
-            <th class="text-center">Kolejność</th>
+            <th></th>
             <th>Zawodnik 1</th>
             <th>Zawodnik 2</th>
             <th class="text-center">Formuła</th>
@@ -17,16 +17,17 @@
         <tbody>
         {% for fight in fights %}
             <tr>
-                <td class="text-center">{{ "%02d"|format(loop.index) }} <a href="{{ path('fight_show', {'id': fight.id }) }}">
+                <td class="text-center"><a href="{{ path('fight_show', {'id': fight.id }) }}">
                         Szczegóły {% if fight.youtubeId %} <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}</a></td>
                 {% for signUp in fight.signuptournament %}
-                    <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.surname }} {{ signUp.user.name }}
-                            {% if signUp.user.club %} ({{ signUp.user.club }}) {% endif %}
+                <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.surname }} {{ signUp.user.name }}
+                        {% if signUp.user.club %} ({{ signUp.user.club }}) {% endif %}
                     </a>
                     {% include '_macros/_fight_result_icon.html.twig' %}
-                {% endfor %}
+                    {% endfor %}
                 <td class="text-center">{{ fight.formula }}</td>
                 <td class="text-center">{{ fight.weight }}</td>
+                <td class="text-center"><a href="{{ path('fight_show', {'id': fight.id }) }}">{{ fight.tournament.name }}</a></td>
             </tr>
         {% endfor %}
         </tbody>

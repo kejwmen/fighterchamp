@@ -1,0 +1,6 @@
+php:
+  build: docker/php
+  volumes:
+    - ./public_html:/var/www/html/
+  ports:
+    - "8000:8000"

@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-xs-offset-1">
+                <table class="table-center">
+                    <tr>
+                        <td class="text-center">
+                            <h1>
+                                <a href="{{ path('user', {'id': fight.signuptournament[0].user.id }) }}">
+                                    {{ fight.signuptournament[0].user }}
+                                </a>
+                            </h1>
+                            {% if fight.winner %}
+                                {{ fight.signuptournament[0].user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}
+                            {% elseif fight.draw %}
+                                <span class='label label-warning'>D</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center" rowspan="2">
+                            <h1>vs.</h1>
+                        </td>
+                        <td class="text-center">
+                            <h1>
+                                <a href="{{ path('user', {'id': fight.signuptournament[1].user.id }) }}">
+                                    {{ fight.signuptournament[1].user }}
+                                </a>
+                            </h1>
+                            {% if fight.winner %}
+                                {{ fight.signuptournament[1].user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}
+                            {% elseif fight.draw %}
+                                <span class='label label-warning'>D</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            {% if fight.signuptournament[0].user.club %}
+                                <h3>
+                                    <a href="{{ path('club_show', {'id': fight.signuptournament[0].user.club.id }) }}"> {{ fight.signuptournament[0].user.club.name }}</a>
+                                </h3>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if fight.signuptournament[1].user.club %}
+                                <h3>
+                                    <a href="{{ path('club_show', {'id': fight.signuptournament[1].user.club.id }) }}"> {{ fight.signuptournament[1].user.club.name }}</a>
+                                </h3>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="text-center">{{ fight.formula }} {{ fight.weight }} kg</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="text-center"><a href="{{ path('tournament_panel', {'id': fight.tournament.id }) }}"> {{ fight.tournament.name }}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="text-center">{{ fight.tournament.start|date('d-m-Y') }}</td>
+                        <td></td>
+                    </tr>
+                    {% if not fight.youtubeId %}
+                    <tr>
+                        <td></td>
+                        <td class="text-center"><h2>Brak nagrania z walki</h2></td>
+                        <td></td>
+                    </tr>
+                    {% endif %}
+                </table>
+                {% if fight.youtubeId %}
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ fight.youtubeId }}"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

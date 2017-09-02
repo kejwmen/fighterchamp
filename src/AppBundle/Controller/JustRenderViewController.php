@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Form\ContactType;
+use AppBundle\Service\AppMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ class JustRenderViewController extends Controller
 
             if($form->isValid()){
 
-                $this->get('appmailer')
+                $this->get(AppMailer::class)
                     ->sendEmail('slawomir.grochowski@gmail.com','Kontakt',$form['email']->getData());
 
                 $this->addFlash('success', 'Sukces! Twój twój adres email został wysłany! Sławek niebawem się do Ciebię odezwie ;)');
