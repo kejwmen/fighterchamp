@@ -11,6 +11,7 @@ use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -102,10 +103,7 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getImageName()
+    public function getImageName(): ?string
     {
         return $this->imageName;
     }
@@ -132,6 +130,7 @@ class User implements UserInterface, Serializable
             $this->password,
             ) = unserialize($serialized);
     }
+
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTask", mappedBy="user")
@@ -200,13 +199,74 @@ class User implements UserInterface, Serializable
      */
     private $signUpTournament;
 
-
     /**
      * @ORM\Column(type="datetime")
      */
     private $create_time;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(min="11", max="11")
+     * @Assert\NotBlank()
+     * @var string
+     */
+    private $pesel;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    private $fatherName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    private $motherName;
+
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if (!($this->motherName || $this->fatherName)) {
+            $context->buildViolation('Podaj imię Ojca albo Matki')
+                ->atPath('fatherName')
+                ->addViolation();
+        }
+    }
+
+
+    public function getFatherName(): ?string
+    {
+        return $this->fatherName;
+    }
+
+    public function setFatherName(?string $fatherName)
+    {
+        $this->fatherName = $fatherName;
+    }
+
+    public function getMotherName(): ?string
+    {
+        return $this->motherName;
+    }
+
+    public function setMotherName(?string $motherName)
+    {
+        $this->motherName = $motherName;
+    }
+
+    public function getPesel(): ?string
+    {
+        return $this->pesel;
+    }
+
+    public function setPesel(?string $pesel)
+    {
+        $this->pesel = $pesel;
+    }
 
 
     public function getUsername()

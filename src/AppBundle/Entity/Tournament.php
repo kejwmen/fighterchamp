@@ -25,6 +25,7 @@ class Tournament
         $this->userAdmin = new ArrayCollection();
         $this->signUpTournament = new ArrayCollection();
         $this->schedule = new ArrayCollection();
+        $this->info = new ArrayCollection();
     }
 
     /**
@@ -94,7 +95,6 @@ class Tournament
      */
     private $end;
 
-
     /**
      * @ORM\Column(type="date", nullable=true)
      */
@@ -112,16 +112,46 @@ class Tournament
     private $poster;
 
     /**
-     * @return mixed
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Info", mappedBy="tournament")
      */
+    private $info;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="tournament")
+     * @var Ticket[]
+     */
+    private $tickets;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    private $facebookEvent;
+
+    public function getPaymentInfo(): string
+    {
+        return
+            (($this->getInfo()->filter(function(Info $info){
+            return $info->getType() === 'singUpPayment';
+        }))->first())->getDescription();
+    }
+
+    public function getFacebookEvent(): ?string
+    {
+        return $this->facebookEvent;
+    }
+
+    public function setFacebookEvent(string $facebookEvent)
+    {
+        $this->facebookEvent = $facebookEvent;
+    }
+
     public function getStart()
     {
         return $this->start;
     }
 
-    /**
-     * @param mixed $start
-     */
+
     public function setStart($start)
     {
         $this->start = $start;
@@ -311,7 +341,7 @@ class Tournament
     }
 
 
-    public function getLogo(): string
+    public function getLogo(): ?string
     {
         return $this->logo;
     }
@@ -321,7 +351,7 @@ class Tournament
         $this->logo = $logo;
     }
 
-    public function getPoster(): string
+    public function getPoster(): ?string
     {
         return $this->poster;
     }
@@ -330,6 +360,28 @@ class Tournament
     {
         $this->poster = $poster;
     }
+
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    public function setInfo(Info $info)
+    {
+        $this->info = $info;
+    }
+
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+
+    public function setTickets($tickets)
+    {
+        $this->tickets = $tickets;
+    }
+
+
 
 
 

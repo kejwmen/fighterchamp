@@ -39,13 +39,16 @@ services:
     tags:
         - {name: doctrine.event_subscriber}
 
+  AppBundle\Service\AppMailer:
+    arguments: ["@mailer"]
+
   app.twig_extension:
           class: AppBundle\Twig\AppExtension
           public: false
 
-  AppBundle\Service\AppMailer:
-    arguments: ["@mailer"]
-
   twig.extension.intl:
     class: Twig_Extensions_Extension_Intl
+
+  twig.extension.dyting_loader:
+    class: Twig_Extension_StringLoader
 

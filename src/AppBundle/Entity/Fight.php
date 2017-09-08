@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FightRepository")
  * @ORM\Table(name="fight")
- *
  */
 class Fight
 {

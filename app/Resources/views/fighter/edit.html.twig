@@ -36,6 +36,13 @@
                     <button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>
                     {% endif %}
                     {{ form_row(form.imageFile, {'label' : 'Zdjęcie Profilowe (opcjonalnie)'}) }}
+                    <div>
+                        <span>Dane potrzebne do obowiązkowego ubezpieczenia</span>
+                        {{ form_row(form.pesel) }}
+                        <span>Podaj imię Ojca albo matki</span>
+                        {{ form_row(form.fatherName) }}
+                        {{ form_row(form.motherName) }}
+                    </div>
 
                     {{ form_row(form.club, {'attr': {'class': 'select2'}}) }}
 

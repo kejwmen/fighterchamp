@@ -138,7 +138,7 @@ class TournamentSignUpController extends Controller
                 $age = 'młodzik';
             }
 
-            return $this->render('tournament/sign_up2.twig', array(
+            return $this->render('tournament/sign_up.twig', array(
                 'form' => $form->createView(),
                 'formDelete' => $formDelete->createView(),
                 'age' => $age,
@@ -152,7 +152,7 @@ class TournamentSignUpController extends Controller
 
         }
 
-        return $this->render('tournament/sign_up2.twig', array(
+        return $this->render('tournament/sign_up.twig', array(
             'tournament' => $tournament,
             'users' => $users,
             'fights' => $fights,

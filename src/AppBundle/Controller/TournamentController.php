@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Fight;
+use AppBundle\Entity\Info;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
 use AppBundle\Form\FightType;
@@ -56,7 +57,7 @@ class TournamentController extends Controller
         $users = $em->getRepository('AppBundle:SignUpTournament')
             ->signUpUserOrder($tournament);
 
-        return $this->render(($tournament->getId() != 2)? 'tournament/show.twig': 'tournament/show2.twig',
+        return $this->render( 'tournament/show.twig',
             [
             'tournament' => $tournament,
             'users' => $users
@@ -68,7 +69,6 @@ class TournamentController extends Controller
      */
     public function panelAction(Tournament $tournament)
     {
-
         return $this->render('tournament/_panel.twig', [
             'tournament' => $tournament,
         ]);
@@ -79,12 +79,8 @@ class TournamentController extends Controller
      */
     public function rulesAction(Tournament $tournament)
     {
-        if($tournament->getId() == 2){
 
-        }
-
-
-        return $this->render(($tournament->getId() != 2)? 'tournament/rules.html.twig': 'tournament/rules2.html.twig',
+        return $this->render("tournament/rules".$tournament->getId().".html.twig",
             [
             'tournament' => $tournament,
         ]);
@@ -95,6 +91,7 @@ class TournamentController extends Controller
      */
     public function contactAction(Tournament $tournament)
     {
+
 
         return $this->render('tournament/contact.html.twig', [
             'tournament' => $tournament,

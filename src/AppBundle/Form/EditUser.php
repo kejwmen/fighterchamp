@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -38,7 +39,6 @@ class EditUser extends AbstractType
             ->add('surname', TextType::class,['label' => 'Nazwisko'])
             ->add('birthDay', BirthdayType::class,[
                 'label' => 'Data Urodzenia',
-                'years' => range(1976, 2010),
                 'translation_domain' => true
             ])
             ->add('phone', TextType::class, ['label' => 'Telefon'])
@@ -52,6 +52,9 @@ class EditUser extends AbstractType
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.name', 'ASC');
                 }])
+            ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
+            ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
+            ->add('pesel', IntegerType::class, ['label' => 'Pesel'])
         ;
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($em) {

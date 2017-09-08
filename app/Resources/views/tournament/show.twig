@@ -3,13 +3,13 @@
         <section class="tournament-data">
             <div class="row">
                 <div class="title col-xs-12">
-                    <img src="{{ asset('img/logo-warszawska-granda.png') }}" class="img-responsive center-block">
+                    <img src="{{ tournament.logo }}" class="img-responsive center-block">
                 </div>
                 <div class="date col-xs-12 col-sm-6 text-uppercase">
                     <h3 class="text-center">data</h3>
                     <div class="row">
                         <div class="day col-xs-6 text-right">
-                            <p><strong>{{ tournament.start | date('Y-m-d') }} </strong>
+                            <p><strong>{{ tournament.start | date('d-m-Y') }} </strong>
                                 <br>
                                 {{ tournament.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
                             </p>
@@ -36,52 +36,40 @@
                     </div>
                 </div>
                 <div class="limits col-xs-12 text-center">
-                    <h2>Zapisy do {{ tournament.signUpTill | date('Y-m-d') }}
+                    <h2>Zapisy do {{ tournament.signUpTill | date('d-m-Y') }}
                         ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})</h2>
                     <h3 class="text-uppercase">uczestnicy</h3>
                     <p><strong>{{ users|length }} / {{ tournament.capacity }}</strong></p>
                 </div>
                 <div class="key-points col-xs-12 col-md-9">
+
                     <h3 class="text-uppercase">harmonogram</h3>
+                    {% set last = '' %}
+                    {% for schedule in tournament.schedule %}
 
-                    <h4>Sobota (11.02.2017)</h4>
-                    <ul class="list-unstyled">
-                        <li>14:30 - 15:30 &#8211; waga zawodników</li>
-                        <li>15:30 - 16:00 &#8211; konferencja i ustalanie par</li>
-                        <li>16:00 - 20:00 &#8211; walki sparingowe kadetów, juniorów, zawodników kategorii A
-                            i walki meczowe między klubami Legia Fight Club a UniQ Fight Club
-                        </li>
-                    </ul>
-                    <h4>Niedziela (12.02.2017)</h4>
-                    <ul class="list-unstyled">
-                        <li>09:30 - 10:30 &#8211; waga zawodników</li>
-                        <li>10:30 - 11:00 &#8211; konferencja i ustalanie par</li>
-                        <li>11:00 - 17:00 &#8211; sparingi w klasach B i C, także walki kobiet</li>
-                    </ul>
+                        {% if last != schedule.start | date('d-m-Y') %}
+                        <h4>{{ schedule.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
+                            ({{ schedule.start | date('d-m-Y') }})</h4>
+                        {% endif %}
 
-                    {#{% for schedule in tournament.schedule %}#}
-                    {#<p><strong>{{ schedule.datetime| date('H:i') }}</strong><span>&mdash;</span>{{ schedule.description }}</p>#}
-                    {#{%  endfor %}#}
+                        <p><strong>{{ schedule.start| date('H:i') }}</strong>-{{ schedule.end| date('H:i') }} - {{ schedule.description }}</p>
+                        {% set last = schedule.start | date('d-m-Y')  %}
+                    {%  endfor %}
 
-                    <h3>Wymagane:</h3>
+                    <h3 class="text-uppercase">Wymagane:</h3>
+
                     <ul>
-                        <li>opłata startowa 35zł (płatne w siedzibie klubu albo przedpłata przelewem), opłata musi
-                            zostać
-                            uiszczona do dnia 06.02.2017 (przedłużone do 09.02.2017)
-                        </li>
-                        <li>niepełnoletni muszą posiadać badania sportowo - lekarskie oraz
-                            <a href="{{ asset('documents/oświadczenie-Granda-dziecko.docx') }}">oświadczenie podpisane
-                                przez
-                                prawnego opiekuna</a></li>
-                        <li>podpisane oświadczenie <a href="{{ asset('documents/oświadczenie-Granda-kobiety.docx') }}"> wersja
-                                dla
-                                kobiet</a> oraz <a href="{{ asset('documents/oświadczenie-Granda.docx') }}">
-                                wersja dla mężczyzn</a></li>
+                        {% for info in tournament.info %}
+                            <li>{{ include(template_from_string(info.description)) }}</li>
+                        {% endfor %}
                     </ul>
+
                 </div>
+
                 <aside class="col-xs-12 col-md-3">
-                    <img src="{{ asset('img/plakatXXI.jpg') }}" class="img-responsive center-block">
+                    <img src="{{ tournament.poster }}" class="img-responsive center-block">
                 </aside>
+
             </div>
         </section>
     </div>
