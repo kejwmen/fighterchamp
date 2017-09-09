@@ -54,7 +54,7 @@ class EditUser extends AbstractType
                 }])
             ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
             ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
-            ->add('pesel', IntegerType::class, ['label' => 'Pesel'])
+            ->add('pesel', TextType::class, ['label' => 'Pesel'])
         ;
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($em) {

@@ -241,7 +241,7 @@ class SecurityController extends Controller
                  $em = $this->getDoctrine()->getManager();
                  $em->persist($user);
                  $em->flush();
-                 
+
                  $transport = (new Swift_SmtpTransport('smtp.zenbox.pl', 587))
                      ->setUsername('fighterchamp@fighterchamp.pl')
                      ->setPassword('Cortez1634')
