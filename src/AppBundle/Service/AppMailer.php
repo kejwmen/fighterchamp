@@ -9,22 +9,30 @@
 namespace AppBundle\Service;
 
 
+use Swift_Mailer;
+
 class AppMailer
 {
-
+    /**
+     * @var \Swift_Mailer
+     */
     private $mailer;
-    public function __construct($_mailer) {
+
+    public function __construct(Swift_Mailer $_mailer)
+    {
         $this->mailer = $_mailer;
     }
 
-    public function sendEmail($to, $subject, $text)
+    public function sendEmail(): int
     {
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
-            ->setFrom('automat@fighterchamp.pl', 'FighterChamp')
-            ->setTo($to)
-            ->setBody($text, 'text/html')
+            $message = \Swift_Message::newInstance()
+                ->setSubject('AppMailer')
+                ->setFrom('fighterchamp@fighterchamp.pl', 'FighterChamp')
+                ->setTo('slawomir.grochowski@gmail.com')
+                ->setBody("siema siema", 'text/html');
         ;
-        return $this->mailer->send($message);
-            }
+        $numberOfSuccessfullRecipients = $this->mailer->send($message);
+
+        return $numberOfSuccessfullRecipients;
+    }
 }

@@ -21,6 +21,8 @@ use AppBundle\Form\RegistrationFacebookType;
 use AppBundle\Form\RegistrationType;
 use AppBundle\Service\AppMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swift_Mailer;
+use Swift_SmtpTransport;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -220,6 +222,7 @@ class SecurityController extends Controller
         $form = $this->createForm(PasswordResetType::class);
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $formData = $form->getData();
@@ -229,30 +232,40 @@ class SecurityController extends Controller
             $user = $em->getRepository('AppBundle:User')
                 ->findOneBy(['email' => $userEmail]);
 
-            if (!$user) {
-                $this->addFlash('danger_info', 'Użytkownik o podanej nazwie nie istnieje.');
-            } else {
-                $new_password = time();
 
-                $user->setPlainPassword($new_password);
+             if($user) {
+                 $new_password = time();
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                 $user->setPlainPassword($new_password);
 
-                $appmailer = $this->get(AppMailer::class);
+                 $em = $this->getDoctrine()->getManager();
+                 $em->persist($user);
+                 $em->flush();
+                 
+                 $transport = (new Swift_SmtpTransport('smtp.zenbox.pl', 587))
+                     ->setUsername('fighterchamp@fighterchamp.pl')
+                     ->setPassword('Cortez1634')
+                 ;
 
-                $text = "Nowe Hasło: " . $new_password;
-                $appmailer->sendEmail(
-                    $userEmail,
-                    'Password Reset',
-                    $text);
+                 $mailer = new Swift_Mailer($transport);
 
-                $this->addFlash('success_info', 'Sukces. Twoje nowe hasło zostało wysłane na ' . $userEmail);
+                 $message = \Swift_Message::newInstance()
+                     ->setSubject('Password Reset')
+                     ->setFrom('fighterchamp@fighterchamp.pl', 'FighterChamp')
+                     ->setTo($userEmail)
+                     ->setBody("Nowe Hasło: " . $new_password, 'text/html');
+
+                 $numberOfSuccessfulSent = $mailer->send($message);
+
+                 $this->addFlash('success_info', 'Sukces. Twoje nowe hasło zostało wysłane na ' . $userEmail);
+
+             }else {
+                     $this->addFlash('danger_info', 'Użytkownik o podanej nazwie nie istnieje.');
+             }
 
                 return $this->redirectToRoute('login');
             }
-        }
+
         return $this->render('security/password_reset.html.twig', [
             'form' => $form->createView(),
         ]);
