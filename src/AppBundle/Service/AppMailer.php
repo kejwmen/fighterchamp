@@ -23,16 +23,15 @@ class AppMailer
         $this->mailer = $_mailer;
     }
 
-    public function sendEmail(): int
+    public function sendEmail($to, $subject, $body): int
     {
             $message = \Swift_Message::newInstance()
-                ->setSubject('AppMailer')
+                ->setSubject($subject)
                 ->setFrom('fighterchamp@fighterchamp.pl', 'FighterChamp')
-                ->setTo('slawomir.grochowski@gmail.com')
-                ->setBody("siema siema", 'text/html');
+                ->setTo($to)
+                ->setBody($body, 'text/html');
         ;
-        $numberOfSuccessfullRecipients = $this->mailer->send($message);
 
-        return $numberOfSuccessfullRecipients;
+        return $this->mailer->send($message);
     }
 }
