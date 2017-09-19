@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'admin/base.html.twig' %}
+    {#<div class="col-xs-12 col-md-10 col-md-offset-1">#}
+        {#{{ form_start(form) }}#}
+        {#{{ form_row(form.formula, { 'label': 'Klasa'} ) }}#}
+        {#{{ form_row(form.weight, { 'label': 'Waga'} ) }}#}
+        {#{% for signup in form.signuptournament %}#}
+            {#<div class="col-xs-6">#}
+                {#{{ form_row(signup, {#}
+                    {#label: 'Zawodnik',#}
+                    {#attr: {'class': 'select2'}#}
+                {#}) }}#}
+            {#</div>#}
+        {#{% endfor %}#}
+
+        {#<button type="submit" class="btn btn-primary" formnovalidate>Paruj</button>#}
+        {#{{ form_end(form) }}#}
+    {#</div>#}
+
+    {#{{ dump(freeUsers) }}#}
+
+
+    <select class="select2" xmlns="http://www.w3.org/1999/html">
+        <optgroup label="Kobiety">
+        {% for user in freeUsers %}
+                {% if user.male == "K" %}
+                <option>{{ user.name }} {{ user.surname }}</option>
+                {% endif %}
+        {% endfor %}
+        </optgroup>
+
+    <optgroup label="Mężczyźni">
+
+            <optgroup label="A">
+        {% for user in freeUsers %}
+            {% if user.formula == "A" %}
+                <option>{{ user.name }} {{ user.surname }}</option>
+            {% endif %}
+        {% endfor %}
+            </optgroup>
+
+        <optgroup label="B">
+            {% for user in freeUsers %}
+                {% if user.formula == "B" %}
+                    <option>{{ user.name }} {{ user.surname }}</option>
+                {% endif %}
+            {% endfor %}
+        </optgroup>
+
+        <optgroup label="C">
+            {% for user in freeUsers %}
+                {% if user.formula == "C" %}
+                    <option>{{ user.name }} {{ user.surname }}</option>
+                {% endif %}
+            {% endfor %}
+        </optgroup>
+
+    </optgroup>
+    </select>
+
+
+
+    {#<div class="col-xs-12">#}
+        {#<p>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</p>#}
+       {#{% include '/admin/_table_users_to_pair.html.twig' %}#}
+    {#</div>#}
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+        $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy",tags: true});
+
+
+            $("#fight_signuptournament_1").val($("#fight_signuptournament_1 option:eq(1)").val());
+
+            window.addEventListener("load", function(){
+                $("select").change();
+            }, false);
+
+            $('select').on('change', function () {
+
+                var selectFighter0 = $("#fight_signuptournament_0").find('option:selected').text();
+                var selectFighter1 = $("#fight_signuptournament_1").find('option:selected').text();
+
+                var formula = [findFormula(selectFighter0), findFormula(selectFighter1)].sort()[0];
+                var weight = Math.max(findWeight(selectFighter0), findWeight(selectFighter1));
+
+                var selectFormula = $("#fight_formula");
+                var selectWeight= $("#fight_weight");
+
+                selectFormula.find("option[value="+formula+"]").prop("selected", true);
+                selectWeight.find("option[value="+weight+"]").prop("selected", true);
+
+                var currValue = $(this).attr('data-value');
+                var column = $(this).val();
+
+                $(this).attr('data-value', column);
+                $('select').find('[value="' + currValue + '"]').removeAttr('disabled');
+                $('select').find('[value="' + currValue + '"]').css('display', 'inline-block');
+                $('select').not(this).each(function () {
+                    if (column === '') {
+                        return;
+                    }
+                    $(this).find('[value="' + column + '"]').attr('disabled', 'disabled');
+                    $(this).find('[value="' + column + '"]').css('display', 'none');
+                });
+            });
+
+            function findFormula(string){
+                return string.match(/(\bA\b)|(\bB\b)|(\bC\b)/)[0];
+            }
+            function findWeight(string) {
+                return string.match(/(\d{2})kg/)[1];
+
+            }
+
+        });
+    </script>
+{% endblock %}

@@ -16,6 +16,9 @@ services:
   normalizer.task:
         class: AppBundle\Serializer\Normalizer\TaskNormalizer
 
+  normalizer.signup:
+      class: AppBundle\Serializer\Normalizer\SignUpNormalizer
+
   serializer_club:
         class: Symfony\Component\Serializer\Serializer
         arguments: [["@normalizer.club"], ["@serializer.encoder.json"]]
@@ -27,6 +30,7 @@ services:
   serializer_user:
         class: Symfony\Component\Serializer\Serializer
         arguments: [["UserNormalizer"], ["@serializer.encoder.json"]]
+
 
   app.security.login_form_authenticator:
     class: AppBundle\Security\LoginFormAuthenticator

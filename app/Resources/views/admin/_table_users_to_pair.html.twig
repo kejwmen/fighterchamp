@@ -1,0 +1,32 @@
+<h3>Ilość: {{ freeUsers| length }}</h3>
+<table id="table" class="table table-striped">
+    <thead>
+    <tr>
+        <th>Nazwisko i Imię</th>
+        <th>Płeć</th>
+        <th>Formuła</th>
+        <th>Kat. Wagowa</th>
+        <th>Staż [miesiące]</th>
+        <th>Wiek</th>
+        <th>Klub</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in freeUsers %}
+        <tr>
+            <td>
+                <a href="{{ path('user', {'id': user.User.id }) }}"> {{ user.User.surname }} {{ user.User.name }}</a>
+            </td>
+            <td> {{ user.User.male ?  'M' : 'K' }} </td>
+            <td> {{ user.formula }} </td>
+            <td> {{ user.weighted ?: user.weight }} </td>
+            <td> {{ user.trainingTime }} </td>
+            <td> {{ user.User.birthDay |getAge }} </td>
+            <td> {% if user.User.club %}
+                <a href="{{ path('club_show', {'id': user.User.club.id }) }}"> {{ user.User.getClub() }}</a>
+            </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

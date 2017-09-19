@@ -30,6 +30,7 @@ class UserNormalizer implements NormalizerInterface
 
 
         return [
+            'id' => $object->getId(),
             'name'   => $object->getName(),
             'surname'   => $object->getSurname(),
             'male' => $object->getMale() ? 'M' : 'K',

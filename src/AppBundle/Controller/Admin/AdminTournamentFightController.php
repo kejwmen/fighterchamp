@@ -80,10 +80,15 @@ class AdminTournamentFightController extends Controller
         $freeUsers = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
 
+        $serializer = $this->get('serializer');
 
-        return $this->render('admin/pair.twig', array(
+        $freeUsers = $serializer->serialize($freeUsers, 'json');
+
+        dump($freeUsers);
+
+        return $this->render('admin/pair.html.twig', array(
             'form' => $form->createView(),
-            'freeUsers' => $freeUsers,
+            'freeUsers' => \json_decode($freeUsers),
             'tournament' => $tournament,
         ));
     }
