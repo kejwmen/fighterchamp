@@ -69,7 +69,6 @@ class AdminTournamentFightController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-
         $data = $request->request->all();
 
         $fight = new Fight();
@@ -83,28 +82,26 @@ class AdminTournamentFightController extends Controller
         $fight->addUser($signUp1);
 
         $formula = $this->getHighestFormula($signUp0, $signUp1);
-
         $fight->setFormula($formula);
 
-
-
-//        $fight->setWeight();
+        $weight = $this->getHighestWeight($signUp0, $signUp1);
+        $fight->setWeight($weight);
 
         $fight->setTournament($tournament);
 
-            $numberOfFights = count($this->getDoctrine()
-                ->getRepository('AppBundle:Fight')->findBy(['tournament' => $tournament]));
+        $numberOfFights = count($this->getDoctrine()
+            ->getRepository('AppBundle:Fight')->findBy(['tournament' => $tournament]));
 
-            $fight->setPosition($numberOfFights + 1);
+        $fight->setPosition($numberOfFights + 1);
 
-            $fight->setTournament($tournament);
-            $fight->setDay(new \DateTime('now'));
+        $fight->setTournament($tournament);
+        $fight->setDay($tournament->getStart());
 
-            $em->persist($fight);
-            $em->flush();
+        $em->persist($fight);
+        $em->flush();
 
 
-        return new JsonResponse();
+        return new Response();
     }
 
 
@@ -118,30 +115,20 @@ class AdminTournamentFightController extends Controller
         $em->remove($fight);
         $em->flush();
 
-        $em = $this->getDoctrine()->getManager();
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament, 'Sobota');
 
-        $i = 1;
-        foreach ($fights as $fight) {
-
-            /**@var Fight $fight */
-            $fight->setPosition($i);
-            $em->flush();
-            $i++;
-        }
+//        $fights = $em->getRepository('AppBundle:Fight')
+//            ->findAllFightByDayAdmin($tournament, 'Sobota');
+//
+//        $this->refreshFightPosition($fights);
+//
+//
+//        $fights = $em->getRepository('AppBundle:Fight')
+//            ->findAllFightByDayAdmin($tournament, 'Niedziela');
 
         $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament, 'Niedziela');
+            ->findAllFightsForTournamentAdmin($tournament);
 
-        $i = 1;
-        foreach ($fights as $fight) {
-
-            /**@var Fight $fight */
-            $fight->setPosition($i);
-            $em->flush();
-            $i++;
-        }
+        $this->refreshFightPosition($fights);
 
 
         return $this->redirectToRoute('admin_tournament_fights', ['id' => $tournament->getId()]);
@@ -202,7 +189,7 @@ class AdminTournamentFightController extends Controller
 
         $position_to_insert = $request->request->get('wantedPosition');
         $position_element_to_take = $request->request->get('position');
-        $day = $request->request->get('day');
+
 
         $em = $this->getDoctrine()->getManager();
         $fights = $em->getRepository('AppBundle:Fight')
@@ -212,15 +199,7 @@ class AdminTournamentFightController extends Controller
 
         array_splice($fights, $position_to_insert - 1, 0, $taken_element);
 
-        $i = 1;
-
-        foreach ($fights as $fight) {
-
-            /**@var Fight $fight */
-            $fight->setPosition($i);
-            $em->flush();
-            $i++;
-        }
+        $this->refreshFightPosition($fights);
 
         return new Response(200);
     }
@@ -312,7 +291,27 @@ class AdminTournamentFightController extends Controller
 
     public function getHighestFormula(SignUpTournament $signUp0, SignUpTournament $signUp1): string
     {
-       return ($signUp0->getFormula() <= $signUp1->getFormula()) ? $signUp1->getFormula() : $signUp1->getFormula();
+        return ($signUp0->getFormula() <= $signUp1->getFormula()) ? $signUp0->getFormula() : $signUp1->getFormula();
+    }
+
+    public function getHighestWeight(SignUpTournament $signUp0, SignUpTournament $signUp1): string
+    {
+        return ($signUp0->getWeight() >= $signUp1->getWeight()) ? $signUp0->getWeight() : $signUp1->getWeight();
+    }
+
+
+    public function refreshFightPosition($fights): void
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $i = 1;
+        foreach ($fights as $fight) {
+
+            /**@var Fight $fight */
+            $fight->setPosition($i);
+            $em->flush();
+            $i++;
+        }
     }
 
 

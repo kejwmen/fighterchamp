@@ -28,7 +28,6 @@ class User implements UserInterface, Serializable
     public function __construct()
     {
         $this->signUpTournament = new ArrayCollection();
-        $this->fights = new ArrayCollection();
         $this->create_time = new \DateTime('now');
         $this->tournamentAdmin = new ArrayCollection();
     }

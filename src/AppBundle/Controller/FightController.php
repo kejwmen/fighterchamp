@@ -37,7 +37,7 @@ class FightController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $fights = $em->getRepository(Fight::class)->findBy([],['youtubeId' => 'DESC']);
+        $fights = $em->getRepository(Fight::class)->findBy(['ready' => true],['youtubeId' => 'DESC']);
 
         return $this->render('fight/list.html.twig',
             [

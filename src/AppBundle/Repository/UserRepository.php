@@ -15,6 +15,21 @@ use Doctrine\ORM\EntityRepository;
 class UserRepository extends EntityRepository
 {
 
+    public function findAllUserWithFight()
+    {
+        $qb = $this->createQueryBuilder('user')
+            ->leftJoin('user.signUpTournament', 'signuptournament')
+            ->leftJoin('signuptournament.fights', 'fights');
+
+//            ->andWhere('signuptournament.user = :user')
+//            ->setParameter('user', $user);
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
+
     /**
      * @return User()
      */
