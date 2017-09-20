@@ -341,8 +341,8 @@ class SecurityController extends Controller
             $em = $this->getDoctrine()->getManager();
             $this->getUser()->removeFile();
             $em->flush();
-
         }
+
         return new Response(200);
     }
 

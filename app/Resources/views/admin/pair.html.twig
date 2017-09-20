@@ -2,72 +2,77 @@
 {% block body %}
     {% include 'admin/base.html.twig' %}
     {#<div class="col-xs-12 col-md-10 col-md-offset-1">#}
-        {#{{ form_start(form) }}#}
-        {#{{ form_row(form.formula, { 'label': 'Klasa'} ) }}#}
-        {#{{ form_row(form.weight, { 'label': 'Waga'} ) }}#}
-        {#{% for signup in form.signuptournament %}#}
-            {#<div class="col-xs-6">#}
-                {#{{ form_row(signup, {#}
-                    {#label: 'Zawodnik',#}
-                    {#attr: {'class': 'select2'}#}
-                {#}) }}#}
-            {#</div>#}
-        {#{% endfor %}#}
+    {#{{ form_start(form) }}#}
+    {#{{ form_row(form.formula, { 'label': 'Klasa'} ) }}#}
+    {#{{ form_row(form.weight, { 'label': 'Waga'} ) }}#}
+    {#{% for signup in form.signuptournament %}#}
+    {#<div class="col-xs-6">#}
+    {#{{ form_row(signup, {#}
+    {#label: 'Zawodnik',#}
+    {#attr: {'class': 'select2'}#}
+    {#}) }}#}
+    {#</div>#}
+    {#{% endfor %}#}
 
-        {#<button type="submit" class="btn btn-primary" formnovalidate>Paruj</button>#}
-        {#{{ form_end(form) }}#}
+    {#<button type="submit" class="btn btn-primary" formnovalidate>Paruj</button>#}
+    {#{{ form_end(form) }}#}
     {#</div>#}
 
-    {#{{ dump(freeUsers) }}#}
+    {{ dump(freeUsersArr) }}
 
-
-    <select class="select2" xmlns="http://www.w3.org/1999/html">
-        <optgroup label="Kobiety">
-        {% for user in freeUsers %}
-                {% if user.male == "K" %}
-                <option>{{ user.name }} {{ user.surname }}</option>
-                {% endif %}
-        {% endfor %}
-        </optgroup>
-
-    <optgroup label="Mężczyźni">
-
-            <optgroup label="A">
-        {% for user in freeUsers %}
-            {% if user.formula == "A" %}
-                <option>{{ user.name }} {{ user.surname }}</option>
-            {% endif %}
-        {% endfor %}
+<div class="col-xs-12 col-md-10 col-md-offset-1">
+    <select class="select2" id="user1" style="width: 50%">
+        {% if freeUsersArr.females %}
+            <optgroup label="Kobiety">
+                {% for user in freeUsersArr.females %}
+                    <option>{{ user.weight }}kg {{ user.staz }} {{ user.name }} {{ user.surname }}</option>
+                {% endfor %}
             </optgroup>
+        {% endif %}
 
-        <optgroup label="B">
-            {% for user in freeUsers %}
-                {% if user.formula == "B" %}
-                    <option>{{ user.name }} {{ user.surname }}</option>
+        {% if freeUsersArr.menA or freeUsersArr.menB or freeUsersArr.menC %}
+            <optgroup label="Mężczyźni">
+
+                {% if freeUsersArr.menA %}
+                    <optgroup label="A">
+                        {% for user in freeUsersArr.menA %}
+                            <option>{{ user.name }} {{ user.surname }}</option>
+                        {% endfor %}
+                    </optgroup>
                 {% endif %}
-            {% endfor %}
-        </optgroup>
 
-        <optgroup label="C">
-            {% for user in freeUsers %}
-                {% if user.formula == "C" %}
-                    <option>{{ user.name }} {{ user.surname }}</option>
+                {% if freeUsersArr.menA %}
+                    <optgroup label="B">
+                        {% for user in freeUsersArr.menB %}
+                            <option>{{ user.name }} {{ user.surname }}</option>
+                        {% endfor %}
+                    </optgroup>
                 {% endif %}
-            {% endfor %}
-        </optgroup>
 
-    </optgroup>
+                {% if freeUsersArr.menA %}
+                    <optgroup label="C">
+                        {% for user in freeUsersArr.menC %}
+                            <option>{{ user.name }} {{ user.surname }}</option>
+                        {% endfor %}
+                    </optgroup>
+                {% endif %}
+            </optgroup>
+        {% endif %}
     </select>
 
+</div>
 
 
-    {#<div class="col-xs-12">#}
-        {#<p>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</p>#}
-       {#{% include '/admin/_table_users_to_pair.html.twig' %}#}
-    {#</div>#}
+
+    <div class="col-xs-12">
+    <p>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</p>
+        <button class="btn btn-success">Paruj</button>
+    {% include '/admin/_table_users_to_pair.html.twig' %}
+    </div>
+
 {% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -76,12 +81,12 @@
 
         $(document).ready(function () {
 
-        $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy",tags: true});
+            $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
 
 
             $("#fight_signuptournament_1").val($("#fight_signuptournament_1 option:eq(1)").val());
 
-            window.addEventListener("load", function(){
+            window.addEventListener("load", function () {
                 $("select").change();
             }, false);
 
@@ -94,10 +99,10 @@
                 var weight = Math.max(findWeight(selectFighter0), findWeight(selectFighter1));
 
                 var selectFormula = $("#fight_formula");
-                var selectWeight= $("#fight_weight");
+                var selectWeight = $("#fight_weight");
 
-                selectFormula.find("option[value="+formula+"]").prop("selected", true);
-                selectWeight.find("option[value="+weight+"]").prop("selected", true);
+                selectFormula.find("option[value=" + formula + "]").prop("selected", true);
+                selectWeight.find("option[value=" + weight + "]").prop("selected", true);
 
                 var currValue = $(this).attr('data-value');
                 var column = $(this).val();
@@ -114,9 +119,10 @@
                 });
             });
 
-            function findFormula(string){
+            function findFormula(string) {
                 return string.match(/(\bA\b)|(\bB\b)|(\bC\b)/)[0];
             }
+
             function findWeight(string) {
                 return string.match(/(\d{2})kg/)[1];
 

@@ -14,6 +14,7 @@ use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
 use AppBundle\Form\FightType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -50,47 +51,58 @@ class AdminTournamentFightController extends Controller
      */
     public function pairAction(Request $request, Tournament $tournament)
     {
+        $freeUsers = $this->getDoctrine()
+            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
+
+
+        return $this->render('admin/pair3.html.twig', array(
+            'freeUsers' => $freeUsers,
+            'tournamentId' => $tournament->getId()
+        ));
+    }
+
+
+    /**
+     * @Route("/turniej/{id}", name="admin_tournament_create_fight")
+     */
+    public function createFight(Request $request, Tournament $tournament)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $data = $request->request->all();
 
         $fight = new Fight();
-        $fight->getSignuptournament()->add(null);
-        $fight->getSignuptournament()->add(null);
 
-        $form = $this->createForm(FightType::class, $fight,['tournament' => $tournament]);
+        $signUpRepo = $em->getRepository('AppBundle:SignUpTournament');
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        $signUp0 = $signUpRepo->find($data['ids'][0]);
+        $signUp1 = $signUpRepo->find($data['ids'][1]);
 
-            $em = $this->getDoctrine()->getManager();
+        $fight->addUser($signUp0);
+        $fight->addUser($signUp1);
 
-            $fight = $form->getData();
+        $signUp0->getFormula();
+        $signUp1->getFormula();
+
+        $fight->setFormula();
+//        $fight->setWeight();
+
+        $fight->setTournament($tournament);
 
             $numberOfFights = count($this->getDoctrine()
-                ->getRepository('AppBundle:Fight')->findAll());
+                ->getRepository('AppBundle:Fight')->findBy(['tournament' => $tournament]));
 
             $fight->setPosition($numberOfFights + 1);
 
             $fight->setTournament($tournament);
             $fight->setDay(new \DateTime('now'));
 
-
             $em->persist($fight);
             $em->flush();
-        }
 
-        $freeUsers = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
 
-        $serializer = $this->get('serializer');
-
-        $freeUsers = $serializer->serialize($freeUsers, 'json');
-
-        dump($freeUsers);
-
-        return $this->render('admin/pair.html.twig', array(
-            'form' => $form->createView(),
-            'freeUsers' => \json_decode($freeUsers),
-            'tournament' => $tournament,
-        ));
+        return new JsonResponse();
     }
 
 
@@ -109,7 +121,7 @@ class AdminTournamentFightController extends Controller
             ->findAllFightByDayAdmin($tournament, 'Sobota');
 
         $i = 1;
-        foreach($fights as $fight) {
+        foreach ($fights as $fight) {
 
             /**@var Fight $fight */
             $fight->setPosition($i);
@@ -121,7 +133,7 @@ class AdminTournamentFightController extends Controller
             ->findAllFightByDayAdmin($tournament, 'Niedziela');
 
         $i = 1;
-        foreach($fights as $fight) {
+        foreach ($fights as $fight) {
 
             /**@var Fight $fight */
             $fight->setPosition($i);
@@ -130,12 +142,8 @@ class AdminTournamentFightController extends Controller
         }
 
 
-
-
-
-        return $this->redirectToRoute('admin_tournament_fights',['id' => $tournament->getId()]);
+        return $this->redirectToRoute('admin_tournament_fights', ['id' => $tournament->getId()]);
     }
-
 
 
     /**
@@ -173,9 +181,9 @@ class AdminTournamentFightController extends Controller
         $user = $em->getRepository('AppBundle:User')
             ->findOneBy(['id' => $userId]);
 
-        $user? $fight->setWinner($user) : $fight->resetWinner();
+        $user ? $fight->setWinner($user) : $fight->resetWinner();
 
-        $draw? $fight->setDraw(true) : $fight->resetDraw();
+        $draw ? $fight->setDraw(true) : $fight->resetDraw();
 
         $em->persist($fight);
         $em->flush();
@@ -198,13 +206,13 @@ class AdminTournamentFightController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForTournamentAdmin($tournament);
 
-        $taken_element = array_splice($fights, $position_element_to_take -1, 1);
+        $taken_element = array_splice($fights, $position_element_to_take - 1, 1);
 
-        array_splice($fights, $position_to_insert -1, 0, $taken_element);
+        array_splice($fights, $position_to_insert - 1, 0, $taken_element);
 
         $i = 1;
 
-        foreach($fights as $fight) {
+        foreach ($fights as $fight) {
 
             /**@var Fight $fight */
             $fight->setPosition($i);
@@ -216,8 +224,6 @@ class AdminTournamentFightController extends Controller
     }
 
 
-
-
     /**
      * @Route("/{id}/setwalki", name="allFightsReady")
      */
@@ -226,7 +232,7 @@ class AdminTournamentFightController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('AppBundle:Fight')->setAllFightsReady($tournament);
 
-        return $this->redirectToRoute('admin_tournament_fights',['id' => $tournament->getId()]);
+        return $this->redirectToRoute('admin_tournament_fights', ['id' => $tournament->getId()]);
     }
 
 
@@ -272,11 +278,11 @@ class AdminTournamentFightController extends Controller
         $em->flush();
 
         $fightsSobota = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament,'Sobota');
+            ->findAllFightByDayAdmin($tournament, 'Sobota');
 
         $i = 1;
 
-        foreach($fightsSobota as $fight) {
+        foreach ($fightsSobota as $fight) {
 
             /**@var Fight $fight */
             $fight->setPosition($i);
@@ -286,11 +292,11 @@ class AdminTournamentFightController extends Controller
 
 
         $fightsNiedziela = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament,'Niedziela');
+            ->findAllFightByDayAdmin($tournament, 'Niedziela');
 
         $i = 1;
 
-        foreach($fightsNiedziela as $fight) {
+        foreach ($fightsNiedziela as $fight) {
 
             /**@var Fight $fight */
             $fight->setPosition($i);
@@ -300,7 +306,6 @@ class AdminTournamentFightController extends Controller
 
         return new Response(200);
     }
-
 
 
 }
