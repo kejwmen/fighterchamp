@@ -82,10 +82,12 @@ class AdminTournamentFightController extends Controller
         $fight->addUser($signUp0);
         $fight->addUser($signUp1);
 
-        $signUp0->getFormula();
-        $signUp1->getFormula();
+        $formula = $this->getHighestFormula($signUp0, $signUp1);
 
-        $fight->setFormula();
+        $fight->setFormula($formula);
+
+
+
 //        $fight->setWeight();
 
         $fight->setTournament($tournament);
@@ -305,6 +307,12 @@ class AdminTournamentFightController extends Controller
         }
 
         return new Response(200);
+    }
+
+
+    public function getHighestFormula(SignUpTournament $signUp0, SignUpTournament $signUp1): string
+    {
+       return ($signUp0->getFormula() <= $signUp1->getFormula()) ? $signUp1->getFormula() : $signUp1->getFormula();
     }
 
 
