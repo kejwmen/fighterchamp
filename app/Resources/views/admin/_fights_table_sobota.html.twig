@@ -34,7 +34,9 @@
                     </select></td>
 
                 {% for signUp in fight.signuptournament %}
-                    <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.name }} {{ signUp.user.surname }} {{ signUp.formula }} {{ signUp.weight }} </a>
+                    <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.name }} {{ signUp.user.surname }}
+                    {% if signUp.user.club %} ({{ signUp.user.club }}) {% endif %}
+                    {{ signUp.formula }} {{ signUp.weight }} </a>
                     {% if fight.winner %}
                         {{ signUp.user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
                     {% elseif fight.draw %}
