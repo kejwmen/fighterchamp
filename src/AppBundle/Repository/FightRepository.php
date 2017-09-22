@@ -122,7 +122,10 @@ class FightRepository extends EntityRepository
         $qb = $this->createQueryBuilder('fight')
             ->leftJoin('fight.signuptournament', 'signuptournament')
             ->andWhere('signuptournament.user = :user')
-            ->setParameter('user', $user);
+            ->andWhere('fight.winner is not null')
+            ->andWhere('fight.draw = :draw')
+            ->setParameter('user', $user)
+            ->setParameter('draw', false);
 
         $query = $qb->getQuery();
         return $query->execute();

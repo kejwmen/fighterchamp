@@ -28,7 +28,7 @@ class UserController extends Controller
     /**
      * @Route("/", name="fighter_all_show")
      */
-    public  function showFighters()
+    public  function listAction()
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('AppBundle:User')
@@ -63,7 +63,6 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-
         $em = $this->get('doctrine.orm.default_entity_manager');
 
         $fights = $em->getRepository('AppBundle:Fight')
@@ -74,8 +73,6 @@ class UserController extends Controller
             'user' => $user,
             'fights' => $fights
         ]);
-
-
     }
 
 }
