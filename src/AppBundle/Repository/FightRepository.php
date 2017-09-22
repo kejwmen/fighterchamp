@@ -131,4 +131,21 @@ class FightRepository extends EntityRepository
         return $query->execute();
     }
 
+    public function findTestUserFights()
+    {
+//        SELECT * FROM `fight`
+//JOIN signuptournament_fight ON signuptournament_fight.fight_id = fight.id
+//JOIN signuptournament ON signuptournament.id = signuptournament_fight.sign_up_tournament_id
+//JOIN user ON signuptournament.user_id = user.id
+
+        $qb = $this->createQueryBuilder('fight')
+            ->leftJoin('fight.signuptournament', 'signuptournament')
+           ->leftJoin('signuptournament.fights', 'signuptournamentsfights')
+            ->leftJoin('signuptournament.user', 'user');
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
+
 }
