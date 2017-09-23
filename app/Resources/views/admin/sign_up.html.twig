@@ -3,6 +3,11 @@
 {% block body %}
     {% include 'admin/base.html.twig' %}
     <div class="col-xs-12">
+        {% for msg in app.session.flashBag.get('warning') %}
+            <div class="alert alert-warning">
+                {{ msg }}
+            </div>
+        {% endfor %}
         <h3>Zapłaciło {{ signUpsPaid|length }} na {{ signUpsTournament|length }} zawodników</h3>
         <h3>Zważono {{ howManyWeighted }} na {{ signUpsTournament|length }} zawodników</h3>
         <table id="table" class="table table-striped">

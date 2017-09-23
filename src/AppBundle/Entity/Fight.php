@@ -146,9 +146,6 @@ class Fight
     {
         $this->ready = $this->ready ? false : true;
 
-//        if (!$this->ready){
-//            $this->position = null;
-//        }
 
     }
 

@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\Fight;
 use AppBundle\Entity\Tournament;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,7 +33,39 @@ class AdminTournamentWeight extends Controller
             ->findOneBy(['id' => $signUpId]);
 
         $signUp->setWeighted($weighted);
+
+        $tournament = $em->getRepository('AppBundle:Tournament')->find(3);
+
+        if($weighted != $signUp->getWeight()){
+
+            $fights = $em->getRepository('AppBundle:Fight')
+                ->findUserFightInTournament($signUp, $tournament );
+
+            if($fights){
+                foreach($fights as $fight){
+                    $em->remove($fight);
+
+                    /**
+                     * @var $fight Fight
+                     */
+                    $signUps = $fight->getSignuptournament();
+
+                    $users = [];
+
+                    foreach ($signUps as $sign)
+                    {
+                        $users []=$sign->getUser();
+                    }
+
+                    $this->addFlash('warning', "Walka $users[0] vs. $users[1] została rozparowana ");
+                }
+            }
+        }
+
         $em->flush();
+
+
+
 
         return new Response(200);
     }

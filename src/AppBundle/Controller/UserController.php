@@ -72,9 +72,6 @@ class UserController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForUser($user);
 
-//        dump($em->getRepository('AppBundle:Fight')
-//            ->findTestUserFights());
-
 
         return $this->render('fighter/show.html.twig', [
             'user' => $user,
