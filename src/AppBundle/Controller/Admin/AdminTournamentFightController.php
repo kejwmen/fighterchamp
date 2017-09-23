@@ -55,7 +55,7 @@ class AdminTournamentFightController extends Controller
             ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
 
 
-        return $this->render('admin/pair3.html.twig', array(
+        return $this->render(':admin:pair.html.twig', array(
             'freeUsers' => $freeUsers,
             'tournamentId' => $tournament->getId()
         ));

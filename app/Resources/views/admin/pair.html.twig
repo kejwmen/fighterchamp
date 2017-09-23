@@ -1,132 +1,64 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     {% include 'admin/base.html.twig' %}
-    {#<div class="col-xs-12 col-md-10 col-md-offset-1">#}
-    {#{{ form_start(form) }}#}
-    {#{{ form_row(form.formula, { 'label': 'Klasa'} ) }}#}
-    {#{{ form_row(form.weight, { 'label': 'Waga'} ) }}#}
-    {#{% for signup in form.signuptournament %}#}
-    {#<div class="col-xs-6">#}
-    {#{{ form_row(signup, {#}
-    {#label: 'Zawodnik',#}
-    {#attr: {'class': 'select2'}#}
-    {#}) }}#}
-    {#</div>#}
-    {#{% endfor %}#}
-
-    {#<button type="submit" class="btn btn-primary" formnovalidate>Paruj</button>#}
-    {#{{ form_end(form) }}#}
-    {#</div>#}
-
-    {{ dump(freeUsersArr) }}
-
-<div class="col-xs-12 col-md-10 col-md-offset-1">
-    <select class="select2" id="user1" style="width: 50%">
-        {% if freeUsersArr.females %}
-            <optgroup label="Kobiety">
-                {% for user in freeUsersArr.females %}
-                    <option>{{ user.weight }}kg {{ user.staz }} {{ user.name }} {{ user.surname }}</option>
-                {% endfor %}
-            </optgroup>
-        {% endif %}
-
-        {% if freeUsersArr.menA or freeUsersArr.menB or freeUsersArr.menC %}
-            <optgroup label="Mężczyźni">
-
-                {% if freeUsersArr.menA %}
-                    <optgroup label="A">
-                        {% for user in freeUsersArr.menA %}
-                            <option>{{ user.name }} {{ user.surname }}</option>
-                        {% endfor %}
-                    </optgroup>
-                {% endif %}
-
-                {% if freeUsersArr.menA %}
-                    <optgroup label="B">
-                        {% for user in freeUsersArr.menB %}
-                            <option>{{ user.name }} {{ user.surname }}</option>
-                        {% endfor %}
-                    </optgroup>
-                {% endif %}
-
-                {% if freeUsersArr.menA %}
-                    <optgroup label="C">
-                        {% for user in freeUsersArr.menC %}
-                            <option>{{ user.name }} {{ user.surname }}</option>
-                        {% endfor %}
-                    </optgroup>
-                {% endif %}
-            </optgroup>
-        {% endif %}
-    </select>
-
-</div>
-
-
-
     <div class="col-xs-12">
-    <p>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</p>
-        <button class="btn btn-success">Paruj</button>
-    {% include '/admin/_table_users_to_pair.html.twig' %}
+        <p>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</p>
+        <button class="btn btn-success btn-block" id="button">Paruj</button>
+        {% include '/admin/_table_users_to_pair.html.twig' %}
     </div>
+{% endblock %}
 
-{% endblock %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
-{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
-
         $(document).ready(function () {
-
-            $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
-
-
-            $("#fight_signuptournament_1").val($("#fight_signuptournament_1 option:eq(1)").val());
-
-            window.addEventListener("load", function () {
-                $("select").change();
-            }, false);
-
-            $('select').on('change', function () {
-
-                var selectFighter0 = $("#fight_signuptournament_0").find('option:selected').text();
-                var selectFighter1 = $("#fight_signuptournament_1").find('option:selected').text();
-
-                var formula = [findFormula(selectFighter0), findFormula(selectFighter1)].sort()[0];
-                var weight = Math.max(findWeight(selectFighter0), findWeight(selectFighter1));
-
-                var selectFormula = $("#fight_formula");
-                var selectWeight = $("#fight_weight");
-
-                selectFormula.find("option[value=" + formula + "]").prop("selected", true);
-                selectWeight.find("option[value=" + weight + "]").prop("selected", true);
-
-                var currValue = $(this).attr('data-value');
-                var column = $(this).val();
-
-                $(this).attr('data-value', column);
-                $('select').find('[value="' + currValue + '"]').removeAttr('disabled');
-                $('select').find('[value="' + currValue + '"]').css('display', 'inline-block');
-                $('select').not(this).each(function () {
-                    if (column === '') {
-                        return;
-                    }
-                    $(this).find('[value="' + column + '"]').attr('disabled', 'disabled');
-                    $(this).find('[value="' + column + '"]').css('display', 'none');
-                });
+            var table = $('#table-pair').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+                },
+                "bPaginate": false,
+                "dom": 'lifrtp'
             });
 
-            function findFormula(string) {
-                return string.match(/(\bA\b)|(\bB\b)|(\bC\b)/)[0];
-            }
+            $('#table-pair tbody').on('click', 'tr', function () {
+                console.log(this);
 
-            function findWeight(string) {
-                return string.match(/(\d{2})kg/)[1];
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                }
+                else {
 
-            }
+                    var numOfActiveRow = table.$('tr.active').length;
+
+                    if (numOfActiveRow === 2) {
+                        table.$('tr.active').removeClass('active');
+                    }
+
+                    $(this).addClass('active');
+                }
+            });
+
+            $('#button').click(function () {
+
+                var numOfActiveRow = table.$('tr.active').length;
+
+                if(numOfActiveRow !==2){
+                    alert('Zaznaczono '+numOfActiveRow+ ' a potrzeba 2 zawodników');
+                }else {
+
+                    var ids = $('.active').map(function (index, element) {
+                        return element.id
+                    }).get();
+
+                    $.post("{{ path('admin_tournament_create_fight', {'id': tournamentId }) }}",
+                        {ids: ids}, function (data, status) {
+
+                        });
+
+                    table.rows('.active').remove().draw(false);
+                }
+
+            });
 
         });
     </script>

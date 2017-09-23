@@ -20,39 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminTournamentWeight extends Controller
 {
     /**
-     * @Route("/turniej/{id}/waga", name="admin_tournament_weight")
-     */
-    public function weightAction(Tournament $tournament)
-    {
-
-        $signUpsTournament = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')
-            ->findAllSignUpsPaidAndWeightedOrder($tournament);
-
-        $howManyWeighted = 0;
-        foreach($signUpsTournament as $signUp){
-           if($signUp->getWeighted() != null)
-           {
-               $howManyWeighted++;
-           }
-        }
-
-
-        $weights = $this->getDoctrine()
-            ->getRepository('AppBundle:Ruleset')
-            ->getWeight();
-
-
-        return $this->render('admin/weight.html.twig', [
-            'signUpsTournament' => $signUpsTournament,
-            'weights' => $weights,
-            'howManyWeighted' => $howManyWeighted
-           
-        ]);
-    }
-
-
-    /**
      * @Route("/set-weighted", name="set_weighted")
      */
     public function setWeighted(Request $request)

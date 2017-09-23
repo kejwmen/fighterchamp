@@ -149,7 +149,7 @@ class SignUpTournamentRepository extends EntityRepository
         return $query->execute();
     }
 
-    public function findAllSortByReady($tournament)
+    public function findAllForTournament($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
             ->leftJoin('signUpTournament.user', 'user')

@@ -3,17 +3,18 @@
 {% block body %}
     {% include 'admin/base.html.twig' %}
     <div class="col-xs-12">
-        {#<h3>Zatwierdzono {{ signUpsTournamentReady|length }} na {{ signUpsTournament|length }} zawodników</h3>#}
         <h3>Zapłaciło {{ signUpsPaid|length }} na {{ signUpsTournament|length }} zawodników</h3>
+        <h3>Zważono {{ howManyWeighted }} na {{ signUpsTournament|length }} zawodników</h3>
         <table id="table" class="table table-striped">
             <thead>
             <tr>
                 <th>Zapłacone?</th>
                 <th>Nazwisko i Imię</th>
+                <th class="text-center">Kat. Wagowa w Zgłoszeniu</th>
+                <th class="text-center">Kat. Wagowa w Turnieju</th>
                 <th>Klasa</th>
                 <th>Staż [miesiące]</th>
                 <th>Płeć</th>
-                <th>Kat. Wagowa</th>
                 <th>Wiek</th>
             </tr>
             </thead>
@@ -32,10 +33,21 @@
                     </td>
                     <td><a href="{{ path('user', {'id': signUp.User.id }) }}">
                             {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
+                    <td> {{ signUp.weight }} </td>
+                    <td>
+                        <select class="select_weighted">
+                            <option value="{{ signUp.id }}"></option>
+                            {% for weight in weights %}
+                                <option value="{{ signUp.id }}|{{ weight.weight }}"
+                                        {{ signUp.weighted == weight.weight ? 'selected' }}
+                                >{{ weight.weight }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
                     <td> {{ signUp.formula }} </td>
                     <td> {{ signUp.trainingTime }}</td>
                     <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
-                    <td> {{ signUp.getFinallWeight() }} </td>
                     <td> {{ signUp.User.birthDay |getAge }} </td>
                 </tr>
             {% endfor %}
@@ -56,7 +68,6 @@
     <script>
 
         $(".select_isPaid").change(function () {
-
             var values = this.value;
             var arrValues = values.split("|");
 
@@ -67,7 +78,23 @@
                 success: function () {
                     location.reload();                 }
             });
-
         });
+
+        $( ".select_weighted" ).change(function() {
+
+            var values = this.value;
+            var arrValues = values.split("|");
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('set_weighted') }}",
+                data: {signUpId: arrValues[0], weighted: arrValues[1]},
+                success: function () {
+
+                    location.reload();
+                }
+            });
+        });
+
     </script>
 {% endblock %}

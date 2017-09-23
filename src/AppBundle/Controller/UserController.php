@@ -35,7 +35,6 @@ class UserController extends Controller
         $users = $em->getRepository('AppBundle:User')
             ->findBy([],['surname' => 'ASC']);
 
-
         $usersAndFights = $this->getUsersWithStats($users, $em);
 
 

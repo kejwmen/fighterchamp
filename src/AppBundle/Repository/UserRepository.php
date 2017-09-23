@@ -15,35 +15,17 @@ use Doctrine\ORM\EntityRepository;
 class UserRepository extends EntityRepository
 {
 
-    public function findAllUserWithFight()
+    public function findAllUsersWithFights()
     {
         $qb = $this->createQueryBuilder('user')
             ->leftJoin('user.signUpTournament', 'signuptournament')
-            ->leftJoin('signuptournament.fights', 'fights');
+            ->leftJoin('signuptournament.fights', 'fights')
+            ->addSelect('signuptournament')
+            ->addSelect('fights');
 
-//            ->andWhere('signuptournament.user = :user')
-//            ->setParameter('user', $user);
-
-        $query = $qb->getQuery();
-
-        return $query->execute();
+          $query = $qb->getQuery();
+          return $query->execute();
     }
-
-
-    /**
-     * @return User()
-     */
-    public function findAllUserSort()
-    {
-        $qb = $this->createQueryBuilder('user')
-            ->leftJoin('user.id', 'fc')
-            ->addOrderBy('user.name', 'DESC');
-
-        $query = $qb->getQuery();
-
-        return $query->execute();
-    }
-
 
     public function findAllSignUpButNotPairYet($tournament)
     {

@@ -26,16 +26,9 @@ class AdminTournamentSignUp extends Controller
      */
     public function signUp(Tournament $tournament)
     {
-        $em = $this->getDoctrine()->getManager();
-
-
         $signUpsTournament = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')
-            ->findAllSortByReady($tournament);
-
-//        $signUpsTournamentReady = $this->getDoctrine()
-//            ->getRepository('AppBundle:SignUpTournament')
-//            ->findBy(['ready' => true], ['ready' => 'ASC']);
+            ->findAllForTournament($tournament);
 
         $signUpsPaid = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')
@@ -46,11 +39,25 @@ class AdminTournamentSignUp extends Controller
             ->findAllSignUpsPaidButDeleted($tournament);
 
 
+
+        $howManyWeighted = 0;
+        foreach($signUpsTournament as $signUp){
+            if($signUp->getWeighted() != null)
+            {
+                $howManyWeighted++;
+            }
+        }
+
+        $weights = $this->getDoctrine()
+            ->getRepository('AppBundle:Ruleset')
+            ->getWeight();
+
         return $this->render('admin/sign_up.html.twig', [
             'signUpsTournament' => $signUpsTournament,
-           // 'signUpsTournamentReady' => $signUpsTournamentReady,
             'signUpsPaid' => $signUpsPaid,
-            'signUpsPaidBuTDeleted' => $signUpsPaidBuTDeleted
+            'signUpsPaidBuTDeleted' => $signUpsPaidBuTDeleted,
+            'weights' => $weights,
+            'howManyWeighted' => $howManyWeighted
         ]);
     }
 
