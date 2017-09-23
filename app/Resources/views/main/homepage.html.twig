@@ -83,20 +83,23 @@
             </div>
         </section>
 
-        {#<h1 class="text-center">XXIII WARSZAWSKA GRANDA NA PIĘŚCI</h1>#}
-        {#<h4 class="text-center">20 maja 2017</h4>#}
-        {#{% if fights %}#}
-            {#{% include 'tournament/_fights.html.twig' with { fights : fights } %}#}
-        {#{% else %}#}
-            {#<p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>#}
-        {#{% endif %}#}
 
-        {#<aside class="poster">#}
-        {#<div class="row">#}
-        {#<div class="col-xs-12">#}
-        {#<img src="{{ asset('img/poster-warszawska-granda-na-piesci-XXI.jpg') }}" class="img-responsive center-block">#}
-        {#</div>#}
-        {#</div>#}
-        {#</aside>#}
+        <h1 class="text-center">Uwaga!</h1>
+        <div class="text-center"> W dniu w turnieju w Warszawie organizowany jest "39. PZU Maraton Warszawski" oznacza to potężne utrudnienia komunikacyjne.
+        Zobacz informator drogowy pod adresem <a href="http://pzumaratonwarszawski.com/drogowy/">http://pzumaratonwarszawski.com/drogowy/</a></div>
+        <h2 class="text-center">XXVI WARSZAWSKA GRANDA NA PIĘŚCI</h2>
+        <h4 class="text-center">23 września 2017</h4>
+        {% if fights %}
+            {% include 'tournament/_fights.html.twig' with { fights : fights } %}
+        {% else %}
+            <p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>
+        {% endif %}
+        <aside class="poster">
+        <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+        <img src="{{ asset('img/tournament/warszawska-granda-na-piesci/poster-warszawska-granda-na-piesci-XXVI.jpg') }}" class="img-responsive center-block">
+        </div>
+        </div>
+        </aside>
     </div>
 {% endblock %}

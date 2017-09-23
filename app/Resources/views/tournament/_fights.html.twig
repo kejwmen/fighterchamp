@@ -21,9 +21,9 @@
                         Szczegóły {% if fight.youtubeId %} <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}</a></td>
                 {% for signUp in fight.signuptournament %}
                     <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.surname }} {{ signUp.user.name }}
-                            {% if signUp.user.club %} ({{ signUp.user.club }}) {% endif %}
+                            {% include '_macros/_fight_result_icon.html.twig' %}
+                            {% if signUp.user.club %} <br> ({{ signUp.user.club }}) {% endif %}
                     </a>
-                    {% include '_macros/_fight_result_icon.html.twig' %}
                 {% endfor %}
                 <td class="text-center">{{ fight.formula }}</td>
                 <td class="text-center">{{ fight.weight }}</td>

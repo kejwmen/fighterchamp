@@ -35,13 +35,11 @@
 
                 {% for signUp in fight.signuptournament %}
                     <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.name }} {{ signUp.user.surname }}
-                    {% if signUp.user.club %} ({{ signUp.user.club }}) {% endif %}
+                            {% include '_macros/_fight_result_icon.html.twig' %}
+                    {% if signUp.user.club %} <br> ({{ signUp.user.club }}) {% endif %}
+                            <br>
                     {{ signUp.formula }} {{ signUp.getFinallWeight }} </a>
-                    {% if fight.winner %}
-                        {{ signUp.user.id == fight.winner.id ? "<span class='label label-success'>W</span></td>" : "<span class='label label-danger'>L</span></td>" }}</td>
-                    {% elseif fight.draw %}
-                        <span class='label label-warning'>D</span></td>
-                    {% endif %}
+
                 {% endfor %}
 
                 <td><select class="select_winner"> <option value="{{ fight.id }}"></option>
