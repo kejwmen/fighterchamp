@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 
+use AppBundle\Entity\Fight;
 use AppBundle\Entity\User;
 use AppBundle\Form\EditUser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,8 +35,12 @@ class UserController extends Controller
         $users = $em->getRepository('AppBundle:User')
             ->findBy([],['surname' => 'ASC']);
 
+
+        $usersAndFights = $this->getUsersWithStats($users, $em);
+
+
         return $this->render('fighter/list.html.twig', [
-           'users' => $users,
+           'usersAndFights' => $usersAndFights ,
         ]);
     }
 
@@ -76,6 +81,42 @@ class UserController extends Controller
             'user' => $user,
             'fights' => $fights
         ]);
+    }
+
+    /**
+     * @param $users
+     * @param $em
+     * @return array
+     */
+    public function getUsersWithStats($users, $em): array
+    {
+        $usersAndFights = [];
+
+        foreach ($users as $user) {
+            $fights = $em->getRepository('AppBundle:Fight')->findAllFightsForUser($user);
+
+            $stats = ['w' => 0, 'd' => 0, 'l' => 0];
+
+            /**
+             * @var $fight Fight
+             */
+            foreach ($fights as $fight) {
+
+                if ($fight->getWinner()) {
+
+                    if ($user->getId() === $fight->getWinner()->getId()) {
+                        $stats['w'] += 1;
+                    } else {
+                        $stats['l'] += 1;
+                    }
+                } elseif ($fight->getDraw()) {
+                    $stats ['d'] += 1;
+                }
+            }
+
+            $usersAndFights [] = [$user, $stats];
+        }
+        return $usersAndFights;
     }
 
 }
