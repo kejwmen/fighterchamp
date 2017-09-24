@@ -163,4 +163,15 @@ class FightRepository extends EntityRepository
 
     }
 
+    public function findAllTournamentFightsWhereFightersAreNotWeighted(Tournament $tournament)
+    {
+        $qb = $this->createQueryBuilder('fight')
+            ->leftJoin('fight.signuptournament', 'signuptournament')
+            ->andWhere('signuptournament.tournament = :tournament')
+            ->andWhere('signuptournament.weighted is null')
+            ->setParameter('tournament', $tournament);
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
 }

@@ -29,6 +29,36 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AdminTournamentFightController extends Controller
 {
+
+    /**
+     * @Route("/fights-not-weighted-remove", name="fights_not_weighted_remove")
+     */
+    public function removeFightsWithNotWeighted()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tournament = $em->getRepository('AppBundle:Tournament')
+            ->find(3);
+
+        $fightsWhereFightersAreNotWeighted = $this->getDoctrine()
+            ->getRepository('AppBundle:Fight')
+            ->findAllTournamentFightsWhereFightersAreNotWeighted($tournament);
+
+        foreach($fightsWhereFightersAreNotWeighted as $fight){
+            $em->remove($fight);
+            $em->flush();
+        }
+
+        $fights = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsForTournamentAdmin($tournament);
+        $this->refreshFightPosition($fights);
+
+
+        return $this->redirectToRoute('admin_tournament_sign_up', ['id' => $tournament->getId()]);
+    }
+
+
+
+
     /**
      * @Route("/turniej/{id}/walki", name="admin_tournament_fights")
      */

@@ -24,6 +24,9 @@
                             {% include '_macros/_fight_result_icon.html.twig' %}
                             {% if signUp.user.club %} <br> ({{ signUp.user.club }}) {% endif %}
                     </a>
+                        <br>
+                        {{ signUp.user.birthDay |getAge }} lat
+                    </td>
                 {% endfor %}
                 <td class="text-center">{{ fight.formula }}</td>
                 <td class="text-center">{{ fight.weight }}</td>

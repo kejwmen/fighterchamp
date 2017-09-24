@@ -39,6 +39,9 @@
                     {% if signUp.user.club %} <br> ({{ signUp.user.club }}) {% endif %}
                             <br>
                     {{ signUp.formula }} {{ signUp.getFinallWeight }} </a>
+                        <br>
+                    {{ signUp.user.birthDay |getAge }} lat
+                    </td>
 
                 {% endfor %}
 
