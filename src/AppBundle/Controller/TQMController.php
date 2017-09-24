@@ -32,7 +32,6 @@ class TQMController extends Controller
         $serializer = $this->get('serializer_task');
         $json = $serializer->serialize($tasks,'json');
 
-        dump($json);
 
 
         return $this->render('tqm/news.html.twig', [
