@@ -33,18 +33,20 @@ class TournamentFightController extends Controller
     public function resultAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
-        $old_arr = $em->getRepository('AppBundle:Fight')
+
+        $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForTournament($tournament);
 
-        $arr = array();
+        $fightsInDay = array();
 
-        foreach($old_arr as $item)
+        foreach($fights as $fight)
         {
-            $arr[$item->getDay()->format('Y-m-d')][]= $item;
+            $fightsInDay[$fight->getDay()->format('Y-m-d')][] = $fight;
         }
 
         return $this->render('tournament/fights.html.twig', [
-            'fightsByDay' => $arr
+            'fightsInDay' => $fightsInDay
+
         ]);
     }
 }

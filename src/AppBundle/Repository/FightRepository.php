@@ -15,6 +15,20 @@ use Doctrine\ORM\EntityRepository;
 class FightRepository extends EntityRepository
 {
 
+    public function findAllVisibleForUser(User $user)
+    {
+        $qb = $this->createQueryBuilder('fight')
+            ->andWhere('fight.users = :user')
+            ->setParameter('user', $user)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    }
+
+
+
     public function fightAllOrderBy($tournament)
     {
         $qb = $this->createQueryBuilder('fight')
@@ -123,8 +137,7 @@ class FightRepository extends EntityRepository
     public function findAllFightsForUser($user)
     {
         $qb = $this->createQueryBuilder('fight')
-            ->leftJoin('fight.signuptournament', 'signuptournament')
-            ->andWhere('signuptournament.user = :user')
+            ->andWhere('fight.users = :user')
             ->andWhere('fight.winner is not null')
             ->andWhere('fight.draw = :draw')
             ->setParameter('user', $user)
@@ -146,22 +159,7 @@ class FightRepository extends EntityRepository
         return $query->execute();
     }
 
-    public function findTestUserFights()
-    {
-//        SELECT * FROM `fight`
-//JOIN signuptournament_fight ON signuptournament_fight.fight_id = fight.id
-//JOIN signuptournament ON signuptournament.id = signuptournament_fight.sign_up_tournament_id
-//JOIN user ON signuptournament.user_id = user.id
 
-        $qb = $this->createQueryBuilder('fight')
-            ->leftJoin('fight.signuptournament', 'signuptournament')
-           ->leftJoin('signuptournament.fights', 'signuptournamentsfights')
-            ->leftJoin('signuptournament.user', 'user');
-
-        $query = $qb->getQuery();
-        return $query->execute();
-
-    }
 
     public function findAllTournamentFightsWhereFightersAreNotWeighted(Tournament $tournament)
     {

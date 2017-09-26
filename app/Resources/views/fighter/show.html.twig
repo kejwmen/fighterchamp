@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 {% set win, lose, draw = 0,0,0 %}
 
-    {% for fight in fights %}
+    {% for fight in user.fights %}
         {% if fight.winner %}
-            {% if user.id == fight.winner.id %} {% set win = win + 1 %} {% else %}{%  set lose = lose + 1 %}
+            {% if user.id == fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
             {% endif %}
-        {% elseif fight.draw %} {%  set draw = draw + 1 %}
+        {% elseif fight.draw %} {% set draw = draw + 1 %}
         {% endif %}
     {% endfor %}
 
@@ -13,53 +13,62 @@
 
 {% block body %}
     <div class="container">
-    <div class="row">
-    {% for msg in app.session.flashBag.get('success') %}
-        <div class="alert alert-success">
-            {{ msg }}
-        </div>
-    {% endfor %}
-
-    <div class="col-xs-12 col-sm-6">
-
-        {% include ':fighter:_profile.html.twig' %}
-    </div>
-    <div class="col-xs-12 col-sm-6">
-    {% if win+lose+draw == 0 %} <h4 class="text-center">Brak rekordów walk</h4>{% else %}
-        <table class="table">
-            <tr>
-                <th>#</th>
-                <th>Turniej</th>
-                <th>Przeciwnik</th>
-                <th>Wynik</th>
-            </tr>
-            {% for fight in fights %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>
-                            <a href="{{ path('tournament_panel', {'id' : fight.tournament.id  }) }}"> {{ fight.tournament.name }} </a>
-                        </td>
-                        {% for signUp in fight.signuptournament %}
-                            {% if signUp.user.id != user.id %}
-                                <td>
-                                    <a href="{{ path('user', {'id' : signUp.user.id  }) }}">{{ signUp.user.name }} {{ signUp.user.surname }}</a>
-                                </td>
-                            {% endif %}
-                        {% endfor %}
-                        <td>
-                        {% if fight.winner %}
-                            {% if user.id == fight.winner.id %} <span class="label label-success">W</span>
-                                {% else %} <span class="label label-danger">L</span>
-                                {% endif %}
-                        {% elseif fight.draw %}
-                            <span class="label label-warning">D</span>
-                        {% endif %}
-                        </td>
-                    </tr>
+        <div class="row">
+            {% for msg in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">
+                    {{ msg }}
+                </div>
             {% endfor %}
-        </table>
+
+            <div class="col-xs-12 col-sm-6">
+                {% include ':fighter:_profile.html.twig' %}
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                {% if win+lose+draw == 0 %} <h4 class="text-center">Brak rekordów walk</h4>{% else %}
+                <table class="table">
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Przeciwnik</th>
+                        <th class="text-center">Formuła</th>
+                        <th class="text-center">Kat. wagowa</th>
+                        <th class="text-center">Wynik</th>
+                        <th class="text-center">Turniej</th>
+                    </tr>
+                    {% for fight in user.fights %}
+                        <tr>
+                            <td class="text-center">
+                                 {{ "%02d"|format(loop.index) }}
+                                <a href="{{ path('fight_show', {'id': fight.id }) }}">
+                                    Szczegóły {% if fight.youtubeId %}
+                                        <img class='youtube-icon'src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                {% for userInFight in fight.users %}
+                                    {% if user.id != userInFight.id %}
+                                        <a href="{{ path('user', {'id' : user.id  }) }}">{{ user.name }} {{ user.surname }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td class="text-center"> {{ fight.formula }}</td>
+                            <td class="text-center"> {{ fight.weight }}</td>
+                            <td class="text-center">
+                                {% if fight.winner %}
+                                    {% if user.id == fight.winner.id %} <span class="label label-success">W</span>
+                                    {% else %} <span class="label label-danger">L</span>
+                                    {% endif %}
+                                {% elseif fight.draw %}
+                                    <span class="label label-warning">D</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ path('tournament_panel', {'id' : fight.tournament.id  }) }}"> {{ fight.tournament.name }} </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-        </div>
-    {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

@@ -13,6 +13,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\User;
 use AppBundle\Form\EditUser;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,22 +61,28 @@ class UserController extends Controller
 
 
     /**
-     * @param User $user
-     * @return Response
-     *
      * @Route("/{id}", name="user")
      */
     public function showAction(User $user)
     {
-        $em = $this->get('doctrine.orm.default_entity_manager');
+
+       foreach ($user->getFights() as $fight){
+           dump($fight);
+       }
+
+        $em = $this->getDoctrine()->getManager();
+//        $fights = $em->getRepository('AppBundle:Fight')
+//            ->findBy(['users' => $user]);
 
         $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsForUser($user);
+            ->findAllVisibleForUser($user);
 
+
+        dump($fights);
 
         return $this->render('fighter/show.html.twig', [
             'user' => $user,
-            'fights' => $fights
+
         ]);
     }
 
@@ -84,12 +91,14 @@ class UserController extends Controller
      * @param $em
      * @return array
      */
-    public function getUsersWithStats($users, $em): array
+    public function getUsersWithStats($users, EntityManager $em): array
     {
         $usersAndFights = [];
 
         foreach ($users as $user) {
-            $fights = $em->getRepository('AppBundle:Fight')->findAllFightsForUser($user);
+//            $fights = $em->getRepository('AppBundle:Fight')->findAllFightsForUser($user);
+
+//            $fights = $em->getRepository('AppBundle:Fight')->findBy(['usuer'])
 
             $stats = ['w' => 0, 'd' => 0, 'l' => 0];
 

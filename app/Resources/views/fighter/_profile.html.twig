@@ -20,7 +20,7 @@
         </td>
     </tr>
     <tr>
-        <td><b>Wiek:</b> {{ user.birthDay | getAge }} lat</td>
+        <td><b>Wiek:</b>{% if user.birthDay %} {{ user.birthDay | getAge }} lat {% endif %}</td>
     </tr>
     <tr>
         <td><b>Płeć:</b> {{ user.male ?  'mężczyzna' : 'kobieta' }}</td>

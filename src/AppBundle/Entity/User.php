@@ -30,6 +30,7 @@ class User implements UserInterface, Serializable
         $this->signUpTournament = new ArrayCollection();
         $this->create_time = new \DateTime('now');
         $this->tournamentAdmin = new ArrayCollection();
+        $this->fights = new ArrayCollection();
     }
 
     /**
@@ -192,6 +193,12 @@ class User implements UserInterface, Serializable
      * @Assert\NotBlank(groups={"Registration"})
      */
     private $plain_password;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="users")
+     * */
+    private $fights;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\SignUpTournament", mappedBy="user")
@@ -511,6 +518,11 @@ class User implements UserInterface, Serializable
         return $diff->y;
     }
 
+
+    public function getFights()
+    {
+        return $this->fights;
+    }
 
 
     public function __toString()

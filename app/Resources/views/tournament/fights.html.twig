@@ -1,22 +1,20 @@
+{% import "fight/_macro_list.html.twig" as macro %}
 <div class="container">
- <div class="row">
+    <div class="row">
 
-     {% if not fightsByDay %}
-         <p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>
-     {% endif %}
+        {% if not fightsInDay %}
+            <p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>
+        {% endif %}
 
-     {%  for fightByDay in fightsByDay %}
 
-         <h1>{{ fightByDay[0].day  |localizeddate('none', 'full', app.request.locale, null, 'cccc') }} {{ fightByDay[0].day | date('d-m-Y') }}</h1>
+        {% for fightsInDay in fightsInDay %}
 
-     {%  include 'tournament/_fights.html.twig' with { fights : fightByDay } %}
+            <h1>{{ fightsInDay[0].day|localizeddate('none', 'full', app.request.locale, null, 'cccc') }} {{ fightsInDay[0].day | date('d-m-Y') }}</h1>
 
-     {% endfor %}
+            {{ macro.table(fightsInDay, {'tournament' : false, 'order': true }) }}
 
- </div>
+        {% endfor %}
+
+
+    </div>
 </div>
-
-
-
-
-

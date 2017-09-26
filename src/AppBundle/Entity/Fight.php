@@ -23,7 +23,7 @@ class Fight
     public function __construct()
     {
         $this->created_at = new \DateTime('now');
-        $this->signuptournament = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -66,7 +66,6 @@ class Fight
      */
     private $position;
 
-
     /**
      * @ORM\Column(type="boolean")
      */
@@ -90,12 +89,25 @@ class Fight
      */
     private $youtubeId;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="fights")
+     * @ORM\JoinTable(name="user_fight")
+     */
+    private $users;
 
     /**
      *
      * @ORM\Column(name="create_time", type="datetime", nullable=true)
      */
     private $created_at;
+
+    /**
+     * @return mixed
+     */
+    public function getSignuptournament()
+    {
+        return $this->signuptournament;
+    }
 
 
     public function getId(): int
@@ -110,24 +122,19 @@ class Fight
     }
 
 
-    public function addUser(SignUpTournament $signUpTournament)
+    public function addUser(User $user)
     {
-        $this->signuptournament[] = $signUpTournament;
+        $this->users[] = $user;
 
         return $this;
     }
 
     /**
-     * @return ArrayCollection|SignUpTournament[]
+     * @return ArrayCollection|User[]
      */
-    public function getSignuptournament()
+    public function getUsers()
     {
-        return $this->signuptournament;
-    }
-
-    public function setsignuptournament(SignUpTournament $signuptournament)
-    {
-        $this->signuptournament = $signuptournament;
+        return $this->users;
     }
 
 
@@ -145,8 +152,6 @@ class Fight
     public function toggleReady()
     {
         $this->ready = $this->ready ? false : true;
-
-
     }
 
 
@@ -203,7 +208,7 @@ class Fight
     }
 
 
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
@@ -237,34 +242,24 @@ class Fight
         return (string)$this->getFormula();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDay()
+
+    public function getDay(): \DateTime
     {
         return $this->day;
     }
 
-    /**
-     * @param mixed $day
-     */
-    public function setDay($day)
+
+    public function setDay(\DateTime $day)
     {
         $this->day = $day;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getYoutubeId()
+    public function getYoutubeId(): ?string
     {
         return $this->youtubeId;
     }
 
-    /**
-     * @param mixed $youtubeId
-     */
-    public function setYoutubeId($youtubeId)
+    public function setYoutubeId(string $youtubeId)
     {
         $this->youtubeId = $youtubeId;
     }

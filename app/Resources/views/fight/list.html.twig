@@ -1,11 +1,9 @@
+{% import "fight/_macro_list.html.twig" as macro %}
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                {% include '/fight/_fights.html.twig' %}
-            </div>
+                {{ macro.table(fights, {'tournament' : true, 'order': false }) }}
         </div>
     </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% import "fight/_macro_list.html.twig" as macro %}
 {% block body %}
     {% for msg in app.session.flashBag.get('success') %}
         <div class="alert alert-success">
@@ -83,14 +83,15 @@
             </div>
         </section>
 
-
+        <div class="container">
+            <div class="row">
         <h1 class="text-center">Uwaga!</h1>
         <div class="text-center"> W dniu w turnieju w Warszawie organizowany jest "39. PZU Maraton Warszawski" oznacza to potężne utrudnienia komunikacyjne.
         Zobacz informator drogowy pod adresem <a href="http://pzumaratonwarszawski.com/drogowy/">http://pzumaratonwarszawski.com/drogowy/</a></div>
         <h2 class="text-center">XXVI WARSZAWSKA GRANDA NA PIĘŚCI</h2>
         <h4 class="text-center">23 września 2017</h4>
         {% if fights %}
-            {% include 'tournament/_fights.html.twig' with { fights : fights } %}
+            {{ macro.table(fights, {'tournament' : false, 'order': true }) }}
         {% else %}
             <p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>
         {% endif %}
@@ -101,5 +102,7 @@
         </div>
         </div>
         </aside>
+    </div>
+    </div>
     </div>
 {% endblock %}

@@ -1,0 +1,52 @@
+{% macro table(fights, row) %}
+    <div class="col-xs-12">
+        <div>
+            <span class="label label-success">W</span> - Win (Wygrana)
+            <span class="label label-warning">D</span> - Draw (Remis)
+            <span class="label label-danger">L</span> - Loss (Przegrana)
+        </div>
+
+        <table id="table-fight" class="table">
+            <thead>
+            <tr>
+                <th class="text-center">{% if row.order %} Kolejność {% endif %}</th>
+                <th>Zawodnik 1</th>
+                <th>Zawodnik 2</th>
+                <th class="text-center">Formuła</th>
+                <th class="text-center">Kat. wagowa</th>
+                {% if row.tournament %}
+                    <th class="text-center">Turniej</th> {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for fight in fights %}
+                <tr>
+                    <td class="text-center">
+                        {% if row.order %} {{ "%02d"|format(loop.index) }} {% endif %}
+                        <a href="{{ path('fight_show', {'id': fight.id }) }}">
+                            Szczegóły {% if fight.youtubeId %}
+                                <img class='youtube-icon'src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}
+                        </a>
+                    </td>
+
+                    {% for user in fight.users %}
+                        <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}
+                                {% include '_macros/_fight_result_icon.html.twig' %}
+                                {% if user.club %} <br> ({{ user.club }}) {% endif %}
+                            </a>
+                            <br>
+                        {% if user.birthDay %} {{ user.birthDay |getAge }} lat {% endif %}
+                        </td>
+                    {% endfor %}
+                    <td class="text-center">{{ fight.formula }}</td>
+                    <td class="text-center">{{ fight.weight }}</td>
+                    {% if row.tournament %}
+                        <td class="text-center"><a
+                                    href="{{ path('fight_show', {'id': fight.id }) }}">{{ fight.tournament.name }}</a>
+                        </td> {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
