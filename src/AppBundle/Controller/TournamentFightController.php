@@ -37,7 +37,7 @@ class TournamentFightController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForTournament($tournament);
 
-        $fightsInDay = array();
+        $fightsInDay = [];
 
         foreach($fights as $fight)
         {

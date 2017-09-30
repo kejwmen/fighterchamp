@@ -8,6 +8,7 @@
 
 namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 
 class SignUpTournamentRepository extends EntityRepository
 {
@@ -104,13 +105,14 @@ class SignUpTournamentRepository extends EntityRepository
     public function findAllSignUpButNotPairYet($tournament)
     {
         $qb = $this->createQueryBuilder('signUpTournament')
-            ->leftJoin('signUpTournament.user', 'user')
-            ->andWhere('signUpTournament.fights is empty' )
+            ->join('signUpTournament.user', 'user')
+            ->andWhere('user.fights is empty')
             ->andWhere('signUpTournament.tournament = :tournament')
             ->setParameter('tournament', $tournament)
+            ->andWhere('signUpTournament.deleted_at is null')
             ->andWhere('signUpTournament.isPaid = true')
             ->andWhere('signUpTournament.deleted_at is null')
-//            ->andWhere('signUpTournament.weighted is not null')
+            ->andWhere('signUpTournament.weighted is not null')
             ->addOrderBy('user.male')
             ->addOrderBy('signUpTournament.formula')
             ->addOrderBy('signUpTournament.weight')

@@ -30,8 +30,6 @@ class TournamentController extends Controller
 {
 
     /**
-     * List all tournaments.
-     *
      * @Route("/", name="tournament_list")
      */
     public function listAction()

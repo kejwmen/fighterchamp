@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <table id="table" class="table table-striped text-center">
+                    <thead>
+                    <tr>
+                        <th>Nazwisko i Imię</th>
+                        <th class="text-center">Płeć</th>
+                        <th class="text-center">Wiek</th>
+                        <th class="text-center">Klub</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
+                            <td class="text-left"><a href="{{ path('user', {'id': user.id }) }}">
+                                    {{ user.surname }} {{ user.name }}</a>
+
+                                {% set win, lose, draw = 0,0,0 %}
+
+                                {% for fight in user.fights %}
+                                    {% if fight.winner %}
+                                        {% if user.id == fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
+                                        {% endif %}
+                                    {% elseif fight.draw %} {% set draw = draw + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                <span class="label label-success">W: {{ win }}</span>
+                                <span class="label label-warning">D: {{ draw }}</span>
+                                <span class="label label-danger">L: {{ lose }}</span>
+                            </td>
+                            <td> {{ user.male ?  'M' : 'K' }}</td>
+                            <td> {{ user.birthDay |getAge }} </td>
+                            <td> {% if user.club %}
+                                    <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

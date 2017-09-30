@@ -4,6 +4,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 use Doctrine\ORM\Mapping\OrderBy;
@@ -27,7 +28,7 @@ class User implements UserInterface, Serializable
 
     public function __construct()
     {
-        $this->signUpTournament = new ArrayCollection();
+        $this->signUpTournaments = new ArrayCollection();
         $this->create_time = new \DateTime('now');
         $this->tournamentAdmin = new ArrayCollection();
         $this->fights = new ArrayCollection();
@@ -196,14 +197,14 @@ class User implements UserInterface, Serializable
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", inversedBy="users")
      * */
     private $fights;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\SignUpTournament", mappedBy="user")
      */
-    private $signUpTournament;
+    private $signUpTournaments;
 
     /**
      * @ORM\Column(type="datetime")
@@ -474,21 +475,22 @@ class User implements UserInterface, Serializable
         $this->facebookId = $facebookId;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSignUpTournament()
+
+    public function getSignUpTournaments()
     {
-        return $this->signUpTournament;
+        return $this->signUpTournaments;
     }
 
-    /**
-     * @param mixed $signUpTournament
-     */
-    public function setSignUpTournament($signUpTournament)
+    public function getSignUpTournament($tournament)
     {
-        $this->signUpTournament = $signUpTournament;
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('tournament', $tournament));
+        $criteria->where(Criteria::expr()->eq('deleted_at', null));
+
+        return $this->signUpTournaments->matching($criteria)->first();
     }
+
+
 
 
     /**
@@ -521,13 +523,33 @@ class User implements UserInterface, Serializable
 
     public function getFights()
     {
-        return $this->fights;
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('ready', true));
+
+        return $this->fights->matching($criteria);
     }
 
+    public function getFight(Tournament $tournament)
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq($tournament, $tournament));
+
+        return $this->fights->matching($criteria);
+    }
 
     public function __toString()
     {
         return $this->name .' '. $this->surname;
     }
+
+    /**
+     * @param mixed $fights
+     */
+    public function setFights($fights)
+    {
+        $this->fights []= $fights;
+    }
+
+
 
 }

@@ -34,12 +34,6 @@ class Fight
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\SignUpTournament", inversedBy="fights")
-     * @ORM\JoinTable(name="signuptournament_fight")
-     * */
-    private $signuptournament;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
      * @ORM\JoinColumn(name="tournament_id", nullable=false)
      */
@@ -90,7 +84,7 @@ class Fight
     private $youtubeId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="fights")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="fights")
      * @ORM\JoinTable(name="user_fight")
      */
     private $users;
@@ -101,13 +95,6 @@ class Fight
      */
     private $created_at;
 
-    /**
-     * @return mixed
-     */
-    public function getSignuptournament()
-    {
-        return $this->signuptournament;
-    }
 
 
     public function getId(): int
@@ -125,6 +112,7 @@ class Fight
     public function addUser(User $user)
     {
         $this->users[] = $user;
+        $user->setFights($this);
 
         return $this;
     }
@@ -263,16 +251,4 @@ class Fight
     {
         $this->youtubeId = $youtubeId;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

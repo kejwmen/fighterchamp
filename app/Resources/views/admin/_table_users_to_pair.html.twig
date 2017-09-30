@@ -12,20 +12,20 @@
     </thead>
     <tbody>
     {% for signUp in freeUsers %}
-        <tr id="{{ signUp.id }}">
-            <td>
-                <a href="{{ path('user', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a>
-            </td>
-            <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
-            <td> {{ signUp.formula }} </td>
-            <td> {{ signUp.weighted ?: signUp.weight }} </td>
-            <td> {{ signUp.trainingTime }} </td>
-            <td> {{ signUp.User.birthDay |getAge }} </td>
-            <td> {% if signUp.User.club %}
-                <a href="{{ path('club_show', {'id': signUp.User.club.id }) }}"> {{ signUp.User.getClub() }}</a>
-            </td>
-            {% endif %}
-        </tr>
+            <tr id="{{ signUp.id }}">
+                <td>
+                    <a href="{{ path('user', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a>
+                </td>
+                <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
+                <td> {{ signUp.formula }} </td>
+                <td> {{ signUp.weighted ?: signUp.weight }} </td>
+                <td> {{ signUp.trainingTime }} </td>
+                <td> {{ signUp.User.birthDay |getAge }} </td>
+                <td> {% if signUp.User.club %}
+                    <a href="{{ path('club_show', {'id': signUp.User.club.id }) }}"> {{ signUp.User.getClub() }}</a>
+                </td>
+                {% endif %}
+            </tr>
     {% endfor %}
     </tbody>
 </table>

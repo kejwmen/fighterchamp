@@ -33,27 +33,28 @@
                         {% endfor %}
                     </select></td>
 
-                {% for signUp in fight.signuptournament %}
-                    <td><a href="{{ path('user', {'id': signUp.user.id }) }}"> {{ signUp.user.name }} {{ signUp.user.surname }}
+                {% for user in fight.users %}
+                    <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.name }} {{ user.surname }}
                             {% include '_macros/_fight_result_icon.html.twig' %}
-                    {% if signUp.user.club %} <br> ({{ signUp.user.club }}) {% endif %}
+                    {% if user.club %} <br> ({{ user.club }}) {% endif %}
                             <br>
-                    {{ signUp.formula }} {{ signUp.getFinallWeight }} </a>
+                            {{ user.getSignUpTournament(tournament).formula }}
+                            {{ user.getSignUpTournament(tournament).getFinallWeight }} </a>
                         <br>
-                    {{ signUp.user.birthDay |getAge }} lat
+                    {{ user.birthDay |getAge }} lat
                     </td>
 
                 {% endfor %}
 
-                <td><select class="select_winner"> <option value="{{ fight.id }}"></option>
-                        {% for signUp in fight.signuptournament %}
-                            {% if fight.winner %}
-                                <option {{ signUp.user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ signUp.user.id }}|{{ fight.draw }}">{{ signUp.user.surname }} {{ signUp.user.name }}</option>
-                            {% else %}
-                                <option value="{{ fight.id }}|{{ signUp.user.id }}|{{ fight.draw }}">{{ signUp.user.surname }} {{ signUp.user.name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                        <option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>
+                {#<td><select class="select_winner"> <option value="{{ fight.id }}"></option>#}
+                        {#{% for signUp in fight.signuptournament %}#}
+                            {#{% if fight.winner %}#}
+                                {#<option {{ signUp.user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ signUp.user.id }}|{{ fight.draw }}">{{ signUp.user.surname }} {{ signUp.user.name }}</option>#}
+                            {#{% else %}#}
+                                {#<option value="{{ fight.id }}|{{ signUp.user.id }}|{{ fight.draw }}">{{ signUp.user.surname }} {{ signUp.user.name }}</option>#}
+                            {#{% endif %}#}
+                        {#{% endfor %}#}
+                        {#<option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>#}
 
                 <td>{{ fight.formula }}</td>
                 <td>{{ fight.weight }}</td>

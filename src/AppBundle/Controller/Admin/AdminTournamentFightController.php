@@ -68,10 +68,14 @@ class AdminTournamentFightController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForTournamentAdmin($tournament);
 
+        $user = $em->getRepository('AppBundle:User')->find(162);
+
+
 
         return $this->render('admin/fight.html.twig', [
             'fights' => $fights,
-            'tournament' => $tournament
+            'tournament' => $tournament,
+            'user' => $user
         ]);
     }
 
@@ -87,7 +91,7 @@ class AdminTournamentFightController extends Controller
 
         return $this->render(':admin:pair.html.twig', array(
             'freeUsers' => $freeUsers,
-            'tournamentId' => $tournament->getId()
+            'tournament' => $tournament
         ));
     }
 
@@ -108,8 +112,8 @@ class AdminTournamentFightController extends Controller
         $signUp0 = $signUpRepo->find($data['ids'][0]);
         $signUp1 = $signUpRepo->find($data['ids'][1]);
 
-        $fight->addUser($signUp0);
-        $fight->addUser($signUp1);
+        $fight->addUser($signUp0->getUser());
+        $fight->addUser($signUp1->getUser());
 
         $formula = $this->getHighestFormula($signUp0, $signUp1);
         $fight->setFormula($formula);

@@ -57,7 +57,7 @@ class SignUpTournament
     private $tournament;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="signUpTournament")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="signUpTournaments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -95,10 +95,6 @@ class SignUpTournament
      */
     private $created_at;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="signuptournament")
-     * */
-    private $fights;
 
     /**
      * @return mixed

@@ -14,14 +14,10 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            {% for msg in app.session.flashBag.get('success') %}
-                <div class="alert alert-success">
-                    {{ msg }}
-                </div>
-            {% endfor %}
+          {% include '_messages/success.html.twig' %}
 
             <div class="col-xs-12 col-sm-6">
-                {% include ':fighter:_profile.html.twig' %}
+                {% include 'user/fighter/_profile.html.twig' %}
             </div>
             <div class="col-xs-12 col-sm-6">
                 {% if win+lose+draw == 0 %} <h4 class="text-center">Brak rekordów walk</h4>{% else %}
@@ -34,6 +30,7 @@
                         <th class="text-center">Wynik</th>
                         <th class="text-center">Turniej</th>
                     </tr>
+
                     {% for fight in user.fights %}
                         <tr>
                             <td class="text-center">
@@ -45,8 +42,8 @@
                             </td>
                             <td class="text-center">
                                 {% for userInFight in fight.users %}
-                                    {% if user.id != userInFight.id %}
-                                        <a href="{{ path('user', {'id' : user.id  }) }}">{{ user.name }} {{ user.surname }}</a>
+                                    {% if userInFight.id != user.id %}
+                                        <a href="{{ path('user', {'id' : userInFight.id  }) }}">{{ userInFight.name }} {{ userInFight.surname }}</a>
                                     {% endif %}
                                 {% endfor %}
                             </td>
@@ -66,6 +63,7 @@
                             </td>
                         </tr>
                     {% endfor %}
+
                 </table>
             </div>
         </div>

@@ -33,31 +33,12 @@ class UserController extends Controller
     public  function listAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('AppBundle:User')
-            ->findBy([],['surname' => 'ASC']);
+        $users = $em->getRepository('AppBundle:User')->findAll();
 
-        $usersAndFights = $this->getUsersWithStats($users, $em);
-
-
-        return $this->render('fighter/list.html.twig', [
-           'usersAndFights' => $usersAndFights ,
+        return $this->render('user/fighter/list.html.twig', [
+           'users' => $users ,
         ]);
     }
-
-//    /**
-//     * @Route("/json", name="fighters_json")
-//     */
-//    public function FightersJson()
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $club = $em->getRepository('AppBundle:User')
-//            ->findAll();
-//
-//        $serializer = $this->get('serializer_user');
-//        $club = $serializer->serialize($club, 'json');
-//
-//        return new Response($club, 200, ['Content-Type' => 'application/json']);
-//    }
 
 
     /**
@@ -65,63 +46,8 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-
-       foreach ($user->getFights() as $fight){
-           dump($fight);
-       }
-
-        $em = $this->getDoctrine()->getManager();
-//        $fights = $em->getRepository('AppBundle:Fight')
-//            ->findBy(['users' => $user]);
-
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllVisibleForUser($user);
-
-
-        dump($fights);
-
-        return $this->render('fighter/show.html.twig', [
+        return $this->render('user/fighter/show.html.twig', [
             'user' => $user,
-
         ]);
     }
-
-    /**
-     * @param $users
-     * @param $em
-     * @return array
-     */
-    public function getUsersWithStats($users, EntityManager $em): array
-    {
-        $usersAndFights = [];
-
-        foreach ($users as $user) {
-//            $fights = $em->getRepository('AppBundle:Fight')->findAllFightsForUser($user);
-
-//            $fights = $em->getRepository('AppBundle:Fight')->findBy(['usuer'])
-
-            $stats = ['w' => 0, 'd' => 0, 'l' => 0];
-
-            /**
-             * @var $fight Fight
-             */
-            foreach ($fights as $fight) {
-
-                if ($fight->getWinner()) {
-
-                    if ($user->getId() === $fight->getWinner()->getId()) {
-                        $stats['w'] += 1;
-                    } else {
-                        $stats['l'] += 1;
-                    }
-                } elseif ($fight->getDraw()) {
-                    $stats ['d'] += 1;
-                }
-            }
-
-            $usersAndFights [] = [$user, $stats];
-        }
-        return $usersAndFights;
-    }
-
 }
