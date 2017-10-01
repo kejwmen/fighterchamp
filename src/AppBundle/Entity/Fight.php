@@ -251,20 +251,4 @@ class Fight
     {
         $this->youtubeId = $youtubeId;
     }
-
-    /**
-     * @return ArrayCollection|SignUpTournament[]
-     */
-    public function getSignuptournament()
-    {
-        return $this->signuptournament;
-    }
-
-
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\SignUpTournament", inversedBy="fights")
-     * @ORM\JoinTable(name="signuptournament_fight")
-     * */
-    private $signuptournament;
-
 }
