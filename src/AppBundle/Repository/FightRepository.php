@@ -9,7 +9,6 @@
 namespace AppBundle\Repository;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
-use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class FightRepository extends EntityRepository
@@ -108,19 +107,6 @@ class FightRepository extends EntityRepository
     }
 
 
-    public function findAllFightsForUser($user)
-    {
-        $qb = $this->createQueryBuilder('fight')
-            ->andWhere('fight.users = :user')
-            ->andWhere('fight.winner is not null')
-            ->andWhere('fight.draw = :draw')
-            ->setParameter('user', $user)
-            ->setParameter('draw', false);
-
-        $query = $qb->getQuery();
-        return $query->execute();
-    }
-
     //should be plural
     public function findUserFightInTournament(SignUpTournament $signUp, Tournament $tournament)
     {
@@ -142,6 +128,7 @@ class FightRepository extends EntityRepository
             ->andWhere('signuptournament.tournament = :tournament')
             ->andWhere('signuptournament.weighted is null')
             ->setParameter('tournament', $tournament);
+
         $query = $qb->getQuery();
         return $query->execute();
     }

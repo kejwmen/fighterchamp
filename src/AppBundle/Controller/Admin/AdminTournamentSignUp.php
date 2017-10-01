@@ -38,9 +38,9 @@ class AdminTournamentSignUp extends Controller
             ->getRepository('AppBundle:SignUpTournament')
             ->findAllSignUpsPaidButDeleted($tournament);
 
-        $fightsWhereFightersAreNotWeighted = $this->getDoctrine()
-            ->getRepository('AppBundle:Fight')
-            ->findAllTournamentFightsWhereFightersAreNotWeighted($tournament);
+//        $fightsWhereFightersAreNotWeighted = $this->getDoctrine()
+//            ->getRepository('AppBundle:Fight')
+//            ->findAllTournamentFightsWhereFightersAreNotWeighted($tournament);
 
         $howManyWeighted = 0;
         foreach($signUpsTournament as $signUp){
@@ -60,7 +60,7 @@ class AdminTournamentSignUp extends Controller
             'signUpsPaidBuTDeleted' => $signUpsPaidBuTDeleted,
             'weights' => $weights,
             'howManyWeighted' => $howManyWeighted,
-            'fightsWhereFightersAreNotWeighted' => $fightsWhereFightersAreNotWeighted
+//            'fightsWhereFightersAreNotWeighted' => $fightsWhereFightersAreNotWeighted
         ]);
     }
 

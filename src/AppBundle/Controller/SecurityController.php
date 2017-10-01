@@ -8,18 +8,12 @@
 
 namespace AppBundle\Controller;
 
-
-use AppBundle\Entity\Club;
 use AppBundle\Entity\User;
-use AppBundle\Entity\UserModel;
 use AppBundle\Form\EditUser;
 use AppBundle\Form\LoginForm;
 use AppBundle\Form\PasswordResetType;
-use AppBundle\Form\RegistrationAfterFbType;
-use AppBundle\Form\RegistrationFacebookForm;
 use AppBundle\Form\RegistrationFacebookType;
 use AppBundle\Form\RegistrationType;
-use AppBundle\Service\AppMailer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swift_Mailer;
 use Swift_SmtpTransport;
@@ -290,15 +284,10 @@ class SecurityController extends Controller
             return $this->redirectToRoute("login");
         }
 
-        $user_id = $this->getUser()->getId();
+        $user = $this->getUser();
 
         $em = $this->getDoctrine()->getManager();
 
-        $user = $em->getRepository('AppBundle:User')
-            ->findOneBy(['id' => $user_id]);
-
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsForUser($user);
 
         $form = $this->createForm(EditUser::class, $user,
             [
@@ -321,7 +310,6 @@ class SecurityController extends Controller
             'user/fighter/edit.html.twig',
             [
                 'user' => $user,
-                'fights' => $fights,
                 'form' => $form->createView()
             ]
         );

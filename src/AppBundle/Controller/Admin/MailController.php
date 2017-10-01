@@ -25,22 +25,22 @@ class MailController extends Controller
      */
     public function mailAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('AppBundle:User')
-            ->findAll();
-
-        $usersQty = count($users);
-
-           $sign_up_users = $em->getRepository('AppBundle:SignUpTournament')
-             ->findAll();
-
-        $sing_up_usersQty = count($sign_up_users);
+//        $em = $this->getDoctrine()->getManager();
+//        $users = $em->getRepository('AppBundle:User')
+//            ->findAll();
+//
+//        $usersQty = count($users);
+//
+//           $sign_up_users = $em->getRepository('AppBundle:SignUpTournament')
+//             ->findAll();
+//
+//        $sing_up_usersQty = count($sign_up_users);
 
         return $this->render('admin/mail.html.twig', [
-            'users' => $users,
-            'usersQty' => $usersQty,
-            'sign_up_users' => $sign_up_users,
-            'sing_up_usersQty' => $sing_up_usersQty
+//            'users' => $users,
+//            'usersQty' => $usersQty,
+//            'sign_up_users' => $sign_up_users,
+//            'sing_up_usersQty' => $sing_up_usersQty
         ]);
     }
 }
