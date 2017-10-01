@@ -15,32 +15,6 @@ use Doctrine\ORM\EntityRepository;
 class FightRepository extends EntityRepository
 {
 
-    public function findAllVisibleForUser(User $user)
-    {
-        $qb = $this->createQueryBuilder('fight')
-            ->andWhere('fight.users = :user')
-            ->setParameter('user', $user)
-        ;
-
-        $query = $qb->getQuery();
-        return $query->execute();
-
-    }
-
-
-
-    public function fightAllOrderBy($tournament)
-    {
-        $qb = $this->createQueryBuilder('fight')
-            ->addOrderBy('fight.day', 'DESC')
-            ->addOrderBy('fight.position')
-            ->andWhere('fight.tournament = :tournament')
-            ->setParameter('tournament', $tournament)
-        ;
-
-        $query = $qb->getQuery();
-        return $query->execute();
-    }
 
     public function findAllFightsForTournament($tournament)
     {

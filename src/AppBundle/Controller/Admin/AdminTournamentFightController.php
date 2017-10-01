@@ -170,23 +170,6 @@ class AdminTournamentFightController extends Controller
 
 
     /**
-     * @Route("/parowanie/{id}", name="find_opponent")
-     */
-    public function findOpponent(SignUpTournament $signUpTournament)
-    {
-        $male = $signUpTournament->getUser()->getMale();
-        $weight = $signUpTournament->getWeight();
-        $formula = $signUpTournament->getFormula();
-
-        $signUpTournament = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')->findOpponent($male, $weight, $formula);
-
-        return new JsonResponse($signUpTournament);
-
-    }
-
-
-    /**
      * @Route("/fight/set-winner", name="setWinner")
      */
     public function setWinnerAction(Request $request)

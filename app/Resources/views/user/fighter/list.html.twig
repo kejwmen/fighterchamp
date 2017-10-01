@@ -7,6 +7,7 @@
                     <thead>
                     <tr>
                         <th>Nazwisko i Imię</th>
+                        <th class="text-center">Rekord</th>
                         <th class="text-center">Płeć</th>
                         <th class="text-center">Wiek</th>
                         <th class="text-center">Klub</th>
@@ -17,7 +18,8 @@
                         <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
                             <td class="text-left"><a href="{{ path('user', {'id': user.id }) }}">
                                     {{ user.surname }} {{ user.name }}</a>
-
+                            </td>
+                            <td>
                                 {% set win, lose, draw = 0,0,0 %}
 
                                 {% for fight in user.fights %}
@@ -28,9 +30,10 @@
                                     {% endif %}
                                 {% endfor %}
 
-                                <span class="label label-success">W: {{ win }}</span>
-                                <span class="label label-warning">D: {{ draw }}</span>
-                                <span class="label label-danger">L: {{ lose }}</span>
+                                <span style="color: #5cb85c">{{ win }} </span>
+                                <span style="color: #f0ad4e">{{ draw }} </span>
+                                <span style="color: #d9534f">{{ lose }} </span>
+
                             </td>
                             <td> {{ user.male ?  'M' : 'K' }}</td>
                             <td> {{ user.birthDay |getAge }} </td>

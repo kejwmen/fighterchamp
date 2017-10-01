@@ -318,7 +318,7 @@ class SecurityController extends Controller
 
 
         return $this->render(
-            'fighter/edit.html.twig',
+            'user/fighter/edit.html.twig',
             [
                 'user' => $user,
                 'fights' => $fights,

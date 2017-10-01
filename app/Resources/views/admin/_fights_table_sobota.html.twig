@@ -46,15 +46,15 @@
 
                 {% endfor %}
 
-                {#<td><select class="select_winner"> <option value="{{ fight.id }}"></option>#}
-                        {#{% for signUp in fight.signuptournament %}#}
-                            {#{% if fight.winner %}#}
-                                {#<option {{ signUp.user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ signUp.user.id }}|{{ fight.draw }}">{{ signUp.user.surname }} {{ signUp.user.name }}</option>#}
-                            {#{% else %}#}
-                                {#<option value="{{ fight.id }}|{{ signUp.user.id }}|{{ fight.draw }}">{{ signUp.user.surname }} {{ signUp.user.name }}</option>#}
-                            {#{% endif %}#}
-                        {#{% endfor %}#}
-                        {#<option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>#}
+                <td><select class="select_winner"> <option value="{{ fight.id }}"></option>
+                        {% for user in fight.users %}
+                            {% if fight.winner %}
+                                <option {{ user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ user.id }}|{{ fight.draw }}">{{ user.surname }} {{ user.name }}</option>
+                            {% else %}
+                                <option value="{{ fight.id }}|{{ user.id }}|{{ fight.draw }}">{{ user.surname }} {{ user.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                        <option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>
 
                 <td>{{ fight.formula }}</td>
                 <td>{{ fight.weight }}</td>

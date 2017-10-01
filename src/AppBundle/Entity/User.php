@@ -529,13 +529,6 @@ class User implements UserInterface, Serializable
         return $this->fights->matching($criteria);
     }
 
-    public function getFight(Tournament $tournament)
-    {
-        $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq($tournament, $tournament));
-
-        return $this->fights->matching($criteria);
-    }
 
     public function __toString()
     {
