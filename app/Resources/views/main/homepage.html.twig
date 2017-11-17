@@ -8,101 +8,84 @@
     {% endfor %}
 
     <div class="container-fluid">
-        <section class="wrapper text-uppercase">
-            <div class="row">
-                <a href="{{ path('tournament_list') }}" class="deco-none">
-                    <div class="info1 col-xs-12 col-md-6">
-                        <img src="{{ asset('img/komunikat.jpg') }}" class="img-responsive center-block">
-                        <div class="text-field">
-                            <h1>turnieje</h1>
-                        </div>
-                    </div>
-                </a>
-
-                <div class="col-xs-12 hidden-md hidden-lg">
-                    <div class="row">
-                        <a href="{{ path('fighter_all_show') }}" class='deco-none'>
-                            <div class="info2 col-xs-12 col-sm-6 text-left">
-                                <img src="{{ asset('img/wyniki.jpg') }}" class="img-responsive pull-left">
-                                <div class="text-field">
-                                    <h2>zawodnicy</h2>
-                                </div>
-
-                            </div>
-                        </a>
-
-                        <div class="info3 col-xs-12 col-sm-6 text-right">
-                            <a href="{{ path('club_list' ) }}" class='deco-none'>
-                                <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
-                                <div class="text-field">
-                                    <h2>kluby</h2>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="youtube col-xs-6 text-center">
-                            <a href="https://www.youtube.com/channel/UCMu8BYMJ8SkgTm14YGA2pxA"><i
-                                        class="fa fa-youtube-play"></i></a>
-                        </div>
-                        <div class="facebook col-xs-6 text-center">
-                            <a href="https://www.facebook.com/FighterChampPL/"><i
-                                        class="fa fa-facebook-square"></i></a>
-                        </div>
+    <section class="wrapper text-uppercase">
+        <div class="row">
+            <a href="{{ path('tournament_list') }}" class="deco-none">
+                <div class="info1 col-xs-12 col-md-6">
+                    <img src="{{ asset('img/komunikat.jpg') }}" class="img-responsive center-block">
+                    <div class="text-field">
+                        <h1>turnieje</h1>
                     </div>
                 </div>
+            </a>
 
-                <div class="hidden-xs hidden-sm col-md-6">
-                    <div class="row">
-                        <div class="info2 col-md-6 text-right">
-                            <a href="{{ path('fighter_all_show') }}" class='deco-none'>
-                                <img src="{{ asset('img/wyniki.jpg') }}" class="img-responsive pull-right">
-                                <div class="text-field">
-                                    <h2>zawodnicy</h2>
-                                </div>
-                            </a>
+            <div class="col-xs-12 hidden-md hidden-lg">
+                <div class="row">
+                    <a href="{{ path('fighter_all_show') }}" class='deco-none'>
+                        <div class="info2 col-xs-12 col-sm-6 text-left">
+                            <img src="{{ asset('img/wyniki.jpg') }}" class="img-responsive pull-left">
+                            <div class="text-field">
+                                <h2>zawodnicy</h2>
+                            </div>
+
                         </div>
-                        <div class="youtube col-md-6 text-center">
-                            <a href="https://www.youtube.com/channel/UCMu8BYMJ8SkgTm14YGA2pxA"><i
-                                        class="fa fa-youtube-play"></i></a>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="info3 col-md-6 text-right">
-                            <a href="{{ path('club_list' ) }}" class='deco-none'>
-                                <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
-                                <div class="text-field">
-                                    <h2>kluby</h2>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="facebook col-md-6 text-center">
-                            <a href="https://www.facebook.com/FighterChampPL/"><i
-                                        class="fa fa-facebook-square"></i></a>
-                        </div>
+                    </a>
+
+                    <div class="info3 col-xs-12 col-sm-6 text-right">
+                        <a href="{{ path('club_list' ) }}" class='deco-none'>
+                            <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
+                            <div class="text-field">
+                                <h2>kluby</h2>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="youtube col-xs-6 text-center">
+                        <a href="https://www.youtube.com/channel/UCMu8BYMJ8SkgTm14YGA2pxA"><i
+                                    class="fa fa-youtube-play"></i></a>
+                    </div>
+                    <div class="facebook col-xs-6 text-center">
+                        <a href="https://www.facebook.com/FighterChampPL/"><i
+                                    class="fa fa-facebook-square"></i></a>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <div class="container">
-            <div class="row">
-        <h1 class="text-center">Uwaga!</h1>
-        <div class="text-center"> W dniu w turnieju w Warszawie organizowany jest "39. PZU Maraton Warszawski" oznacza to potężne utrudnienia komunikacyjne.
-        Zobacz informator drogowy pod adresem <a href="http://pzumaratonwarszawski.com/drogowy/">http://pzumaratonwarszawski.com/drogowy/</a></div>
-        <h2 class="text-center">XXVI WARSZAWSKA GRANDA NA PIĘŚCI</h2>
-        <h4 class="text-center">23 września 2017</h4>
-        {% if fights %}
-            {{ macro.table(fights, {'tournament' : false, 'order': true }) }}
-        {% else %}
-            <p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>
-        {% endif %}
-        <aside class="poster">
-        <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
-        <img src="{{ asset('img/tournament/warszawska-granda-na-piesci/poster-warszawska-granda-na-piesci-XXVI.jpg') }}" class="img-responsive center-block">
+            <div class="hidden-xs hidden-sm col-md-6">
+                <div class="row">
+                    <div class="info2 col-md-6 text-right">
+                        <a href="{{ path('fighter_all_show') }}" class='deco-none'>
+                            <img src="{{ asset('img/wyniki.jpg') }}" class="img-responsive pull-right">
+                            <div class="text-field">
+                                <h2>zawodnicy</h2>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="youtube col-md-6 text-center">
+                        <a href="https://www.youtube.com/channel/UCMu8BYMJ8SkgTm14YGA2pxA"><i
+                                    class="fa fa-youtube-play"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="info3 col-md-6 text-right">
+                        <a href="{{ path('club_list' ) }}" class='deco-none'>
+                            <img src="{{ asset('img/3.jpg') }}" class="img-responsive pull-right">
+                            <div class="text-field">
+                                <h2>kluby</h2>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="facebook col-md-6 text-center">
+                        <a href="https://www.facebook.com/FighterChampPL/"><i
+                                    class="fa fa-facebook-square"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-        </aside>
-    </div>
-    </div>
-    </div>
+    </section>
+
+    {#<div class="container">#}
+        {#<div class="row">#}
+
+        {#</div>#}
+    {#</div>#}
 {% endblock %}
