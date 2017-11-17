@@ -75,7 +75,7 @@
     $( "#tournament_fights" ).click(function() {
         $.ajax({
             type: 'GET',
-            url: "{{ path('tournament_fights', {id: tournament.id}) }}",
+            url: "{{ path('fight_list', {tournament: tournament.id}) }}",
             success: function (data) {
                 $(".main").html(data);
             }

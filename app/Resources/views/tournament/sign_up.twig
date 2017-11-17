@@ -50,9 +50,9 @@
                     <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
                     {{ form_end(formDelete)  }}
                     <br>
-                    <button @click="show = !show" class="btn btn-primary align-left" >Edytuj</button> <br>
+                    <button id="edit" class="btn btn-primary align-left" >Edytuj</button> <br>
 
-                    <div v-if="show" class="col-xs-12">
+                    <div class="col-xs-12 edit">
                         {% if app.user.pesel and (app.user.fatherName or app.user.motherName) %}
                             {% include 'tournament/_sign_up_form.html.twig' %}
                             {% else %}
@@ -115,12 +115,8 @@
 
     {{ parent() }}
     <script>
-        new Vue({
-            el: '#app',
-            delimiters: ['${', '}'],
-            data: {
-                show: false,
-            },
+        $("#edit").click(function(){
+            $(".edit").toggle();
         });
 
         $( "#tournament_rules" ).click(function() {
@@ -161,7 +157,7 @@
         $( "#tournament_fights" ).click(function() {
             $.ajax({
                 type: 'GET',
-                url: "{{ path('tournament_fights', {id: tournament.id}) }}",
+                url: "{{ path('tournament_list', {id: tournament.id}) }}",
                 success: function (data) {
                     $(".main").html(data);
                 }

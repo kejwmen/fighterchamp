@@ -12,7 +12,7 @@
     <tbody>
     {% for signUp in signUps %}
         <tr>
-            <td><a href="{{ path('user', {'id': signUp.User.id }) }}">
+            <td><a href="{{ path('user_show', {'id': signUp.User.id }) }}">
                     {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
             <td> {{ signUp.formula }} </td>
             <td> {{ signUp.trainingTime }}</td>

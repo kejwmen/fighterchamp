@@ -14,7 +14,7 @@
     {% for signUp in freeUsers %}
             <tr id="{{ signUp.id }}">
                 <td>
-                    <a href="{{ path('user', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a>
+                    <a href="{{ path('user_show', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a>
                 </td>
                 <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
                 <td> {{ signUp.formula }} </td>

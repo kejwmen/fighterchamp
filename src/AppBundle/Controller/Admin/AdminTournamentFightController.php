@@ -89,84 +89,12 @@ class AdminTournamentFightController extends Controller
             ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
 
 
-        return $this->render(':admin:pair.html.twig', array(
+        return $this->render(':admin:pair.html.twig', [
             'freeUsers' => $freeUsers,
             'tournament' => $tournament
-        ));
+        ]);
     }
 
-
-    /**
-     * @Route("/turniej/{id}", name="admin_tournament_create_fight")
-     */
-    public function createFight(Request $request, Tournament $tournament)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $data = $request->request->all();
-
-        $fight = new Fight();
-
-        $signUpRepo = $em->getRepository('AppBundle:SignUpTournament');
-
-        $signUp0 = $signUpRepo->find($data['ids'][0]);
-        $signUp1 = $signUpRepo->find($data['ids'][1]);
-
-        $fight->addUser($signUp0->getUser());
-        $fight->addUser($signUp1->getUser());
-
-        $formula = $this->getHighestFormula($signUp0, $signUp1);
-        $fight->setFormula($formula);
-
-        $weight = $this->getHighestWeight($signUp0, $signUp1);
-        $fight->setWeight($weight);
-
-        $fight->setTournament($tournament);
-
-        $numberOfFights = count($this->getDoctrine()
-            ->getRepository('AppBundle:Fight')->findBy(['tournament' => $tournament]));
-
-        $fight->setPosition($numberOfFights + 1);
-
-        $fight->setTournament($tournament);
-        $fight->setDay($tournament->getStart());
-
-        $em->persist($fight);
-        $em->flush();
-
-
-        return new Response();
-    }
-
-
-    /**
-     * @Route("/{id}/fight/{fight_id}/remove", name="admin_remove_fight")
-     * @ParamConverter("fight", options={"id" = "fight_id"})
-     */
-    public function removeFight(Fight $fight, Tournament $tournament)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($fight);
-        $em->flush();
-
-
-//        $fights = $em->getRepository('AppBundle:Fight')
-//            ->findAllFightByDayAdmin($tournament, 'Sobota');
-//
-//        $this->refreshFightPosition($fights);
-//
-//
-//        $fights = $em->getRepository('AppBundle:Fight')
-//            ->findAllFightByDayAdmin($tournament, 'Niedziela');
-
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsForTournamentAdmin($tournament);
-
-        $this->refreshFightPosition($fights);
-
-
-        return $this->redirectToRoute('admin_tournament_fights', ['id' => $tournament->getId()]);
-    }
 
 
     /**
@@ -306,15 +234,7 @@ class AdminTournamentFightController extends Controller
     }
 
 
-    public function getHighestFormula(SignUpTournament $signUp0, SignUpTournament $signUp1): string
-    {
-        return ($signUp0->getFormula() <= $signUp1->getFormula()) ? $signUp0->getFormula() : $signUp1->getFormula();
-    }
 
-    public function getHighestWeight(SignUpTournament $signUp0, SignUpTournament $signUp1): string
-    {
-        return ($signUp0->getWeight() >= $signUp1->getWeight()) ? $signUp0->getWeight() : $signUp1->getWeight();
-    }
 
 
     public function refreshFightPosition($fights): void

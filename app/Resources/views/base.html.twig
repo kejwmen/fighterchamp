@@ -14,8 +14,6 @@
     <link rel="stylesheet"
           href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-    <script src="{{ asset('vue.js') }}"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <meta property="og:image" content=""/>
     <meta property="og:title" content="Fighter Champ | Amatorska liga turniejów sportów walki"/>
     <meta property="og:description" content="Fighter Champ | Amatorska liga turniejów sportów walki"/>
@@ -65,7 +63,7 @@
                 {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')  %}
                     {% if is_granted('ROLE_USER') %}
                     <li {{ (app.request.attributes.get('_route') == 'my_profile') ? 'class="active"' }}><a
-                                href="{{ path ('my_profile') }}">Mój Profil</a></li>
+                                href="{{ path ('user_edit_view') }}">Mój Profil</a></li>
                         {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li {{ (app.request.attributes.get('_route') == 'admin_tournament_sign_up') ? 'class="active"' }}><a

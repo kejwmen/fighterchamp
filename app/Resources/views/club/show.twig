@@ -1,28 +1,30 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-        <div class="container">
-                <div class="row">
-                        <div class="col-xs-12">
-                                <h1>{{ club.name }}</h1>
-                                <table id="table" class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                                <th>Nazwisko i Imię</th>
-                                                <th>Płeć</th>
-                                                <th>Wiek</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for user in users %}
-                                                <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
-                                                        <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}</a></td>
-                                                        <td> {{ user.male ?  'M' : 'K' }}</td>
-                                                        <td> {{ user.birthDay |getAge }} </td>
-                                                </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                </table>
-                        </div>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>{{ club.name }}</h1>
+                <table id="table" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nazwisko i Imię</th>
+                        <th>Płeć</th>
+                        <th>Wiek</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in club.users %}
+                        <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
+                            <td>
+                                <a href="{{ path('user_show', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}</a>
+                            </td>
+                            <td> {{ user.male ?  'M' : 'K' }}</td>
+                            <td> {{ user.birthDay |getAge }} </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </div>
 {% endblock %}

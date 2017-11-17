@@ -43,7 +43,7 @@
                             <td class="text-center">
                                 {% for userInFight in fight.users %}
                                     {% if userInFight.id != user.id %}
-                                        <a href="{{ path('user', {'id' : userInFight.id  }) }}">{{ userInFight.name }} {{ userInFight.surname }}</a>
+                                        <a href="{{ path('user_show', {'id' : userInFight.id  }) }}">{{ userInFight.name }} {{ userInFight.surname }}</a>
                                     {% endif %}
                                 {% endfor %}
                             </td>

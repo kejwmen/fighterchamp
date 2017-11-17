@@ -30,7 +30,7 @@
                     </td>
 
                     {% for user in fight.users %}
-                        <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}
+                        <td><a href="{{ path('user_show', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}
                                 {% include '_macros/_fight_result_icon.html.twig' %}
                                 {% if user.club %} <br> ({{ user.club }}) {% endif %}
                             </a>
