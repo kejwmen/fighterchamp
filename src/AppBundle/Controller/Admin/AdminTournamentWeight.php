@@ -34,7 +34,7 @@ class AdminTournamentWeight extends Controller
 
         $signUp->setWeighted($weighted);
 
-        $tournament = $em->getRepository('AppBundle:Tournament')->find(3);
+        $tournament = $em->getRepository('AppBundle:Tournament')->find(4);
 
         if($weighted != $signUp->getWeight()){
 
