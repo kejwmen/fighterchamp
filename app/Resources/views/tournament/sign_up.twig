@@ -50,9 +50,9 @@
                     <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
                     {{ form_end(formDelete)  }}
                     <br>
-                    <button @click="show = !show" class="btn btn-primary align-left" >Edytuj</button> <br>
+                    <button id="edit_button" class="btn btn-primary align-left" >Edytuj</button> <br>
 
-                    <div v-if="show" class="col-xs-12">
+                    <div id="edit_box" class="col-xs-12">
                         {% if app.user.pesel and (app.user.fatherName or app.user.motherName) %}
                             {% include 'tournament/_sign_up_form.html.twig' %}
                             {% else %}
@@ -96,8 +96,6 @@
                     <small>Jeśli skasujesz swoje zgłoszenie, nie będziesz mógł ponownie się zapisać!</small>
                     {% endif %}
 
-
-
                 {% endif %}
                 <div class="col-xs-12">
                     <h3>
@@ -105,22 +103,28 @@
                     </h3>
                     {% include 'tournament/_listaZapisanych.html.twig' %}
                 </div>
-
             </div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block javascripts %}
-
     {{ parent() }}
+
+    <script src="{{ asset('js/youtube.js') }}"></script>
+
     <script>
-        new Vue({
-            el: '#app',
-            delimiters: ['${', '}'],
-            data: {
-                show: false,
-            },
+        $( document ).ready(function() {
+    {% if isUserRegister.getYoutubeId is defined and isUserRegister.getYouTubeId != '' %}
+            embedYouTube('{{ isUserRegister.getYoutubeId }}');
+    {% endif %}
+        });
+    </script>
+
+
+    <script>
+        $("#edit_box").hide();
+
+        $("#edit_button").click(function(){
+            $("#edit_box").toggle();
         });
 
         $( "#tournament_rules" ).click(function() {

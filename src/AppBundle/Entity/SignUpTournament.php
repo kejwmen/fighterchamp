@@ -97,16 +97,25 @@ class SignUpTournament
 
 
     /**
-     * @return mixed
+     * @ORM\Column(type="string")
+     * @var string
      */
+    private $youtubeId = '';
+
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    private $musicArtistAndTitle = '';
+
+
     public function getTrainingTime()
     {
         return $this->trainingTime;
     }
 
-    /**
-     * @param mixed $trainingTime
-     */
+
     public function setTrainingTime($trainingTime)
     {
         $this->trainingTime = $trainingTime;
@@ -126,11 +135,6 @@ class SignUpTournament
         $this->deleted_at = new \DateTime('now');
     }
 
-
-    public function getName()
-    {
-        return "Siema";
-    }
 
 
 
@@ -250,17 +254,12 @@ class SignUpTournament
         return null;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getWeighted()
     {
         return $this->weighted;
     }
 
-    /**
-     * @param mixed $weighted
-     */
     public function setWeighted($weighted)
     {
         $this->weighted = $weighted;
@@ -270,6 +269,30 @@ class SignUpTournament
     {
         return $this->weighted ?? $this->weight;
     }
+
+
+    public function getYoutubeId(): string
+    {
+        return $this->youtubeId;
+    }
+
+    public function setYoutubeId(?string $youtubeId = ''): void
+    {
+        $this->youtubeId = $youtubeId;
+    }
+
+    public function getMusicArtistAndTitle(): string
+    {
+        return $this->musicArtistAndTitle;
+    }
+
+    public function setMusicArtistAndTitle(?string $musicArtistAndTitle = '')
+    {
+        $this->musicArtistAndTitle = $musicArtistAndTitle;
+    }
+
+
+
 
     public function __toString()
     {
