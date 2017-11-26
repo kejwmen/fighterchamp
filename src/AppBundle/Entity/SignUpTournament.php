@@ -97,14 +97,14 @@ class SignUpTournament
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     private $youtubeId = '';
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     private $musicArtistAndTitle = '';
@@ -271,7 +271,7 @@ class SignUpTournament
     }
 
 
-    public function getYoutubeId(): string
+    public function getYoutubeId(): ?string
     {
         return $this->youtubeId;
     }
@@ -281,7 +281,7 @@ class SignUpTournament
         $this->youtubeId = $youtubeId;
     }
 
-    public function getMusicArtistAndTitle(): string
+    public function getMusicArtistAndTitle(): ?string
     {
         return $this->musicArtistAndTitle;
     }
