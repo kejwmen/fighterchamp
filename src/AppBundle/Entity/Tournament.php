@@ -82,6 +82,7 @@ class Tournament
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Schedule", mappedBy="tournament")
+     * @ORM\OrderBy({"start" = "ASC"})
      */
     private $schedule;
 
