@@ -23,24 +23,6 @@ class JustRenderViewController extends Controller
      */
     public function contactController(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $userRepo =  $em->getRepository('AppBundle:User');
-
-        $user1 = $userRepo->find(30);
-        $user2 = $userRepo->find(31);
-
-        $fight = new Fight();
-
-        $fight->addUser($user1);
-        $fight->addUser($user2);
-
-        $fight->setTournament($em->getRepository('AppBundle:Tournament')->find(3));
-
-        $em->persist($fight);
-        $em->flush();
-
-
 
         $form = $this->createForm(ContactType::class, null);
 
