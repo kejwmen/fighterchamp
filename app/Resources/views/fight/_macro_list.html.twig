@@ -12,10 +12,12 @@
                 <th class="text-center">{% if row.order %} Kolejność {% endif %}</th>
                 <th>Zawodnik 1</th>
                 <th>Zawodnik 2</th>
+                <th class="text-center">Płeć</th>
                 <th class="text-center">Formuła</th>
                 <th class="text-center">Kat. wagowa</th>
                 {% if row.tournament %}
-                    <th class="text-center">Turniej</th> {% endif %}
+                    <th class="text-center">Turniej</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -24,11 +26,12 @@
                     <td class="text-center">
                         {% if row.order %} {{ "%02d"|format(loop.index) }} {% endif %}
                         <a href="{{ path('fight_show', {'id': fight.id }) }}">
-                            Szczegóły {% if fight.youtubeId %}
-                                <img class='youtube-icon'src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}
+                            Szczegóły
+                            {% if fight.youtubeId %}
+                                <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'>
+                            {% endif %}
                         </a>
                     </td>
-
                     {% for user in fight.users %}
                         <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}
                                 {% include '_macros/_fight_result_icon.html.twig' %}
@@ -38,6 +41,7 @@
                         {% if user.birthDay %} {{ user.birthDay |getAge }} lat {% endif %}
                         </td>
                     {% endfor %}
+                    <td class="text-center"> {{ fight.users[0].male ? 'M' : 'K' }}</td>
                     <td class="text-center">{{ fight.formula }}</td>
                     <td class="text-center">{{ fight.weight }}</td>
                     {% if row.tournament %}

@@ -105,21 +105,19 @@ class AdminTournamentFightController extends Controller
 
         $data = $request->request->all();
 
-        $fight = new Fight();
-
         $signUpRepo = $em->getRepository('AppBundle:SignUpTournament');
 
         $signUp0 = $signUpRepo->find($data['ids'][0]);
         $signUp1 = $signUpRepo->find($data['ids'][1]);
 
+        $formula = $this->getHighestFormula($signUp0, $signUp1);
+        $weight = $this->getHighestWeight($signUp0, $signUp1);
+
+        $fight = new Fight($formula, $weight);
+
         $fight->addUser($signUp0->getUser());
         $fight->addUser($signUp1->getUser());
 
-        $formula = $this->getHighestFormula($signUp0, $signUp1);
-        $fight->setFormula($formula);
-
-        $weight = $this->getHighestWeight($signUp0, $signUp1);
-        $fight->setWeight($weight);
 
         $fight->setTournament($tournament);
 

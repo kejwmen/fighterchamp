@@ -20,8 +20,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Fight
 {
 
-    public function __construct()
+    public function __construct(string $formula, string $weight)
     {
+        $this->formula = $formula;
+        $this->weight = $weight;
+
         $this->created_at = new \DateTime('now');
         $this->users = new ArrayCollection();
     }
@@ -46,12 +49,12 @@ class Fight
     private $winner;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string")
      */
     private $formula;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string")
      */
     private $weight;
 
@@ -178,21 +181,9 @@ class Fight
     }
 
 
-    public function setFormula(string $formula)
-    {
-        $this->formula = $formula;
-    }
-
-
     public function getWeight()
     {
         return $this->weight;
-    }
-
-
-    public function setWeight(string $weight)
-    {
-        $this->weight = $weight;
     }
 
 
