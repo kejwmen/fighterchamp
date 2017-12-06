@@ -1,4 +1,9 @@
 {% extends 'base.html.twig' %}
+{% import '_macros/macro.html.twig' as macro %}
+{% set signUpOpen = "now"|date('Y-m-d') <= tournament.signUpTill|date('Y-m-d') %}
+{% set isAvailableSeats = signUpTournament|length <= tournament.capacity %}
+{% set isTournamentEnded = tournament.end|date('Y-m-d') < "now"|date('Y-m-d') %}
+
 {% block body %}
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
         <nav class="row navbar navbar-inverse navbar-admin">
@@ -6,7 +11,8 @@
             <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <ul class="nav navbar-nav nav-tabs nav-justified">
                     <li id="tournament_show"><a href="#">Info</a></li>
-                    <li id="tournament_sign_ups"><a href="{{ path('tournament_sign_up', {'id': tournament.id}) }}">Zgłoszenia</a></li>
+                    <li id="tournament_sign_ups"><a href="{{ path('tournament_sign_up', {'id': tournament.id}) }}">Zgłoszenia</a>
+                    </li>
                     <li id="tournament_fights"><a href="#">Walki</a></li>
                     <li id="tournament_rules"><a href="#">Regulamin</a></li>
                     <li id="tournament_contact"><a href="#">Kontakt</a></li>
@@ -17,160 +23,153 @@
     <div class="main">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12" id="app">
+                <div class="col-xs-12">
 
-                    {% if "now"|date('Y-m-d') <= tournament.signUpTill|date('Y-m-d') %}
-                    <p class="text-center">Zgłoszenia przyjmowane są do {{ tournament.signUpTill | date('Y-m-d') }}
-                        ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})</p>
-                        {% if is_granted('ROLE_USER') %}
-                            <p>
-                                <small>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d') }}.
-                                    W dniu turnieju {{ tournament.start | date('Y-m-d') }} będziesz miał {{ date_diff }}
-                                    lat.
-                                    Więc twoja kategoria wiekowa to - <b>{{ age }}</b></small>
+                    {% if signUpOpen %}
+                            <p class="text-center">
+                                Zgłoszenia przyjmowane są do {{ macro.formatYMDdzienTygodnia(tournament.signUpTill) }}
                             </p>
-                            <p>
-                                <small>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b></small>
-                            </p><br>
-                        {% endif %}
+                    {% else %}
+                            {% if isTournamentEnded %}
+                                <p class="text-center">
+                                    Turniej zakończył się {{ macro.formatYMDdzienTygodnia(tournament.end) }}
+                                </p>
+                            {% else %}
+                            <p class="text-center">
+                                Termin przyjmowania zgłoszeń minął {{ macro.formatYMDdzienTygodnia(tournament.signUpTill) }}
+                            </p>
+                            {% endif %}
+                    {% endif %}
 
-                        {% if signUpTournament| length >= tournament.capacity %}
-                            <p><strong>Limit miejsc został wyczerpany</strong></p>
-                        {% endif %}
+
+                    {% if not isAvailableSeats %}
+                            <p class="text-center">
+                                <strong>Limit miejsc został wyczerpany</strong>
+                            </p>
+                    {% endif %}
 
                     {% if not is_granted('ROLE_USER') %}
-                        <p>Aby edytować / skasować swoje zgłoszenie na turniej musisz być zalogowany! &#8594; <a href="{{ path ('login') }}">Przejdź do strony logowania</a></p>
-                    {% endif %}
-                    {% if is_granted('ROLE_USER') and isUserRegister  %}
-                    <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>
-
-                    {% include 'tournament/_twojeZgloszeniehtml.twig' with {signUpTournament : [isUserRegister]} only %}
-
-                    {{ form_start(formDelete) }}
-                    <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
-                    {{ form_end(formDelete)  }}
-                    <br>
-                    <button id="edit_button" class="btn btn-primary align-left" >Edytuj</button> <br>
-
-                    <div id="edit_box" class="col-xs-12">
-                        {% if app.user.pesel and (app.user.fatherName or app.user.motherName) %}
-                            {% include 'tournament/_sign_up_form.html.twig' %}
-                            {% else %}
-                                <p>Aby wysłać swoje zgłoszenie na turniej musisz podać niezbędne dane do obowiązkowego
-                                    uzbezpieczenia - numer pesel oraz imię Ojca albo Matki.
-                                    <a href="{{ path ('my_profile') }}">Przejdź do Mój Profil</a> aby uzupełnić brakujące dane</p>
-                        {% endif %}
-
-                    </div>
-                    {% if not isUserRegister.isPaid %}
-                        <br>
-                        <p><small>{{ include(template_from_string(tournament.paymentInfo)) }}</small></p>
-                    {% endif %}
-                </div>
-
-                {% endif %}
-
-                {% if is_granted('ROLE_USER') and not isUserRegister  %}
-
-                    {% if app.user.pesel and (app.user.fatherName or app.user.motherName) %}
-                        {% include 'tournament/_sign_up_form.html.twig' %}
-                    {% else %}
-                        <p>Aby wysłać swoje zgłoszenie na turniej musisz podać niezbędne dane do obowiązkowego
-                            uzbezpieczenia - numer pesel oraz imię Ojca albo Matki.
-                            <a href="{{ path ('my_profile') }}">Przejdź do Mój Profil</a> aby uzupełnić brakujące dane</p>
+                    <p>
+                        Aby edytować / skasować swoje zgłoszenie na turniej musisz być zalogowany! &#8594;
+                        <a href="{{ path ('login') }}">Przejdź do strony logowania</a>
+                    </p>
                     {% endif %}
 
-                {% endif %}
-                {% else %}
-                    <p class="text-center">Termin przyjmowania zgłoszeń minął {{ tournament.signUpTill | date('Y-m-d') }}
-                        ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})</p>
+                    {% if is_granted('ROLE_USER') %}
 
-                {% if is_granted('ROLE_USER') and isUserRegister and tournament.end|date('Y-m-d') > "now"|date('Y-m-d')  %}
-                    <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>
+                            {% if isUserRegister %}
 
-                    {% include 'tournament/_twojeZgloszeniehtml.twig' with {signUpTournament : [isUserRegister]} only %}
+                                            <p>Twoje zgłoszenie na turniej zostało zarejestrowane:</p>
+                                            {% include 'tournament/_twojeZgloszeniehtml.twig' with { signUpTournament : [isUserRegister]} only %}
+                                            {% include 'tournament/_parts/skasuj_moje_zgloszenie_form.html.twig' %}
 
-                    {{ form_start(formDelete) }}
-                    <button type="submit" class="btn btn-danger" formnovalidate >Skasuj moje zgłoszenie </button>
-                    {{ form_end(formDelete)  }}
-                    <small>Jeśli skasujesz swoje zgłoszenie, nie będziesz mógł ponownie się zapisać!</small>
+                                    {% if signUpOpen %}
+
+                                            <br>
+                                            <button id="edit_button" class="btn btn-primary align-left">Edytuj</button>
+                                            <br>
+
+                                            <div id="edit_box" class="col-xs-12">
+                                                {% include 'tournament/_parts/show_sing_up_form_if_inssurance_data_ELSE_link_to_profile.html.twig' %}
+                                            </div>
+
+                                    {% else %}
+                                            <br>
+                                            <small>Termin przyjmowania i edycji zgłoszeń zakończył się. Obecnie możesz tylko skasować swoje zgłoszenie.</small>
+                                            <small>Jeśli skasujesz swoje zgłoszenie, nie będziesz mógł ponownie się zapisać!</small>
+                                            <br>
+
+                                    {% endif %}
+
+
+                                    {% if not isUserRegister.isPaid %}
+                                        <br>
+                                        <p>
+                                            <small>{{ include(template_from_string(tournament.paymentInfo)) }}</small>
+                                        </p>
+                                    {% endif %}
+
+                            {% elseif not isUserRegister %}
+
+                                {% if signUpOpen and isAvailableSeats %}
+
+                                    {% include 'tournament/_parts/show_sing_up_form_if_inssurance_data_ELSE_link_to_profile.html.twig' %}
+
+                                {% endif %}
+
+                            {% endif %}
+
                     {% endif %}
 
-                {% endif %}
-                <div class="col-xs-12">
-                    <h3>
-                        Liczba zapisanych: {{ signUpTournament| length }} / {{ tournament.capacity }}
-                    </h3>
+
                     {% include 'tournament/_listaZapisanych.html.twig' %}
                 </div>
             </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
+    {% block javascripts %}
+        {{ parent() }}
 
-    <script src="{{ asset('js/youtube.js') }}"></script>
+        <script src="{{ asset('js/youtube.js') }}"></script>
 
-    <script>
-        $( document ).ready(function() {
-    {% if isUserRegister.getYoutubeId is defined and isUserRegister.getYouTubeId != '' %}
-            embedYouTube('{{ isUserRegister.getYoutubeId }}');
-    {% endif %}
-        });
-    </script>
-
-
-    <script>
-        $("#edit_box").hide();
-
-        $("#edit_button").click(function(){
-            $("#edit_box").toggle();
-        });
-
-        $( "#tournament_rules" ).click(function() {
-            $.ajax({
-                type: 'GET',
-                url: "{{ path('tournament_rules', {id: tournament.id}) }}",
-                success: function (data) {
-                    $(".main").html(data);
-                }
+        <script>
+            $(document).ready(function () {
+                {% if isUserRegister.getYoutubeId is defined and isUserRegister.getYouTubeId != '' %}
+                embedYouTube('{{ isUserRegister.getYoutubeId }}');
+                {% endif %}
             });
-        });
+        </script>
 
-        $( "#tournament_contact" ).click(function() {
-            $.ajax({
-                type: 'GET',
-                url: "{{ path('tournament_contact', {id: tournament.id}) }}",
-                success: function (data) {
-                    $(".main").html(data);
-                }
+        <script>
+            $("#edit_box").hide();
+
+            $("#edit_button").click(function () {
+                $("#edit_box").toggle();
             });
-        });
 
-
-
-
-        $( "#tournament_show" ).click(function() {
-            $.ajax({
-                type: 'GET',
-                url: "{{ path('tournament_show', {id: tournament.id}) }}",
-                success: function (data) {
-                    $(".main").html(data);
-                }
+            $("#tournament_rules").click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ path('tournament_rules', {id: tournament.id}) }}",
+                    success: function (data) {
+                        $(".main").html(data);
+                    }
+                });
             });
-        });
 
-
-
-        $( "#tournament_fights" ).click(function() {
-            $.ajax({
-                type: 'GET',
-                url: "{{ path('tournament_fights', {id: tournament.id}) }}",
-                success: function (data) {
-                    $(".main").html(data);
-                }
+            $("#tournament_contact").click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ path('tournament_contact', {id: tournament.id}) }}",
+                    success: function (data) {
+                        $(".main").html(data);
+                    }
+                });
             });
-        });
 
-    </script>
-{% endblock %}
+
+            $("#tournament_show").click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ path('tournament_show', {id: tournament.id}) }}",
+                    success: function (data) {
+                        $(".main").html(data);
+                    }
+                });
+            });
+
+
+            $("#tournament_fights").click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ path('tournament_fights', {id: tournament.id}) }}",
+                    success: function (data) {
+                        $(".main").html(data);
+                    }
+                });
+            });
+
+        </script>
+    {% endblock %}

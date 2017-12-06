@@ -1,0 +1,9 @@
+<p>
+    <small>Twoja data urodzenia to: {{ app.user.birthDay | date('Y-m-d') }}.
+        W dniu turnieju {{ tournament.start | date('Y-m-d') }} będziesz miał {{ date_diff }}
+        lat.
+        Więc twoja kategoria wiekowa to - <b>{{ age }}</b></small>
+</p>
+<p>
+    <small>Twoja płeć to <b>{{ app.user.male ?  'mężczyzna' : 'kobieta' }}</b></small>
+</p><br>

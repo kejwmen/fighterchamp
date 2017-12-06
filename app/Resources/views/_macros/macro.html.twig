@@ -15,3 +15,9 @@
     <span style="color: #d9534f">{{ lose }} </span>
 
 {% endmacro %}
+
+{% macro formatYMDdzienTygodnia(dateVar) %}
+
+    {{ dateVar | date('Y-m-d') }} ({{ dateVar |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})
+
+{% endmacro %}
