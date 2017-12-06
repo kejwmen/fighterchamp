@@ -173,7 +173,7 @@ class SignUpTournament
     }
 
 
-    public function getWeight(): string
+    public function getWeight(): ?string
     {
         return $this->weight;
     }
