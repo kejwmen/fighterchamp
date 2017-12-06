@@ -100,44 +100,9 @@ class SignUpTournamentRepository extends EntityRepository
 
     public function findAllSignUpButNotPairYet()
     {
-//       $qb = $this->createQueryBuilder('signUpTournament')
-//            ->leftJoin('signUpTournament.user', 'user')
-//            ->leftJoin('user.fights', 'fight', 'WITH', 'fight.tournament = :tournament')
-//            ->andWhere('signUpTournament.deleted_at is null')
-//            ->andWhere('signUpTournament.tournament = :tournament')
-//            ->setParameter('tournament', $tournament)
-//            ->andWhere('fight.id IS NULL')
-//        ;
-
-//        $qb = $this->createQueryBuilder('signUpTournament')
-//
-//            ->leftJoin('signUpTournament.user', 'user')
-//            ->andWhere('signUpTournament.tournament = :tournament')->setParameter('tournament', $tournament)
-//
-//            ->leftJoin('user.fights', 'fight', 'WITH', 'fight.tournament = :tournament')
-//            ->andWhere('signUpTournament.deleted_at is null')
-//            ->andWhere('fight.id IS NULL')
-//        ;
-
-
-        $rsm = new ResultSetMapping();
-
-
-        $em = $this->getEntityManager();
-
-//        $q = $em->createNativeQuery('SELECT * FROM signuptournament sut
-//LEFT JOIN user u ON sut.user_id = u.id
-//WHERE sut.tournament_id = 4
-//AND sut.deleted_at IS NULL
-//AND u.id NOT IN (
-//    SELECT uu.id FROM user uu
-//    JOIN user_fight uf ON uf.user_id = uu.id
-//    JOIN fight f ON uf.fight_id = f.id
-//    WHERE f.tournament_id = 4)', $rsm);
 
         $conn = $this->getEntityManager()
             ->getConnection();
-
 
         $stmt = $conn->prepare('SELECT sut.id FROM signuptournament sut
 LEFT JOIN user u ON sut.user_id = u.id
@@ -155,12 +120,7 @@ WHERE f.tournament_id = 4)');
 
         return $stmt->fetchAll();
 
-
-
-
     }
-
-
 
 
 
