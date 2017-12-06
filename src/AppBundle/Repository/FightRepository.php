@@ -9,6 +9,7 @@
 namespace AppBundle\Repository;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class FightRepository extends EntityRepository
@@ -107,13 +108,12 @@ class FightRepository extends EntityRepository
     }
 
 
-    //should be plural
-    public function findUserFightInTournament(SignUpTournament $signUp, Tournament $tournament)
+    public function findUserFightsInTournament(User $user, Tournament $tournament)
     {
         $qb = $this->createQueryBuilder('fight')
-            ->leftJoin('fight.signuptournament', 'signuptournament')
-            ->andWhere('signuptournament = :signUp')
-            ->setParameter('signUp', $signUp);
+            ->leftJoin('fight.users', 'user')
+            ->andWhere('user = :user')
+            ->setParameter('user', $user);
 
         $query = $qb->getQuery();
         return $query->execute();

@@ -90,7 +90,7 @@ class AdminTournamentSignUp extends Controller
         $isPaid =  $request->request->get('isPaid');
 
         $signUp = $em->getRepository('AppBundle:SignUpTournament')
-            ->findOneBy(['id' => $signUpId]);
+            ->find($signUpId);
 
         $signUp->setIsPaid($isPaid);
 

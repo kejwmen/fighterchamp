@@ -29,8 +29,9 @@ class AdminTournamentWeight extends Controller
         $weighted = $request->request->get('weighted');
 
         $em = $this->getDoctrine()->getManager();
+
         $signUp = $em->getRepository('AppBundle:SignUpTournament')
-            ->findOneBy(['id' => $signUpId]);
+            ->find($signUpId);
 
         $signUp->setWeighted($weighted);
 
@@ -39,23 +40,15 @@ class AdminTournamentWeight extends Controller
         if($weighted != $signUp->getWeight()){
 
             $fights = $em->getRepository('AppBundle:Fight')
-                ->findUserFightInTournament($signUp, $tournament );
+                ->findUserFightsInTournament($signUp->getUser(), $tournament );
 
             if($fights){
                 foreach($fights as $fight){
+
+                    $users = $fight->getUsers();
+
                     $em->remove($fight);
 
-                    /**
-                     * @var $fight Fight
-                     */
-                    $signUps = $fight->getSignuptournament();
-
-                    $users = [];
-
-                    foreach ($signUps as $sign)
-                    {
-                        $users []=$sign->getUser();
-                    }
 
                     $this->addFlash('warning', "Walka $users[0] vs. $users[1] została rozparowana ");
                 }

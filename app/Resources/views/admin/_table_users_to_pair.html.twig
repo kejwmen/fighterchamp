@@ -1,7 +1,11 @@
+{% import '_macros/macro.html.twig' as macro %}
 <table id="table-pair" class="table table-striped">
     <thead>
     <tr>
+        <th>Zapłacone?</th>
+        <th>Zważony?</th>
         <th>Nazwisko i Imię</th>
+        <th>Rekord</th>
         <th>Płeć</th>
         <th>Formuła</th>
         <th>Kat. Wagowa</th>
@@ -13,18 +17,24 @@
     <tbody>
     {% for signUp in freeUsers %}
             <tr id="{{ signUp.id }}">
+                <td> {{ signUp.isPaid ? 'Tak' : 'Nie' }} </td>
+                <td> {{ signUp.weighted ? 'Tak' : 'Nie' }} </td>
                 <td>
                     <a href="{{ path('user', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a>
+                </td>
+                <td>
+                    {{ macro.record(signUp.user) }}
                 </td>
                 <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
                 <td> {{ signUp.formula }} </td>
                 <td> {{ signUp.weighted ?: signUp.weight }} </td>
                 <td> {{ signUp.trainingTime }} </td>
                 <td> {{ signUp.User.birthDay |getAge }} </td>
-                <td> {% if signUp.User.club %}
+                <td>
+                    {% if signUp.User.club %}
                     <a href="{{ path('club_show', {'id': signUp.User.club.id }) }}"> {{ signUp.User.getClub() }}</a>
+                    {% endif %}
                 </td>
-                {% endif %}
             </tr>
     {% endfor %}
     </tbody>

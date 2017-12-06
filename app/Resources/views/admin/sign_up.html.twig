@@ -4,7 +4,7 @@
     {% include 'admin/base.html.twig' %}
     <div class="col-xs-12">
         {% for msg in app.session.flashBag.get('warning') %}
-            <div class="alert alert-warning">
+            <div class="alert alert-danger">
                 {{ msg }}
             </div>
         {% endfor %}
@@ -26,7 +26,7 @@
             <tbody>
             {% for signUp in signUpsTournament %}
                 <tr>
-                    <td><select class="select_isPaid">
+                    <td><select autocomplete="off" class="select_isPaid">
                             {% if signUp.isPaid %}
                                 <option selected value="{{ signUp.id }}|1">Tak</option>
                                 <option value="{{ signUp.id }}|0">Nie</option>
@@ -40,11 +40,11 @@
                             {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
                     <td> {{ signUp.weight }} </td>
                     <td>
-                        <select class="select_weighted">
+                        <select autocomplete="off" class="select_weighted">
                             <option value="{{ signUp.id }}"></option>
                             {% for weight in weights %}
                                 <option value="{{ signUp.id }}|{{ weight.weight }}"
-                                        {{ signUp.weighted == weight.weight ? 'selected' }}
+                                        {{ signUp.weighted == weight.weight ? ' selected' }}
                                 >{{ weight.weight }}
                                 </option>
                             {% endfor %}
@@ -63,8 +63,8 @@
             {#<a href="{{ path('fights_not_weighted_remove') }}"#}
                {#style="color: white"> Rozparuj walki zawodników którzy nie zostali zważeni</a></button>#}
         {#<strong>   {{ fightsWhereFightersAreNotWeighted|length }}</strong>#}
-        {#<h3>Liczba zgłoszeń zapłaconych ale zawodnik później się wycofał {{ signUpsPaidBuTDeleted|length }}</h3>#}
 
+        <h3>Liczba zgłoszeń zapłaconych ale zawodnik później się wycofał {{ signUpsPaidBuTDeleted|length }}</h3>
         {% include 'admin/_sign_ups.html.twig' with {signUps : signUpsPaidBuTDeleted} %}
 
 

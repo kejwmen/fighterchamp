@@ -86,11 +86,17 @@ class AdminTournamentFightController extends Controller
     public function pairAction(Request $request, Tournament $tournament)
     {
         $freeUsers = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament);
+            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet();
 
+        $users = [];
+
+        foreach($freeUsers as $user)
+        {
+            $users [] = $this->getDoctrine()->getRepository('AppBundle:SignUpTournament')->find($user['id']);
+        }
 
         return $this->render(':admin:pair.html.twig', array(
-            'freeUsers' => $freeUsers,
+            'freeUsers' => $users,
             'tournament' => $tournament
         ));
     }

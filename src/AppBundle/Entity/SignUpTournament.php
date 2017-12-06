@@ -172,17 +172,13 @@ class SignUpTournament
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getWeight()
+
+    public function getWeight(): string
     {
         return $this->weight;
     }
 
-    /**
-     * @param mixed $weight
-     */
+
     public function setWeight($weight)
     {
         $this->weight = $weight;
