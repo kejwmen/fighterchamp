@@ -459,17 +459,13 @@ class User implements UserInterface, Serializable
         $this->password = null;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getFacebookId()
     {
         return $this->facebookId;
     }
 
-    /**
-     * @param mixed $facebookId
-     */
+
     public function setFacebookId($facebookId)
     {
         $this->facebookId = $facebookId;
@@ -485,7 +481,8 @@ class User implements UserInterface, Serializable
     {
         $criteria = Criteria::create();
         $criteria->where(Criteria::expr()->eq('tournament', $tournament));
-        $criteria->where(Criteria::expr()->eq('deleted_at', null));
+        $criteria->andWhere(Criteria::expr()->eq('deleted_at', null));
+        $criteria->getFirstResult();
 
         return $this->signUpTournaments->matching($criteria)->first();
     }

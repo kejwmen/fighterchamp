@@ -62,20 +62,16 @@ class AdminTournamentFightController extends Controller
     /**
      * @Route("/turniej/{id}/walki", name="admin_tournament_fights")
      */
-    public function resultAction(Tournament $tournament)
+    public function listAction(Tournament $tournament)
     {
         $em = $this->getDoctrine()->getManager();
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForTournamentAdmin($tournament);
 
-        $user = $em->getRepository('AppBundle:User')->find(162);
-
-
 
         return $this->render('admin/fight.html.twig', [
             'fights' => $fights,
             'tournament' => $tournament,
-            'user' => $user
         ]);
     }
 

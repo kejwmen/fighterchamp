@@ -34,14 +34,18 @@
                     </select></td>
 
                 {% for user in fight.users %}
+                    {% set signUp = user.getSignUpTournament(tournament)  %}
+
                     <td><a href="{{ path('user', {'id': user.id }) }}"> {{ user.name }} {{ user.surname }}
                             {% include '_macros/_fight_result_icon.html.twig' %}
                     {% if user.club %} <br> ({{ user.club }}) {% endif %}
                             <br>
-                            {{ user.getSignUpTournament(tournament).formula }}
-                            {{ user.getSignUpTournament(tournament).getFinallWeight }} </a>
+                            {{ signUp.formula }}
+                            {{ signUp.getFinallWeight }} </a>
                         <br>
                     {{ user.birthDay |getAge }} lat
+                        <br>
+                        {{ signUp.isPaid ? '' : 'Niezapłacone'  }}
                     </td>
 
                 {% endfor %}
