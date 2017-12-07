@@ -25,7 +25,7 @@ class HomepageController extends Controller
             ->findBy(array(), array('date' => 'DESC'));
 
         $tournament = $em->getRepository('AppBundle:Tournament')
-            ->find(3);
+            ->find(4);
 
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForTournament($tournament);

@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Faker\Provider\DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -80,6 +81,10 @@ class SignUpTournament
      */
     private $deleted_at;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deletedAtByAdmin;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -121,9 +126,7 @@ class SignUpTournament
         $this->trainingTime = $trainingTime;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getDeletedAt()
     {
         return $this->deleted_at;
@@ -286,6 +289,20 @@ class SignUpTournament
     {
         $this->musicArtistAndTitle = $musicArtistAndTitle;
     }
+
+
+    public function getDeletedAtByAdmin(): ?\DateTime
+    {
+        return $this->deletedAtByAdmin;
+    }
+
+
+    public function setDeleteByAdmin(?\DateTime $dateTime): void
+    {
+        $this->deletedAtByAdmin = $dateTime;
+    }
+
+
 
 
 

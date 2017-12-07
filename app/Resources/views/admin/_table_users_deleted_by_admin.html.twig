@@ -1,5 +1,5 @@
 {% import '_macros/macro.html.twig' as macro %}
-<table id="table-pair" class="table table-striped">
+<table id="table-deleted" class="table table-striped">
     <thead>
     <tr>
         <th></th>
@@ -17,11 +17,11 @@
     </thead>
     <tbody>
     {% for signUp in signUps %}
-        {% if signUp.deletedAtByAdmin is null %}
+        {% if signUp.deletedAtByAdmin %}
             <tr id="{{ signUp.id }}">
                 <td>
                     <a href="{{ path("admin_tournament_toggle_delete_by_admin", {'id' : signUp.id }) }}"
-                       class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Skasuj</a>
+                       class="btn btn-success"><i class="fa fa-recycle fa-lg"></i> Przywróć</a>
                 </td>
                 <td> {{ signUp.isPaid ? 'Tak' : 'Nie' }} </td>
                 <td> {{ signUp.weighted ? 'Tak' : 'Nie' }} </td>

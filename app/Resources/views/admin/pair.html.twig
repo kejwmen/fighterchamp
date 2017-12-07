@@ -8,8 +8,12 @@
             </div>
         {% endfor %}
         <button class="btn btn-success btn-block" id="button">Paruj</button>
+        <br>
         <p>Zawodnicy którzy są zgłoszeni do turnieju ale nie są jescze sparowani</p>
-        {% include '/admin/_table_users_to_pair.html.twig' %}
+        {% include '/admin/_table_users_to_pair.html.twig' with {signUps : freeUsers} %}
+        <br>
+        <p>Zgłoszenia skasowane przed Administratora</p>
+        {% include '/admin/_table_users_deleted_by_admin.html.twig' with {signUps : freeUsers} %}
     </div>
 {% endblock %}
 

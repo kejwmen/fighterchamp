@@ -306,153 +306,115 @@ class User implements UserInterface, Serializable
         // TODO: Implement __call() method.
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getEmail()
     {
         return $this->email;
     }
 
-    /**
-     * @param mixed $email
-     */
+
     public function setEmail($email)
     {
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @param mixed $id
-     */
+
     public function setId($id)
     {
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     */
+
     public function setName($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getSurname()
     {
         return $this->surname;
     }
 
-    /**
-     * @param mixed $surname
-     */
+
     public function setSurname($surname)
     {
         $this->surname = $surname;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getBirthDay()
     {
         return $this->birthDay;
     }
 
-    /**
-     * @param mixed $birthDay
-     */
+
     public function setBirthDay(DateTime $birthDay)
     {
         $this->birthDay = $birthDay;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getClub()
     {
         return $this->club;
     }
 
-    /**
-     * @param mixed $club
-     */
+
     public function setClub($club)
     {
         $this->club = $club;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getPhone()
     {
         return $this->phone;
     }
 
-    /**
-     * @param mixed $phone
-     */
+
     public function setPhone($phone)
     {
         $this->phone = $phone;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getMale()
     {
         return $this->male;
     }
 
-    /**
-     * @param mixed $male
-     */
+
     public function setMale($male)
     {
         $this->male = $male;
     }
 
-    /**
-     * @param mixed $password
-     */
+
     public function setPassword($password)
     {
         $this->password = $password;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getPlainPassword()
     {
         return $this->plain_password;
     }
 
-    /**
-     * @param mixed $plain_password
-     */
+
     public function setPlainPassword($plain_password)
     {
         $this->plain_password = $plain_password;
@@ -495,9 +457,7 @@ class User implements UserInterface, Serializable
      */
     private $tournamentAdmin;
 
-    /**
-     * @return mixed
-     */
+
     public function getTournamentAdmin()
     {
         return $this->tournamentAdmin;
@@ -532,9 +492,7 @@ class User implements UserInterface, Serializable
         return $this->name .' '. $this->surname;
     }
 
-    /**
-     * @param mixed $fights
-     */
+
     public function setFights($fights)
     {
         $this->fights []= $fights;

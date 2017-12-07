@@ -10,9 +10,11 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -98,6 +100,21 @@ class AdminTournamentSignUp extends Controller
 
         return new Response(200);
     }
+
+    /**
+     * @Route("/sign-up-delete-by-admin/{id}", name="admin_tournament_toggle_delete_by_admin")
+     */
+    public function toggleDeleteByAdminAction(SignUpTournament $signUpTournament)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $signUpTournament->setDeleteByAdmin($signUpTournament->getDeletedAtByAdmin() ? null : new DateTime('now'));
+
+        $em->flush();
+
+        return $this->redirectToRoute('admin_tournament_pair',['id' => 4]);
+    }
+
 
 
 }
