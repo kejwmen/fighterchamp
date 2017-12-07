@@ -1,5 +1,5 @@
+{% import "_macros/macro.html.twig" as macro %}
 {% extends 'base.html.twig' %}
-{% import "fight/_macro_list.html.twig" as macro %}
 {% block body %}
     {% for msg in app.session.flashBag.get('success') %}
         <div class="alert alert-success">
@@ -83,19 +83,22 @@
             </div>
         </section>
 
+        <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
         <h1 class="text-center">XXIX WARSZAWSKA GRANDA NA PIĘŚCI</h1>
         <h4 class="text-center">10 grudnia 2017</h4>
         {% if fights %}
-            {% include 'tournament/fights.html.twig' with { fights : fights } %}
+            {{ macro.table(fights, {'tournament' : false, 'order': true }) }}
         {% else %}
             <p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>
         {% endif %}
 
-        <div class="row">
+
             <div class="col-xs-12 col-md-8 col-md-offset-2">
                 <img class="img-responsive"
                      src="{{ asset('img/tournament/warszawska-granda-na-piesci/poster-warszawska-granda-na-piesci-XXIX.jpg') }}">
             </div>
+        </div>
         </div>
     </div>
 {% endblock %}

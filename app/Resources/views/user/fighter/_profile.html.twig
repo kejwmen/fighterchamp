@@ -1,14 +1,17 @@
 <table class="table table-condensed text-center table-borderless">
     <tr>
-        <td><h1> {{ user.name }} {{ user.surname }}</h1></td>
-    </tr>
-    <tr>
-        <td><h3><span class="label label-success">W: {{ win }}</span>
+        <td>
+            <h3><span class="label label-success">W: {{ win }}</span>
                 <span class="label label-warning">D: {{ draw }}</span>
                 <span class="label label-danger">L: {{ lose }}</span>
+            </h3>
         </td>
     </tr>
-
+    <tr>
+        <td>
+            <h1> {{ user.name }} {{ user.surname }}</h1>
+        </td>
+    </tr>
     <tr>
         <td><img class='center' style="width: 180px;, height: 180px;"
                     {% if user.male %}
@@ -28,7 +31,7 @@
     <tr>
         <td>
             <b>Klub:</b>{% if user.club %}
-            <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}
+            <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }} </a>
                 {% endif %}
         </td>
     </tr>
