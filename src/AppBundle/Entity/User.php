@@ -195,9 +195,8 @@ class User implements UserInterface, Serializable
      */
     private $plain_password;
 
-
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fight", inversedBy="users")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="user")
      * */
     private $fights;
 
@@ -480,10 +479,13 @@ class User implements UserInterface, Serializable
 
     public function getFights()
     {
-        $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq('ready', true));
+//        $criteria = Criteria::create();
+//        $criteria->where(Criteria::expr()->eq('ready', true));
+//
+//        return $this->fights->matching($criteria);
 
-        return $this->fights->matching($criteria);
+        return $this->fights;
+
     }
 
 

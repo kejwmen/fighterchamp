@@ -11,6 +11,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -87,8 +88,8 @@ class Fight
     private $youtubeId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="fights")
-     * @ORM\JoinTable(name="user_fight")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="fight")
+     * @OrderBy({"isRedCorner" = "DESC"})
      */
     private $users;
 
@@ -120,9 +121,7 @@ class Fight
         return $this;
     }
 
-    /**
-     * @return ArrayCollection|User[]
-     */
+
     public function getUsers()
     {
         return $this->users;

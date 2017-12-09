@@ -8,17 +8,13 @@
 
                     <tr>
                         <td class="text-center">
-                            {{ macro.recordBootstrap(fight.users[0]) }}
+                            {{ macro.recordBootstrap(fight.users[0].user) }}
                             <h1>
-                                <a href="{{ path('user', {'id': fight.users[0].id }) }}">
-                                    {{ fight.users[0] }}
+                                <a href="{{ path('user', {'id': fight.users[0].user.id }) }}">
+                                    {{ fight.users[0].user }}
                                 </a>
                             </h1>
 
-                            {#<h3><span class="label label-success">W: {{ win }}</span>#}
-                                {#<span class="label label-warning">D: {{ draw }}</span>#}
-                                {#<span class="label label-danger">L: {{ lose }}</span>#}
-                            {#</h3>#}
 
 
                             {% if fight.winner %}
@@ -33,14 +29,14 @@
                         </td>
 
                         <td class="text-center">
-                            {{ macro.recordBootstrap(fight.users[1]) }}
+                            {{ macro.recordBootstrap(fight.users[1].user) }}
                             <h1>
-                                <a href="{{ path('user', {'id': fight.users[1].id }) }}">
-                                    {{ fight.users[1] }}
+                                <a href="{{ path('user', {'id': fight.users[1].user.id }) }}">
+                                    {{ fight.users[1].user }}
                                 </a>
                             </h1>
                             {% if fight.winner %}
-                                {{ fight.users[1].id == fight.winner.id ? "<h3><span class='label label-success'>W</span></h3></td>" : "<h3><span class='label label-danger'>L</span></h3></td>" }}
+                                {{ fight.users[1].user.id == fight.winner.id ? "<h3><span class='label label-success'>W</span></h3></td>" : "<h3><span class='label label-danger'>L</span></h3></td>" }}
                             {% elseif fight.draw %}
                                 <h3><span class='label label-warning'>D</span></h3>
                             {% endif %}
@@ -48,17 +44,17 @@
                     <tr>
 
                         <td class="text-center">
-                            {% if fight.users[0].club %}
+                            {% if fight.users[0].user.club %}
                                 <h3>
-                                    <a href="{{ path('club_show', {'id': fight.users[0].club.id }) }}"> {{ fight.users[0].club.name }}</a>
+                                    <a href="{{ path('club_show', {'id': fight.users[0].user.club.id }) }}"> {{ fight.users[0].user.club.name }}</a>
                                 </h3>
                             {% endif %}
                         </td>
 
                         <td class="text-center">
-                            {% if fight.users[1].club %}
+                            {% if fight.users[1].user.club %}
                                 <h3>
-                                    <a href="{{ path('club_show', {'id': fight.users[1].club.id }) }}"> {{ fight.users[1].club.name }}</a>
+                                    <a href="{{ path('club_show', {'id': fight.users[1].user.club.id }) }}"> {{ fight.users[1].user.club.name }}</a>
                                 </h3>
                             {% endif %}
                         </td>

@@ -13,6 +13,7 @@ use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserFight;
 use AppBundle\Form\FightType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -29,6 +30,49 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AdminTournamentFightController extends Controller
 {
+
+    public function toggleCorners(UserFight $userOneFight, UserFight $userTwoFight): void
+    {
+        $one = $userOneFight->isRedCorner();
+        $two = $userTwoFight->isRedCorner();
+
+        $this->convertNullToFalse($one);
+        $this->convertNullToFalse($two);
+
+        if($one === $two){
+            $one = true;
+            $two = false;
+        }
+
+        $one = ($one === true) ? false : true;
+        $two = ($two === false) ? true : false;
+
+        $userOneFight->setIsRedCorner($one);
+        $userTwoFight->setIsRedCorner($two);
+    }
+
+    public function convertNullToFalse(&$arg)
+    {
+        $arg = $arg ?? false;
+    }
+
+
+    /**
+     * @Route("/toggle-corner/walki/{id}", name="toggle_corners")
+     */
+    public function toggleCornersAction(Fight $fight)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $usersFight = $fight->getUsers();
+
+        $this->toggleCorners($usersFight[0], $usersFight[1]);
+
+        $em->flush();
+
+        return $this->redirectToRoute('admin_tournament_fights', ['id' => 4]);
+    }
+
 
     /**
      * @Route("/fights-not-weighted-remove", name="fights_not_weighted_remove")

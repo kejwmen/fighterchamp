@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Fight;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -23,7 +24,6 @@ class FightController extends Controller
      */
     public function showAction(Fight $fight)
     {
-
         return $this->render('fight/show.html.twig',
             [
                 'fight' => $fight,

@@ -1,5 +1,5 @@
 {% if fight.winner %}
-    {{ user.id == fight.winner.id ? "<span class='label label-success'>W</span>" : "<span class='label label-danger'>L</span>" }}
+    {{ user.user.id == fight.winner.id ? "<span class='label label-success'>W</span>" : "<span class='label label-danger'>L</span>" }}
 {% elseif fight.draw %}
     <span class='label label-warning'>D</span>
 {% endif %}
