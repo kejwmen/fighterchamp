@@ -19,7 +19,6 @@ class HomepageController extends Controller
      */
     public function resultAction()
     {
-
         $em = $this->getDoctrine()->getManager();
         $news = $em->getRepository('AppBundle:News')
             ->findBy(array(), array('date' => 'DESC'));
@@ -32,7 +31,8 @@ class HomepageController extends Controller
 
         return $this->render(':main:homepage.html.twig', [
             'news' => $news,
-            'fights' => $fights
+            'fights' => $fights,
+            'tournament' => $tournament
         ]);
 
 
