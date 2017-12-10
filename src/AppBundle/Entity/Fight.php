@@ -88,7 +88,7 @@ class Fight
     private $youtubeId;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="fight")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="fight", cascade={"persist", "remove"})
      * @OrderBy({"isRedCorner" = "DESC"})
      */
     private $users;

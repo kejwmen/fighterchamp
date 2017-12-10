@@ -35,25 +35,29 @@ class AdminTournamentWeight extends Controller
 
         $signUp->setWeighted($weighted);
 
-        $tournament = $em->getRepository('AppBundle:Tournament')->find(4);
-
-        if($weighted != $signUp->getWeight()){
-
-            $fights = $em->getRepository('AppBundle:Fight')
-                ->findUserFightsInTournament($signUp->getUser(), $tournament );
-
-            if($fights){
-                foreach($fights as $fight){
-
-                    $users = $fight->getUsers();
-
-                    $em->remove($fight);
-
-
-                    $this->addFlash('warning', "Walka $users[0] vs. $users[1] została rozparowana ");
-                }
-            }
-        }
+        //TODO naprawić
+//        $tournament = $em->getRepository('AppBundle:Tournament')->find(4);
+//
+//        if($weighted != $signUp->getWeight()){
+//
+//            $fights = $em->getRepository('AppBundle:Fight')
+//                ->findUserFightsInTournament($signUp->getUser(), $tournament );
+//
+//            if($fights){
+//                foreach($fights as $fight){
+//
+//                    $users = $fight->getUsers();
+//
+//                    $em->remove($fight);
+//
+//                    $userOne = $users[0]->getUser();
+//                    $userTwo = $users[1]->getUser();
+//
+//                    $this->addFlash('warning', "Walka $userOne vs. $userTwo została rozparowana ");
+//
+//                }
+//            }
+//        }
 
         $em->flush();
 

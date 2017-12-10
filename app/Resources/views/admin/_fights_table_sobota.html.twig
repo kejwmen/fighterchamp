@@ -65,7 +65,10 @@
                             {{ signUp.formula }}
                             {{ signUp.getFinallWeight }} </a>
                         <br>
-                    {{ user.user.birthDay |getAge }} lat
+                        {% if user.user.birthDay %}
+                            {% set age = user.user.birthDay |getAge %}
+                            {{ age }} lat {{ age <= 18 ? '(Junior)' }}
+                        {% endif %}
                         <br>
                         {{ signUp.isPaid ? '' : 'Niezapłacone'  }}
                     </td>

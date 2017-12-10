@@ -161,8 +161,13 @@ class AdminTournamentFightController extends Controller
 
         $fight = new Fight($formula, $weight);
 
-        $fight->addUser($signUp0->getUser());
-        $fight->addUser($signUp1->getUser());
+        $userFightOne = new UserFight();
+        $userFightOne->setFight($fight);
+        $userFightOne->setUser($signUp0->getUser());
+
+        $userFightTwo = new UserFight();
+        $userFightTwo->setFight($fight);
+        $userFightTwo->setUser($signUp1->getUser());
 
 
         $fight->setTournament($tournament);
@@ -176,6 +181,8 @@ class AdminTournamentFightController extends Controller
         $fight->setDay($tournament->getStart());
 
         $em->persist($fight);
+        $em->persist($userFightOne);
+        $em->persist($userFightTwo);
         $em->flush();
 
 
