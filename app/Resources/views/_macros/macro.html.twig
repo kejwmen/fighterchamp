@@ -89,7 +89,7 @@
                     <td>
                         <a href="{{ path('user', {'id': user.user.id }) }}">
                             <div>
-                            {{ user.user.surname }} {{ user.user.name }}<br>
+                            {{ user.user.surname }} {{ user.user.name }} {% include '_macros/_fight_result_icon.html.twig' %}<br>
                             {{ macro.record(user.user) }}
                             {% if user.user.club %} <br> ({{ user.user.club }}) {% endif %}
                             </div>
