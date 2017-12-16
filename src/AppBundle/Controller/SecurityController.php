@@ -9,18 +9,15 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Form\EditUser;
-use AppBundle\Form\LoginForm;
-use AppBundle\Form\PasswordResetType;
-use AppBundle\Form\RegistrationFacebookType;
-use AppBundle\Form\RegistrationType;
+use AppBundle\Form\Security\LoginForm;
+use AppBundle\Form\Security\PasswordResetType;
+use AppBundle\Form\User\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -30,11 +27,9 @@ class SecurityController extends Controller
     /**
      * @Route("/login", name="login")
      */
-
     public function loginAction()
     {
         $authenticationUtils = $this->get('security.authentication_utils');
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -50,53 +45,7 @@ class SecurityController extends Controller
         );
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse|Response
-     *
-     * @Route("/rejestracja", name="register")
-     */
-    public function registerAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(RegistrationType::class, new User(),
-            [
-            'entity_manager' => $this->get('doctrine.orm.entity_manager')
-            ]
-        );
-
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-
-            $user = $form->getData();
-            $em->persist($user);
-            $em->flush();
-
-
-            $this->addFlash('success', 'Sukces! Twój profil został utworzony! Jesteś zalogowany!');
-
-            $this->get('security.authentication.guard_handler')
-                ->authenticateUserAndHandleSuccess(
-                    $user,
-                    $request,
-                    $this->get('app.security.login_form_authenticator'),
-                    'main'
-                );
-
-            return $this->redirectToRoute('user', [
-                'id' => $user->getId()
-            ]);
-        }
-        return $this->render('security/register.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
-
-    }
 
     /**
      * @Route("/rejestracja-facebook", name="register_fb")
@@ -149,27 +98,11 @@ class SecurityController extends Controller
 
             $user = $form->getData();
 
-            function download_image1($image_url, $image_file){
-                $fp = fopen ($image_file, 'w+');              // open file handle
-
-                $ch = curl_init($image_url);
-                // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // enable if you want
-                curl_setopt($ch, CURLOPT_FILE, $fp);          // output to file
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 1000);      // some large value to allow curl to run for a long time
-                curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
-                // curl_setopt($ch, CURLOPT_VERBOSE, true);   // Enable this line to see debug prints
-                curl_exec($ch);
-
-                curl_close($ch);                              // closing curl handle
-                fclose($fp);                                  // closing file handle
-            }
-
             if($imageName){
 
                 $file_name = 'fb_temp';
 
-                download_image1($imageName,$file_name);
+                $this->download_image1($imageName,$file_name);
 
                 $file = new File($file_name,true);
                 $ext = $file->getExtension();
@@ -205,6 +138,22 @@ class SecurityController extends Controller
             'imageName' => $imageName,
             'user' => $user
         ]);
+    }
+
+    public function download_image1($image_url, $image_file){
+        $fp = fopen ($image_file, 'w+');              // open file handle
+
+        $ch = curl_init($image_url);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // enable if you want
+        curl_setopt($ch, CURLOPT_FILE, $fp);          // output to file
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 1000);      // some large value to allow curl to run for a long time
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+        // curl_setopt($ch, CURLOPT_VERBOSE, true);   // Enable this line to see debug prints
+        curl_exec($ch);
+
+        curl_close($ch);                              // closing curl handle
+        fclose($fp);                                  // closing file handle
     }
 
     /**
@@ -274,47 +223,6 @@ class SecurityController extends Controller
 
     }
 
-    /**
-     * @Route("/mojprofil", name="my_profile")
-     */
-    public function showMyProfile(Request $request)
-    {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-
-            return $this->redirectToRoute("login");
-        }
-
-        $user = $this->getUser();
-
-        $em = $this->getDoctrine()->getManager();
-
-
-        $form = $this->createForm(EditUser::class, $user,
-            [
-                'entity_manager' => $em
-            ]
-        );
-
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-        }
-
-
-        return $this->render(
-            'user/fighter/edit.html.twig',
-            [
-                'user' => $user,
-                'form' => $form->createView()
-            ]
-        );
-
-    }
 
     /**
      * @Route("/setnullonimage", name="setNullOnImage", options={"expose"=true})

@@ -134,26 +134,21 @@ class User implements UserInterface, Serializable
     private $userTasks;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $name;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $surname;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="date", nullable=true)
      */
     private $birthDay;
@@ -164,7 +159,6 @@ class User implements UserInterface, Serializable
     private $club;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", nullable=true)
      */
     private $phone;
@@ -208,7 +202,6 @@ class User implements UserInterface, Serializable
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Length(min="11", max="11")
-     * @Assert\NotBlank()
      * @var string
      */
     private $pesel;
@@ -226,17 +219,17 @@ class User implements UserInterface, Serializable
     private $motherName;
 
 
-    /**
-     * @Assert\Callback
-     */
-    public function validate(ExecutionContextInterface $context, $payload)
-    {
-        if (!($this->motherName || $this->fatherName)) {
-            $context->buildViolation('Podaj imię Ojca albo Matki')
-                ->atPath('fatherName')
-                ->addViolation();
-        }
-    }
+//    /**
+//     * @Assert\Callback
+//     */
+//    public function validate(ExecutionContextInterface $context, $payload)
+//    {
+//        if (!($this->motherName || $this->fatherName)) {
+//            $context->buildViolation('Podaj imię Ojca albo Matki')
+//                ->atPath('fatherName')
+//                ->addViolation();
+//        }
+//    }
 
 
     public function getFatherName(): ?string

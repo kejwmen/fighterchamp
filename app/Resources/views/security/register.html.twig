@@ -4,63 +4,44 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-6 col-md-offset-3">
-
                 <a class="btn btn-block btn-social btn-facebook" href="{{ path('connect_facebook') }}">
                     <span class="fa fa-facebook"></span> Zarejestruj się przez Facebooka
                 </a>
                 <br>
+                <form class="text-center">
+                    <label class="radio-inline">
+                    <input type="radio" name="gender" value="male"> Zawodnik
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="gender" value="male"> Trener
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="gender" value="male"> Kibic
+                    </label>
+                </form>
+                <br>
 
-                {{ form_start(form) }}
-                {{ form_row(form.email) }}
-                {{ form_row(form.plain_password.first, {
-                    label: 'Hasło'
-                }) }}
-                {{ form_row(form.plain_password.second, {
-                    label: 'Powtórz Hasło'
-                }) }}
-                {{ form_row(form.male) }}
-                {{ form_row(form.name) }}
-                {{ form_row(form.surname) }}
-                {{ form_row(form.birthDay) }}
-                {{ form_row(form.phone) }}
-                {{ form_row(form.imageFile, {
-                    label : 'Zdjęcie Profilowe (opcjonalnie)'
-                }) }}
-                <div>
-                    <span>Dane potrzebne do obowiązkowego ubezpieczenia</span>
-                    {{ form_row(form.pesel) }}
-                    <span>Podaj imię Ojca albo matki</span>
-                    {{ form_row(form.fatherName) }}
-                    {{ form_row(form.motherName) }}
-                </div>
-                {{ form_row(form.name) }}
-                {{ form_row(form.surname) }}
-                {{ form_row(form.club, {'attr': {'class': 'select2'}}) }}
-                <div>
-                    <a href="{{ path('rules') }}">Regulamin</a>
-                </div>
-                {{ form_row(form.terms, {
-                    label: 'Oświadczam, że zapoznałem/am się i akceptuję Regulamin
-                         oraz wyrażam zgodę na przetwarzanie moich danych osobowych.'
-                }) }}
-
-                <button type="submit" class="btn btn-primary" formnovalidate>Zarejestruj się
-                    <span class="fa fa-lock"></span></button>
-                {{ form_end(form) }}
-
+                <form method="POST" class="ajaxForm" action="{{ path('user_create') }}">
+                    <div id="form_body">
+                        {% include '/security/user_form.html.twig' with {'form': form} %}
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 {% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
 {% endblock %}
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy",tags: true});
+        initAjaxForm();
+        $(document).ready(function () {
+            $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
+
         });
     </script>
 {% endblock %}

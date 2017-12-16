@@ -1,4 +1,3 @@
-{% import '_macros/macro.html.twig' as macro %}
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="container">
@@ -21,7 +20,20 @@
                                     {{ user.surname }} {{ user.name }}</a>
                             </td>
                             <td>
-                               {{ macro.record(user) }}
+                                {% set win, lose, draw = 0,0,0 %}
+
+                                {% for fight in user.fights %}
+                                    {% if fight.winner %}
+                                        {% if user.id == fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
+                                        {% endif %}
+                                    {% elseif fight.draw %} {% set draw = draw + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                <span style="color: #5cb85c">{{ win }} </span>
+                                <span style="color: #f0ad4e">{{ draw }} </span>
+                                <span style="color: #d9534f">{{ lose }} </span>
+
                             </td>
                             <td> {{ user.male ?  'M' : 'K' }}</td>
                             <td> {{ user.birthDay |getAge }} </td>
