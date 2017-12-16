@@ -7,6 +7,7 @@
  */
 
 namespace AppBundle\Controller;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -18,9 +19,8 @@ class CouchController extends Controller
     /**
      * @Route("/", name="fighter_all_show")
      */
-    public  function showFighters()
+    public  function showFighters(EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('AppBundle:User')
             ->findBy([],['surname' => 'ASC']);
 

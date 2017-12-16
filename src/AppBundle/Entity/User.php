@@ -3,11 +3,11 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
-use Doctrine\ORM\Mapping\OrderBy;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,12 +19,14 @@ use Symfony\Component\HttpFoundation\File\File;
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
+ * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
  * @UniqueEntity(fields={"email"}, message="Użytkownik o podanym adresie email jest już zarejestrowany!")
  *
  */
 class User implements UserInterface, Serializable
 {
+    use TimestampableTrait;
 
     public function __construct()
     {
@@ -52,13 +54,6 @@ class User implements UserInterface, Serializable
      * @var string
      */
     private $imageName;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @var \DateTime
-     */
-    private $updatedAt;
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -322,13 +317,6 @@ class User implements UserInterface, Serializable
     {
         return $this->id;
     }
-
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
 
     public function getName()
     {

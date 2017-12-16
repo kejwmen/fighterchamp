@@ -39,14 +39,18 @@ class TournamentFightController extends Controller
 
         $fightsInDay = [];
 
-        foreach($fights as $fight)
+        foreach ($fights as $fight)
         {
             $fightsInDay[$fight->getDay()->format('Y-m-d')][] = $fight;
         }
 
-        return $this->render('tournament/fights.html.twig', [
-            'fightsInDay' => $fightsInDay
+        dump($fights);
 
-        ]);
+
+        return $this->render('tournament/fights.html.twig',
+            [
+                'fightsInDay' => $fightsInDay
+
+            ]);
     }
 }

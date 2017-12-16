@@ -25,12 +25,12 @@
                     <h3 class="text-uppercase text-center">miejsce</h3>
                     <div class="row">
                         <div class="building col-xs-6 text-right">
-                            <p><strong>{{ tournament.placeName }}</strong></p>
+                            <p><strong>{{ tournament.place.name }}</strong></p>
                         </div>
                         <div class="address col-xs-6">
-                            <p>{{ tournament.city }}
+                            <p>{{ tournament.place.city }}
                                 <br>
-                                {{ tournament.street }}
+                                {{ tournament.place.street }}
                             </p>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
                         )</h2>
                     <h3 class="text-uppercase">uczestnicy</h3>
-                    <p><strong>{{ users|length }} / {{ tournament.capacity }}</strong></p>
+                    <p><strong>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</strong></p>
                 </div>
                 <div class="key-points col-xs-12 col-md-9">
 

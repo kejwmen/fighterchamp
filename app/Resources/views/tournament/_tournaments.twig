@@ -24,9 +24,9 @@
                {#<td>{{ schedule.start|date('m-Y') }} month</td>#}
                 {#{% endif %}#}
             {#{% endfor %}#}
-            <td>{{ tournament.city }}</td>
-            <td>{{ tournament.placeName }}</td>
-            <td>{{ tournament.street }}</td>
+            <td>{{ tournament.place.city }}</td>
+            <td>{{ tournament.place.name }}</td>
+            <td>{{ tournament.place.street }}</td>
         </tr>
     {% endfor %}
     </tbody>

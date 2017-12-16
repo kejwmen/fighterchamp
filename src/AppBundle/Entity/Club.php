@@ -52,11 +52,6 @@ class Club
      */
     private $www;
 
-    /**
-     *
-     * @ORM\Column(name="create_time", type="datetime")
-     */
-    private $created_at;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

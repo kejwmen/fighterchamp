@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -18,7 +19,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class FightController extends Controller
 {
-
     /**
      * @Route("/{id}", name="fight_show")
      */
@@ -33,10 +33,8 @@ class FightController extends Controller
     /**
      * @Route("", name="fight_list")
      */
-    public function listAction()
+    public function listAction(EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $fights = $em->getRepository(Fight::class)->findBy(['ready' => true],['youtubeId' => 'DESC']);
 
         return $this->render('fight/list.html.twig',

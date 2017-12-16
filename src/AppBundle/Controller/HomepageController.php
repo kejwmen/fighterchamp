@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -17,9 +18,8 @@ class HomepageController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function resultAction()
+    public function resultAction(EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
         $news = $em->getRepository('AppBundle:News')
             ->findBy(array(), array('date' => 'DESC'));
 

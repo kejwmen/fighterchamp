@@ -17,3 +17,4 @@
 /src/AppBundle/Controller/TestoweController.php
 /.idea/
 /web/img/user
+/deploy.php

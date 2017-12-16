@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Club;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -14,12 +15,10 @@ class ClubController extends Controller
     /**
      * @Route("/", name="club_list")
      */
-    public function listAction()
+    public function listAction(EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
         $clubs = $em->getRepository('AppBundle:Club')
             ->findAllOrderByNumberOfUsers();
-
 
         return $this->render('club/list.twig',
             [
@@ -32,7 +31,6 @@ class ClubController extends Controller
      */
     public function showAction(Club $club)
     {
-
         $users = $club->getUsers();
 
         return $this->render('club/show.twig',

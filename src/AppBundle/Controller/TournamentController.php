@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -28,21 +29,19 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class TournamentController extends Controller
 {
-
     /**
      * @Route("/", name="tournament_list")
      */
-    public function listAction()
+    public function listAction(EntityManagerInterface $em): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $tournaments = $em->getRepository('AppBundle:Tournament')
-            ->findBy([],['id' => 'DESC']);
+        $tournaments = $em->getRepository(Tournament::class)
+            ->findBy([], ['id' => 'DESC']);
 
 
-        return $this->render('tournament/list.twig', array(
-            'tournaments' => $tournaments,
-        ));
+        return $this->render('tournament/list.twig',
+            [
+                'tournaments' => $tournaments,
+            ]);
     }
 
     /**
@@ -50,16 +49,10 @@ class TournamentController extends Controller
      */
     public function showAction(Tournament $tournament)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $users = $em->getRepository('AppBundle:SignUpTournament')
-            ->signUpUserOrder($tournament);
-
-        return $this->render( 'tournament/show.twig',
+        return $this->render('tournament/show.twig',
             [
-            'tournament' => $tournament,
-            'users' => $users
-        ]);
+                'tournament' => $tournament,
+            ]);
     }
 
     /**
@@ -67,9 +60,10 @@ class TournamentController extends Controller
      */
     public function panelAction(Tournament $tournament)
     {
-        return $this->render('tournament/_panel.twig', [
-            'tournament' => $tournament,
-        ]);
+        return $this->render('tournament/_panel.twig',
+            [
+                'tournament' => $tournament,
+            ]);
     }
 
     /**
@@ -77,11 +71,10 @@ class TournamentController extends Controller
      */
     public function rulesAction(Tournament $tournament)
     {
-
-        return $this->render("tournament/rules".$tournament->getId().".html.twig",
+        return $this->render("tournament/rules" . $tournament->getId() . ".html.twig",
             [
-            'tournament' => $tournament,
-        ]);
+                'tournament' => $tournament,
+            ]);
     }
 
     /**
@@ -89,9 +82,8 @@ class TournamentController extends Controller
      */
     public function contactAction(Tournament $tournament)
     {
-
-
-        return $this->render('tournament/contact.html.twig', [
+        return $this->render('tournament/contact.html.twig',
+            [
             'tournament' => $tournament,
         ]);
     }

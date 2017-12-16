@@ -19,7 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tournament
 {
-
     public function __construct()
     {
         $this->userAdmin = new ArrayCollection();
@@ -37,43 +36,14 @@ class Tournament
 
     /**
      * @ORM\Column(type="string")
+     * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      */
-    private $capacity;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $city;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $postalCode;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $street;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $placeName;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $phone;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $contactGuy;
+    private $place;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\SignUpTournament", mappedBy="tournament")
@@ -129,6 +99,12 @@ class Tournament
      */
     private $facebookEvent;
 
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private $capacity = 0;
+
     public function getPaymentInfo(): string
     {
         return
@@ -158,118 +134,32 @@ class Tournament
         $this->start = $start;
     }
 
-    /**
-     * @return mixed
-     */
     public function getEnd()
     {
         return $this->end;
     }
 
-    /**
-     * @param mixed $end
-     */
     public function setEnd($end)
     {
         $this->end = $end;
     }
 
-
-    /**
-     * @return mixed
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCapacity()
-    {
-        return $this->capacity;
-    }
-
-    /**
-     * @param mixed $capacity
-     */
-    public function setCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStreet()
-    {
-        return $this->street;
-    }
-
-    /**
-     * @param mixed $street
-     */
-    public function setStreet($street)
-    {
-        $this->street = $street;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPlaceName()
-    {
-        return $this->placeName;
-    }
-
-    /**
-     * @param mixed $placeName
-     */
-    public function setPlaceName($placeName)
-    {
-        $this->placeName = $placeName;
-    }
 
     /**
      * @ORM\OneToMany(
@@ -279,9 +169,7 @@ class Tournament
      */
     private $userAdmin;
 
-    /**
-     * @return mixed
-     */
+
     public function getUserAdmin()
     {
         return $this->userAdmin;
@@ -316,31 +204,20 @@ class Tournament
     }
 
 
-
-    /**
-     * @return mixed
-     */
     public function getSchedule()
     {
         return $this->schedule;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSignUpTill()
     {
         return $this->signUpTill;
     }
 
-    /**
-     * @param mixed $signUpTill
-     */
     public function setSignUpTill($signUpTill)
     {
         $this->signUpTill = $signUpTill;
     }
-
 
     public function getLogo(): ?string
     {
@@ -382,17 +259,24 @@ class Tournament
         $this->tickets = $tickets;
     }
 
+    public function getPlace()
+    {
+        return $this->place;
+    }
 
+    public function setPlace(Place $place): void
+    {
+        $this->place = $place;
+    }
 
+    public function getCapacity(): int
+    {
+        return $this->capacity;
+    }
 
-
-
-
-
-
-
-
-
-
+    public function setCapacity(int $capacity): void
+    {
+        $this->capacity = $capacity;
+    }
 }
 
