@@ -59,7 +59,7 @@
                                 {% endif %}
                             </td>
                             <td class="text-center">
-                                <a href="{{ path('tournament_panel', {'id' : fight.fight.tournament.id  }) }}"> {{ fight.fight.tournament.name }} </a>
+                                <a href="{{ path('tournament_show', {'id' : fight.fight.tournament.id  }) }}"> {{ fight.fight.tournament.name }} </a>
                             </td>
                         </tr>
                     {% endfor %}
