@@ -1,3 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+ {% include 'tournament/_parts/_panel.twig' %}
+
 <address class="text-center col-xs-12">
     <i class="fa fa-phone"></i> 505 266 615<br/>
     {% if tournament.facebookEvent %}
@@ -24,5 +28,7 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGtu16D8pKTbgxy9dEIQwkONpcInDkufc&callback=initMap"
         async defer></script>
+
+{% endblock %}
 
 

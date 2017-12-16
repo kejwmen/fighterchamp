@@ -44,12 +44,10 @@ class TournamentFightController extends Controller
             $fightsInDay[$fight->getDay()->format('Y-m-d')][] = $fight;
         }
 
-        dump($fights);
-
-
         return $this->render('tournament/fights.html.twig',
             [
-                'fightsInDay' => $fightsInDay
+                'fightsInDay' => $fightsInDay,
+                'tournament' => $tournament
 
             ]);
     }

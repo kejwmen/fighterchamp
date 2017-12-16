@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -89,7 +90,7 @@ class Tournament
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ticket", mappedBy="tournament")
-     * @var Ticket[]
+     * @var ArrayCollection/Ticket[]
      */
     private $tickets;
 
@@ -249,6 +250,9 @@ class Tournament
         $this->info = $info;
     }
 
+    /**
+     * @return ArrayCollection|Ticket[]
+     */
     public function getTickets()
     {
         return $this->tickets;
@@ -277,6 +281,41 @@ class Tournament
     public function setCapacity(int $capacity): void
     {
         $this->capacity = $capacity;
+    }
+
+    public function getTicketFighterAdult(): ?Ticket
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('isAdult', true));
+        $criteria->andWhere(Criteria::expr()->eq('userType', 'fighter'));
+        $criteria->getFirstResult();
+
+        $result = $this->tickets->matching($criteria);
+
+
+        if($result->isEmpty())
+        {
+            return null;
+        }
+
+        return $result = $result->first();
+    }
+
+    public function getTicketFighterChild(): ?Ticket
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('isAdult', false));
+        $criteria->andWhere(Criteria::expr()->eq('userType', 'fighter'));
+        $criteria->getFirstResult();
+
+        $result = $this->tickets->matching($criteria);
+
+        if($result->isEmpty())
+        {
+            return null;
+        }
+
+        return $result = $result->first();
     }
 }
 

@@ -7,6 +7,7 @@
  */
 
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,7 +41,25 @@ class Ticket
      * @ORM\Column(type="string")
      * @var string
      */
-    private $type;
+    private $userType;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $isAdult;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $promoUntil;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $insurance;
 
     public function getId(): int
     {
@@ -62,14 +81,14 @@ class Ticket
         $this->price = $price;
     }
 
-    public function getType(): string
+    public function getUserType(): string
     {
-        return $this->type;
+        return $this->userType;
     }
 
-    public function setType(string $type)
+    public function setUserType(string $userType)
     {
-        $this->type = $type;
+        $this->userType = $userType;
     }
 
     public function getTournament(): Tournament
@@ -80,6 +99,36 @@ class Ticket
     public function setTournament(Tournament $tournament)
     {
         $this->tournament = $tournament;
+    }
+
+    public function isAdult(): bool
+    {
+        return $this->isAdult;
+    }
+
+    public function setIsAdult(bool $isAdult): void
+    {
+        $this->isAdult = $isAdult;
+    }
+
+    public function getPromoUntil(): ?\DateTime
+    {
+        return $this->promoUntil;
+    }
+
+    public function setPromoUntil(\DateTime $promoUntil): void
+    {
+        $this->promoUntil = $promoUntil;
+    }
+
+    public function isInsurance(): bool
+    {
+        return $this->insurance;
+    }
+
+    public function setInsurance(bool $insurance): void
+    {
+        $this->insurance = $insurance;
     }
 
 

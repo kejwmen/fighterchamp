@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\Info;
+use AppBundle\Entity\Ticket;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
 use AppBundle\Form\FightType;
@@ -45,7 +46,7 @@ class TournamentController extends Controller
     }
 
     /**
-     * @Route("/show/{id}", name="tournament_show", condition="request.isXmlHttpRequest()")
+     * @Route("/{id}", name="tournament_show")
      */
     public function showAction(Tournament $tournament)
     {
@@ -56,29 +57,18 @@ class TournamentController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="tournament_panel")
-     */
-    public function panelAction(Tournament $tournament)
-    {
-        return $this->render('tournament/_panel.twig',
-            [
-                'tournament' => $tournament,
-            ]);
-    }
-
-    /**
-     * @Route("/{id}/regulamin", name="tournament_rules", condition="request.isXmlHttpRequest()")
+     * @Route("/{id}/regulamin", name="tournament_rules")
      */
     public function rulesAction(Tournament $tournament)
     {
-        return $this->render("tournament/rules" . $tournament->getId() . ".html.twig",
+        return $this->render("tournament/rules.html.twig",
             [
                 'tournament' => $tournament,
             ]);
     }
 
     /**
-     * @Route("/{id}/kontakt", name="tournament_contact", condition="request.isXmlHttpRequest()")
+     * @Route("/{id}/kontakt", name="tournament_contact")
      */
     public function contactAction(Tournament $tournament)
     {

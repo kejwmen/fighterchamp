@@ -1,3 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+ {% include 'tournament/_parts/_panel.twig' %}
+
 {% import "_macros/macro.html.twig" as macro %}
 <div class="container">
     <div class="row">
@@ -17,3 +21,4 @@
         
     </div>
 </div>
+{% endblock %}
