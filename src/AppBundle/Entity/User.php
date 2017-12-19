@@ -31,7 +31,6 @@ class User implements UserInterface, Serializable
     public function __construct()
     {
         $this->signUpTournaments = new ArrayCollection();
-        $this->create_time = new \DateTime('now');
         $this->tournamentAdmin = new ArrayCollection();
         $this->fights = new ArrayCollection();
     }
@@ -199,11 +198,6 @@ class User implements UserInterface, Serializable
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\SignUpTournament", mappedBy="user")
      */
     private $signUpTournaments;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $create_time;
 
     /**
      * @ORM\Column(type="string", nullable=true)
