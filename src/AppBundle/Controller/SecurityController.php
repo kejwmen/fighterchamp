@@ -86,7 +86,7 @@ class SecurityController extends Controller
         $imageName = $session->get('imageName');
         $user->setEmail($session->get('email'));
 
-
+//todo form
         $form = $this->createForm(RegistrationFacebookType::class, $user,
          [
              'entity_manager' => $this->get('doctrine.orm.entity_manager')

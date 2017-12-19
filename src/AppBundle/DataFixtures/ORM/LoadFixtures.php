@@ -4,10 +4,9 @@ namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
 use Nelmio\Alice\Fixtures;
 
-class LoadUserData implements FixtureInterface
+class LoadFixtures implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {

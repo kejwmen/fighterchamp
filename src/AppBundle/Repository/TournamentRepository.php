@@ -9,9 +9,22 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Tournament;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
 class TournamentRepository extends EntityRepository
 {
+    public static function createFightsReadyCriteria()
+    {
+        return Criteria::create()
+        ->where(Criteria::expr()->eq('isReady', true))
+        ->orderBy(['day' => 'ASC'])
+        ->orderBy(['position' => 'ASC']);
+    }
 
+    public static function createSignsUpTournamentNotDeleted()
+    {
+        return Criteria::create()
+        ->where(Criteria::expr()->eq('deleted_at', null));
+    }
 }

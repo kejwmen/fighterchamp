@@ -26,12 +26,9 @@ class HomepageController extends Controller
         $tournament = $em->getRepository('AppBundle:Tournament')
             ->find(4);
 
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsForTournament($tournament);
 
         return $this->render(':main:homepage.html.twig', [
             'news' => $news,
-            'fights' => $fights,
             'tournament' => $tournament
         ]);
 

@@ -4,14 +4,19 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\User\UserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+
+// condition="request.isXmlHttpRequest()
 
 /**
- * @Route("/api", condition="request.isXmlHttpRequest()")
+ * @Route("/api")
  */
 class UserController extends Controller
 {
@@ -104,9 +109,35 @@ class UserController extends Controller
                         'entity' => $form->getData(),
                         'form' => $form->createView(),
                     ])], 400);
+    }
+
+    /**
+     * @Route("/ludzie", name="api_user_list")
+     * @Method("POST")
+     */
+    public function listAction(Request $request, EntityManagerInterface $em)
+    {
+        $userType = $request->request->get('userType');
 
 
+        $users = $em->getRepository(User::class)->findBy(['type' => $userType]);
+
+        if($userType == 1)
+        {
+            $user = 'fighter';
+        }elseif($userType == 2)
+        {
+            $user = 'coach';
+        }else{
+            $user = 'fan';
+        }
+
+        return $this->render("user/$user/_list.html.twig",
+            [
+                'users' => $users
+            ]);
 
     }
+
 
 }

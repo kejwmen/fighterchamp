@@ -15,22 +15,6 @@ use Doctrine\ORM\EntityRepository;
 class FightRepository extends EntityRepository
 {
 
-
-    public function findAllFightsForTournament($tournament)
-    {
-        $qb = $this->createQueryBuilder('fight')
-            ->addOrderBy('fight.day')
-            ->addOrderBy('fight.position')
-            ->andWhere('fight.tournament = :tournament')
-            ->andWhere('fight.ready = 1')
-            ->setParameter('tournament', $tournament)
-
-        ;
-        $query = $qb->getQuery();
-        return $query->execute();
-
-    }
-
     public function findAllFightsForTournamentAdmin($tournament)
     {
         $qb = $this->createQueryBuilder('fight')
@@ -44,9 +28,6 @@ class FightRepository extends EntityRepository
         return $query->execute();
 
     }
-
-
-
 
     public function findAllFightByDayAdmin($tournament,$day)
     {
@@ -83,7 +64,7 @@ class FightRepository extends EntityRepository
     public function fightReadyOrderBy($tournament)
     {
         $qb = $this->createQueryBuilder('fight')
-            ->andWhere('fight.ready = :ready')
+            ->andWhere('fight.isReady = :ready')
             ->andWhere('fight.tournament = :tournament')
             ->setParameter('ready', true)
             ->setParameter('tournament', $tournament)
@@ -99,26 +80,13 @@ class FightRepository extends EntityRepository
 
         $em = $this->getEntityManager();
 
-        $q = $em->createQuery('update AppBundle:Fight fight set fight.ready = ?1 where fight.ready = ?2 and fight.tournament = ?3')
+        $q = $em->createQuery('update AppBundle:Fight fight set fight.is_ready = ?1 where fight.is_ready = ?2 and fight.tournament = ?3')
             ->setParameter(1, true)
             ->setParameter(2, false)
             ->setParameter(3, $tournament);
 
         $q->execute();
     }
-
-
-    public function findUserFightsInTournament(User $user, Tournament $tournament)
-    {
-        $qb = $this->createQueryBuilder('fight')
-            ->leftJoin('fight.users', 'user')
-            ->andWhere('user = :user')
-            ->setParameter('user', $user);
-
-        $query = $qb->getQuery();
-        return $query->execute();
-    }
-
 
 
     public function findAllTournamentFightsWhereFightersAreNotWeighted(Tournament $tournament)

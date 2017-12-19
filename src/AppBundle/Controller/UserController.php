@@ -10,13 +10,15 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\User;
+use AppBundle\Form\User\UserType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 /**
- * @Route("/zawodnicy")
+ * @Route("/ludzie")
  */
 class UserController extends Controller
 {
@@ -24,13 +26,14 @@ class UserController extends Controller
      * @Route("/", name="user_list")
      * @Method("GET")
      */
-    public  function listAction(EntityManagerInterface $em)
+    public function listAction(EntityManagerInterface $em)
     {
         $users = $em->getRepository('AppBundle:User')->findAll();
 
-        return $this->render('user/fighter/list.html.twig', [
-           'users' => $users ,
-        ]);
+        return $this->render('user/list.html.twig',
+            [
+ //               'users' => $users,
+            ]);
     }
 
     /**
@@ -98,7 +101,6 @@ class UserController extends Controller
             ]
         );
     }
-
 
 
 }

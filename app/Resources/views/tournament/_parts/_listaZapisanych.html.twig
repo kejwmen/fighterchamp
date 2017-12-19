@@ -19,7 +19,7 @@
         <tbody>
         {% for signUp in signUpTournament %}
             <tr>
-                <td><a href="{{ path('user', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
+                <td><a href="{{ path('user_show', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
                 <td>
                     {{ macro.record(signUp.user) }}
                 </td>

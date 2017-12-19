@@ -52,8 +52,8 @@ services:
     tags:
         - {name: doctrine.event_subscriber}
 
-  AppBundle\Service\AppMailer:
-    arguments: ["@mailer"]
+#  AppBundle\Service\AppMailer:
+#    arguments: ["@mailer"]
 
   app.twig_extension:
           class: AppBundle\Twig\AppExtension

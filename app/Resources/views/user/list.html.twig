@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <form id="choose-user" class="text-center">
+                    <label class="radio-inline">
+                        <input type="radio" name="user" id="fighter" value="1"> Zawodnicy
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="user" id="couch" value="2"> Trenerzy
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="user" id="fan" value="3"> Kibice
+                    </label>
+                </form>
+
+                <div id="user-table"></div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+
+        $("#choose-user").change(function () {
+
+            var checkedValue = document.querySelector('input[name="user"]:checked').value;
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('api_user_list') }}",
+                data: {userType: checkedValue},
+                success: function (data) {
+
+                    $('#user-table').html(data);
+
+                    $('#table').DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+                        },
+                        "bPaginate": false,
+                        "dom": 'lifrtp'
+                    });
+
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+            $("#fighter").prop("checked", true).trigger('change');
+        });
+
+
+    </script>
+
+
+{% endblock %}

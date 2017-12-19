@@ -23,16 +23,20 @@
         </td>
     </tr>
     <tr>
-        <td><b>Wiek:</b>{% if user.birthDay %} {{ user.birthDay | getAge }} lat {% endif %}</td>
+        <td><b>Płeć:</b> {{ user.male ?  'mężczyzna' : 'kobieta' }}</td>
     </tr>
     <tr>
-        <td><b>Płeć:</b> {{ user.male ?  'mężczyzna' : 'kobieta' }}</td>
+        <td><b>Wiek:</b>{% if user.birthDay %} {{ user.birthDay | getAge }} lat {% endif %}</td>
     </tr>
     <tr>
         <td>
             <b>Klub:</b>{% if user.club %}
             <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }} </a>
-                {% endif %}
+            {% endif %}
         </td>
     </tr>
+    <tr>
+        <td><b>Trener: </b>Mariusz</td>
+    </tr>
+
 </table>

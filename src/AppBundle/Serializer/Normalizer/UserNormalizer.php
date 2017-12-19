@@ -34,8 +34,8 @@ class UserNormalizer implements NormalizerInterface
             'name'   => $object->getName(),
             'surname'   => $object->getSurname(),
             'male' => $object->getMale() ? 'M' : 'K',
-            '_self' => $this->router->generate('user',['id' => $object->getId()]),
-            'age' => $object->getAge(),
+            '_self' => $this->router->generate('user_show',['id' => $object->getId()]),
+//            'age' => $object->getAge(),
             'club' => $object->getClub() ?  $object->getClub()->getName() : null,
             'club_link' => $object->getClub() ?  $this->router->generate('club_show',['id' => $object->getClub()->getId()]) : null,
         ];

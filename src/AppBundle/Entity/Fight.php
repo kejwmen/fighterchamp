@@ -36,8 +36,9 @@ class Fight
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
-     * @ORM\JoinColumn(name="tournament_id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament", inversedBy="fights")
+     * @ORM\JoinColumn(nullable=false)
+     * @var Tournament
      */
     private $tournament;
 
@@ -65,7 +66,7 @@ class Fight
     /**
      * @ORM\Column(type="boolean")
      */
-    private $ready = false;
+    private $isReady = false;
 
 
     /**
@@ -126,20 +127,20 @@ class Fight
     }
 
 
-    public function getReady(): bool
+    public function getIsReady(): bool
     {
-        return $this->ready;
+        return $this->isReady;
     }
 
 
-    public function setReady(bool $ready)
+    public function setIsReady(bool $isReady)
     {
-        $this->ready = $ready;
+        $this->isReady = $isReady;
     }
 
     public function toggleReady()
     {
-        $this->ready = $this->ready ? false : true;
+        $this->isReady = $this->isReady ? false : true;
     }
 
 

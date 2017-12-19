@@ -31,9 +31,9 @@ class User implements UserInterface, Serializable
     public function __construct()
     {
         $this->signUpTournaments = new ArrayCollection();
-        $this->create_time = new \DateTime('now');
         $this->tournamentAdmin = new ArrayCollection();
         $this->fights = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -128,6 +128,12 @@ class User implements UserInterface, Serializable
     }
 
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User")
+     **/
+    private $users;
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTask", mappedBy="user")
      */
@@ -195,11 +201,6 @@ class User implements UserInterface, Serializable
     private $signUpTournaments;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $create_time;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Length(min="11", max="11")
      * @var string
@@ -217,6 +218,12 @@ class User implements UserInterface, Serializable
      * @var string
      */
     private $motherName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    private $type;
 
 
 //    /**
@@ -460,13 +467,7 @@ class User implements UserInterface, Serializable
 
     public function getFights()
     {
-//        $criteria = Criteria::create();
-//        $criteria->where(Criteria::expr()->eq('ready', true));
-//
-//        return $this->fights->matching($criteria);
-
         return $this->fights;
-
     }
 
 
@@ -481,6 +482,14 @@ class User implements UserInterface, Serializable
         $this->fights []= $fights;
     }
 
+    public function getType(): string
+    {
+        return $this->type;
+    }
 
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
 
 }
