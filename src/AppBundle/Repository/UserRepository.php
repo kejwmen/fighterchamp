@@ -8,9 +8,15 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
+    public static function createCoachCriteria()
+    {
+        return Criteria::create()
+            ->where(Criteria::expr()->eq('type', 2));
+    }
 
 }

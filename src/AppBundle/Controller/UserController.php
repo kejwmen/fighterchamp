@@ -59,19 +59,11 @@ class UserController extends Controller
             return $this->redirectToRoute("login");
         }
 
-        $user = $this->getUser();
-
-        $form = $this->createForm(UserType::class, $user,
-            [
-                'action' => $this->generateUrl('user_update'),
-                'method' => 'POST',
-                'entity_manager' => $this->get('doctrine.orm.entity_manager'),
-                'is_new_user' => false
-            ]);
+        $form = $this->createForm(UserType::class, $this->getUser());
 
         return $this->render('user/fighter/edit.html.twig',
             [
-                'user' => $user,
+                'user' => $this->getUser(),
                 'form' => $form->createView()
             ]
         );
@@ -84,19 +76,10 @@ class UserController extends Controller
      */
     public function newAction()
     {
-        $user = new User();
-
-        $form = $this->createForm(UserType::class, $user,
-            [
-                'action' => $this->generateUrl('user_create'),
-                'method' => 'POST',
-                'entity_manager' => $this->get('doctrine.orm.entity_manager'),
-                'is_new_user' => true
-            ]);
+        $form = $this->createForm(UserType::class, new User());
 
         return $this->render('security/register.html.twig',
             [
-                'entity' => $user,
                 'form' => $form->createView()
             ]
         );

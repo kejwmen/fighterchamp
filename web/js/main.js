@@ -22,6 +22,7 @@ function initAjaxForm()
                     }
 
                     $('.form_error').html(jqXHR.responseJSON.message);
+                    $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
 
                 } else {
                     alert(errorThrown);

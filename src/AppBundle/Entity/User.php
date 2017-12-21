@@ -4,6 +4,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\TimestampableTrait;
+use AppBundle\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -491,5 +492,27 @@ class User implements UserInterface, Serializable
     {
         $this->type = $type;
     }
+
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    public function setUsers($users): void
+    {
+        $this->users[] = $users;
+    }
+
+    public function addUser($user)
+    {
+        $this->setUsers($user);
+        $this->users->add($user);
+    }
+
+    public function getCoach()
+    {
+        return $this->users->matching(UserRepository::createCoachCriteria())->first();
+    }
+
 
 }

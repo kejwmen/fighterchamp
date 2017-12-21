@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncode;
+
 
 // condition="request.isXmlHttpRequest()
 
@@ -24,16 +24,10 @@ class UserController extends Controller
      * @Route("/user-create", name="user_create")
      * @Method("POST")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
         $user = new User();
-        $form = $this->createForm(UserType::class, $user,
-            [
-                'entity_manager' => $this->get('doctrine.orm.entity_manager'),
-                'is_new_user' => true
-            ]
-        );
+        $form = $this->createForm(UserType::class, $user);
 
 
         $form->handleRequest($request);
@@ -59,9 +53,8 @@ class UserController extends Controller
 
         return new JsonResponse(
             [
-                'form' => $this->renderView('security/user_form.html.twig',
+                'form' => $this->renderView('user/user_form.html.twig',
                     [
-                        'entity' => $user,
                         'form' => $form->createView(),
                     ])], 400);
     }
@@ -70,17 +63,10 @@ class UserController extends Controller
     /**
      * @Route("/user-update", name="user_update")
      */
-    public function updateAction(Request $request)
+    public function updateAction(Request $request, EntityManagerInterface $em)
     {
 
-        $em = $this->getDoctrine()->getManager();
-
-        $form = $this->createForm(UserType::class, new User(),
-            [
-                'entity_manager' => $this->get('doctrine.orm.entity_manager'),
-                'is_new_user' => false
-            ]
-        );
+        $form = $this->createForm(UserType::class, new User());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -104,9 +90,8 @@ class UserController extends Controller
 
         return new JsonResponse(
             [
-                'form' => $this->renderView('security/user_form.html.twig',
+                'form' => $this->renderView('user/user_form.html.twig',
                     [
-                        'entity' => $form->getData(),
                         'form' => $form->createView(),
                     ])], 400);
     }

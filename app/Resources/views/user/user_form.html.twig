@@ -12,15 +12,32 @@
                 }) }}
             </div>
         {% endif %}
-        {{ form_row(form.male) }}
-        {{ form_row(form.name) }}
-        {{ form_row(form.surname) }}
+        {{ form_row(form.male, {
+            label: 'Płeć',
+            placeholder : 'Wybierz płeć'
+        }) }}
+        {{ form_row(form.name, {
+            label: 'Imię'
+        }) }}
+        {{ form_row(form.surname, {
+            label: 'Nazwisko'
+        }) }}
         {% if form.birthDay is defined %} {{ form_row(form.birthDay) }} {% endif %}
         {% if form.birthDay is defined %} {{ form_row(form.phone) }} {% endif %}
         {{ form_row(form.imageFile, {
             label : 'Zdjęcie Profilowe (opcjonalnie)'
         }) }}
-        {{ form_row(form.club, {'attr': {'class': 'select2'}}) }}
+        {{ form_row(form.club, {
+            label: 'Klub (opcjonalnie)',
+            placeholder: 'Wybierz klub albo wpisz nowy',
+            attr: {'class': 'select2'}
+        }) }}
+     {{ form_row(form.users, {
+         label: 'Trener (opcjonalnie)',
+         placeholder: 'Wybierz trenera'
+     }) }}
+
+
     {% if form.plain_password is defined %}
 <a href="{{ path('rules') }}">Regulamin</a>
 {{ form_row(form.terms, {
