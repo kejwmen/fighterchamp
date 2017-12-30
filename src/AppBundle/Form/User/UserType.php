@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -31,65 +32,68 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserType extends AbstractType
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
+//    /**
+//     * @var EntityManagerInterface
+//     */
+//    private $em;
+//
+//    public function __construct(EntityManagerInterface $em)
+//    {
+//        $this->em = $em;
+//    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $user = $builder->getData();
+//        $user = $builder->getData();
 
         $builder
-            ->add('email', EmailType::class, [
-                'constraints' => [
-                    new Email(),
-                    new NotBlank()
-                    ]
-            ])
+            ->add('email', EmailType::class
+//                , [
+//                'constraints' => [
+//                    new Email(),
+//                    new NotBlank()
+//                    ]
+//            ]
+            )
 
-            ->add('male', ChoiceType::class, [
-                'choices'  => [
-                    'Mężczyzna' => 1,
-                    'Kobieta' => 0]
-            ])
+//            ->add('male', ChoiceType::class, [
+//                'choices'  => [
+//                    'Mężczyzna' => 1,
+//                    'Kobieta' => 0]
+//            ])
+//
+//            ->add('name', TextType::class, [
+//                'constraints' => [new NotBlank()]
+//            ])
+//            ->add('surname', TextType::class,[
+//                'constraints' => [new NotBlank()]
+//            ])
+//            ->add('imageFile', FileType::class,
+//                ['required' => false])
+//
+//            ->add('club', EntityType::class, [
+//                'required' => false,
+//                'class' => 'AppBundle:Club',
+//                'query_builder' => function(EntityRepository $er) {
+//                    return $er->createQueryBuilder('u')
+//                        ->orderBy('u.name', 'ASC');
+//                }])
 
-            ->add('name', TextType::class, [
-                'constraints' => [new NotBlank()]
-            ])
-            ->add('surname', TextType::class,[
-                'constraints' => [new NotBlank()]
-            ])
-            ->add('imageFile', FileType::class,
-                ['required' => false])
-
-            ->add('club', EntityType::class, [
-                'required' => false,
-                'class' => 'AppBundle:Club',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
-                }])
-
-            ->add('users', EntityType::class, [
-                'required' => false,
-                'class' => 'AppBundle:User',
-                'data' => $user->getCoach(),
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->andWhere('u.type = 2')
-                        ->orderBy('u.name', 'ASC');
-                }])
+//            ->add('users', EntityType::class, [
+//                'required' => false,
+//                'empty_data'  => null,
+//                'class' => 'AppBundle:User',
+//                'data' => $user->getCoach(),
+//                'query_builder' => function(EntityRepository $er) {
+//                    return $er->createQueryBuilder('u')
+//                        ->andWhere('u.type = 2')
+//                        ->orderBy('u.name', 'ASC');
+//                }])
 
         ;
 
-        $builder->addEventSubscriber(new CreateClubIfDosentExist($this->em));
-        $builder->addEventSubscriber(new AddTermsAndPlainPasswordFieldsIfNewUser());
+//        $builder->addEventSubscriber(new CreateClubIfDosentExist($this->em));
+//        $builder->addEventSubscriber(new AddTermsAndPlainPasswordFieldsIfNewUser());
 
         }
 
@@ -99,6 +103,11 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'empty_data' => function (FormInterface $form) {
+                return new User(
+                    $form->get('email')->getData()
+                );
+            }
         ]);
     }
 

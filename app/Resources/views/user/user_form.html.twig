@@ -32,11 +32,13 @@
             placeholder: 'Wybierz klub albo wpisz nowy',
             attr: {'class': 'select2'}
         }) }}
-     {{ form_row(form.users, {
-         label: 'Trener (opcjonalnie)',
-         placeholder: 'Wybierz trenera'
-     }) }}
 
+{#<div id="coach">#}
+    {#{{ form_row(form.users, {#}
+        {#label: 'Trener (opcjonalnie)',#}
+        {#placeholder: 'Wybierz trenera'#}
+    {#}) }}#}
+{#</div>#}
 
     {% if form.plain_password is defined %}
 <a href="{{ path('rules') }}">Regulamin</a>

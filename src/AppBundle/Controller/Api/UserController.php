@@ -65,21 +65,25 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, EntityManagerInterface $em)
     {
+        $user = $this->getUser();
 
-        $form = $this->createForm(UserType::class, new User());
+        $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user = $form->getData();
-            $em->persist($user);
+
+            $formUser = $form->getData();
+
+            $em->persist($formUser);
             $em->flush();
 
             $this->addFlash('success', 'Sukces! Zmiany na twoim profilu zostały zapisane!!');
 
             $this->get('security.authentication.guard_handler')
                 ->authenticateUserAndHandleSuccess(
-                    $user,
+                    $formUser,
                     $request,
                     $this->get('app.security.login_form_authenticator'),
                     'main'

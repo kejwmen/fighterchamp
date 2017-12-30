@@ -8,17 +8,9 @@
                     <span class="fa fa-facebook"></span> Zarejestruj się przez Facebooka
                 </a>
                 <br>
-                <form class="text-center">
-                    <label class="radio-inline">
-                    <input type="radio" name="gender" value="male"> Zawodnik
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="gender" value="male"> Trener
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="gender" value="male"> Kibic
-                    </label>
-                </form>
+
+                {% include '/_parts/choose-user.html.twig' %}
+
                 <br>
 
                 <form method="POST" class="ajaxForm" action="{{ path('user_create') }}">
@@ -41,6 +33,19 @@
         initAjaxForm();
         $(document).ready(function () {
             $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
+
+            $("#choose-user").change(function () {
+
+                var checkedValue = document.querySelector('input[name="user"]:checked').value;
+
+                if(checkedValue > 1) {
+                    $("#coach").hide();
+                }else{
+                    $("#coach").show();
+                }
+
+
+            });
 
         });
     </script>

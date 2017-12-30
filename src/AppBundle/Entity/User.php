@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 
 namespace AppBundle\Entity;
@@ -29,12 +29,14 @@ class User implements UserInterface, Serializable
 {
     use TimestampableTrait;
 
-    public function __construct()
+    public function __construct(string $email)
     {
+
         $this->signUpTournaments = new ArrayCollection();
         $this->tournamentAdmin = new ArrayCollection();
         $this->fights = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->email = $email;
     }
 
     /**
@@ -221,10 +223,10 @@ class User implements UserInterface, Serializable
     private $motherName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
      */
-    private $type;
+    private $type = 1;
 
 
 //    /**
@@ -483,12 +485,12 @@ class User implements UserInterface, Serializable
         $this->fights []= $fights;
     }
 
-    public function getType(): string
+    public function getType(): int
     {
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(int $type): void
     {
         $this->type = $type;
     }
@@ -498,21 +500,49 @@ class User implements UserInterface, Serializable
         return $this->users;
     }
 
-    public function setUsers($users): void
+    public function setUsers(?User $user): void
     {
-        $this->users[] = $users;
+
+        if(!$user){
+            $this->users->removeElement($this->getCoach());
+            return;
+        }
+
+        if ($this->users->contains($user)) {
+            return;
+        }
+
+        $coach = $this->getCoach();
+
+        if($coach){
+            $this->users->removeElement($coach);
+        }
+
+        $this->users[] = $user;
     }
 
     public function addUser($user)
     {
+        if ($this->users->contains($user)) {
+            return;
+        }
+
         $this->setUsers($user);
         $this->users->add($user);
     }
+
+    public function removeUser($user)
+    {
+        $this->users->removeElement($user);
+    }
+
 
     public function getCoach()
     {
         return $this->users->matching(UserRepository::createCoachCriteria())->first();
     }
+
+
 
 
 }

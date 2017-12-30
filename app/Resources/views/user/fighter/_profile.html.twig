@@ -10,6 +10,9 @@
     <tr>
         <td>
             <h1> {{ user.name }} {{ user.surname }}</h1>
+            <h4>
+                {% if user.type == 1  %} Zawodnik {% elseif user.type == 2 %} Trener {% else %} Kibic {% endif %}
+            </h4>
         </td>
     </tr>
     <tr>
@@ -30,17 +33,24 @@
     </tr>
     <tr>
         <td>
-            <b>Klub:</b>{% if user.club %}
-            <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }} </a>
+            <b>Klub:</b>
+            {% if user.club %}
+                <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }} </a>
+            {% else %}
+                bez klubu
             {% endif %}
         </td>
     </tr>
-    {% if user.getCoach() %}
+
     <tr>
         <td>
-            <b>Trener: </b><a href="{{ path('user_show', {'id': user.getCoach().id}) }}">{{ user.getCoach().name }} {{ user.getCoach().surname }} </a>
+            <b>Trener: </b>
+            {% if user.getCoach() %}
+                <a href="{{ path('user_show', {'id': user.getCoach().id}) }}">{{ user.getCoach().name }} {{ user.getCoach().surname }} </a>
+            {% else %}
+                bez trenera
+            {% endif %}
         </td>
     </tr>
-    {% endif %}
 
 </table>

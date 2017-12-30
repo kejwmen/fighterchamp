@@ -13,7 +13,14 @@ function initAjaxForm()
                 if (typeof data.message !== 'undefined') {
                     alert(data.message);
                 }
-                window.location.href = data.location;
+                location.reload();
+
+                // window.location.href = data.location;
+            })
+            .success(function(data){
+                if(data.location){
+                    window.location.replace(data.location);
+                }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 if (typeof jqXHR.responseJSON !== 'undefined') {

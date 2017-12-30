@@ -76,7 +76,7 @@ class UserController extends Controller
      */
     public function newAction()
     {
-        $form = $this->createForm(UserType::class, new User());
+        $form = $this->createForm(UserType::class);
 
         return $this->render('security/register.html.twig',
             [

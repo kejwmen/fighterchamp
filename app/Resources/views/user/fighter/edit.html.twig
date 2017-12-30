@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
 
     {% set win, lose, draw = 0,0,0 %}
 
@@ -18,7 +23,9 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-6 col-md-offset-3">
-                    <form method="POST" class="ajaxForm" action="{{ path('user_create') }}">
+                    <div id="testowe">Dupppaaaaaaaa</div>
+
+                    <form method="POST" class="ajaxForm" action="{{ path('user_update') }}">
                         <div id="form_body">
                             {% include '/user/user_form.html.twig' with {'form': form} %}
                         </div>
@@ -38,8 +45,11 @@
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
         $(document).ready(function () {
+
             initAjaxForm();
             $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
+
+            $("#coach").hide();
 
             $(".setNullOnImage").click(function() {
 
@@ -47,12 +57,9 @@
                     type: 'POST',
                     url: "{{ path('setNullOnImage') }}",
                     success: function () {
-
                     }
                 });
             });
-
-
         });
     </script>
 {% endblock %}

@@ -1,4 +1,5 @@
-{% macro record(user) %}
+
+{% macro countRecord(user) %}
 
     {% set win, lose, draw = 0,0,0 %}
 
@@ -10,30 +11,31 @@
         {% endif %}
     {% endfor %}
 
-    {#<div>#}
-    <span style="color: #5cb85c">{{ win }} </span>
-    <span style="color: #f0ad4e">{{ draw }} </span>
-    <span style="color: #d9534f">{{ lose }} </span>
-    {#</div>#}
+{% endmacro %}
+
+
+
+{% macro record(user) %}
+    {#{% import _self as macro %}#}
+    {#{{ macro.countRecord(user) }}#}
+
+
+    {#<span style="color: #5cb85c">{{ win }} </span>#}
+    {#<span style="color: #f0ad4e">{{ draw }} </span>#}
+    {#<span style="color: #d9534f">{{ lose }} </span>#}
+
 
 {% endmacro %}
 
 {% macro recordBootstrap(user) %}
+    {#{% import _self as macro %}#}
+    {#{{ macro.countRecord(user) }}#}
 
-    {% set win, lose, draw = 0,0,0 %}
 
-    {% for fight in user.fights %}
-        {% if fight.fight.winner %}
-            {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
-            {% endif %}
-        {% elseif fight.fight.draw %} {% set draw = draw + 1 %}
-        {% endif %}
-    {% endfor %}
-
-    <h3><span class="label label-success">W: {{ win }}</span>
-        <span class="label label-warning">D: {{ draw }}</span>
-        <span class="label label-danger">L: {{ lose }}</span>
-    </h3>
+    {#<h3><span class="label label-success">W: {{ win }}</span>#}
+        {#<span class="label label-warning">D: {{ draw }}</span>#}
+        {#<span class="label label-danger">L: {{ lose }}</span>#}
+    {#</h3>#}
 
 {% endmacro %}
 
