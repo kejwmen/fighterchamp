@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <div class="container">
         <div class="row">
@@ -8,16 +7,12 @@
                     <span class="fa fa-facebook"></span> Zarejestruj się przez Facebooka
                 </a>
                 <br>
-
-                {% include '/_parts/choose-user.html.twig' %}
-
-                <br>
-
-                <form method="POST" class="ajaxForm" action="{{ path('user_create') }}">
-                    <div id="form_body">
-                        {% include '/user/user_form.html.twig' with {'form': form} %}
-                    </div>
-                </form>
+                <div class="col-sm-6 col-sm-offset-3 user-type">
+                   {% include '_parts/choose-user.html.twig' %}
+                </div>
+                <div class="row"></div>
+                    <div class="js-form-register"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -31,22 +26,34 @@
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
         initAjaxForm();
+
         $(document).ready(function () {
-            $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
 
-            $("#choose-user").change(function () {
+            $("input:radio").click(function() {
 
-                var checkedValue = document.querySelector('input[name="user"]:checked').value;
-
-                if(checkedValue > 1) {
-                    $("#coach").hide();
-                }else{
-                    $("#coach").show();
-                }
-
+                insertForm(1)
 
             });
 
+            $("input:radio:first").prop("checked", true).trigger("click");
+
         });
+
+        function insertForm (type) {
+
+            $.ajax({
+                type: 'GET',
+                url: Routing.generate('user_register_form_view', { type: type}),
+                success: function (data) {
+                    $(".js-form-register").html(data);
+
+                    $('.radio-inline').change(function() {
+                        var checkedValue = $('input:radio:checked').val();
+                        insertForm(checkedValue);
+                        $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+                    });
+                }
+            });
+        }
     </script>
 {% endblock %}

@@ -14,7 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Club
 {
-
     public function __construct()
     {
         $this->created_at = new \DateTime('now');
@@ -46,12 +45,10 @@ class Club
      */
     private $street;
 
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $www;
-
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

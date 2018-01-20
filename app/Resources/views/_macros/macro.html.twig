@@ -13,16 +13,23 @@
 
 {% endmacro %}
 
-
-
 {% macro record(user) %}
-    {#{% import _self as macro %}#}
-    {#{{ macro.countRecord(user) }}#}
+
+    {% set win, lose, draw = 0,0,0 %}
+
+    {% for fight in user.userFights %}
+        {% if fight.fight.winner %}
+            {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
+            {% endif %}
+        {% elseif fight.fight.draw %} {% set draw = draw + 1 %}
+        {% endif %}
+    {% endfor %}
 
 
-    {#<span style="color: #5cb85c">{{ win }} </span>#}
-    {#<span style="color: #f0ad4e">{{ draw }} </span>#}
-    {#<span style="color: #d9534f">{{ lose }} </span>#}
+
+    <span style="color: #5cb85c">{{ win }} </span>
+    <span style="color: #f0ad4e">{{ draw }} </span>
+    <span style="color: #d9534f">{{ lose }} </span>
 
 
 {% endmacro %}
@@ -87,7 +94,7 @@
                         {% endif %}
                     </a>
                 </td>
-                {% for user in fight.users %}
+                {% for user in fight.usersFight %}
                     <td>
                         <a href="{{ path('user_show', {'id': user.user.id }) }}">
                             <div>
@@ -102,7 +109,7 @@
                         {% endif %}
                     </td>
                 {% endfor %}
-                <td class="text-center">{{ fight.users[0].user.male ? 'M' : 'K' }}</td>
+                <td class="text-center">{{ fight.usersFight[0].user.male ? 'M' : 'K' }}</td>
                 <td class="text-center">{{ fight.formula }}</td>
                 <td class="text-center">{{ fight.weight }}</td>
                 {% if row.tournament %}

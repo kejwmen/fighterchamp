@@ -83,46 +83,47 @@
             </div>
         </section>
 
-        <div class="row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2">
-                <h1 class="text-center">XXIX WARSZAWSKA GRANDA NA PIĘŚCI</h1>
-                <h4 class="text-center">10 grudnia 2017</h4>
+        {#<div class="row">#}
+            {#<div class="col-xs-12 col-md-8 col-md-offset-2">#}
+                {#<h1 class="text-center">XXIX WARSZAWSKA GRANDA NA PIĘŚCI</h1>#}
+                {#<h4 class="text-center">10 grudnia 2017</h4>#}
 
 
-                <div class="row">
-                    <div class="col-xs-10 col-md-8 col-md-offset-2" style="display: flex;flex-flow:column; align-items: center">
-                        <h3 class="text-uppercase text-center">harmonogram</h3>
-                        <div>
-                            {% set last = '' %}
-                            {% for schedule in tournament.schedule %}
-                                <p><strong>{{ schedule.start| date('H:i') }}</strong>-{{ schedule.end| date('H:i') }}
-                                    - {{ schedule.description }}</p>
-                                {% set last = schedule.start | date('d-m-Y') %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+                {#<div class="row">#}
+                    {#<div class="col-xs-10 col-md-8 col-md-offset-2" style="display: flex;flex-flow:column; align-items: center">#}
+                        {#<h3 class="text-uppercase text-center">harmonogram</h3>#}
+                        {#<div>#}
+                            {#{% set last = '' %}#}
+                            {#{% for schedule in tournament.schedule %}#}
+                                {#<p><strong>{{ schedule.start| date('H:i') }}</strong>-{{ schedule.end| date('H:i') }}#}
+                                    {#- {{ schedule.description }}</p>#}
+                                {#{% set last = schedule.start | date('d-m-Y') %}#}
+                            {#{% endfor %}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
 
-                {% if tournament.fights %}
-                    {{ macro.table(tournament.fights, {'tournament' : false, 'order': true }) }}
-                {% else %}
-                    <p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>
-                {% endif %}
+                {#{% if tournament.fights %}#}
+                    {#{{ macro.table(tournament.fights, {'tournament' : false, 'order': true }) }}#}
+                {#{% else %}#}
+                    {#<p class="text-center">Na tej stronie w dniu turnieju widoczna będzie lista walk</p>#}
+                {#{% endif %}#}
 
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="//www.youtube.com/embed/MYuNLDfLf2s"
-                            allowfullscreen></iframe>
-                </div>
-                <br>
-                <br>
+                {#<div class="embed-responsive embed-responsive-16by9">#}
+                    {#<iframe class="embed-responsive-item" src="//www.youtube.com/embed/MYuNLDfLf2s"#}
+                            {#allowfullscreen></iframe>#}
+                {#</div>#}
+                {#<br>#}
+                {#<br>#}
 
-                <div class="col-xs-12 col-md-8 col-md-offset-2">
-                    <img class="img-responsive"
-                         src="{{ asset('img/tournament/warszawska-granda-na-piesci/poster-warszawska-granda-na-piesci-XXIX.jpg') }}">
-                </div>
-            </div>
-        </div>
-    </div>
+                {#<div class="col-xs-12 col-md-8 col-md-offset-2">#}
+                    {#<img class="img-responsive"#}
+                         {#src="{{ asset('img/tournament/warszawska-granda-na-piesci/poster-warszawska-granda-na-piesci-XXIX.jpg') }}">#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

@@ -4,3 +4,6 @@ Czy walki będą nagrywane?
 
 
 https://allegro.pl/regulamin/pl - zgoda na otrzymwanie maili reklamowych
+
+https://github.com/Behatch/contexts
+java -jar selenium-server-standalone-3.8.1.jar

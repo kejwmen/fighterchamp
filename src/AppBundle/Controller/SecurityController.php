@@ -12,6 +12,7 @@ use AppBundle\Entity\User;
 use AppBundle\Form\Security\LoginForm;
 use AppBundle\Form\Security\PasswordResetType;
 use AppBundle\Form\User\UserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swift_Mailer;
 use Swift_SmtpTransport;
@@ -46,11 +47,10 @@ class SecurityController extends Controller
     }
 
 
-
     /**
      * @Route("/rejestracja-facebook", name="register_fb")
      */
-    public function registerFBAction(Request $request)
+    public function registerFBAction(Request $request, EntityManagerInterface $em)
     {
 
         $session = $this->get('session');
@@ -61,10 +61,7 @@ class SecurityController extends Controller
             return $this->redirectToRoute('login');
         }
 
-        $em = $this->getDoctrine()->getManager();
-
-        $user = $this->getDoctrine()
-            ->getRepository('AppBundle:User')
+        $user = $em->getRepository('AppBundle:User')
             ->findOneBy(['facebookId' => $facebookId]);
 
         if($user){
@@ -86,7 +83,7 @@ class SecurityController extends Controller
         $imageName = $session->get('imageName');
         $user->setEmail($session->get('email'));
 
-//todo form
+
         $form = $this->createForm(RegistrationFacebookType::class, $user,
          [
              'entity_manager' => $this->get('doctrine.orm.entity_manager')
@@ -112,10 +109,6 @@ class SecurityController extends Controller
                 $user->setImageFile($image_file);
             }
 
-
-
-
-            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -130,7 +123,7 @@ class SecurityController extends Controller
                 );
 
 
-            return $this->redirectToRoute('user', ['id' => $user->getId()]);
+            return $this->redirectToRoute('user_edit_view', ['id' => $user->getId()]);
         }
 
         return $this->render('security/register_facebook.html.twig', [

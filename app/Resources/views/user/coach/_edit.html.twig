@@ -1,0 +1,43 @@
+
+{{ form_start(form, {
+    attr : { 'class': 'ajaxForm' } }) }}
+
+
+{{ form_row(form.email) }}
+        {{ form_row(form.male, {
+            label: 'Płeć',
+            placeholder : 'Wybierz płeć'
+        }) }}
+        {{ form_row(form.name, {
+            label: 'Imię'
+        }) }}
+        {{ form_row(form.surname, {
+            label: 'Nazwisko'
+        }) }}
+            {{ form_row(form.birthDay, {
+                label: 'Data Urodzenia'
+            }) }}
+            {{ form_row(form.phone, {
+                label: 'Telefon'
+            }) }}
+        {{ form_row(form.imageFile, {
+            label : 'Zdjęcie Profilowe (opcjonalnie)'
+        }) }}
+        {{ form_row(form.club, {
+            label: 'Klub (opcjonalnie)',
+            placeholder: 'Wybierz klub albo wpisz nowy',
+            attr: {'class': 'select2'}
+        }) }}
+
+<button type="submit" name="submit" class="btn btn-primary" formnovalidate>
+     Zapisz
+</button>
+{{ form_end(form) }}
+
+<script>
+    $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
+</script>
+
+          {#{% if user.imageName %}#}
+              {#<button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>#}
+          {#{% endif %}#}

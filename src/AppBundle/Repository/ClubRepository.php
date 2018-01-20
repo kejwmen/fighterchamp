@@ -14,8 +14,8 @@ class ClubRepository extends EntityRepository
     public function findAllOrderByNumberOfUsers()
     {
         $qb = $this->createQueryBuilder('club')
+            ->select('club, COUNT(user.id) as userCount')
             ->leftJoin('club.users', 'user')
-            ->addSelect('COUNT(user.id) as userCount')
             ->groupBy('club.id')
             ->orderBy('userCount' ,'DESC')
         ;

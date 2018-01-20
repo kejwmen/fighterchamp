@@ -1,0 +1,62 @@
+
+{{ form_start(form, {
+    attr : { 'class': 'ajaxForm' } }) }}
+
+
+{{ form_row(form.email) }}
+        {% if form.plain_password is defined %}
+            <div class="col-sm-6">
+                {{ form_row(form.plain_password.first, {
+                    label: 'Hasło'
+                }) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.plain_password.second, {
+                    label: 'Powtórz Hasło'
+                }) }}
+            </div>
+        {% endif %}
+        {{ form_row(form.male, {
+            label: 'Płeć',
+            placeholder : 'Wybierz płeć'
+        }) }}
+        {{ form_row(form.name, {
+            label: 'Imię'
+        }) }}
+        {{ form_row(form.surname, {
+            label: 'Nazwisko'
+        }) }}
+            {{ form_row(form.birthDay, {
+                label: 'Data Urodzenia'
+            }) }}
+            {{ form_row(form.phone, {
+                label: 'Telefon'
+            }) }}
+        {{ form_row(form.imageFile, {
+            label : 'Zdjęcie Profilowe (opcjonalnie)'
+        }) }}
+        {{ form_row(form.club, {
+            label: 'Klub (opcjonalnie)',
+            placeholder: 'Wybierz klub albo wpisz nowy',
+            attr: {'class': 'select2'}
+        }) }}
+
+{% if form.plain_password is defined %}
+    <a href="{{ path('rules') }}">Regulamin</a>
+    {{ form_row(form.terms, {
+        label: 'Oświadczam, że zapoznałem/am się i akceptuję Regulamin
+                         oraz wyrażam zgodę na przetwarzanie moich danych osobowych.'
+    }) }}
+{% endif %}
+<button type="submit" name="submit" class="btn btn-primary" formnovalidate>
+    {% if form.plain_password is defined %}Zarejestruj się {% else %} Zapisz {% endif %}
+</button>
+{{ form_end(form) }}
+
+<script>
+    $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
+</script>
+
+          {#{% if user.imageName %}#}
+              {#<button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>#}
+          {#{% endif %}#}

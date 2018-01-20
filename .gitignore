@@ -18,3 +18,7 @@
 /.idea/
 /web/img/user
 /deploy.php
+/selenium-server-standalone-3.8.1.jar
+
+web/app_dev.php
+web/app_test.php

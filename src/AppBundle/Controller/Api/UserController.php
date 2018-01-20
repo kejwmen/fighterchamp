@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\User\CoachType;
 use AppBundle\Form\User\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -11,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Form\User\FighterType;
 
 
 // condition="request.isXmlHttpRequest()
@@ -26,14 +28,26 @@ class UserController extends Controller
      */
     public function createAction(Request $request, EntityManagerInterface $em)
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
 
+        $user = new User();
+        $form = $this->createForm($this->getFormType($request), $user, [
+            'method' => 'POST',
+            'action' => $this->generateUrl('user_create'),
+        ]);
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
+            /**
+             * @var $user User
+             */
             $user = $form->getData();
+
+            if($coach = $user->getCoach()){
+                if(!$user->getType() === 1) $user->removeUser($coach);
+            }
+
             $em->persist($user);
             $em->flush();
 
@@ -53,7 +67,7 @@ class UserController extends Controller
 
         return new JsonResponse(
             [
-                'form' => $this->renderView('user/user_form.html.twig',
+                'form' => $this->renderView($this->getFormTypeView($request),
                     [
                         'form' => $form->createView(),
                     ])], 400);
@@ -61,18 +75,17 @@ class UserController extends Controller
 
 
     /**
-     * @Route("/user-update", name="user_update")
+     * @Route("/user-update", name="api_user_update")
      */
     public function updateAction(Request $request, EntityManagerInterface $em)
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm($this->getFormType($request), $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
 
             $formUser = $form->getData();
 
@@ -94,7 +107,7 @@ class UserController extends Controller
 
         return new JsonResponse(
             [
-                'form' => $this->renderView('user/user_form.html.twig',
+                'form' => $this->renderView($this->getFormTypeView($request),
                     [
                         'form' => $form->createView(),
                     ])], 400);
@@ -125,8 +138,44 @@ class UserController extends Controller
             [
                 'users' => $users
             ]);
-
     }
+
+
+    private function getFormType(Request $request):string
+    {
+        $data = $request->request->all();
+        $type = $data['fighter']['type'] ?? $data['coach']['type'] ?? $data['user']['type'];
+
+
+        switch ($type) {
+            case '1':
+                return FighterType::class;
+            case '2':
+                return CoachType::class;
+            case '3':
+                return UserType::class;
+            default:
+                return 'Nie ma takiego typu';
+        }
+    }
+
+    private function getFormTypeView(Request $request): string
+    {
+        $data = $request->request->all();
+        $type = $data['fighter']['type'] ?? $data['coach']['type'] ?? $data['user']['type'];
+
+        switch ($type) {
+            case '1':
+                return 'user/fighter/_form.html.twig';
+            case '2':
+                return 'user/coach/_form.html.twig';
+            case '3':
+                return 'user/fan/_form.html.twig';
+            default:
+                return 'Nie ma takiego typu';
+        }
+    }
+
 
 
 }

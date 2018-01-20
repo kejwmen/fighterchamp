@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -32,83 +33,66 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserType extends AbstractType
 {
-//    /**
-//     * @var EntityManagerInterface
-//     */
-//    private $em;
-//
-//    public function __construct(EntityManagerInterface $em)
-//    {
-//        $this->em = $em;
-//    }
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $user = $builder->getData();
 
         $builder
-            ->add('email', EmailType::class
-//                , [
-//                'constraints' => [
-//                    new Email(),
-//                    new NotBlank()
-//                    ]
-//            ]
+            ->add('type', HiddenType::class,[
+                'data' => 3])
+            ->add('email', EmailType::class,
+                [
+                    'constraints' => [
+                        new Email(),
+                        new NotBlank()
+                    ]
+                ]
             )
+            ->add('male', ChoiceType::class, [
+                'choices' => [
+                    'Mężczyzna' => 1,
+                    'Kobieta' => 0]
+            ])
 
-//            ->add('male', ChoiceType::class, [
-//                'choices'  => [
-//                    'Mężczyzna' => 1,
-//                    'Kobieta' => 0]
-//            ])
-//
-//            ->add('name', TextType::class, [
-//                'constraints' => [new NotBlank()]
-//            ])
-//            ->add('surname', TextType::class,[
-//                'constraints' => [new NotBlank()]
-//            ])
-//            ->add('imageFile', FileType::class,
-//                ['required' => false])
-//
-//            ->add('club', EntityType::class, [
-//                'required' => false,
-//                'class' => 'AppBundle:Club',
-//                'query_builder' => function(EntityRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->orderBy('u.name', 'ASC');
-//                }])
+            ->add('name', TextType::class, [
+                'constraints' => [new NotBlank()]
+            ])
+            ->add('surname', TextType::class,[
+                'constraints' => [new NotBlank()]
+            ])
+            ->add('imageFile', FileType::class,
+                ['required' => false])
 
-//            ->add('users', EntityType::class, [
-//                'required' => false,
-//                'empty_data'  => null,
-//                'class' => 'AppBundle:User',
-//                'data' => $user->getCoach(),
-//                'query_builder' => function(EntityRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->andWhere('u.type = 2')
-//                        ->orderBy('u.name', 'ASC');
-//                }])
-
+            ->add('club', EntityType::class, [
+                'required' => false,
+                'class' => 'AppBundle:Club',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.name', 'ASC');
+                }])
         ;
 
-//        $builder->addEventSubscriber(new CreateClubIfDosentExist($this->em));
-//        $builder->addEventSubscriber(new AddTermsAndPlainPasswordFieldsIfNewUser());
+        $builder->addEventSubscriber(new CreateClubIfDosentExist($this->em));
+        $builder->addEventSubscriber(new AddTermsAndPlainPasswordFieldsIfNewUser());
 
-        }
-
+    }
 
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-            'empty_data' => function (FormInterface $form) {
-                return new User(
-                    $form->get('email')->getData()
-                );
-            }
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => User::class
+            ]);
     }
 
 }

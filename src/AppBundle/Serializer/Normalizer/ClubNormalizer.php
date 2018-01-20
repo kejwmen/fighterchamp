@@ -8,11 +8,9 @@
 
 namespace AppBundle\Serializer\Normalizer;
 
-
 use AppBundle\Entity\Club;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\scalar;
 
 class ClubNormalizer implements NormalizerInterface
 {
@@ -32,7 +30,7 @@ class ClubNormalizer implements NormalizerInterface
         ];
     }
 
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof Club;
     }

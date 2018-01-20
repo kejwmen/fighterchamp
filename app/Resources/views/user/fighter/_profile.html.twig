@@ -1,4 +1,15 @@
 <table class="table table-condensed text-center table-borderless">
+    {% if user.type == 1 %}
+        {% set win, lose, draw = 0,0,0 %}
+
+        {% for fight in user.userFights %}
+            {% if fight.fight.winner %}
+                {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
+                {% endif %}
+            {% elseif fight.fight.draw %} {% set draw = draw + 1 %}
+            {% endif %}
+        {% endfor %}
+
     <tr>
         <td>
             <h3><span class="label label-success">W: {{ win }}</span>
@@ -7,6 +18,7 @@
             </h3>
         </td>
     </tr>
+    {% endif %}
     <tr>
         <td>
             <h1> {{ user.name }} {{ user.surname }}</h1>
@@ -41,7 +53,7 @@
             {% endif %}
         </td>
     </tr>
-
+{% if user.type == 1 %}
     <tr>
         <td>
             <b>Trener: </b>
@@ -52,5 +64,5 @@
             {% endif %}
         </td>
     </tr>
-
+{% endif %}
 </table>

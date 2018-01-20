@@ -3,27 +3,47 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <span>Nie wszystkie kluby mają wpisane miasta, jeśli chciałbyś pomóc i je
-                    wpisać to zostaw swój email w dziale <a href="{{ path('contact') }}">{{ path('contact') }}</a> </span>
-                <table id="table" class="table">
+
+                <table id="table-clubs" class="table">
                     <thead>
                     <tr>
-                        <th>Nazwa</th>
-                        <th class="text-center">Liczba Zawodników</th>
-                        <th>Miasto</th>
+                       <th></th>
+                        <th>Name</th>
+                        <th>Liczba Zawodników</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {% for arr in clubs %}
-                        <tr>
-                            <td><a href="{{ path('club_show', {'id': arr[0].id }) }}">{{ arr[0].name }}</a></td>
-                            <td class="text-center">{{ arr[0].users |length }}</td>
-                            <td>{{ arr[0].city }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
                 </table>
+
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $(document).ready(function(){
+        var t = $('#table-clubs').DataTable({
+            "ajax": "{{ path('app_api_club_list')}}",
+            "columns": [
+                { data : null },
+                { data : '0.name',
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href="+ oData[0]._self +">"+ oData[0].name +"</a>");
+                    }},
+                { data : 'userCount'}
+            ],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+            },
+            "bPaginate": false,
+            "dom": 'lifrtp'
+        });
+
+        t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+    });
+</script>
 {% endblock %}

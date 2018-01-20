@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
  {% set win, lose, draw = 0,0,0 %}
 
-    {% for fight in user.fights %}
+    {% for fight in user.userFights %}
         {% if fight.fight.winner %}
             {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
             {% endif %}
@@ -14,59 +14,15 @@
 {% block body %}
     <div class="container">
         <div class="row">
-          {% include '_messages/success.html.twig' %}
+            {% include '_messages/success.html.twig' %}
 
             <div class="col-xs-12 col-sm-6">
                 {% include 'user/fighter/_profile.html.twig' %}
             </div>
-            <div class="col-xs-12 col-sm-6">
-                {% if win+lose+draw == 0 %} <h4 class="text-center">Brak rekordów walk</h4>{% else %}
-                <table class="table">
-                    <tr>
-                        <th class="text-center">#</th>
-                        <th class="text-center">Przeciwnik</th>
-                        <th class="text-center">Formuła</th>
-                        <th class="text-center">Kat. wagowa</th>
-                        <th class="text-center">Wynik</th>
-                        <th class="text-center">Turniej</th>
-                    </tr>
+            {% if user.type == 1 %}
+            {% include ':user/fighter:_record_table.html.twig' %}
+            {% endif %}
 
-                    {% for fight in user.fights %}
-                        <tr>
-                            <td class="text-center">
-                                 {{ "%02d"|format(loop.index) }}
-                                <a href="{{ path('fight_show', {'id': fight.fight.id }) }}">
-                                    Szczegóły {% if fight.fight.youtubeId %}
-                                        <img class='youtube-icon'src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}
-                                </a>
-                            </td>
-                            <td class="text-center">
-                                {% for userInFight in fight.fight.users %}
-                                    {% if userInFight.user.id != user.id %}
-                                        <a href="{{ path('user_show', {'id' : userInFight.user.id  }) }}">{{ userInFight.user.name }} {{ userInFight.user.surname }}</a>
-                                    {% endif %}
-                                {% endfor %}
-                            </td>
-                            <td class="text-center"> {{ fight.fight.formula }}</td>
-                            <td class="text-center"> {{ fight.fight.weight }}</td>
-                            <td class="text-center">
-                                {% if fight.fight.winner %}
-                                    {% if user.id == fight.fight.winner.id %} <span class="label label-success">W</span>
-                                    {% else %} <span class="label label-danger">L</span>
-                                    {% endif %}
-                                {% elseif fight.fight.draw %}
-                                    <span class="label label-warning">D</span>
-                                {% endif %}
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ path('tournament_show', {'id' : fight.fight.tournament.id  }) }}"> {{ fight.fight.tournament.name }} </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-
-                </table>
-            </div>
         </div>
-        {% endif %}
     </div>
 {% endblock %}

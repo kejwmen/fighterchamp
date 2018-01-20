@@ -25,12 +25,10 @@ function initAjaxForm()
             .fail(function (jqXHR, textStatus, errorThrown) {
                 if (typeof jqXHR.responseJSON !== 'undefined') {
                     if (jqXHR.responseJSON.hasOwnProperty('form')) {
-                        $('#form_body').html(jqXHR.responseJSON.form);
+                        $('.ajaxForm').html(jqXHR.responseJSON.form);
                     }
 
                     $('.form_error').html(jqXHR.responseJSON.message);
-                    $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
-
                 } else {
                     alert(errorThrown);
                 }

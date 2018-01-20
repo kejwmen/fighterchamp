@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+ {% set win, lose, draw = 0,0,0 %}
+
+    {% for fight in user.userFights %}
+        {% if fight.fight.winner %}
+            {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
+            {% endif %}
+        {% elseif fight.fight.draw %} {% set draw = draw + 1 %}
+        {% endif %}
+    {% endfor %}
+
+{% block title %} {{ user.name }} {{ user.surname }} {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+          {% include '_messages/success.html.twig' %}
+
+            <div class="col-xs-12 col-sm-6">
+                {% include 'user/fighter/_profile.html.twig' %}
+            </div>
+
+
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

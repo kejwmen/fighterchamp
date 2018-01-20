@@ -1,0 +1,58 @@
+
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class=" row">
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+
+               {{ include('user/fighter/_profile.html.twig') }}
+
+                <div class="col-sm-6 col-sm-offset-3 user-type">
+                    {% include '_parts/choose-user.html.twig' %}
+                </div>
+                <div class="row"></div>
+                <div class="js-form-register"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script>
+        initAjaxForm();
+
+        $(document).ready(function () {
+
+            $("input:radio").click(function() {
+
+                insertForm({{ user.type }})
+
+            });
+
+            $('input[name="user-type"][value="{{ user.type }}"]').prop('checked', true).trigger("click");
+
+        });
+
+        function insertForm (type) {
+            $.ajax({
+                type: 'GET',
+                url: Routing.generate('user_update_form_view', { type: type}),
+                success: function (data) {
+                    $(".js-form-register").html(data);
+
+                    $('.radio-inline').change(function() {
+                        var checkedValue = $('input:radio:checked').val();
+                        insertForm(checkedValue);
+                        $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
+                    });
+                }
+            });
+        }
+    </script>
+{% endblock %}

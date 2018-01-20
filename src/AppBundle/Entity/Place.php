@@ -25,7 +25,7 @@ class Place
     private $id;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      * @var string
      */
     private $name;
@@ -37,13 +37,13 @@ class Place
     private $capacity;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      * @var string
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      * @var string
      */
     private $street;

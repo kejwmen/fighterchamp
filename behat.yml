@@ -1,6 +1,13 @@
 default:
-    extensions:
-        Behat\MinkExtension:
-            base_url: http://localhost:8000
-            goutte: ~
-            selenium2: ~
+  extensions:
+    Behat\Symfony2Extension: ~
+    Behat\MinkExtension:
+      base_url:  'http://localhost:8000/app_test.php/'
+      goutte: ~
+      selenium2: ~
+
+  suites:
+    my_suite:
+      contexts:
+        - FeatureContext
+        - Behat\MinkExtension\Context\MinkContext

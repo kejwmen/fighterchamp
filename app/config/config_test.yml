@@ -17,5 +17,4 @@ swiftmailer:
 
 doctrine:
     dbal:
-        dbname:   "%database_name%"
-
+        dbname:   fighterchamp_test

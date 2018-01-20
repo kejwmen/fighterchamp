@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 2016-06-21
- * Time: 07:13
- */
 declare(strict_types = 1);
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 
@@ -19,13 +15,13 @@ use Doctrine\ORM\Mapping\OrderBy;
  */
 class Fight
 {
+    use TimestampableTrait;
+
     public function __construct(string $formula, string $weight)
     {
         $this->formula = $formula;
         $this->weight = $weight;
-
-        $this->created_at = new \DateTime('now');
-        $this->users = new ArrayCollection();
+        $this->usersFight = new ArrayCollection();
     }
 
     /**
@@ -37,10 +33,12 @@ class Fight
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament", inversedBy="fights")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      * @var Tournament
      */
     private $tournament;
+
+    //     * @ORM\JoinColumn(nullable=false)
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
@@ -68,18 +66,15 @@ class Fight
      */
     private $isReady = false;
 
-
     /**
      * @ORM\Column(type="boolean")
      */
     private $draw = false;
 
-
     /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $day;
-
 
     /**
      * @ORM\Column(type="string",nullable=true)
@@ -87,17 +82,10 @@ class Fight
     private $youtubeId;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="fight", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="fight")
      * @OrderBy({"isRedCorner" = "DESC"})
      */
-    private $users;
-
-    /**
-     *
-     * @ORM\Column(name="create_time", type="datetime", nullable=true)
-     */
-    private $created_at;
-
+    private $usersFight;
 
 
     public function getId(): int
@@ -106,24 +94,21 @@ class Fight
     }
 
 
-    public function setId(int $id)
+    public function addUserFight(UserFight $userFight)
     {
-        $this->id = $id;
-    }
+//        if ($this->usersFight->contains($userFight))
+//        {
+//            return;
+//        }
 
-
-    public function addUser(User $user)
-    {
-        $this->users[] = $user;
-        $user->setFights($this);
+        $userFight->setFight($this);
 
         return $this;
     }
 
-
-    public function getUsers()
+    public function getUsersFight(): Collection
     {
-        return $this->users;
+        return $this->usersFight;
     }
 
 
