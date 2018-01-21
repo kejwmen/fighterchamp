@@ -29,8 +29,7 @@ class UserController extends Controller
     public function createAction(Request $request, EntityManagerInterface $em)
     {
 
-        $user = new User();
-        $form = $this->createForm($this->getFormType($request), $user, [
+        $form = $this->createForm($this->getFormType($request), null, [
             'method' => 'POST',
             'action' => $this->generateUrl('user_create'),
         ]);
@@ -89,18 +88,9 @@ class UserController extends Controller
 
             $formUser = $form->getData();
 
-            $em->persist($formUser);
             $em->flush();
 
             $this->addFlash('success', 'Sukces! Zmiany na twoim profilu zostały zapisane!!');
-
-            $this->get('security.authentication.guard_handler')
-                ->authenticateUserAndHandleSuccess(
-                    $formUser,
-                    $request,
-                    $this->get('app.security.login_form_authenticator'),
-                    'main'
-                );
 
             return new JsonResponse(200);
         }

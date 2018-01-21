@@ -16,6 +16,7 @@
             </div>
         </div>
     </div>
+
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
@@ -29,31 +30,39 @@
 
         $(document).ready(function () {
 
-            $("input:radio").click(function() {
+               $(".radio-inline").change(function() {
 
-                insertForm(1)
+                insertForm($('input:radio:checked').val());
 
             });
 
-            $("input:radio:first").prop("checked", true).trigger("click");
-
+              $("input:radio:first").prop("checked", true).trigger("change");
         });
 
-        function insertForm (type) {
+        function insertForm (type){
 
             $.ajax({
                 type: 'GET',
                 url: Routing.generate('user_register_form_view', { type: type}),
                 success: function (data) {
                     $(".js-form-register").html(data);
-
-                    $('.radio-inline').change(function() {
-                        var checkedValue = $('input:radio:checked').val();
-                        insertForm(checkedValue);
-                        $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
-                    });
                 }
             });
         }
+
+
+        {#$(".setNullOnImage").click(function() {#}
+
+            {#$.ajax({#}
+                {#type: 'POST',#}
+                {#url: "{{ path('setNullOnImage') }}",#}
+                {#success: function () {#}
+                    {#location.reload();#}
+                {#}#}
+            {#});#}
+        {#});#}
+
+
+
     </script>
 {% endblock %}

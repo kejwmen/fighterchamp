@@ -39,7 +39,9 @@ class FighterType extends AbstractType
             new NotBlank()
         ]
     ])
-        ->add('phone', TextType::class)
+        ->add('phone', TextType::class,[
+            'constraints' => [new NotBlank()]
+        ])
 
         ->add('users', EntityType::class, [
         'required' => false,

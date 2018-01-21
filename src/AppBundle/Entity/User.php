@@ -80,7 +80,6 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
-
     public function getImageFile(): ?File
     {
         return $this->imageFile;
@@ -175,9 +174,9 @@ class User implements UserInterface, Serializable
     private $male;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Facebook", mappedBy="user")
      */
-    private $facebookId;
+    private $facebook;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -331,18 +330,15 @@ class User implements UserInterface, Serializable
         $this->password = null;
     }
 
-
-    public function getFacebookId()
+    public function getFacebook()
     {
-        return $this->facebookId;
+        return $this->facebook;
     }
 
-
-    public function setFacebookId($facebookId)
+    public function setFacebook($facebook): void
     {
-        $this->facebookId = $facebookId;
+        $this->facebook = $facebook;
     }
-
 
     public function getSignUpTournaments()
     {

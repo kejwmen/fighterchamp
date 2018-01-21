@@ -16,6 +16,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Route("/ludzie")
@@ -70,9 +72,20 @@ class UserController extends Controller
      * @Route("/rejestracja", name="user_create_view")
      * @Method("GET")
      */
-    public function newAction()
+    public function newAction(SessionInterface $session)
     {
-        return $this->render('security/register.html.twig');
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        $facebookId = $session->get('facebookId');
+        $session->clear();
+
+
+        return $this->render('security/register.html.twig',[
+            'facebookId' => $facebookId
+        ]);
     }
 
     /**
@@ -99,7 +112,22 @@ class UserController extends Controller
      */
     public function formUpdateAction($type)
     {
-        $form = $this->createForm($this->getFormType($type), $this->getUser(), [
+        $user = $this->getUser();
+
+        if(!$user) {
+            $session = $this->get('session');
+            $user = new User();
+            $user->setFacebookId($session->get('facebookId'));
+            $user->setName($session->get('name'));
+            $user->setSurname($session->get('surname'));
+            $user->setMale($session->get('male'));
+//        $imageName = $session->get('imageName');
+            $user->setEmail($session->get('email'));
+        }
+
+
+
+        $form = $this->createForm($this->getFormType($type), $user, [
             'action' => $this->generateUrl('api_user_update'),
             'method' => 'POST'
         ]);

@@ -2,12 +2,12 @@
 {% block body %}
     <div class="container">
         <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 user-type">
+                {% include '_parts/choose-user.html.twig' %}
+            </div>
+
             <div class="col-xs-12">
-
-            {% include '/_parts/choose-user.html.twig' %}
-
                 <div id="user-table"></div>
-
 
             </div>
         </div>
@@ -17,15 +17,23 @@
     {{ parent() }}
     <script>
 
+        $(document).ready(function () {
 
-        $("#choose-user").change(function () {
+            $(".radio-inline").change(function() {
 
-            var checkedValue = document.querySelector('input[name="user"]:checked').value;
+                insertForm($('input:radio:checked').val());
+
+            });
+
+            $("input:radio:first").prop("checked", true).trigger("change");
+        });
+
+        function insertForm (type){
 
             $.ajax({
                 type: 'POST',
                 url: "{{ path('api_user_list') }}",
-                data: {userType: checkedValue},
+                data: {userType: type},
                 success: function (data) {
 
                     $('#user-table').html(data);
@@ -40,15 +48,6 @@
 
                 }
             });
-        });
-
-
-        $(document).ready(function () {
-            $("#fighter").prop("checked", true).trigger('change');
-        });
-
-
+        }
     </script>
-
-
 {% endblock %}

@@ -13,9 +13,12 @@ function initAjaxForm()
                 if (typeof data.message !== 'undefined') {
                     alert(data.message);
                 }
-                location.reload();
 
-                // window.location.href = data.location;
+                if(data.location){
+                    window.location.href = data.location;
+                }else{
+                    location.reload();
+                }
             })
             .success(function(data){
                 if(data.location){

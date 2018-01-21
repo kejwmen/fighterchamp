@@ -22,7 +22,7 @@ class AddTermsAndPlainPasswordFieldsIfNewUser implements EventSubscriberInterfac
     {
         $user = $event->getData();
 
-        if (!$user || null === $user->getId()) {
+        if (!$user || null === $user) {
 
             $form = $event->getForm();
 

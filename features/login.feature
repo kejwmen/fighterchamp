@@ -5,6 +5,7 @@ Feature: Authentication
     And I am on the homepage
     When I follow "Login"
 
+    @javascript
   Scenario: Loggin in
     Given there is and admin user "user@fighterchamp.com" with password "mypassword"
     And I fill in "Email" with "user@fighterchamp.com"
@@ -24,6 +25,7 @@ Feature: Authentication
     And I select "Mężczyzna" from "<male>"
     And I fill in "Imię" with "Sławomir"
     And I fill in "Nazwisko" with "Grochowski"
+    And I fill in "Telefon" with "666 666 666 "
     And I check "<term>"
     And I press "Zarejestruj się"
     And I wait for result

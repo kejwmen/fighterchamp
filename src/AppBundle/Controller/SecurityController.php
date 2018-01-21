@@ -53,44 +53,6 @@ class SecurityController extends Controller
     public function registerFBAction(Request $request, EntityManagerInterface $em)
     {
 
-        $session = $this->get('session');
-
-        $facebookId = $session->get('facebookId');
-
-        if(!$facebookId){
-            return $this->redirectToRoute('login');
-        }
-
-        $user = $em->getRepository('AppBundle:User')
-            ->findOneBy(['facebookId' => $facebookId]);
-
-        if($user){
-            $this->get('security.authentication.guard_handler')
-                ->authenticateUserAndHandleSuccess(
-                    $user,
-                    $request,
-                    $this->get('app.security.login_form_authenticator'),
-                    'main'
-                );
-            return $this->redirectToRoute('homepage');
-        }
-
-        $user = new User();
-        $user->setFacebookId($session->get('facebookId'));
-        $user->setName($session->get('name'));
-        $user->setSurname($session->get('surname'));
-        $user->setMale($session->get('male'));
-        $imageName = $session->get('imageName');
-        $user->setEmail($session->get('email'));
-
-
-        $form = $this->createForm(RegistrationFacebookType::class, $user,
-         [
-             'entity_manager' => $this->get('doctrine.orm.entity_manager')
-         ]
-        );
-
-        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $form->getData();
