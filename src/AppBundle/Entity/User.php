@@ -194,9 +194,13 @@ class User implements UserInterface, Serializable
     private $signUpTournaments;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     */
+    private $type = 1;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Length(min="11", max="11")
-     * @Assert\NotBlank()
      * @var string
      */
     private $pesel;
@@ -213,14 +217,6 @@ class User implements UserInterface, Serializable
      */
     private $motherName;
 
-
-    /**
-     * @Assert\Callback
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @var int
-     */
-    private $type = 1;
 
 //    /**
 //     * @var UserInsuranceData
@@ -397,7 +393,7 @@ class User implements UserInterface, Serializable
 
     public function getPlec()
     {
-       return ($this->getMale()) ? 'M' : 'K';
+        return ($this->getMale()) ? 'M' : 'K';
     }
 
     public function getAge()
@@ -492,4 +488,7 @@ class User implements UserInterface, Serializable
     {
         $this->male = $male;
     }
+
+
+
 }
