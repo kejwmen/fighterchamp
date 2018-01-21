@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk
- * Date: 12/9/17
- * Time: 12:39 AM
- */
 
 namespace AppBundle\Entity;
 
@@ -25,13 +19,14 @@ class UserFight
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="fights")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="userFights")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Fight", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Fight", inversedBy="usersFight", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $fight;
@@ -42,22 +37,22 @@ class UserFight
      */
     private $isRedCorner;
 
+    public function __construct(bool $isRedCorner = null)
+    {
+        $this->isRedCorner = $isRedCorner;
+    }
+
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
-    {
-        $this->user = $user;
-    }
-
-    public function getFight()
+    public function getFight(): Fight
     {
         return $this->fight;
     }
@@ -67,15 +62,13 @@ class UserFight
         $this->fight = $fight;
     }
 
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
     public function isRedCorner(): ?bool
     {
         return $this->isRedCorner;
     }
-
-
-    public function setIsRedCorner(?bool $isRedCorner): void
-    {
-        $this->isRedCorner = $isRedCorner;
-    }
-
 }

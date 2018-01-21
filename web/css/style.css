@@ -15,9 +15,9 @@
 }
 
 
-button, input, optgroup, select, textarea {
-    color: black;
-}
+/*button, input, optgroup, select, textarea {*/
+    /*color: white;*/
+/*}*/
 
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
     color: grey;

@@ -35,7 +35,7 @@ class FightController extends Controller
      */
     public function listAction(EntityManagerInterface $em)
     {
-        $fights = $em->getRepository(Fight::class)->findBy(['ready' => true],['youtubeId' => 'DESC']);
+        $fights = $em->getRepository(Fight::class)->findBy(['isReady' => true],['youtubeId' => 'DESC']);
 
         return $this->render('fight/list.html.twig',
             [

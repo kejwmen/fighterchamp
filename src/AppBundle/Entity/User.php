@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Traits\TimestampableTrait;
+use AppBundle\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,7 +33,8 @@ class User implements UserInterface, Serializable
     {
         $this->signUpTournaments = new ArrayCollection();
         $this->tournamentAdmin = new ArrayCollection();
-        $this->fights = new ArrayCollection();
+        $this->userFights = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -78,10 +80,7 @@ class User implements UserInterface, Serializable
         return $this;
     }
 
-    /**
-     * @return File|null
-     */
-    public function getImageFile()
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
@@ -127,32 +126,33 @@ class User implements UserInterface, Serializable
     }
 
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User")
+     **/
+    private $users;
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTask", mappedBy="user")
      */
     private $userTasks;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $name;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $surname;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="date", nullable=true)
      */
     private $birthDay;
@@ -163,21 +163,20 @@ class User implements UserInterface, Serializable
     private $club;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", nullable=true)
      */
     private $phone;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(type="boolean",nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $male;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Facebook", mappedBy="user")
      */
-    private $facebookId;
+    private $facebook;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -188,11 +187,6 @@ class User implements UserInterface, Serializable
      * @Assert\NotBlank(groups={"Registration"})
      */
     private $plain_password;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="user")
-     * */
-    private $fights;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\SignUpTournament", mappedBy="user")
@@ -222,47 +216,23 @@ class User implements UserInterface, Serializable
 
     /**
      * @Assert\Callback
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
      */
-    public function validate(ExecutionContextInterface $context, $payload)
+    private $type = 1;
+
+//    /**
+//     * @var UserInsuranceData
+//     * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserInsuranceData")
+//     */
+//    private $insuranceData;
+
+
+    public function updateInsuranceData(UserInsuranceData $insuranceData)
     {
-        if (!($this->motherName || $this->fatherName)) {
-            $context->buildViolation('Podaj imię Ojca albo Matki')
-                ->atPath('fatherName')
-                ->addViolation();
-        }
+        $this->insuranceData = $insuranceData;
     }
-
-
-    public function getFatherName(): ?string
-    {
-        return $this->fatherName;
-    }
-
-    public function setFatherName(?string $fatherName)
-    {
-        $this->fatherName = $fatherName;
-    }
-
-    public function getMotherName(): ?string
-    {
-        return $this->motherName;
-    }
-
-    public function setMotherName(?string $motherName)
-    {
-        $this->motherName = $motherName;
-    }
-
-    public function getPesel(): ?string
-    {
-        return $this->pesel;
-    }
-
-    public function setPesel(?string $pesel)
-    {
-        $this->pesel = $pesel;
-    }
-
 
     public function getUsername()
     {
@@ -301,12 +271,6 @@ class User implements UserInterface, Serializable
     }
 
 
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-
     public function getId()
     {
         return $this->id;
@@ -315,12 +279,6 @@ class User implements UserInterface, Serializable
     public function getName()
     {
         return $this->name;
-    }
-
-
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
 
@@ -377,13 +335,6 @@ class User implements UserInterface, Serializable
         return $this->male;
     }
 
-
-    public function setMale($male)
-    {
-        $this->male = $male;
-    }
-
-
     public function setPassword($password)
     {
         $this->password = $password;
@@ -402,18 +353,15 @@ class User implements UserInterface, Serializable
         $this->password = null;
     }
 
-
-    public function getFacebookId()
+    public function getFacebook()
     {
-        return $this->facebookId;
+        return $this->facebook;
     }
 
-
-    public function setFacebookId($facebookId)
+    public function setFacebook($facebook): void
     {
-        $this->facebookId = $facebookId;
+        $this->facebook = $facebook;
     }
-
 
     public function getSignUpTournaments()
     {
@@ -430,7 +378,10 @@ class User implements UserInterface, Serializable
         return $this->signUpTournaments->matching($criteria)->first();
     }
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="user")
+     */
+    private $userFights;
 
 
     /**
@@ -459,15 +410,9 @@ class User implements UserInterface, Serializable
     }
 
 
-    public function getFights()
+    public function getUserFights()
     {
-//        $criteria = Criteria::create();
-//        $criteria->where(Criteria::expr()->eq('ready', true));
-//
-//        return $this->fights->matching($criteria);
-
-        return $this->fights;
-
+        return $this->userFights;
     }
 
 
@@ -476,12 +421,75 @@ class User implements UserInterface, Serializable
         return $this->name .' '. $this->surname;
     }
 
-
-    public function setFights($fights)
+    public function getType(): int
     {
-        $this->fights []= $fights;
+        return $this->type;
+    }
+
+    public function setType(int $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $user): void
+    {
+
+        if(!$user){
+            $this->users->removeElement($this->getCoach());
+            return;
+        }
+
+        if ($this->users->contains($user)) {
+            return;
+        }
+
+        $coach = $this->getCoach();
+
+        if($coach){
+            $this->users->removeElement($coach);
+        }
+
+        $this->users[] = $user;
+    }
+
+    public function addUser($user)
+    {
+        if ($this->users->contains($user)) {
+            return;
+        }
+
+        $this->setUsers($user);
+        $this->users->add($user);
+    }
+
+    public function removeUser($user)
+    {
+        $this->users->removeElement($user);
     }
 
 
+    public function getCoach()
+    {
+        return $this->users->matching(UserRepository::createCoachCriteria())->first();
+    }
 
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setMale($male): void
+    {
+        $this->male = $male;
+    }
 }

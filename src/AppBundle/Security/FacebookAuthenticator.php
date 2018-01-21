@@ -5,9 +5,11 @@
  * Date: 06.08.16
  * Time: 09:51
  */
+declare(strict_types=1);
 
 namespace AppBundle\Security;
 
+use AppBundle\Entity\Facebook;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -60,34 +62,40 @@ class FacebookAuthenticator extends SocialAuthenticator
         /** @var FacebookUser $facebookUser */
         $facebookUser = $this->getFacebookClient()->fetchUserFromToken($credentials);
 
-        $user = $this->em->getRepository('AppBundle:User')
-                    ->findOneBy(['facebookId' => $facebookUser->getId()]);
+        $id = $facebookUser->getId();
+
+        $facebook = $this->em->getRepository('AppBundle:Facebook')
+                    ->findOneBy(['facebookId' => $id]);
+
+        $user = $facebook ? $facebook->getUser() : null;
 
         if(!$user){
+                $facebook = new Facebook(
+                    $facebookUser->getId(),
+                    $facebookUser->getFirstName(),
+                    $facebookUser->getLastName(),
+                    $facebookUser->getEmail(),
+                    $facebookUser->getGender() === 'male'
+                );
 
-            /** @var $session Session **/
-            $session = $this->container->get('session');
+            $user = new User();
+            $user->setName($facebook->getName());
+            $user->setSurname($facebook->getSurname());
+            $user->setEmail($facebook->getEmail());
+            $user->setMale($facebook->isMale());
+            $user->setType(3);
 
-            $session->set('facebookId', $facebookUser->getId());
-            $session->set('name', $facebookUser->getFirstName());
-            $session->set('surname', $facebookUser->getLastName());
-            $session->set('male', $facebookUser->getGender() == 'male' ? true : false);
-            $session->set('imageName', $facebookUser->getPictureUrl());
-            $session->set('email', $facebookUser->getEmail());
+            $this->em->persist($user);
+            $this->em->persist($facebook);
+            $facebook->setUser($user);
 
-            $session->save();
-
-            throw new AuthenticationException();
+            $this->em->flush();
         }
 
-
         return $user;
-
     }
 
-    /**
-     * @return FacebookClient
-     */
+
     private function getFacebookClient()
     {
         return $this->clientRegistry
@@ -97,17 +105,12 @@ class FacebookAuthenticator extends SocialAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-
-        return new RedirectResponse($this->container->get('router')
-            ->generate('register_fb'));
-
+        return new RedirectResponse($this->container->get('router')->generate('user_create_view'));
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $user = $token->getUser();
-
-            return new RedirectResponse($this->router->generate('homepage'));
+        return new RedirectResponse($this->router->generate('user_edit_view'));
     }
 
     public function start(Request $request, AuthenticationException $authException = null)

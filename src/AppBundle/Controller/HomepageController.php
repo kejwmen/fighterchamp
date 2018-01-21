@@ -8,7 +8,6 @@
 
 namespace AppBundle\Controller;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,15 +25,9 @@ class HomepageController extends Controller
         $tournament = $em->getRepository('AppBundle:Tournament')
             ->find(4);
 
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsForTournament($tournament);
-
         return $this->render(':main:homepage.html.twig', [
             'news' => $news,
-            'fights' => $fights,
             'tournament' => $tournament
         ]);
-
-
     }
 }

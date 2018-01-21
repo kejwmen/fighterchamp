@@ -31,6 +31,7 @@ services:
   serializer_club:
         class: Symfony\Component\Serializer\Serializer
         arguments: [["@normalizer.club"], ["@serializer.encoder.json"]]
+        public: true
 
   serializer_task:
         class: Symfony\Component\Serializer\Serializer
@@ -52,8 +53,8 @@ services:
     tags:
         - {name: doctrine.event_subscriber}
 
-  AppBundle\Service\AppMailer:
-    arguments: ["@mailer"]
+#  AppBundle\Service\AppMailer:
+#    arguments: ["@mailer"]
 
   app.twig_extension:
           class: AppBundle\Twig\AppExtension

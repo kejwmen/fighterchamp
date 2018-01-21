@@ -1,30 +1,47 @@
 AppBundle\Entity\User:
-  user_{1..10}:
-    name: <firstname()>
-    surname: <lastname()>
-    male: <boolean()>
-    plain_password: aaa
+  user{1..20}:
+    __construct: [true]
+    name: <firstName()>
+    surname: <lastName()>
+    plain_password: password
     email: <email()>
-    birth_day: <date()>
-    phone: <phoneNumber()>
-    club: <company()>
-AppBundle\Entity\Tournament:
-  tournament_{1..10}:
-    name: <company()>
-    date: <date()>
-
-AppBundle\Entity\SignUpTournament:
-  sign.user_{1..10}:
-    __construct: ['@user_*','@tournament_*']
-    weight: <weight()>
-    formula: '50%? boks : k1'
-    ready: '50%? 1 : 0'
+    birth_day: <dateTimeBetween("-200 days", "now")>
+    phone: <current()>
 
 AppBundle\Entity\Fight:
-  fight_{1..10}:
-    tournament: '@tournament_*'
-    users: ['@user_<current()>','@user_*']
-    winner: <randomElement(array(@user_1,@user_2))>
+  fight{1..10}:
+    __construct: [boks,'A']
+    isReady: true
+    tournament: '@tournament*'
+
+AppBundle\Entity\Place:
+  place{1..10}:
+    name: <company()>
+    city: <city()>
+    street: <streetName()>
+
+AppBundle\Entity\Tournament:
+  tournament{1..10}:
+    name: <company()>
+    place: '@place*'
+    start: <dateTimeBetween("-200 days", "-100 days")>
+    end: <dateTimeBetween("-100 days", "now")>
+
+AppBundle\Entity\UserFight:
+  usrFight{1..10}:
+    __construct: [ true ]
+    fight: "@fight"
+    user: '@user*'
+
+
+
+
+
+
+
+
+
+
 
 
 

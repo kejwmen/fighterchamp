@@ -64,7 +64,7 @@ class AdminTournamentFightController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $usersFight = $fight->getUsers();
+        $usersFight = $fight->getUsersFight();
 
         $this->toggleCorners($usersFight[0], $usersFight[1]);
 

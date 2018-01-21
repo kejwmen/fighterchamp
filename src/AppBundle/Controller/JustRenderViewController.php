@@ -24,7 +24,7 @@ class JustRenderViewController extends Controller
     public function contactController(Request $request)
     {
 
-        $form = $this->createForm(ContactType::class, null);
+        $form = $this->createForm(ContactType::class);
 
             $form->handleRequest($request);
 

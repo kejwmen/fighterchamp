@@ -1,81 +1,86 @@
 <?php
 
+use AppBundle\Entity\User;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
-use Behat\MinkExtension\Context\MinkContext;
+use Behat\MinkExtension\Context\RawMinkContext;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';
+require_once __DIR__ . '/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends MinkContext implements Context
+class FeatureContext extends RawMinkContext implements Context
 {
-
-    private $output;
-
     /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
+     * @var EntityManagerInterface
      */
+    private $em;
+
     public function __construct()
     {
+        $kernel = new AppKernel('test', true);
+        $kernel->boot();
+        $this->em = $kernel->getContainer()->get('doctrine')->getManager();
     }
 
     /**
-     * @BeforeScenerio
+     * @BeforeScenario
      */
-    public function moveIntoTestDir()
+    public function clearData()
     {
-        if(!is_dir('test')) {
-            mkdir('test');
+        $purger = new ORMPurger($this->em);
+        $purger->purge();
+    }
+
+
+    /**
+     * @Then /^I wait for result$/
+     */
+    public function iWaitForResult()
+    {
+        $this->getSession()->wait(3000);
+    }
+
+    /**
+     * @Given /^there is and admin user "([^"]*)" with password "([^"]*)"$/
+     */
+    public function thereIsAndAdminUserWithPassword($arg1, $arg2)
+    {
+        $user = new User();
+        $user->setEmail($arg1);
+        $user->setPlainPassword($arg2);
+        $user->setName('Mario');
+        $user->setSurname('Brothers');
+        $user->setMale(true);
+
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+    }
+
+//    private function getEntityManager(): EntityManagerInterface
+//    {
+//        return $this->getContainer()->get('doctrine')->getManager();
+//    }
+
+    /**
+     * Pauses the scenario until the user presses a key. Useful when debugging a scenario.
+     *
+     * @Then I break
+     */
+    public function iPutABreakpoint()
+    {
+        fwrite(STDOUT, "\033[s    \033[93m[Breakpoint] Press \033[1;93m[RETURN]\033[0;93m to continue...\033[0m");
+        while (fgets(STDIN, 1024) == '') {
         }
+        fwrite(STDOUT, "\033[u");
+        return;
     }
-
-    /**
-     * @AfterScenerio
-     */
-    public function moveOutOfTestDir()
-    {
-        chdir('..');
-        if(is_dir('test')) {
-            system('rm -r'.realpath('test'));
-        }
-    }
-
-
-    /**
-     * @Given there is a file named :filename
-     */
-    public function thereIsAFileNamed($filename)
-    {
-        touch($filename);
-    }
-
-    /**
-     * @When I run :command
-     */
-    public function iRun($command)
-    {
-        $this->output = shell_exec($command);
-    }
-
-    /**
-     * @Then I should see :arg1 in the output
-     */
-    public function iShouldSeeInTheOutput($string)
-    {
-
-        assertContains(
-            $string,
-            $this->output,
-            sprintf('Did not see "%s" in the output "%s"', $string, $this->output)
-        );
-    }
-
 
 }

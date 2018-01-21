@@ -49,8 +49,8 @@
 
                 <li {{ (app.request.attributes.get('_route') == 'tournament_list') ? 'class="active"' }}><a
                             href="{{ path ('tournament_list' ) }}">Turnieje</a></li>
-                <li {{ (app.request.attributes.get('_route') == 'fighter_all_show') ? 'class="active"' }}><a
-                            href="{{ path ('fighter_all_show') }}">Zawodnicy</a></li>
+                <li {{ (app.request.attributes.get('_route') == 'user_list') ? 'class="active"' }}><a
+                            href="{{ path ('user_list') }}">Ludzie</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'club_list') ? 'class="active"' }}><a
                             href="{{ path ('club_list') }}">Kluby</a></li>
                 {#<li {{ (app.request.attributes.get('_route') == 'tqm_nowosci') ? 'class="active"' }}><a#}
@@ -63,8 +63,8 @@
                             href="{{ path ('contact') }}">Kontakt</a></li>
                 {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')  %}
                     {% if is_granted('ROLE_USER') %}
-                    <li {{ (app.request.attributes.get('_route') == 'my_profile') ? 'class="active"' }}><a
-                                href="{{ path ('my_profile') }}">Mój Profil</a></li>
+                    <li {{ (app.request.attributes.get('_route') == 'user_edit_view') ? 'class="active"' }}><a
+                                href="{{ path ('user_edit_view') }}">Mój Profil</a></li>
                         {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li {{ (app.request.attributes.get('_route') == 'admin_tournament_sign_up') ? 'class="active"' }}><a
@@ -106,7 +106,7 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script>
         $(document).ready(function(){
-            $('#table').DataTable({
+           var t = $('#table').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
                 },

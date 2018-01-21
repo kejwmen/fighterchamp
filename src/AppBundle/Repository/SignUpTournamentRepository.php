@@ -75,29 +75,6 @@ class SignUpTournamentRepository extends EntityRepository
         return $query->execute();
     }
 
-    public function findAllSignUpButNotPairYetQB($tournament)
-    {
-        $qb = $this->createQueryBuilder('signUpTournament')
-            ->leftJoin('signUpTournament.user', 'user')
-            ->andWhere('signUpTournament.fights is empty')
-            ->andWhere('signUpTournament.tournament = :tournament')
-            ->setParameter('tournament', $tournament)
-            ->andWhere('signUpTournament.isPaid = true')
-//            ->andWhere('signUpTournament.weighted is not null')
-            ->addOrderBy('user.male')
-            ->addOrderBy('signUpTournament.formula')
-            ->addOrderBy('signUpTournament.weight')
-            ->addOrderBy('signUpTournament.trainingTime')
-            ->addOrderBy('user.birthDay', 'DESC')
-            ->addOrderBy('user.surname');
-
-//        $query = $qb->getQuery();
-//        return $query->execute();
-
-        return $qb;
-    }
-
-
     public function findAllSignUpButNotPairYet()
     {
 
@@ -158,26 +135,5 @@ WHERE f.tournament_id = 4)');
         $query = $qb->getQuery();
         return $query->execute();
     }
-
-    public function findOpponent($male, $weight, $formula)
-    {
-        $qb = $this->createQueryBuilder('signUpTournament')
-            ->leftJoin('signUpTournament . user', 'user')
-            ->leftJoin('user . fights', 'fights' )
-            ->andWhere('user . male = :male')
-            ->andWhere('signUpTournament . weight = :weight')
-            ->andWhere('signUpTournament . formula = :formula')
-            ->setParameter('male', $male)
-            ->setParameter('weight', $weight)
-            ->setParameter('formula', $formula)
-
-        ;
-
-        $query = $qb->getQuery();
-      //  $query->getArrayResult();
-
-        return $query->execute();
-    }
-
 
 }

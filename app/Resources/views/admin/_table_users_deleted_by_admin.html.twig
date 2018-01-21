@@ -26,7 +26,7 @@
                 <td> {{ signUp.isPaid ? 'Tak' : 'Nie' }} </td>
                 <td> {{ signUp.weighted ? 'Tak' : 'Nie' }} </td>
                 <td>
-                    <a href="{{ path('user', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a>
+                    <a href="{{ path('user_show', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a>
                 </td>
                 <td>
                     {{ macro.record(signUp.user) }}

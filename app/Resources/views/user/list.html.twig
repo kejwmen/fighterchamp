@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 user-type">
+                {% include '_parts/choose-user.html.twig' %}
+            </div>
+
+            <div class="col-xs-12">
+                <div id="user-table"></div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(document).ready(function () {
+
+            $(".radio-inline").change(function() {
+
+                insertForm($('input:radio:checked').val());
+
+            });
+
+            $("input:radio:first").prop("checked", true).trigger("change");
+        });
+
+        function insertForm (type){
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('api_user_list') }}",
+                data: {userType: type},
+                success: function (data) {
+
+                    $('#user-table').html(data);
+
+                    $('#table').DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+                        },
+                        "bPaginate": false,
+                        "dom": 'lifrtp'
+                    });
+
+                }
+            });
+        }
+    </script>
+{% endblock %}

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
+use AppBundle\Repository\TournamentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
@@ -26,6 +27,7 @@ class Tournament
         $this->signUpTournament = new ArrayCollection();
         $this->schedule = new ArrayCollection();
         $this->info = new ArrayCollection();
+        $this->fights = new ArrayCollection();
     }
 
     /**
@@ -93,6 +95,12 @@ class Tournament
      * @var ArrayCollection/Ticket[]
      */
     private $tickets;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Fight", mappedBy="tournament")
+     * @var ArrayCollection/Fight[]
+     */
+    private $fights;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -198,10 +206,7 @@ class Tournament
 
     public function getSignUpTournament()
     {
-        $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq('deleted_at', null));
-
-        return $this->signUpTournament->matching($criteria);
+        return $this->signUpTournament->matching(TournamentRepository::createSignsUpTournamentNotDeleted());
     }
 
 
@@ -317,5 +322,19 @@ class Tournament
 
         return $result = $result->first();
     }
+
+    public function getFights(): Collection
+    {
+        return $this->fights;
+    }
+
+   public function getFightsReady(): Collection
+   {
+       return $this->fights->matching(
+           TournamentRepository::createFightsReadyCriteria()
+       );
+   }
+
+
 }
 
