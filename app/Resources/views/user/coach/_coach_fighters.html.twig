@@ -1,5 +1,25 @@
 {% import '_macros/macro.html.twig' as macro %}
 <div class="col-xs-12 col-sm-6">
+    {% set win, lose, draw = 0,0,0 %}
+
+    {% for user in user.users %}
+
+        {% for fight in user.userFights %}
+            {% if fight.fight.winner %}
+                {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
+                {% endif %}
+            {% elseif fight.fight.draw %} {% set draw = draw + 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+<div class="col-xs-6 col-xs-offset-3">
+            <h3><span class="label label-success">W: {{ win }}</span>
+                <span class="label label-warning">D: {{ draw }}</span>
+                <span class="label label-danger">L: {{ lose }}</span>
+            </h3>
+</div>
+
     {% if user.users|length == 0 %} <h4 class="text-center">Brak przypisanych zawodników</h4>
     {% else %}
 

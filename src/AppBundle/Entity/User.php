@@ -229,13 +229,6 @@ class User implements UserInterface, Serializable
         return $this->motherName;
     }
 
-
-
-
-
-
-
-
 //    /**
 //     * @var UserInsuranceData
 //     * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserInsuranceData")
@@ -453,14 +446,14 @@ class User implements UserInterface, Serializable
     public function setUsers(?User $user)
     {
         if(!$user){
-            $this->users->removeElement($this->getCoach());
+            $this->removeUser($this->getCoach());
             return;
         }
 
         $coach = $this->getCoach();
 
         if($coach){
-            $this->users->removeElement($coach);
+            $this->removeUser($coach);
         }
 
         if (!$this->users->contains($user)) {
@@ -478,11 +471,11 @@ class User implements UserInterface, Serializable
         }
     }
 
-    public function removeFriend(User $user)
+    public function removeUser(User $user)
     {
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
-            $user->removeFriend($this);
+            $user->removeUser($this);
         }
     }
 
