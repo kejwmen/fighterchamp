@@ -273,7 +273,7 @@ class User implements UserInterface, Serializable
         $this->plain_password = null;
     }
 
-    function __call($name, $arguments)
+    public function __call($name, $arguments)
     {
         // TODO: Implement __call() method.
     }
@@ -450,8 +450,19 @@ class User implements UserInterface, Serializable
         return $this->users;
     }
 
-    public function setUsers(User $user)
+    public function setUsers(?User $user)
     {
+        if(!$user){
+            $this->users->removeElement($this->getCoach());
+            return;
+        }
+
+        $coach = $this->getCoach();
+
+        if($coach){
+            $this->users->removeElement($coach);
+        }
+
         if (!$this->users->contains($user)) {
             $this->users->add($user);
             $user->addUser($this);
@@ -474,44 +485,6 @@ class User implements UserInterface, Serializable
             $user->removeFriend($this);
         }
     }
-
-
-//    public function setUsers(?User $user): void
-//    {
-//
-//        if(!$user){
-//            $this->users->removeElement($this->getCoach());
-//            return;
-//        }
-//
-//        if ($this->users->contains($user)) {
-//            return;
-//        }
-//
-//        $coach = $this->getCoach();
-//
-//        if($coach){
-//            $this->users->removeElement($coach);
-//        }
-//
-//        $this->users[] = $user;
-//    }
-//
-//    public function addUser($user)
-//    {
-//        if ($this->users->contains($user)) {
-//            return;
-//        }
-//
-//        $this->setUsers($user);
-//        $this->users->add($user);
-//    }
-//
-//    public function removeUser($user)
-//    {
-//        $this->users->removeElement($user);
-//    }
-
 
     public function getCoach()
     {
