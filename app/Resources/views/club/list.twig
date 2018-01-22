@@ -8,7 +8,7 @@
                     <tr>
                        <th></th>
                         <th>Name</th>
-                        {#<th>Rekord Zawodników</th>#}
+                        <th>Rekord Zawodników</th>
                         <th>Liczba Zawodników</th>
                     </tr>
                     </thead>
@@ -30,6 +30,14 @@
                     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                         $(nTd).html("<a href="+ oData[0]._self +">"+ oData[0].name +"</a>");
                     }},
+                { data : 'record',
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html(
+                            '<span style="color: #5cb85c">'+ oData['record']['W'] +'</span> '+
+                            '<span style="color: #f0ad4e">'+ oData['record']['D'] +'</span> '+
+                            '<span style="color: #d9534f">'+ oData['record']['L'] +'</span>'
+                        );
+                    }},
                 { data : 'userCount'}
             ],
             "language": {
@@ -47,3 +55,5 @@
     });
 </script>
 {% endblock %}
+
+
