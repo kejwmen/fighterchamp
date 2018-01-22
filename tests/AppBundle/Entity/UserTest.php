@@ -8,57 +8,50 @@
 
 namespace AppBundle\Tests;
 
-use AppBundle\Entity\Foo;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
+use AppKernel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserTest extends KernelTestCase
 {
     /**
-     * @var UserRepository
+     * @var EntityManagerInterface
      */
     private $em;
 
 
     public function setUp()
     {
-       $kernel =  self::bootKernel();
-
-        $this->em = $kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
+        $kernel = new AppKernel('dev', true);
+        $kernel->boot();
+        $this->em = $kernel->getContainer()->get('doctrine')->getManager();
 
     }
 
     public function testUserEditWithoutSetters()
     {
-        $user = new Foo('slawomir.grochowski@gmail.com');
 
-        $user->__construct('mario');
-
-        var_dump($user);
     }
 
 
-    public function AddCoachWhenThatIsExistingOne()
+    public function testAddCoachWhenThatIsExistingOne()
     {
         /**
          * @var $user User
          */
-        $user = $this->em->getRepository(User::class)->find(346);
+        $user = $this->em->getRepository('AppBundle:User')->find(18);
 
-        $user2 = $this->em->getRepository(User::class)->find(21);
+        $user2 = $this->em->getRepository('AppBundle:User')->find(19);
 
-//        $couch = $user->getCoach();
 
-        $user->setUsers($user2);
+        $user->addUser($user2);
 
-        $this->em->persist();
+        $this->em->persist($user);
         $this->em->flush();
 
-        echo 'duaaaa';
+        var_dump('duaaaa');
     }
 
 }

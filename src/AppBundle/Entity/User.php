@@ -199,11 +199,7 @@ class User implements UserInterface, Serializable
      */
     private $type = 1;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
-     */
-    private $pesel;
+
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -216,6 +212,28 @@ class User implements UserInterface, Serializable
      * @var string
      */
     private $motherName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $pesel;
+
+
+    public function getFatherName(): string
+    {
+        return $this->fatherName;
+    }
+
+    public function getMotherName(): string
+    {
+        return $this->motherName;
+    }
+
+
+
+
+
+
 
 
 //    /**
@@ -432,41 +450,67 @@ class User implements UserInterface, Serializable
         return $this->users;
     }
 
-    public function setUsers(?User $user): void
+    public function setUsers(User $user)
     {
-
-        if(!$user){
-            $this->users->removeElement($this->getCoach());
-            return;
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addUser($this);
         }
-
-        if ($this->users->contains($user)) {
-            return;
-        }
-
-        $coach = $this->getCoach();
-
-        if($coach){
-            $this->users->removeElement($coach);
-        }
-
-        $this->users[] = $user;
     }
 
-    public function addUser($user)
+
+    public function addUser(User $user)
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addUser($this);
+        }
+    }
+
+    public function removeFriend(User $user)
     {
         if ($this->users->contains($user)) {
-            return;
+            $this->users->removeElement($user);
+            $user->removeFriend($this);
         }
-
-        $this->setUsers($user);
-        $this->users->add($user);
     }
 
-    public function removeUser($user)
-    {
-        $this->users->removeElement($user);
-    }
+
+//    public function setUsers(?User $user): void
+//    {
+//
+//        if(!$user){
+//            $this->users->removeElement($this->getCoach());
+//            return;
+//        }
+//
+//        if ($this->users->contains($user)) {
+//            return;
+//        }
+//
+//        $coach = $this->getCoach();
+//
+//        if($coach){
+//            $this->users->removeElement($coach);
+//        }
+//
+//        $this->users[] = $user;
+//    }
+//
+//    public function addUser($user)
+//    {
+//        if ($this->users->contains($user)) {
+//            return;
+//        }
+//
+//        $this->setUsers($user);
+//        $this->users->add($user);
+//    }
+//
+//    public function removeUser($user)
+//    {
+//        $this->users->removeElement($user);
+//    }
 
 
     public function getCoach()

@@ -44,7 +44,7 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        return $this->render('user/fighter/show.html.twig',
+        return $this->render($this->getShowViewType($user),
             [
                 'user' => $user,
             ]);
@@ -177,6 +177,20 @@ class UserController extends Controller
                 return CoachType::class;
             case '3':
                 return UserType::class;
+            default:
+                return 'Nie ma takiego typu';
+        }
+    }
+
+    private function getShowViewType(User $user)
+    {
+        switch ($user->getType()) {
+            case 1:
+                return 'user/fighter/show.html.twig';
+            case 2:
+                return 'user/coach/show.html.twig';
+            case 3:
+                return 'user/fan/fan.html.twig';
             default:
                 return 'Nie ma takiego typu';
         }

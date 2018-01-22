@@ -1,0 +1,36 @@
+{% import '_macros/macro.html.twig' as macro %}
+<div class="col-xs-12 col-sm-6">
+    {% if user.users|length == 0 %} <h4 class="text-center">Brak przypisanych zawodników</h4>
+    {% else %}
+
+    <table class="table">
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Nazwisko i Imię</th>
+            <th class="text-center">Rekord</th>
+            <th class="text-center">Płeć</th>
+            <th class="text-center">Wiek</th>
+            <th class="text-center">Klub</th>
+        </tr>
+        {% for user in user.users %}
+            <tr>
+                <td> {{ loop.index }}</td>
+                <td class="text-center">
+                    <a href="{{ path('user_show', {'id' : user.id  }) }}">   {{ user.surname }} {{ user.name }}</a>
+                </td>
+                <td class="text-center">
+                    {{ macro.record(user) }}
+                </td>
+                <td class="text-center"> {{ user.male ? 'M' : 'K' }}</td>
+                <td class="text-center"> {{ user.getAge }}</td>
+                <td class="text-center">
+                    {% if user.club %}
+                        <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}</a>
+                    {% endif %}
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}

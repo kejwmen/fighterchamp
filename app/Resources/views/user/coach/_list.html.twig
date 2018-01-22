@@ -3,7 +3,6 @@
     <thead>
     <tr>
         <th>Nazwisko i Imię</th>
-        <th class="text-center">Rekord</th>
         <th class="text-center">Rekord Zawodników</th>
         <th class="text-center">Liczba Zawodników</th>
         <th class="text-center">Płeć</th>
@@ -13,22 +12,38 @@
     </thead>
     <tbody>
     {% for user in users %}
-        <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
-            <td class="text-left"><a href="{{ path('user_show', {'id': user.id }) }}">
-                    {{ user.surname }} {{ user.name }}</a>
-            </td>
-            <td>
-                {{ macro.record(user) }}
-            </td>
-            <td> [funkcja niedostępna] </td>
-            <td> [funkcja niedostępna] </td>
-            <td> {{ user.male ?  'M' : 'K' }}</td>
-            <td> {{ user.birthDay |getAge }} </td>
-            <td> {% if user.club %}
-                    <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}</a>
+    <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
+        <td class="text-left"><a href="{{ path('user_show', {'id': user.id }) }}">
+                {{ user.surname }} {{ user.name }}</a>
+        </td>
+        <td>
+            {% set win, lose, draw = 0,0,0 %}
+
+            {% for user in user.users %}
+
+            {% for fight in user.userFights %}
+                {% if fight.fight.winner %}
+                    {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
+                    {% endif %}
+                {% elseif fight.fight.draw %} {% set draw = draw + 1 %}
                 {% endif %}
-            </td>
-        </tr>
+            {% endfor %}
+            {% endfor %}
+
+            <span style="color: #5cb85c">{{ win }} </span>
+            <span style="color: #f0ad4e">{{ draw }} </span>
+            <span style="color: #d9534f">{{ lose }} </span>
+
+
+        </td>
+        <td> {{ user.users|length }} </td>
+        <td> {{ user.male ?  'M' : 'K' }}</td>
+        <td> {{ user.birthDay |getAge }} </td>
+        <td> {% if user.club %}
+                <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }}</a>
+            {% endif %}
+        </td>
+    </tr>
     {% endfor %}
     </tbody>
 </table>
