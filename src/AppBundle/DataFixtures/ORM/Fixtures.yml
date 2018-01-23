@@ -1,37 +1,37 @@
 AppBundle\Entity\User:
   user{1..20}:
-    __construct: [true]
-    name: <firstName()>
+    name: '<firstName()>'
     surname: <lastName()>
     plain_password: password
     email: <email()>
-    birth_day: <dateTimeBetween("-200 days", "now")>
+    male: <boolean(50)>
+    birth_day: <date_create()>
     phone: <current()>
 
-AppBundle\Entity\Fight:
-  fight{1..10}:
-    __construct: [boks,'A']
-    isReady: true
-    tournament: '@tournament*'
-
-AppBundle\Entity\Place:
-  place{1..10}:
-    name: <company()>
-    city: <city()>
-    street: <streetName()>
-
-AppBundle\Entity\Tournament:
-  tournament{1..10}:
-    name: <company()>
-    place: '@place*'
-    start: <dateTimeBetween("-200 days", "-100 days")>
-    end: <dateTimeBetween("-100 days", "now")>
-
-AppBundle\Entity\UserFight:
-  usrFight{1..10}:
-    __construct: [ true ]
-    fight: "@fight"
-    user: '@user*'
+#AppBundle\Entity\Fight:
+#  fight{1..10}:
+#    __construct: [boks,'A']
+#    isReady: true
+#    tournament: '@tournament*'
+#
+#AppBundle\Entity\Place:
+#  place{1..10}:
+#    name: <company()>
+#    city: <city()>
+#    street: <streetName()>
+#
+#AppBundle\Entity\Tournament:
+#  tournament{1..10}:
+#    name: <company()>
+#    place: '@place*'
+#    start: <dateTimeBetween("-200 days", "-100 days")>
+#    end: <dateTimeBetween("-100 days", "now")>
+#
+#AppBundle\Entity\UserFight:
+#  usrFight{1..10}:
+#    __construct: [ true ]
+#    fight: "@fight"
+#    user: '@user*'
 
 
 
