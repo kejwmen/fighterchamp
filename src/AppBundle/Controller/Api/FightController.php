@@ -14,15 +14,15 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Route("/api")
  */
-class ClubController extends Controller
+class FightController extends Controller
 {
     /**
-     * @Route("/kluby")
+     * @Route("/walki")
      */
     public function listAction(EntityManagerInterface $em)
     {
-        $clubs = $em->getRepository('AppBundle:Club')->findAllOrderByNumberOfUsers();
-
-        return new JsonResponse(['data' => $clubs]);
+//        $fights = $em->getRepository('AppBundle:Fight')->findAllOrderByNumberOfUsers();
+//
+//        return new JsonResponse(['data' => $fights]);
     }
 }

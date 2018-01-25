@@ -240,7 +240,7 @@ class AdminTournamentFightController extends Controller
 
         $user ? $fight->setWinner($user) : $fight->resetWinner();
 
-        $draw ? $fight->setDraw(true) : $fight->resetDraw();
+        $draw ? $fight->setIsDraw(true) : $fight->resetDraw();
 
         $em->persist($fight);
         $em->flush();

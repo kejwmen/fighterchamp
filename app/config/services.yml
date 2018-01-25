@@ -19,6 +19,8 @@ services:
 
   AppBundle\Serializer\Normalizer\UserNormalizer: ~
 
+
+
   normalizer.club:
         class: AppBundle\Serializer\Normalizer\ClubNormalizer
 

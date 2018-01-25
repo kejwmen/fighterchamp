@@ -13,15 +13,22 @@ class ClubRepository extends EntityRepository
 {
     public function findAllOrderByNumberOfUsers()
     {
-        $qb = $this->createQueryBuilder('club')
-            ->select('club, COUNT(user.id) as userCount')
-            ->leftJoin('club.users', 'user')
-            ->groupBy('club.id')
-            ->orderBy('userCount' ,'DESC')
-        ;
+        $conn = $this->getEntityManager()->getConnection();
 
-        $query = $qb->getQuery();
-        return $query->execute();
+        $sql = 'SELECT c.id, c.name , count(DISTINCT(us.id)) as user_count
+  ,sum(case when f.winner_id = us.id then 1 else 0 end) as win
+  ,sum(case when f.draw then 1 else 0 end) AS draw
+  ,sum(case when f.winner_id != user_id and !f.draw then 1 else 0 end) as lose
+FROM user as us
+  LEFT JOIN user_fight AS uf ON uf.user_id = us.id
+  LEFT JOIN fight as f ON f.id = uf.fight_id
+  JOIN club c ON us.club_id = c.id
+GROUP BY c.id';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
 
     }
 

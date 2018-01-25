@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="col-sm-6 col-sm-offset-3 user-type">
+            {% include '_parts/choose-user.html.twig' %}
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table id="table-users" class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Imię i Nazwisko</th>
+                        <th class="text-center">Rekord</th>
+                        <th class="text-center">Płeć</th>
+                        <th class="text-center">Wiek</th>
+                        <th class="text-center">Klub</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $(document).ready(function () {
+
+        $(".radio-inline").change(function() {
+
+            insertForm($('input:radio:checked').val());
+
+        });
+
+        $("input:radio:first").prop("checked", true).trigger("change");
+    });
+
+    function insertForm (type){
+
+        var t = $('#table-users').DataTable({
+            "destroy": true,
+            "ajax": "{{ path('api_user_list')}}",
+            data: {
+                type: 1,
+            },
+            'columnDefs': [
+                {
+                    "targets": [2,3,4,5],
+                    "className": "text-center",
+                }],
+            "columns": [
+                { data : null },
+                { mData : function (data){
+                        var link = Routing.generate('user_show', { id: data.id});
+                        return "<a href='"+ link +"'>" + data.name +' '+ data.surname + "</a>";
+                    }},
+                { mData: function (data) {
+                        return'<span style="color: #5cb85c">'+ data.win +'</span> ' +
+                            '<span style="color: #f0ad4e">'+ data.draw +'</span> ' +
+                            '<span style="color: #d9534f">'+ data.lose +'</span>'
+                    }},
+                { data : 'male'},
+                { data : 'age'},
+                { mData: function (data){
+                        var link = Routing.generate('club_show', { id: data.club_id});
+                        return "<a href='"+ link +"'>" + data.club_name + "</a>";
+                    }
+                }
+            ],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+            },
+            "bPaginate": false,
+            "dom": 'lifrtp'
+        });
+
+        t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+
+    }
+
+
+
+
+
+
+
+
+
+
+</script>
+{% endblock %}

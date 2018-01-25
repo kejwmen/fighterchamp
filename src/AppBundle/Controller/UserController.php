@@ -28,18 +28,13 @@ class UserController extends Controller
      * @Route("/", name="user_list")
      * @Method("GET")
      */
-    public function listAction(EntityManagerInterface $em)
+    public function listAction()
     {
-        $users = $em->getRepository('AppBundle:User')->findAll();
-
-        return $this->render('user/list.html.twig',
-            [
-                'users' => $users,
-            ]);
+        return $this->render('user/list.twig');
     }
 
     /**
-     * @Route("/{id}", name="user_show", requirements={"id": "\d+"})
+     * @Route("/{id}", name="user_show", requirements={"id": "\d+"}, options={"expose"=true})
      * @Method("GET")
      */
     public function showAction(User $user)

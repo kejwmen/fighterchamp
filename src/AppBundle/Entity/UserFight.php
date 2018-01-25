@@ -37,6 +37,12 @@ class UserFight
      */
     private $isRedCorner;
 
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    private $isDisqualified = false;
+
     public function __construct(bool $isRedCorner = null)
     {
         $this->isRedCorner = $isRedCorner;
@@ -70,5 +76,15 @@ class UserFight
     public function isRedCorner(): ?bool
     {
         return $this->isRedCorner;
+    }
+
+    public function isDisqualified(): bool
+    {
+        return $this->isDisqualified;
+    }
+
+    public function setIsDisqualified(bool $isDisqualified): void
+    {
+        $this->isDisqualified = $isDisqualified;
     }
 }

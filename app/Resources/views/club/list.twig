@@ -13,7 +13,6 @@
                     </tr>
                     </thead>
                 </table>
-
             </div>
         </div>
     </div>
@@ -26,17 +25,16 @@
             "ajax": "{{ path('app_api_club_list')}}",
             "columns": [
                 { data : null },
-                { data : '0.name',
-                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                        $(nTd).html("<a href="+ oData[0]._self +">"+ oData[0].name +"</a>");
+                { mData : function (data){
+                        var link = Routing.generate('club_show', { id: data.id});
+                        return "<a href='"+ link +"'>" + data.name +"</a>";
                     }},
-                { data : 'record',
-                    "mRender": function (data, type, full) {
-                        return'<span style="color: #5cb85c">'+ data['W'] +'</span> ' +
-                            '<span style="color: #f0ad4e">'+ data['D'] +'</span> ' +
-                            '<span style="color: #d9534f">'+ data['L'] +'</span>'
+                { mData: function (data) {
+                        return'<span style="color: #5cb85c">'+ data.win +'</span> ' +
+                            '<span style="color: #f0ad4e">'+ data.draw +'</span> ' +
+                            '<span style="color: #d9534f">'+ data.lose +'</span>'
                     }},
-                { data : 'userCount'}
+                { data : 'user_count'}
             ],
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
@@ -53,11 +51,3 @@
     });
 </script>
 {% endblock %}
-
-
-
-
-
-{#"fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {#}
-{#$(nTd).html(oData['record']['W']);#}
-{#}},#}

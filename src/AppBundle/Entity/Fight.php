@@ -40,6 +40,8 @@ class Fight
 
     //     * @ORM\JoinColumn(nullable=false)
 
+
+    //winner should be in UserFight
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="winner_id", nullable=true)
@@ -69,7 +71,7 @@ class Fight
     /**
      * @ORM\Column(type="boolean")
      */
-    private $draw = false;
+    private $isDraw = false;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -182,20 +184,20 @@ class Fight
     }
 
 
-    public function getDraw(): bool
+    public function getIsDraw(): bool
     {
-        return $this->draw;
+        return $this->isDraw;
     }
 
 
-    public function setDraw(bool $draw)
+    public function setIsDraw(bool $isDraw)
     {
-        $this->draw = $draw;
+        $this->isDraw = $isDraw;
     }
 
     public function resetDraw()
     {
-        $this->draw = false;
+        $this->isDraw = false;
     }
 
 

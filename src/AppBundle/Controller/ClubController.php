@@ -22,7 +22,7 @@ class ClubController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="club_show")
+     * @Route("/{id}", name="club_show", options={"expose"=true})
      */
     public function showAction(Club $club)
     {

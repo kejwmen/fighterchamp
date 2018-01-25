@@ -105,29 +105,28 @@ class UserController extends Controller
 
     /**
      * @Route("/ludzie", name="api_user_list")
-     * @Method("POST")
+     * @Method("GET")
      */
-    public function listAction(Request $request, EntityManagerInterface $em)
+    public function listAction(EntityManagerInterface $em)
     {
-        $userType = $request->request->get('userType');
+        $users = $em->getRepository(User::class)->findAllByType();
 
+//        if($userType == 1)
+//        {
+//            $user = 'fighter';
+//        }elseif($userType == 2)
+//        {
+//            $user = 'coach';
+//        }else{
+//            $user = 'fan';
+//        }
 
-        $users = $em->getRepository(User::class)->findBy(['type' => $userType]);
+//        return $this->render("user/fighter/_list.html.twig",
+//            [
+////                'users' => $users
+//            ]);
 
-        if($userType == 1)
-        {
-            $user = 'fighter';
-        }elseif($userType == 2)
-        {
-            $user = 'coach';
-        }else{
-            $user = 'fan';
-        }
-
-        return $this->render("user/$user/_list.html.twig",
-            [
-                'users' => $users
-            ]);
+        return new JsonResponse(['data' => $users]);
     }
 
 
