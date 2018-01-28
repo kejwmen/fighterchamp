@@ -21,8 +21,8 @@ class FightController extends Controller
      */
     public function listAction(EntityManagerInterface $em)
     {
-//        $fights = $em->getRepository('AppBundle:Fight')->findAllOrderByNumberOfUsers();
-//
-//        return new JsonResponse(['data' => $fights]);
+        $fights = $em->getRepository('AppBundle:Fight')->findAllArray();
+
+        return new JsonResponse(['data' => array_chunk($fights,2)]);
     }
 }

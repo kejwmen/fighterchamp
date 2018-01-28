@@ -22,3 +22,7 @@
     }
 
 
+update user_fight
+join fight f ON user_fight.fight_id = f.id
+set user_fight.is_winner = true
+where f.winner_id = user_fight.user_id

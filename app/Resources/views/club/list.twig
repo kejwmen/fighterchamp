@@ -26,8 +26,7 @@
             "columns": [
                 { data : null },
                 { mData : function (data){
-                        var link = Routing.generate('club_show', { id: data.id});
-                        return "<a href='"+ link +"'>" + data.name +"</a>";
+                        return "<a href='"+ data._self +"'>" + data.name +"</a>";
                     }},
                 { mData: function (data) {
                         return'<span style="color: #5cb85c">'+ data.win +'</span> ' +

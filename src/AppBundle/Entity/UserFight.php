@@ -24,7 +24,6 @@ class UserFight
      */
     private $user;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Fight", inversedBy="usersFight", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
@@ -32,10 +31,10 @@ class UserFight
     private $fight;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      * @var bool
      */
-    private $isRedCorner;
+    private $isRedCorner = false;
 
     /**
      * @ORM\Column(type="boolean")
@@ -43,9 +42,15 @@ class UserFight
      */
     private $isDisqualified = false;
 
-    public function __construct(bool $isRedCorner = null)
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    private $isWinner = false;
+
+    public function __construct()
     {
-        $this->isRedCorner = $isRedCorner;
+
     }
 
     public function getId(): int
@@ -86,5 +91,15 @@ class UserFight
     public function setIsDisqualified(bool $isDisqualified): void
     {
         $this->isDisqualified = $isDisqualified;
+    }
+
+    public function isWinner(): bool
+    {
+        return $this->isWinner;
+    }
+
+    public function setIsWinner(bool $isWinner): void
+    {
+        $this->isWinner = $isWinner;
     }
 }

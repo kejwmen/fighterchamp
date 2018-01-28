@@ -52,8 +52,7 @@
             "columns": [
                 { data : null },
                 { mData : function (data){
-                        var link = Routing.generate('user_show', { id: data.id});
-                        return "<a href='"+ link +"'>" + data.name +' '+ data.surname + "</a>";
+                        return "<a href='"+ data._self +"'>" + data.name +' '+ data.surname + "</a>";
                     }},
                 { mData: function (data) {
                         return'<span style="color: #5cb85c">'+ data.win +'</span> ' +
@@ -63,8 +62,10 @@
                 { data : 'male'},
                 { data : 'age'},
                 { mData: function (data){
-                        var link = Routing.generate('club_show', { id: data.club_id});
-                        return "<a href='"+ link +"'>" + data.club_name + "</a>";
+                    if (data.club_url) {
+                        return "<a href='"+ data.club_url +"'>" + data.club_name + "</a>";
+                    }
+                    else return '';
                     }
                 }
             ],
@@ -82,15 +83,5 @@
         } ).draw();
 
     }
-
-
-
-
-
-
-
-
-
-
 </script>
 {% endblock %}
