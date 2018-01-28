@@ -30,8 +30,8 @@ class UserRepository extends EntityRepository
             ,TIMESTAMPDIFF(YEAR, us.birth_day, CURDATE()) AS age
           ,sum(case when uf.is_winner is true then 1 else 0 end) as win
           ,sum(case when f.is_draw is true then 1 else 0 end) AS draw
-          ,sum(case when uf.is_winner is not true then 1 else 0 end) as lose
-            ,CONCAT('/kluby', c.id) as club_url, c.name as club_name
+          ,sum(case when uf.is_winner is not true and f.is_draw is false then 1 else 0 end) as lose
+            ,CONCAT('/kluby/', c.id) as club_url, c.name as club_name
         FROM user as us
             LEFT JOIN user_fight AS uf ON uf.user_id = us.id
             LEFT JOIN fight as f ON f.id = uf.fight_id

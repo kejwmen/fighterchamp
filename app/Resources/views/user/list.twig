@@ -28,11 +28,8 @@
     $(document).ready(function () {
 
         $(".radio-inline").change(function() {
-
             insertForm($('input:radio:checked').val());
-
         });
-
         $("input:radio:first").prop("checked", true).trigger("change");
     });
 
@@ -47,7 +44,7 @@
             'columnDefs': [
                 {
                     "targets": [2,3,4,5],
-                    "className": "text-center",
+                    "className": "text-center"
                 }],
             "columns": [
                 { data : null },
@@ -81,7 +78,6 @@
                 cell.innerHTML = i+1;
             } );
         } ).draw();
-
     }
 </script>
 {% endblock %}
