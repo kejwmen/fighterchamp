@@ -5,7 +5,8 @@
         {% if fight.fight.winner %}
             {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
             {% endif %}
-        {% elseif fight.fight.draw %} {% set draw = draw + 1 %}
+        {% elseif fight.fight.isDraw %} {% set draw = draw + 1 %}
+        {% elseif fight.isDisqualified %} {% set lose = lose + 1 %}
         {% endif %}
     {% endfor %}
 

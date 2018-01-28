@@ -37,12 +37,12 @@
     });
 
     function insertForm (type){
-
         var t = $('#table-users').DataTable({
             "destroy": true,
-            "ajax": "{{ path('api_user_list')}}",
-            data: {
-                type: 1,
+            "ajax": {
+                "url": "{{ path('api_user_list')}}",
+                "type": "GET",
+                "data": {type: type}
             },
             'columnDefs': [
                 {

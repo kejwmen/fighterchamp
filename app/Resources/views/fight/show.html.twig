@@ -19,7 +19,7 @@
 
                             {% if fight.winner %}
                                 {{ fight.usersFight[0].id == fight.winner.id ? "<h3><span class='label label-success'>W</span></h3></td>" : "<h3><span class='label label-danger'>L</span></h3></td>" }}
-                            {% elseif fight.draw %}
+                            {% elseif fight.isDraw %}
                                 <h3><span class='label label-warning'>D</span></h3>
                             {% endif %}
                         </td>
@@ -37,7 +37,7 @@
                             </h1>
                             {% if fight.winner %}
                                 {{ fight.usersFight[1].user.id == fight.winner.id ? "<h3><span class='label label-success'>W</span></h3></td>" : "<h3><span class='label label-danger'>L</span></h3></td>" }}
-                            {% elseif fight.draw %}
+                            {% elseif fight.isDraw %}
                                 <h3><span class='label label-warning'>D</span></h3>
                             {% endif %}
                         </td>

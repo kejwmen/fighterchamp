@@ -35,8 +35,10 @@
                         {% if user.id == userFight.fight.winner.id %} <span class="label label-success">W</span>
                         {% else %} <span class="label label-danger">L</span>
                         {% endif %}
-                    {% elseif userFight.fight.draw %}
+                    {% elseif userFight.fight.isDraw %}
                         <span class="label label-warning">D</span>
+                    {% elseif userFight.isDisqualified %}
+                        <span class='label label-dark'>DQ</span>
                     {% endif %}
                 </td>
                 <td class="text-center">
