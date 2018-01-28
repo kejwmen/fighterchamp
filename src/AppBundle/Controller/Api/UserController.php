@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\User\FighterType;
+use Symfony\Component\Serializer\Serializer;
 
 
 // condition="request.isXmlHttpRequest()
@@ -22,6 +23,20 @@ use AppBundle\Form\User\FighterType;
  */
 class UserController extends Controller
 {
+    /**
+     * @Route("/ludzie/{id}", name="api_user_show")
+     * @Method("GET")
+     */
+    public function showAction(User $user)
+    {
+        $user = $this->get('serializer_user')->serialize($user, 'json');
+
+
+
+        return new Response($user, 200, ['Content-Type' => 'application/json']);
+    }
+
+
     /**
      * @Route("/user-create", name="user_create")
      * @Method("POST")

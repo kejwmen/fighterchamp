@@ -7,7 +7,7 @@ services:
   _defaults:
      autowire: true
      autoconfigure: true
-     public: false
+     public: true
 
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -16,9 +16,6 @@ services:
     # you can exclude directories or files
     # but if a service is unused, it's removed anyway
     exclude: '../../src/AppBundle/{Entity,Repository,Tests,DataFixtures,Twig}'
-
-  AppBundle\Serializer\Normalizer\UserNormalizer: ~
-
 
 
   normalizer.club:
@@ -29,6 +26,10 @@ services:
 
   normalizer.signup:
       class: AppBundle\Serializer\Normalizer\SignUpNormalizer
+
+  normalizer.user:
+      class: AppBundle\Serializer\Normalizer\UserNormalizer
+
 
   serializer_club:
         class: Symfony\Component\Serializer\Serializer
@@ -41,7 +42,7 @@ services:
 
   serializer_user:
         class: Symfony\Component\Serializer\Serializer
-        arguments: [["UserNormalizer"], ["@serializer.encoder.json"]]
+        arguments: [['@normalizer.user'], ["@serializer.encoder.json"]]
 
 
   app.security.login_form_authenticator:
