@@ -1,21 +1,10 @@
 <table class="table table-condensed text-center table-borderless">
     {% if user.type == 1 %}
-        {% set win, lose, draw = 0,0,0 %}
-
-        {% for fight in user.userFights %}
-            {% if fight.fight.winner %}
-                {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
-                {% endif %}
-            {% elseif fight.fight.isDraw %} {% set draw = draw + 1 %}
-            {% elseif fight.isDisqualified %} {% set lose = lose + 1 %}
-            {% endif %}
-        {% endfor %}
-
     <tr>
         <td>
-            <h3><span class="label label-success">W: {{ win }}</span>
-                <span class="label label-warning">D: {{ draw }}</span>
-                <span class="label label-danger">L: {{ lose }}</span>
+            <h3><span class="label label-success">W: {{ user.record.win }}</span>
+                <span class="label label-warning">D: {{ user.record.draw }}</span>
+                <span class="label label-danger">L: {{ user.record.lose }}</span>
             </h3>
         </td>
     </tr>
@@ -30,12 +19,12 @@
     </tr>
     <tr>
         <td><img class='center' style="width: 180px;, height: 180px;"
-                    {% if user.male %}
-                 src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/male.png') }}"
-                    {% else %}
-                 src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"
-             >
-            {% endif %}
+                    {#{% if user.male %}#}
+                 {#src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/male.png') }}"#}
+                    {#{% else %}#}
+                 {#src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"#}
+             {#>#}
+            {#{% endif %}#}
         </td>
     </tr>
     <tr>
@@ -48,7 +37,7 @@
         <td>
             <b>Klub:</b>
             {% if user.club %}
-                <a href="{{ path('club_show', {'id': user.club.id }) }}"> {{ user.getClub() }} </a>
+                <a href="{{ user.club.href }}"> {{ user.club.name }} </a>
             {% else %}
                 bez klubu
             {% endif %}
@@ -57,12 +46,12 @@
 {% if user.type == 1 %}
     <tr>
         <td>
-            <b>Trener: </b>
-            {% if user.getCoach() %}
-                <a href="{{ path('user_show', {'id': user.getCoach().id}) }}">{{ user.getCoach().name }} {{ user.getCoach().surname }} </a>
-            {% else %}
-                bez trenera
-            {% endif %}
+            {#<b>Trener: </b>#}
+            {#{% if user.getCoach() %}#}
+                {#<a href="{{ path('user_show', {'id': user.getCoach().id}) }}">{{ user.getCoach().name }} {{ user.getCoach().surname }} </a>#}
+            {#{% else %}#}
+                {#bez trenera#}
+            {#{% endif %}#}
         </td>
     </tr>
 {% endif %}

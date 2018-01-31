@@ -3114,16 +3114,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.4.3",
+            "version": "v3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "21abeae69baf64d689b04ca33663b4354be1a226"
+                "reference": "5220b6f9fcdee261c6fdd3e096f3b204fba5d906"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/21abeae69baf64d689b04ca33663b4354be1a226",
-                "reference": "21abeae69baf64d689b04ca33663b4354be1a226",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/5220b6f9fcdee261c6fdd3e096f3b204fba5d906",
+                "reference": "5220b6f9fcdee261c6fdd3e096f3b204fba5d906",
                 "shasum": ""
             },
             "require": {
@@ -3141,7 +3141,6 @@
                 "symfony/polyfill-mbstring": "~1.0",
                 "symfony/polyfill-php56": "~1.0",
                 "symfony/polyfill-php70": "~1.6",
-                "symfony/polyfill-util": "~1.0",
                 "twig/twig": "^1.35|^2.4.4"
             },
             "conflict": {
@@ -3265,7 +3264,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2018-01-05 08:33:31"
+            "time": "2018-01-29 12:30:04"
         },
         {
             "name": "twig/extensions",

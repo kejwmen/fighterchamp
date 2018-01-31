@@ -11,26 +11,24 @@ namespace AppBundle\Serializer\Normalizer;
 use AppBundle\Entity\Club;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerAwareInterface;
+use Symfony\Component\Serializer\SerializerAwareTrait;
+use Tests\AppBundle\Serializer\Organization;
 
-class ClubNormalizer implements NormalizerInterface
+class OrganizationNormalizer implements NormalizerInterface, SerializerAwareInterface
 {
-    private $router;
-
-    public function __construct(Router $router)
-    {
-        $this->router = $router;
-    }
+    use SerializerAwareTrait;
 
     public function normalize($object, $format = null, array $context = array())
     {
         return [
             'name'   => $object->getName(),
-            '_self' => $this->router->generate('club_show',['id' => $object->getId()]),
+            'member' => $this->serializer->normalize($object->getMember(), $format, $context)
         ];
     }
 
     public function supportsNormalization($data, $format = null): bool
     {
-        return $data instanceof Club;
+        return $data instanceof Organization;
     }
 }

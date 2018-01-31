@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         return $this->render($this->getShowViewType($user),
             [
-                'user' => $user,
+                'user' => $this->get('serializer.my')->normalize($user)
             ]);
     }
 

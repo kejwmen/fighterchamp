@@ -6,6 +6,7 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Traits\TimestampableTrait;
 use AppBundle\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
@@ -385,11 +386,11 @@ class User implements UserInterface, Serializable
         return $this->signUpTournaments->matching($criteria)->first();
     }
 
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="user")
      */
     private $userFights;
-
 
     /**
      * @ORM\OneToMany(targetEntity="UserAdminTournament", mappedBy="user")
@@ -499,6 +500,10 @@ class User implements UserInterface, Serializable
         $this->male = $male;
     }
 
-
-
+    public function getFights() : Collection
+    {
+        return $this->userFights->map(function (UserFight $userFight){
+           return $userFight->getFight();
+        });
+    }
 }

@@ -38,16 +38,6 @@ class Fight
      */
     private $tournament;
 
-    //     * @ORM\JoinColumn(nullable=false)
-
-
-    //winner should be in UserFight
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="winner_id", nullable=true)
-     */
-    private $winner;
-
     /**
      * @ORM\Column(type="string")
      */
@@ -66,7 +56,7 @@ class Fight
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isReady = false;
+    private $isVisible = false;
 
     /**
      * @ORM\Column(type="boolean")
@@ -114,20 +104,20 @@ class Fight
     }
 
 
-    public function getIsReady(): bool
+    public function getIsVisible(): bool
     {
-        return $this->isReady;
+        return $this->isVisible;
     }
 
 
-    public function setIsReady(bool $isReady)
+    public function setIsVisible(bool $isVisible)
     {
-        $this->isReady = $isReady;
+        $this->isVisible = $isVisible;
     }
 
     public function toggleReady()
     {
-        $this->isReady = $this->isReady ? false : true;
+        $this->isVisible = $this->isVisible ? false : true;
     }
 
 
@@ -145,18 +135,6 @@ class Fight
     public function resetWinner()
     {
         $this->winner = null;
-    }
-
-
-    public function getWinner()
-    {
-        return $this->winner;
-    }
-
-
-    public function setWinner(User $winner)
-    {
-        $this->winner = $winner;
     }
 
 

@@ -4,3 +4,13 @@ app:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+api_fight_list:
+    path:     /api/walki
+    controller: AppBundle\Controller\Api\FightController::listAction
+
+api_fight_show:
+    path:     /api/walki/{id}
+    controller: AppBundle\Controller\Api\FightController::showAction
+    requirements:
+            id: '\d+'

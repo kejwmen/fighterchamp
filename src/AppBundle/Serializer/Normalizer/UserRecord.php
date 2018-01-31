@@ -11,11 +11,11 @@ namespace AppBundle\Serializer\Normalizer;
 
 class UserRecord implements \JsonSerializable
 {
-    private $win = 0;
+    public $win = 0;
 
-    private $draw = 0;
+    public $draw = 0;
 
-    private $lose = 0;
+    public $lose = 0;
 
     public function addWin()
     {
@@ -40,6 +40,4 @@ class UserRecord implements \JsonSerializable
           'L' => $this->lose
         ];
     }
-
-
 }

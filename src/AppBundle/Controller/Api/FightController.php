@@ -2,27 +2,26 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Club;
-use AppBundle\Repository\ClubRepository;
+use AppBundle\Entity\Fight;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-
-/**
- * @Route("/api")
- */
 class FightController extends Controller
 {
-    /**
-     * @Route("/walki")
-     */
     public function listAction(EntityManagerInterface $em)
     {
         $fights = $em->getRepository('AppBundle:Fight')->findAllArray();
 
         return new JsonResponse(['data' => array_chunk($fights,2)]);
+    }
+
+    public function showAction(Fight $fight)
+    {
+        $result = $this->get('serializer.my')->serialize($fight, 'json');
+
+
+        return new Response($result, 200, ['Content-Type' => 'application/json']);
     }
 }

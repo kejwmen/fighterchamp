@@ -48,10 +48,11 @@ class UserFight
      */
     private $isWinner = false;
 
-    public function __construct()
-    {
-
-    }
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    private $isDraw = false;
 
     public function getId(): int
     {
@@ -101,5 +102,15 @@ class UserFight
     public function setIsWinner(bool $isWinner): void
     {
         $this->isWinner = $isWinner;
+    }
+
+    public function isDraw(): bool
+    {
+        return $this->isDraw;
+    }
+
+    public function setIsDraw(bool $isDraw): void
+    {
+        $this->isDraw = $isDraw;
     }
 }

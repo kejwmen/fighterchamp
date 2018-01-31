@@ -29,9 +29,7 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        $user = $this->get('serializer_user')->serialize($user, 'json');
-
-
+        $user = $this->get('serializer.my')->serialize($user, 'json');
 
         return new Response($user, 200, ['Content-Type' => 'application/json']);
     }

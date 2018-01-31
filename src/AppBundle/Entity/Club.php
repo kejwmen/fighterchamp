@@ -61,23 +61,13 @@ class Club
     private $users;
 
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Club
-     */
+
     public function setName($name)
     {
         $this->name = $name;
@@ -85,23 +75,13 @@ class Club
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
+
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set city
-     *
-     * @param string $city
-     *
-     * @return Club
-     */
+
     public function setCity($city)
     {
         $this->city = $city;
@@ -109,23 +89,13 @@ class Club
         return $this;
     }
 
-    /**
-     * Get city
-     *
-     * @return string
-     */
+
     public function getCity()
     {
         return $this->city;
     }
 
-    /**
-     * Set street
-     *
-     * @param string $street
-     *
-     * @return Club
-     */
+
     public function setStreet($street)
     {
         $this->street = $street;
@@ -133,59 +103,43 @@ class Club
         return $this;
     }
 
-    /**
-     * Get street
-     *
-     * @return string
-     */
+
     public function getStreet()
     {
         return $this->street;
     }
 
-    /**
-     * @return string
-     */
+
     public function getImageName()
     {
         return $this->imageName;
     }
 
-    /**
-     * @param string $imageName
-     */
+
     public function setImageName($imageName)
     {
         $this->imageName = $imageName;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getWww()
     {
         return $this->www;
     }
 
-    /**
-     * @param mixed $www
-     */
+
     public function setWww($www)
     {
         $this->www = $www;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getUsers()
     {
         return $this->users;
     }
 
-    /**
-     * @param mixed $users
-     */
+
     public function setUsers($users)
     {
         $this->users = $users;

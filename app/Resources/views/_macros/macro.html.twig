@@ -15,22 +15,9 @@
 
 {% macro record(user) %}
 
-    {% set win, lose, draw = 0,0,0 %}
-
-    {% for fight in user.userFights %}
-        {% if fight.fight.winner %}
-            {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
-            {% endif %}
-        {% elseif fight.fight.isDraw %} {% set draw = draw + 1 %}
-        {% endif %}
-    {% endfor %}
-
-
-
-    <span style="color: #5cb85c">{{ win }} </span>
-    <span style="color: #f0ad4e">{{ draw }} </span>
-    <span style="color: #d9534f">{{ lose }} </span>
-
+    <span style="color: #5cb85c">{{ user.record.win }} </span>
+    <span style="color: #f0ad4e">{{ user.record.draw }} </span>
+    <span style="color: #d9534f">{{ user.record.lose }} </span>
 
 {% endmacro %}
 

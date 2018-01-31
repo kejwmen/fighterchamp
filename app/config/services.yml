@@ -30,19 +30,29 @@ services:
   normalizer.user:
       class: AppBundle\Serializer\Normalizer\UserNormalizer
 
+  normalizer.fight:
+        class: AppBundle\Serializer\Normalizer\FightNormalizer
 
-  serializer_club:
-        class: Symfony\Component\Serializer\Serializer
-        arguments: [["@normalizer.club"], ["@serializer.encoder.json"]]
-        public: true
+  normalizer.user.fight:
+        class: AppBundle\Serializer\Normalizer\UserFightNormalizer
 
-  serializer_task:
-        class: Symfony\Component\Serializer\Serializer
-        arguments: [["@normalizer.task"], ["@serializer.encoder.json"]]
+  normalizer.member:
+        class: AppBundle\Serializer\Normalizer\MemberNormalizer
 
-  serializer_user:
+  normalizer.organization:
+        class: AppBundle\Serializer\Normalizer\OrganizationNormalizer
+
+  serializer.testing:
+          class: Symfony\Component\Serializer\Serializer
+          arguments: [["@normalizer.organization", "@normalizer.member"], ["@serializer.encoder.json"]]
+          public: true
+
+  serializer.my:
         class: Symfony\Component\Serializer\Serializer
-        arguments: [['@normalizer.user'], ["@serializer.encoder.json"]]
+        arguments: [['@normalizer.user', '@normalizer.user.fight'], ["@serializer.encoder.json"]]
+
+
+
 
 
   app.security.login_form_authenticator:

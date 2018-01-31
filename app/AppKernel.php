@@ -1,6 +1,8 @@
     <?php
 
-use Symfony\Component\HttpKernel\Kernel;
+    use AppBundle\AppCompilerPass;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
@@ -8,6 +10,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = [
+            new AppBundle\AppBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -15,7 +18,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new AppBundle\AppBundle(),
             new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
@@ -33,6 +35,9 @@ class AppKernel extends Kernel
 
         return $bundles;
     }
+
+
+
 
     public function getRootDir()
     {
