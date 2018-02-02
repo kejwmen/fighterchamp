@@ -27,21 +27,75 @@ class FightNormalizer implements NormalizerInterface, SerializerAwareInterface
             'href' => $this->router->generate('fight_show', ['id' => $object->getId()]),
             'formula' => $object->getFormula(),
             'weight' => $object->getWeight(),
+            'youtubeId' => $object->getYoutubeId(),
             'tournament' => [
-                'href' => $this->router->generate('tournament_show', ['id' => $object->getTournament()->getId()]),
-                'name' => $object->getTournament()->getName()
+                'href' => $this->router->generate('club_show', ['id' => $object->getTournament()->getId()]),
+                'name' => $object->getTournament()->getName(),
+                'start' => $object->getTournament()->getStart()
             ],
             'usersFight' => array_map(
-                function ($object) use ($format, $context) {
-                    return $this->serializer->normalize($object, $format, $context);
-                },
-                $object->getUsersFight()->toArray()
-            ),
+                function (UserFight $userFight) {
+                    return [
+                        'isWinner' => $userFight->isWinner(),
+                        'isDraw' => $userFight->isDraw(),
+                        'isDisqualified' => $userFight->isDisqualified(),
+                        'isRedCorner' => $userFight->isRedCorner(),
+                        'user' => [
+                            'href' => $this->router->generate('user_show', ['id' => $userFight->getUser()->getId()]),
+                            'name' => $userFight->getUser()->getName(),
+                            'surname' => $userFight->getUser()->getSurname(),
+                            'male' => $userFight->getUser()->getMale(),
+                            'birthDay' => $userFight->getUser()->getBirthDay(),
+                            'record' => $this->countRecord($userFight->getUser()),
+                            'club' => [
+                                'href' => $userFight->getUser()->getClub() ? $this->router->generate('club_show', ['id' => $userFight->getUser()->getClub()->getId()]) : null,
+                                'name' => $userFight->getUser()->getClub() ? $userFight->getUser()->getClub()->getName() : null,
+                            ],
+                            'type' => $userFight->getUser()->getType(),
+                        ]
+                    ];
+                }, $object->getUsersFight()->toArray())
         ];
     }
 
     public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof Fight;
+    }
+
+    private function countRecord(User $user)
+    {
+        $userRecord = new UserRecord();
+
+        foreach ($user->getUserFights() as $userFight) {
+            if ($this->isDraw($userFight)) {
+                $userRecord->addDraw();
+
+            } elseif ($this->isWinner($userFight)) {
+                $userRecord->addWin();
+            } elseif ($this->isLose($userFight)) {
+                $userRecord->addLose();
+            }
+        }
+        return [
+            'win' => $userRecord->win,
+            'draw' => $userRecord->draw,
+            'lose' => $userRecord->lose
+        ];
+    }
+
+    private function isDraw(UserFight $userFight): bool
+    {
+        return $userFight->getFight()->getIsDraw();
+    }
+
+    private function isLose(UserFight $userFight): bool
+    {
+        return !$userFight->isWinner() || $userFight->isDisqualified();
+    }
+
+    private function isWinner(UserFight $userFight): bool
+    {
+        return $userFight->isWinner();
     }
 }

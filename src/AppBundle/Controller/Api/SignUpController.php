@@ -3,23 +3,22 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Fight;
+use AppBundle\Entity\SignUpTournament;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class FightController extends Controller
+class SignUpController extends Controller
 {
     public function listAction(EntityManagerInterface $em)
     {
-        $fights = $em->getRepository('AppBundle:Fight')->findAllArray();
 
-        return new JsonResponse(['data' => array_chunk($fights,2)]);
     }
 
-    public function showAction(Fight $fight)
+    public function showAction(SignUpTournament $signUp)
     {
-        $result = $this->get('serializer.my')->serialize($fight, 'json');
+        $result = $this->get('serializer.my')->serialize($signUp, 'json');
 
         return new Response($result, 200, ['Content-Type' => 'application/json']);
     }

@@ -24,6 +24,9 @@ class FightController extends Controller
      */
     public function showAction(Fight $fight)
     {
+        $fight = $this->get('serializer.my')->normalize($fight);
+
+
         return $this->render('fight/show.html.twig',
             [
                 'fight' => $fight,

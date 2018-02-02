@@ -17,7 +17,7 @@ class TournamentRepository extends EntityRepository
     public static function createFightsReadyCriteria()
     {
         return Criteria::create()
-        ->where(Criteria::expr()->eq('isReady', true))
+        ->where(Criteria::expr()->eq('isVisible', true))
         ->orderBy(['day' => 'ASC'])
         ->orderBy(['position' => 'ASC']);
     }

@@ -10,13 +10,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerAwareTrait;
 
-class UserNormalizer implements NormalizerInterface, SerializerAwareInterface
+class UserNormalizer implements NormalizerInterface
 {
-    use SerializerAwareTrait;
-
     private $router;
-
-    private $userId;
 
     public function __construct(Router $router)
     {
@@ -25,10 +21,6 @@ class UserNormalizer implements NormalizerInterface, SerializerAwareInterface
 
     public function normalize($object, $format = null, array $context = array())
     {
-        /**
-         * @var $object User
-         */
-        $this->userId = $object->getId();
 
         return [
             'href' => $this->router->generate('user_show', ['id' => $object->getId()]),

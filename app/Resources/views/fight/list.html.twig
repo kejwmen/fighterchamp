@@ -22,7 +22,7 @@
     <script>
         $(document).ready(function(){
             var t = $('#table-clubs').DataTable({
-                "ajax": "{{ path('app_api_fight_list')}}",
+                "ajax": "{{ path('api_fight_list')}}",
                 "columns": [
                     { data : null },
                     { mData : function (data){
@@ -31,11 +31,11 @@
                             return  "<a href='"+ data['0']._self +"'>Szczegóły</a>" + temp;
                         }},
                     { mData : function (data){
-                            return renderWDLDQ(data['0']) + '<br>' + record(data['0']) +
+                            return record(data['0']) + renderWDLDQ(data['0']) +
                                 club(data['0']) + '<br>' + age(data['0']);
                         }},
                     { mData : function (data){
-                            return renderWDLDQ(data['1']) + '<br>' + record(data['1']) +
+                            return record(data['1']) + renderWDLDQ(data['1']) +
                                  club(data['1']) + '<br>' + age(data['1']);
                         }},
                 ],
@@ -67,9 +67,9 @@
         }
 
         function record(data) {
-            return '<span style="color: #5cb85c">'+ data.win +'</span> ' +
+            return '<div><span style="color: #5cb85c">'+ data.win +'</span> ' +
             '<span style="color: #f0ad4e">'+ data.draw +'</span> ' +
-            '<span style="color: #d9534f">'+ data.lose +'</span>';
+            '<span style="color: #d9534f">'+ data.lose +'</span></div>';
         }
 
         function club(data) {

@@ -33,9 +33,6 @@ services:
   normalizer.fight:
         class: AppBundle\Serializer\Normalizer\FightNormalizer
 
-  normalizer.user.fight:
-        class: AppBundle\Serializer\Normalizer\UserFightNormalizer
-
   normalizer.member:
         class: AppBundle\Serializer\Normalizer\MemberNormalizer
 
@@ -49,10 +46,7 @@ services:
 
   serializer.my:
         class: Symfony\Component\Serializer\Serializer
-        arguments: [['@normalizer.user', '@normalizer.user.fight'], ["@serializer.encoder.json"]]
-
-
-
+        arguments: [['@normalizer.user', '@normalizer.fight', '@normalizer.signup'], ["@serializer.encoder.json"]]
 
 
   app.security.login_form_authenticator:

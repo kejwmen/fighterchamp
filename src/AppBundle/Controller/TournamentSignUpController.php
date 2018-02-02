@@ -142,7 +142,7 @@ class TournamentSignUpController extends Controller
                 'date_diff' => $date_diff,
                 'isUserRegister' => $isUserRegister,
                 'fights' => $fights,
-                'signUpTournament' => $signUpTournament,
+                'signUpTournament' => $this->get('serializer.my')->normalize($signUpTournament),
             ));
 
         }
@@ -151,7 +151,7 @@ class TournamentSignUpController extends Controller
             'tournament' => $tournament,
             'users' => $users,
             'fights' => $fights,
-            'signUpTournament' => $signUpTournament,
+            'signUpTournament' => $this->get('serializer.my')->normalize($signUpTournament),
         ));
 
     }

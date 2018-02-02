@@ -14,3 +14,9 @@ api_fight_show:
     controller: AppBundle\Controller\Api\FightController::showAction
     requirements:
             id: '\d+'
+
+api_signup_show:
+    path:     /api/zapisy/{id}
+    controller: AppBundle\Controller\Api\SignUpController::showAction
+    requirements:
+            id: '\d+'

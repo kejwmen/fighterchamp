@@ -63,18 +63,15 @@ class SignUpTournament
      */
     private $user;
 
-
     /**
      * @ORM\Column(type="boolean")
      */
     private $isReady = false;
 
-
     /**
      * @ORM\Column(type="boolean")
      */
     private $isPaid = false;
-
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -139,19 +136,11 @@ class SignUpTournament
     }
 
 
-
-
-    /**
-     * @return mixed
-     */
-    public function getIsPaid()
+    public function isPaid()
     {
         return $this->isPaid;
     }
 
-    /**
-     * @param mixed $isPaid
-     */
     public function setIsPaid($isPaid)
     {
         $this->isPaid = $isPaid;

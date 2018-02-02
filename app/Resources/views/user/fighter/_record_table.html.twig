@@ -20,36 +20,11 @@
                             <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}
                     </a>
                 </td>
-
-                {% set thisUserFight = '' %}
-                {% for userFight in fight.usersFight %}
-                    {% if app.request.pathinfo != userFight.user.href %}
-
-                        <td class="text-center">
-                            <div> {{ macro.record(userFight.user) }} </div>
-                            <a href="{{ userFight.user.href }}">{{ userFight.user.name }} {{ userFight.user.surname }}</a>
-                        </td>
-                    {% else %}
-                    {% set thisUserFight = userFight %}
-                    {% endif %}
-                {% endfor %}
-
-                <td class="text-center"> {{ fight.formula }}</td>
-                <td class="text-center"> {{ fight.weight }}</td>
-                <td class="text-center">
-
-                    {% if thisUserFight.isWinner %}
-                    <span class="label label-success">W</span>
-                    {% elseif thisUserFight.isWinner == false and thisUserFight.isDraw == false %}
-                    <span class="label label-danger">L</span>
-                    {% endif %}
-                    {{ thisUserFight.isDraw ? '<span class="label label-warning">D</span>' }}
-                    {{ thisUserFight.isDisqualified ? '<span class="label label-dark">DQ</span>' }}
-
-                </td>
-                <td class="text-center">
-                    <a href=""> {{ fight.tournament.name }} </a>
-                </td>
+                <td class="text-center"> {{ macro.opponent(fight.usersFight) }} </td>
+                <td class="text-center"> {{ fight.formula }} </td>
+                <td class="text-center"> {{ fight.weight }} </td>
+                <td class="text-center"> {{ macro.fightResult(fight.usersFight) }} </td>
+                <td class="text-center"> <a href="{{ fight.tournament.href }}"> {{ fight.tournament.name }} </a> </td>
             </tr>
         {% endfor %}
     </table>

@@ -1,10 +1,10 @@
+{% import "_macros/macro.html.twig" as macro %}
 <table class="table table-condensed text-center table-borderless">
     {% if user.type == 1 %}
     <tr>
         <td>
-            <h3><span class="label label-success">W: {{ user.record.win }}</span>
-                <span class="label label-warning">D: {{ user.record.draw }}</span>
-                <span class="label label-danger">L: {{ user.record.lose }}</span>
+            <h3>
+                {{ macro.recordLabel(user) }}
             </h3>
         </td>
     </tr>

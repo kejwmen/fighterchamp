@@ -1,37 +1,55 @@
+{% macro record(user) %}
+    <span style="color: #5cb85c">{{ user.record.win }} </span>
+    <span style="color: #f0ad4e">{{ user.record.draw }} </span>
+    <span style="color: #d9534f">{{ user.record.lose }} </span>
+{% endmacro %}
 
-{% macro countRecord(user) %}
+{% macro recordLabel(user) %}
+<span class="label label-success">W: {{ user.record.win }}</span>
+<span class="label label-warning">D: {{ user.record.draw }}</span>
+<span class="label label-danger">L: {{ user.record.lose }}</span>
+{% endmacro %}
 
-    {% set win, lose, draw = 0,0,0 %}
+{% macro fightResultForUserFight(userFight) %}
+    {% if userFight.isWinner %}
+        <span class="label label-success">W</span>
+    {% elseif userFight.isWinner == false and userFight.isDraw == false %}
+        <span class="label label-danger">L</span>
+    {% endif %}
+    {{ userFight.isDraw ? '<span class="label label-warning">D</span>' }}
+    {{ userFight.isDisqualified ? '<span class="label label-dark">DQ</span>' }}
+{% endmacro %}
 
-    {% for fight in user.fights %}
-        {% if fight.fight.winner %}
-            {% if user.id == fight.fight.winner.id %} {% set win = win + 1 %} {% else %}{% set lose = lose + 1 %}
-            {% endif %}
-        {% elseif fight.fight.isDraw %} {% set draw = draw + 1 %}
+{% macro fightResult(usersFight) %}
+    {% for userFight in usersFight %}
+{% if app.request.pathinfo != userFight.user.href %}
+    {% if userFight.isWinner %}
+        <span class="label label-success">W</span>
+    {% elseif userFight.isWinner == false and userFight.isDraw == false %}
+        <span class="label label-danger">L</span>
+    {% endif %}
+    {{ userFight.isDraw ? '<span class="label label-warning">D</span>' }}
+    {{ userFight.isDisqualified ? '<span class="label label-dark">DQ</span>' }}
+{% endif %}
+    {% endfor %}
+
+{% endmacro %}
+
+{% macro opponent(usersFight) %}
+    {% import _self as macro %}
+
+    {% for userFight in usersFight %}
+        {% if app.request.pathinfo != userFight.user.href %}
+
+                <div> {{ macro.record(userFight.user) }} </div>
+                <a href="{{ userFight.user.href }}">{{ userFight.user.name }} {{ userFight.user.surname }}</a>
+
         {% endif %}
     {% endfor %}
 
 {% endmacro %}
 
-{% macro record(user) %}
 
-    <span style="color: #5cb85c">{{ user.record.win }} </span>
-    <span style="color: #f0ad4e">{{ user.record.draw }} </span>
-    <span style="color: #d9534f">{{ user.record.lose }} </span>
-
-{% endmacro %}
-
-{% macro recordBootstrap(user) %}
-    {#{% import _self as macro %}#}
-    {#{{ macro.countRecord(user) }}#}
-
-
-    {#<h3><span class="label label-success">W: {{ win }}</span>#}
-        {#<span class="label label-warning">D: {{ draw }}</span>#}
-        {#<span class="label label-danger">L: {{ lose }}</span>#}
-    {#</h3>#}
-
-{% endmacro %}
 
 {% macro formatYMDdzienTygodnia(dateVar) %}
 
@@ -85,8 +103,8 @@
                     <td>
                         <a href="{{ path('user_show', {'id': user.user.id }) }}">
                             <div>
-                            {{ user.user.surname }} {{ user.user.name }} {% include '_macros/_fight_result_icon.html.twig' %}<br>
-                            {{ macro.record(user.user) }}
+                            {{ user.user.surname }} {{ user.user.name }} WDLQ<br>
+                            {#{{ macro.record(user.user) }}#}
                             {% if user.user.club %} <br> ({{ user.user.club }}) {% endif %}
                             </div>
                         </a>
