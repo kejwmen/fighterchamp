@@ -5,18 +5,35 @@ app:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
-api_fight_list:
-    path:     /api/walki
-    controller: AppBundle\Controller\Api\FightController::listAction
-
 api_fight_show:
     path:     /api/walki/{id}
     controller: AppBundle\Controller\Api\FightController::showAction
+    condition: 'request.isXmlHttpRequest()'
     requirements:
             id: '\d+'
+
+api_fight_list:
+    path:     /api/walki/{slug}/{id}
+    controller: AppBundle\Controller\Api\FightController::listAction
+    condition: 'request.isXmlHttpRequest()'
+    defaults:
+            slug: turnieje
+            id: all
 
 api_signup_show:
     path:     /api/zapisy/{id}
     controller: AppBundle\Controller\Api\SignUpController::showAction
+    condition: 'request.isXmlHttpRequest()'
     requirements:
             id: '\d+'
+
+api_club_list:
+    path:     /api/kluby
+    condition: 'request.isXmlHttpRequest()'
+    controller: AppBundle\Controller\Api\ClubController::listAction
+
+api_tournament_show:
+    path:     /api/turnieje/{id}
+    condition: 'request.isXmlHttpRequest()'
+    controller: AppBundle\Controller\Api\TournamentController::showAction
+

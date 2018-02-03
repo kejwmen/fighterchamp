@@ -21,6 +21,9 @@ services:
   normalizer.club:
         class: AppBundle\Serializer\Normalizer\ClubNormalizer
 
+  normalizer.tournament:
+        class: AppBundle\Serializer\Normalizer\TournamentNormalizer
+
   normalizer.task:
         class: AppBundle\Serializer\Normalizer\TaskNormalizer
 
@@ -33,20 +36,9 @@ services:
   normalizer.fight:
         class: AppBundle\Serializer\Normalizer\FightNormalizer
 
-  normalizer.member:
-        class: AppBundle\Serializer\Normalizer\MemberNormalizer
-
-  normalizer.organization:
-        class: AppBundle\Serializer\Normalizer\OrganizationNormalizer
-
-  serializer.testing:
-          class: Symfony\Component\Serializer\Serializer
-          arguments: [["@normalizer.organization", "@normalizer.member"], ["@serializer.encoder.json"]]
-          public: true
-
   serializer.my:
         class: Symfony\Component\Serializer\Serializer
-        arguments: [['@normalizer.user', '@normalizer.fight', '@normalizer.signup'], ["@serializer.encoder.json"]]
+        arguments: [['@normalizer.user', '@normalizer.fight', '@normalizer.signup', '@normalizer.club', '@normalizer.club'], ["@serializer.encoder.json"]]
 
 
   app.security.login_form_authenticator:

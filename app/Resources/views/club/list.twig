@@ -22,18 +22,28 @@
 <script>
     $(document).ready(function(){
         var t = $('#table-clubs').DataTable({
-            "ajax": "{{ path('app_api_club_list')}}",
+            "ajax": "{{ path('api_club_list')}}",
             "columns": [
                 { data : null },
                 { mData : function (data){
-                        return "<a href='"+ data._self +"'>" + data.name +"</a>";
+                        return "<a href='"+ data.href +"'>" + data.name +"</a>";
                     }},
                 { mData: function (data) {
-                        return'<span style="color: #5cb85c">'+ data.win +'</span> ' +
-                            '<span style="color: #f0ad4e">'+ data.draw +'</span> ' +
-                            '<span style="color: #d9534f">'+ data.lose +'</span>'
+
+                        var win = draw = lose = 0;
+
+                        for (var i = 0, len = Object.keys( data.users).length; i < len; i++) {
+
+                            win +=  data.users[i].record.win
+                            draw +=  data.users[i].record.draw
+                            lose +=  data.users[i].record.lose
+                        }
+
+                        return recordClub(win,draw,lose);
                     }},
-                { data : 'user_count'}
+                { mData : function (data){
+                        return Object.keys( data.users).length
+                    }},
             ],
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
@@ -48,5 +58,12 @@
             } );
         } ).draw();
     });
+
+    function recordClub(win, draw, lose) {
+        return  '<span style="color: #5cb85c">' + win  + '</span> '+
+            '<span style="color: #f0ad4e">' + draw + '</span> '+
+            '<span style="color: #d9534f">' + lose + '</span>'
+    }
+
 </script>
 {% endblock %}

@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h1>{{ club.name }}</h1>
+                <h2>{{ macro.recordLabel(club) }}</h2>
                 <table id="table" class="table table-striped">
                     <thead>
                     <tr>
@@ -16,11 +17,11 @@
                     </thead>
                     <tbody>
                     {% for user in club.users %}
-                        <tr {% if is_granted('ROLE_USER') %} {{ user.id == app.user.id ? "class='success black'" }} {% endif %}>
-                            <td><a href="{{ path('user_show', {'id': user.id }) }}"> {{ user.surname }} {{ user.name }}</a></td>
+                        <tr>
+                            <td><a href="{{ user.href }}"> {{ user.surname }} {{ user.name }}</a></td>
                             <td> {{ macro.record(user) }}</td>
                             <td> {{ user.male ?  'M' : 'K' }}</td>
-                            <td> {{ user.birthDay |getAge }} </td>
+                            <td> {{ user.birthDay|getAge }} </td>
                         </tr>
                     {% endfor %}
                     </tbody>

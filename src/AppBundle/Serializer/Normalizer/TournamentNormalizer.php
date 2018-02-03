@@ -8,17 +8,20 @@
 
 namespace AppBundle\Serializer\Normalizer;
 
-
 use AppBundle\Entity\Club;
-use AppBundle\Entity\SignUpTournament;
+use AppBundle\Entity\Fight;
+use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserFight;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\scalar;
+use Symfony\Component\Serializer\SerializerAwareInterface;
+use Symfony\Component\Serializer\SerializerAwareTrait;
 
-class SignUpNormalizer implements NormalizerInterface
+class TournamentNormalizer implements NormalizerInterface, SerializerAwareInterface
 {
+    use SerializerAwareTrait;
+
     private $router;
 
     public function __construct(Router $router)
@@ -29,38 +32,36 @@ class SignUpNormalizer implements NormalizerInterface
     public function normalize($object, $format = null, array $context = array())
     {
         return [
-            'id' => $object->getId(),
-            'formula'   => $object->getFormula(),
-            'weight'   => $object->getFinallWeight(),
-            'staz' => $object->getStazTreningowy(),
-            'youtubeId' => $object->getYouTubeId(),
-            'musicArtistAndTitle' => $object->getMusicArtistAndTitle(),
-            'isPaid' => $object->isPaid(),
-            'user'=> [
-                'href' => $this->router->generate('user_show', ['id' => $object->getUser()->getId()]),
-                'name' => $object->getUser()->getName(),
-                'surname' => $object->getUser()->getSurname(),
-                'male' => $object->getUser()->getMale(),
-                'birthDay' => $object->getUser()->getBirthDay(),
-                'record' => $this->countRecord($object->getUser()),
-                'club' => $this->club($object->getUser())
-            ]
+            'href' => $this->router->generate('tournament_show',['id' => $object->getId()]),
+            'name'   => $object->getName(),
+            'fights' => array_map(function (Fight $fight) {
+                return $this->serializer->normalize($fight);
+                },$object->getFights()->toArray())
         ];
     }
 
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null): bool
     {
-        return $data instanceof SignUpTournament;
+        return $data instanceof Tournament;
     }
 
-    private function club(User $user)
+    private function countRecordClub($users)
     {
-        if(!$user->getClub()){
-            return null;
+        $win = $draw = $lose = 0;
+
+        foreach ($users as $user){
+
+           $record =  $this->countRecord($user);
+
+            $win += $record['win'];
+            $draw += $record['draw'];
+            $lose += $record['lose'];
         }
+
         return [
-            'href' => $this->router->generate('club_show', ['id' => $user->getClub()->getId()]),
-            'name' => $user->getClub()->getName(),
+            'win' => $win,
+            'draw' => $draw,
+            'lose' => $lose
         ];
     }
 

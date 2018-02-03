@@ -1,3 +1,4 @@
+{% import "_macros/macro.html.twig" as macro %}
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="container">
@@ -10,6 +11,7 @@
                         <th></th>
                         <th>Zawodnik 1</th>
                         <th>Zawodnik 2</th>
+                        <th>Turniej</th>
                     </tr>
                     </thead>
                 </table>
@@ -20,24 +22,41 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             var t = $('#table-clubs').DataTable({
-                "ajax": "{{ path('api_fight_list')}}",
+                "ajax": "{{ path('api_fight_list') }}",
                 "columns": [
-                    { data : null },
-                    { mData : function (data){
-                        var temp = (data['0'].youtube_id === null)  ?  '' : " <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'></a>";
+                    {data: null},
+                    {
+                        mData: function (data) {
+                            var temp = (data.youtubeId === null) ? '' : " <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'></a>";
 
-                            return  "<a href='"+ data['0']._self +"'>Szczegóły</a>" + temp;
-                        }},
-                    { mData : function (data){
-                            return record(data['0']) + renderWDLDQ(data['0']) +
-                                club(data['0']) + '<br>' + age(data['0']);
-                        }},
-                    { mData : function (data){
-                            return record(data['1']) + renderWDLDQ(data['1']) +
-                                 club(data['1']) + '<br>' + age(data['1']);
-                        }},
+                            return "<a href='" + data.href + "'>Szczegóły</a>" + temp;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+
+                            return record(data.usersFight[0].user) + '<br>' +
+                                "<a href='" + data.usersFight[0].user.href + "'>" + data.usersFight[0].user.surname + ' ' + data.usersFight[0].user.name + '</a> ' +
+                                fightResult(data.usersFight[0]) + club(data.usersFight[0].user) + '<br>' + age(data.usersFight[0].user)
+                                ;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+
+                            return record(data.usersFight[1].user) + '<br>' +
+                                "<a href='" + data.usersFight[1].user.href + "'>" + data.usersFight[1].user.surname + ' ' + data.usersFight[1].user.name + '</a> ' +
+                                fightResult(data.usersFight[1]) + club(data.usersFight[1].user) + '<br>' + age(data.usersFight[1].user)
+                                ;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return "<a href='" + data.tournament.href + "'>" + data.tournament.name + "</href>";
+                        }
+                    }
                 ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
@@ -46,45 +65,56 @@
                 "dom": 'lifrtp'
             });
 
-            t.on( 'order.dt search.dt', function () {
-                t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
-                } );
-            } ).draw();
+            t.on('order.dt search.dt', function () {
+                t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
         });
 
-        function renderWDLDQ(data) {
-            var temp = "<a href='"+ data.user_url +"'>" + data.name +' '+ data.surname + "</a> ";
-            if (data.is_draw === '1') {
-                temp += "<span class='label label-warning'>D</span>"
-            }else if(data.is_disqualified === '1'){
-                temp += "<span class='label label-dark'>DQ</span>";
-            } else {
-                temp += data.is_winner === '1' ? "<span class='label label-success'>W</span>" : "<span class='label label-danger'>L</span>";
+        function fightResult(userFight) {
+
+            var result = '';
+
+            if (userFight.isWinner === true) {
+                result = '<span class="label label-success">W</span>';
+            } else if (userFight.isWinner === false && userFight.isDraw === false && userFight.isDisqualified === false ) {
+                result = '<span class="label label-danger">L</span>'
             }
 
-            return temp;
+            if (userFight.isDraw === true){
+                result = '<span class="label label-warning">D</span>';
+            }else if (userFight.isDisqualified === true ){
+                result = '<span class="label label-dark">DQ</span>';
+            }
+
+            return result;
+
         }
 
-        function record(data) {
-            return '<div><span style="color: #5cb85c">'+ data.win +'</span> ' +
-            '<span style="color: #f0ad4e">'+ data.draw +'</span> ' +
-            '<span style="color: #d9534f">'+ data.lose +'</span></div>';
+
+        function record(user) {
+            return '<span style="color: #5cb85c">' + user.record.win + '</span> ' +
+                '<span style="color: #f0ad4e">' + user.record.draw + '</span> ' +
+                '<span style="color: #d9534f">' + user.record.lose + '</span>'
         }
 
-        function club(data) {
-            if(data.club_url === null){
+
+        function club(user) {
+            if (user.club === null) {
                 return '';
             }
-            return "<br><a href='"+ data.club_url +"'>" + data.club_name +"</a>";
+            return "<br><a href='" + user.club.href + "'>" + user.club.name + "</a>";
         }
 
-        function age(data){
-            if(data.age === null){
+        function age(user) {
+            if (user.birthDay === null) {
                 return '';
             }
-            var temp = data.age <= 18 ? '(Junior)' : '';
-            return data.age + ' lat ' + temp;
+            var age = new Date(new Date - new Date(user.birthDay.date)).getFullYear() - 1970;
+
+            var temp = age <= 18 ? '(Junior)' : '';
+            return age + ' lat ' + temp;
         }
     </script>
 {% endblock %}

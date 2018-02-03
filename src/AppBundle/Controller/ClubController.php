@@ -26,6 +26,8 @@ class ClubController extends Controller
      */
     public function showAction(Club $club)
     {
+        $club = $this->get('serializer.my')->normalize($club);
+
         return $this->render('club/show.twig',
             [
              'club' => $club

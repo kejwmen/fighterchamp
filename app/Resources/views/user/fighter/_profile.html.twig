@@ -46,12 +46,12 @@
 {% if user.type == 1 %}
     <tr>
         <td>
-            {#<b>Trener: </b>#}
-            {#{% if user.getCoach() %}#}
-                {#<a href="{{ path('user_show', {'id': user.getCoach().id}) }}">{{ user.getCoach().name }} {{ user.getCoach().surname }} </a>#}
-            {#{% else %}#}
-                {#bez trenera#}
-            {#{% endif %}#}
+            <b>Trener: </b>
+            {% if user.coach %}
+                <a href="{{ user.coach.href }}">{{ user.coach.name }} {{ user.coach.surname }} </a>
+            {% else %}
+                bez trenera
+            {% endif %}
         </td>
     </tr>
 {% endif %}

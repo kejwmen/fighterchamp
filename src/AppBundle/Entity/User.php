@@ -447,7 +447,9 @@ class User implements UserInterface, Serializable
     public function setUsers(?User $user)
     {
         if(!$user){
-            $this->removeUser($this->getCoach());
+            if($this->getCoach()){
+                $this->removeUser($this->getCoach());
+            }
             return;
         }
 

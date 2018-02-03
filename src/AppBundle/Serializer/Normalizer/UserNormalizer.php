@@ -29,10 +29,8 @@ class UserNormalizer implements NormalizerInterface
             'male' => $object->getMale(),
             'birthDay' => $object->getBirthDay(),
             'record' => $this->countRecord($object),
-            'club' => [
-                'href' => $object->getClub() ? $this->router->generate('club_show', ['id' => $object->getClub()->getId()]) : null,
-                'name' => $object->getClub() ? $object->getClub()->getName() : null,
-            ],
+            'club' => $this->club($object),
+            'coach' => $this->coach($object),
             'type' => $object->getType(),
             'fights' => array_map(
                 function (Fight $fight) {
@@ -42,7 +40,7 @@ class UserNormalizer implements NormalizerInterface
                         'weight' => $fight->getWeight(),
                         'youtubeId' => $fight->getYoutubeId(),
                         'tournament' => [
-                            'href' => $this->router->generate('club_show', ['id' => $fight->getTournament()->getId()]),
+                            'href' => $this->router->generate('tournament_show', ['id' => $fight->getTournament()->getId()]),
                             'name' => $fight->getTournament()->getName()
                         ],
                         'usersFight' => array_map(
@@ -59,10 +57,8 @@ class UserNormalizer implements NormalizerInterface
                                         'male' => $userFight->getUser()->getMale(),
                                         'birthDay' => $userFight->getUser()->getBirthDay(),
                                         'record' => $this->countRecord($userFight->getUser()),
-                                        'club' => [
-                                            'href' => $userFight->getUser()->getClub() ? $this->router->generate('club_show', ['id' => $userFight->getUser()->getClub()->getId()]) : null,
-                                            'name' => $userFight->getUser()->getClub() ? $userFight->getUser()->getClub()->getName() : null,
-                                        ],
+                                        'club' => $this->club($userFight->getUser()),
+                                        'coach' => $this->coach($userFight->getUser()),
                                         'type' => $userFight->getUser()->getType(),
                                     ]
                                 ];
@@ -72,6 +68,30 @@ class UserNormalizer implements NormalizerInterface
         ];
 
     }
+
+    private function club(User $user)
+    {
+        if(!$user->getClub()){
+            return null;
+        }
+        return [
+            'href' => $this->router->generate('club_show', ['id' => $user->getClub()->getId()]),
+            'name' => $user->getClub()->getName(),
+        ];
+    }
+
+    private function coach(User $user)
+    {
+        if(!$user->getCoach()){
+            return null;
+        }
+        return [
+            'href' => $this->router->generate('user_show', ['id' => $user->getCoach()->getId()]),
+            'name' => $user->getCoach()->getName(),
+            'surname' => $user->getCoach()->getName()
+        ];
+    }
+
 
     private function countRecord(User $user)
     {

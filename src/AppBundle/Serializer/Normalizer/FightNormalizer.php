@@ -29,7 +29,7 @@ class FightNormalizer implements NormalizerInterface, SerializerAwareInterface
             'weight' => $object->getWeight(),
             'youtubeId' => $object->getYoutubeId(),
             'tournament' => [
-                'href' => $this->router->generate('club_show', ['id' => $object->getTournament()->getId()]),
+                'href' => $this->router->generate('tournament_show', ['id' => $object->getTournament()->getId()]),
                 'name' => $object->getTournament()->getName(),
                 'start' => $object->getTournament()->getStart()
             ],
@@ -47,10 +47,7 @@ class FightNormalizer implements NormalizerInterface, SerializerAwareInterface
                             'male' => $userFight->getUser()->getMale(),
                             'birthDay' => $userFight->getUser()->getBirthDay(),
                             'record' => $this->countRecord($userFight->getUser()),
-                            'club' => [
-                                'href' => $userFight->getUser()->getClub() ? $this->router->generate('club_show', ['id' => $userFight->getUser()->getClub()->getId()]) : null,
-                                'name' => $userFight->getUser()->getClub() ? $userFight->getUser()->getClub()->getName() : null,
-                            ],
+                            'club' => $this->club($userFight->getUser()),
                             'type' => $userFight->getUser()->getType(),
                         ]
                     ];
@@ -61,6 +58,17 @@ class FightNormalizer implements NormalizerInterface, SerializerAwareInterface
     public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof Fight;
+    }
+
+    private function club(User$user)
+    {
+        if(!$user->getClub()){
+            return null;
+        }
+        return [
+            'href' => $this->router->generate('club_show', ['id' => $user->getClub()->getId()]),
+            'name' => $user->getClub()->getName(),
+        ];
     }
 
     private function countRecord(User $user)

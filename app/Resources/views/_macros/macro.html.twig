@@ -10,22 +10,24 @@
 <span class="label label-danger">L: {{ user.record.lose }}</span>
 {% endmacro %}
 
+
 {% macro fightResultForUserFight(userFight) %}
     {% if userFight.isWinner %}
         <span class="label label-success">W</span>
-    {% elseif userFight.isWinner == false and userFight.isDraw == false %}
+    {% elseif userFight.isWinner == false and userFight.isDraw == false and userFight.isDisqualified == false %}
         <span class="label label-danger">L</span>
     {% endif %}
+
     {{ userFight.isDraw ? '<span class="label label-warning">D</span>' }}
     {{ userFight.isDisqualified ? '<span class="label label-dark">DQ</span>' }}
 {% endmacro %}
 
 {% macro fightResult(usersFight) %}
     {% for userFight in usersFight %}
-{% if app.request.pathinfo != userFight.user.href %}
+{% if app.request.pathinfo == userFight.user.href %}
     {% if userFight.isWinner %}
         <span class="label label-success">W</span>
-    {% elseif userFight.isWinner == false and userFight.isDraw == false %}
+    {% elseif userFight.isWinner == false and userFight.isDraw == false and userFight.isDisqualified == false %}
         <span class="label label-danger">L</span>
     {% endif %}
     {{ userFight.isDraw ? '<span class="label label-warning">D</span>' }}
