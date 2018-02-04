@@ -41,7 +41,6 @@ class UserController extends Controller
      */
     public function createAction(Request $request, EntityManagerInterface $em)
     {
-
         $form = $this->createForm($this->getFormType($request), null, [
             'method' => 'POST',
             'action' => $this->generateUrl('user_create'),
@@ -125,7 +124,7 @@ class UserController extends Controller
         $queryType = $request->query->get('type');
 
         $type = null;
-        if(($queryType === '1' || $queryType === '2' || $queryType === '3')){
+        if($queryType === '1' || $queryType === '2' || $queryType === '3'){
             $type = (int)$queryType;
         }
 
