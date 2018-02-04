@@ -28,6 +28,7 @@ class UserNormalizer implements NormalizerInterface
             'surname' => $object->getSurname(),
             'male' => $object->getMale(),
             'birthDay' => $object->getBirthDay(),
+            'imageName' => $object->getImageName(),
             'record' => $this->countRecord($object),
             'club' => $this->club($object),
             'coach' => $this->coach($object),

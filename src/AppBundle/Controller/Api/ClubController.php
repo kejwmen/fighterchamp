@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Service\StandUp;
 
 class ClubController extends Controller
 {

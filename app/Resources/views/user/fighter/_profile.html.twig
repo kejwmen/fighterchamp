@@ -19,12 +19,12 @@
     </tr>
     <tr>
         <td><img class='center' style="width: 180px;, height: 180px;"
-                    {#{% if user.male %}#}
-                 {#src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/male.png') }}"#}
-                    {#{% else %}#}
-                 {#src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"#}
-             {#>#}
-            {#{% endif %}#}
+                    {% if user.male %}
+                 src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/male.png') }}"
+                    {% else %}
+                 src="{{ user.imageName ? "/img/user/" ~ user.imageName  : asset('img/female.png') }}"
+             >
+            {% endif %}
         </td>
     </tr>
     <tr>
