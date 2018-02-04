@@ -39,6 +39,8 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
+        $us = $this->get('serializer.my')->normalize($user);
+
         return $this->render($this->getShowViewType($user),
             [
                 'user' => $this->get('serializer.my')->normalize($user)

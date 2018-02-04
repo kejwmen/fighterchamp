@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Enum\UserFightResult;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +54,22 @@ class UserFight
      * @var bool
      */
     private $isDraw = false;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $result;
+
+    public function getResult(): string
+    {
+        return $this->result;
+    }
+
+    public function setResult(UserFightResult $result): void
+    {
+        $this->result = $result->getValue();
+    }
+
 
     public function getId(): int
     {

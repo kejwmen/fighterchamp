@@ -25,13 +25,17 @@
 {% macro fightResult(usersFight) %}
     {% for userFight in usersFight %}
 {% if app.request.pathinfo == userFight.user.href %}
-    {% if userFight.isWinner %}
-        <span class="label label-success">W</span>
-    {% elseif userFight.isWinner == false and userFight.isDraw == false and userFight.isDisqualified == false %}
-        <span class="label label-danger">L</span>
+
+    {% if userFight.result == 'win' %}
+            <span class="label label-success">W</span>
+        {% elseif userFight.result == 'lose' %}
+            <span class="label label-danger">L</span>
+        {% elseif userFight.result == 'draw' %}
+         <span class="label label-warning">D</span>
+        {% elseif userFight.result == 'disqualify'%}
+        <span class="label label-dark">DQ</span>
     {% endif %}
-    {{ userFight.isDraw ? '<span class="label label-warning">D</span>' }}
-    {{ userFight.isDisqualified ? '<span class="label label-dark">DQ</span>' }}
+
 {% endif %}
     {% endfor %}
 
@@ -60,71 +64,71 @@
 {% endmacro %}
 
 
-{% macro table(fights, row) %}
-    {% import _self as macro %}
+{#{% macro table(fights, row) %}#}
+    {#{% import _self as macro %}#}
 
-    <div>
-        <span class="label label-success">W</span> - Win (Wygrana)
-        <span class="label label-warning">D</span> - Draw (Remis)
-        <span class="label label-danger">L</span> - Loss (Przegrana)
-    </div>
+    {#<div>#}
+        {#<span class="label label-success">W</span> - Win (Wygrana)#}
+        {#<span class="label label-warning">D</span> - Draw (Remis)#}
+        {#<span class="label label-danger">L</span> - Loss (Przegrana)#}
+    {#</div>#}
 
-    <table id="table-fight" class="table">
-        <thead>
-        <tr>
-            <th class="text-center">{% if row.order %} Kolejność {% endif %}</th>
-            <th>
-                Zawodnik 1 <br>
-                <span class="label label-danger">Narożnik Czerwony</span>
-            </th>
-            <th>
-                Zawodnik 2 <br>
-                <span class="label label-primary">Narożnik Niebieski</span>
-            </th>
-            <th class="text-center">Płeć</th>
-            <th class="text-center">Formuła</th>
-            <th class="text-center">Kat. wagowa</th>
-            {% if row.tournament %}
-                <th class="text-center">Turniej</th>
-            {% endif %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for fight in fights %}
-            <tr>
-                <td class="text-center">
-                    {% if row.order %} {{ "%02d"|format(loop.index) }} {% endif %}
-                    <a href="{{ path('fight_show', {'id': fight.id }) }}">
-                        Szczegóły
-                        {% if fight.youtubeId %}
-                            <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'>
-                        {% endif %}
-                    </a>
-                </td>
-                {% for user in fight.usersFight %}
-                    <td>
-                        <a href="{{ path('user_show', {'id': user.user.id }) }}">
-                            <div>
-                            {{ user.user.surname }} {{ user.user.name }} WDLQ<br>
+    {#<table id="table-fight" class="table">#}
+        {#<thead>#}
+        {#<tr>#}
+            {#<th class="text-center">{% if row.order %} Kolejność {% endif %}</th>#}
+            {#<th>#}
+                {#Zawodnik 1 <br>#}
+                {#<span class="label label-danger">Narożnik Czerwony</span>#}
+            {#</th>#}
+            {#<th>#}
+                {#Zawodnik 2 <br>#}
+                {#<span class="label label-primary">Narożnik Niebieski</span>#}
+            {#</th>#}
+            {#<th class="text-center">Płeć</th>#}
+            {#<th class="text-center">Formuła</th>#}
+            {#<th class="text-center">Kat. wagowa</th>#}
+            {#{% if row.tournament %}#}
+                {#<th class="text-center">Turniej</th>#}
+            {#{% endif %}#}
+        {#</tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+        {#{% for fight in fights %}#}
+            {#<tr>#}
+                {#<td class="text-center">#}
+                    {#{% if row.order %} {{ "%02d"|format(loop.index) }} {% endif %}#}
+                    {#<a href="{{ path('fight_show', {'id': fight.id }) }}">#}
+                        {#Szczegóły#}
+                        {#{% if fight.youtubeId %}#}
+                            {#<img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'>#}
+                        {#{% endif %}#}
+                    {#</a>#}
+                {#</td>#}
+                {#{% for user in fight.usersFight %}#}
+                    {#<td>#}
+                        {#<a href="{{ path('user_show', {'id': user.user.id }) }}">#}
+                            {#<div>#}
+                            {#{{ user.user.surname }} {{ user.user.name }} WDLQ<br>#}
                             {#{{ macro.record(user.user) }}#}
-                            {% if user.user.club %} <br> ({{ user.user.club }}) {% endif %}
-                            </div>
-                        </a>
-                        {% if user.user.birthDay %}
-                            {% set age = user.user.birthDay |getAge %}
-                            {{ age }} lat {{ age <= 18 ? '(Junior)' }}
-                        {% endif %}
-                    </td>
-                {% endfor %}
-                <td class="text-center">{{ fight.usersFight[0].user.male ? 'M' : 'K' }}</td>
-                <td class="text-center">{{ fight.formula }}</td>
-                <td class="text-center">{{ fight.weight }}</td>
-                {% if row.tournament %}
-                    <td class="text-center"><a
-                                href="{{ path('fight_show', {'id': fight.id }) }}">{{ fight.tournament.name }}</a>
-                    </td> {% endif %}
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% endmacro %}
+                            {#{% if user.user.club %} <br> ({{ user.user.club }}) {% endif %}#}
+                            {#</div>#}
+                        {#</a>#}
+                        {#{% if user.user.birthDay %}#}
+                            {#{% set age = user.user.birthDay |getAge %}#}
+                            {#{{ age }} lat {{ age <= 18 ? '(Junior)' }}#}
+                        {#{% endif %}#}
+                    {#</td>#}
+                {#{% endfor %}#}
+                {#<td class="text-center">{{ fight.usersFight[0].user.male ? 'M' : 'K' }}</td>#}
+                {#<td class="text-center">{{ fight.formula }}</td>#}
+                {#<td class="text-center">{{ fight.weight }}</td>#}
+                {#{% if row.tournament %}#}
+                    {#<td class="text-center"><a#}
+                                {#href="{{ path('fight_show', {'id': fight.id }) }}">{{ fight.tournament.name }}</a>#}
+                    {#</td> {% endif %}#}
+            {#</tr>#}
+        {#{% endfor %}#}
+        {#</tbody>#}
+    {#</table>#}
+{#{% endmacro %}#}

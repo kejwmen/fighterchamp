@@ -40,6 +40,7 @@ class FightNormalizer implements NormalizerInterface, SerializerAwareInterface
                         'isDraw' => $userFight->isDraw(),
                         'isDisqualified' => $userFight->isDisqualified(),
                         'isRedCorner' => $userFight->isRedCorner(),
+                        'result' => $userFight->getResult(),
                         'user' => [
                             'href' => $this->router->generate('user_show', ['id' => $userFight->getUser()->getId()]),
                             'name' => $userFight->getUser()->getName(),
