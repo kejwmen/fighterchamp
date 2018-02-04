@@ -90,8 +90,8 @@ class UserController extends Controller
     public function formAction($type)
     {
         $form = $this->createForm($this->getFormType($type), null, [
-            'action' => $this->generateUrl('user_create'),
-            'method' => 'POST'
+            'method' => 'POST',
+            'action' => $this->generateUrl('user_create')
         ]);
 
         return $this->render($this->getFormTypeView($type),

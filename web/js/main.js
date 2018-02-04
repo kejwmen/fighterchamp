@@ -1,6 +1,6 @@
 function initAjaxForm()
 {
-    $('body').on('submit', '.ajaxForm', function (e) {
+    $('.ajaxForm').on('submit', function (e) {
 
         e.preventDefault();
 
@@ -35,7 +35,6 @@ function initAjaxForm()
                 } else {
                     alert(errorThrown);
                 }
-
             });
     });
 }

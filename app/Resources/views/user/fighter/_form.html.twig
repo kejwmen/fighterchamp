@@ -2,7 +2,6 @@
 {{ form_start(form, {
     attr : { 'class': 'ajaxForm' } }) }}
 
-
 {{ form_row(form.email) }}
         {% if form.plain_password is defined %}
             <div class="col-sm-6">
@@ -61,8 +60,12 @@
 {{ form_end(form) }}
 
 <script>
-    $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
-    initAjaxForm();
+    $(document).ready(function () {
+
+        $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
+        initAjaxForm();
+    });
+
 </script>
 
           {#{% if user.imageName %}#}
