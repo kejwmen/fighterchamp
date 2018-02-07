@@ -38,24 +38,6 @@ class UserFight
     private $isRedCorner = false;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @var bool
-     */
-    private $isDisqualified = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @var bool
-     */
-    private $isWinner = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @var bool
-     */
-    private $isDraw = false;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $result;
@@ -69,7 +51,6 @@ class UserFight
     {
         $this->result = $result->getValue();
     }
-
 
     public function getId(): int
     {
@@ -99,35 +80,5 @@ class UserFight
     public function isRedCorner(): ?bool
     {
         return $this->isRedCorner;
-    }
-
-    public function isDisqualified(): bool
-    {
-        return $this->isDisqualified;
-    }
-
-    public function setIsDisqualified(bool $isDisqualified): void
-    {
-        $this->isDisqualified = $isDisqualified;
-    }
-
-    public function isWinner(): bool
-    {
-        return $this->isWinner;
-    }
-
-    public function setIsWinner(bool $isWinner): void
-    {
-        $this->isWinner = $isWinner;
-    }
-
-    public function isDraw(): bool
-    {
-        return $this->isDraw;
-    }
-
-    public function setIsDraw(bool $isDraw): void
-    {
-        $this->isDraw = $isDraw;
     }
 }

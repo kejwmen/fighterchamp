@@ -19,6 +19,8 @@ use Symfony\Component\Serializer\Normalizer\scalar;
 
 class SignUpNormalizer implements NormalizerInterface
 {
+    use CountRecordTrait;
+
     private $router;
 
     public function __construct(Router $router)
@@ -62,41 +64,5 @@ class SignUpNormalizer implements NormalizerInterface
             'href' => $this->router->generate('club_show', ['id' => $user->getClub()->getId()]),
             'name' => $user->getClub()->getName(),
         ];
-    }
-
-    private function countRecord(User $user)
-    {
-        $userRecord = new UserRecord();
-
-        foreach ($user->getUserFights() as $userFight) {
-            if ($this->isDraw($userFight)) {
-                $userRecord->addDraw();
-
-            } elseif ($this->isWinner($userFight)) {
-                $userRecord->addWin();
-            } elseif ($this->isLose($userFight)) {
-                $userRecord->addLose();
-            }
-        }
-        return [
-            'win' => $userRecord->win,
-            'draw' => $userRecord->draw,
-            'lose' => $userRecord->lose
-        ];
-    }
-
-    private function isDraw(UserFight $userFight): bool
-    {
-        return $userFight->getFight()->getIsDraw();
-    }
-
-    private function isLose(UserFight $userFight): bool
-    {
-        return !$userFight->isWinner() || $userFight->isDisqualified();
-    }
-
-    private function isWinner(UserFight $userFight): bool
-    {
-        return $userFight->isWinner();
     }
 }

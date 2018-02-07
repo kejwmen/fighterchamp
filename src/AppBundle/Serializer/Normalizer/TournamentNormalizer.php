@@ -20,6 +20,7 @@ use Symfony\Component\Serializer\SerializerAwareTrait;
 
 class TournamentNormalizer implements NormalizerInterface, SerializerAwareInterface
 {
+    use CountRecordTrait;
     use SerializerAwareTrait;
 
     private $router;
@@ -63,41 +64,5 @@ class TournamentNormalizer implements NormalizerInterface, SerializerAwareInterf
             'draw' => $draw,
             'lose' => $lose
         ];
-    }
-
-    private function countRecord(User $user)
-    {
-        $userRecord = new UserRecord();
-
-        foreach ($user->getUserFights() as $userFight) {
-            if ($this->isDraw($userFight)) {
-                $userRecord->addDraw();
-
-            } elseif ($this->isWinner($userFight)) {
-                $userRecord->addWin();
-            } elseif ($this->isLose($userFight)) {
-                $userRecord->addLose();
-            }
-        }
-        return [
-            'win' => $userRecord->win,
-            'draw' => $userRecord->draw,
-            'lose' => $userRecord->lose
-        ];
-    }
-
-    private function isDraw(UserFight $userFight): bool
-    {
-        return $userFight->getFight()->getIsDraw();
-    }
-
-    private function isLose(UserFight $userFight): bool
-    {
-        return !$userFight->isWinner() || $userFight->isDisqualified();
-    }
-
-    private function isWinner(UserFight $userFight): bool
-    {
-        return $userFight->isWinner();
     }
 }

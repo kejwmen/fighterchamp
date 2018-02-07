@@ -12,6 +12,8 @@ use Symfony\Component\Serializer\SerializerAwareTrait;
 
 class UserNormalizer implements NormalizerInterface
 {
+    use CountRecordTrait;
+
     private $router;
 
     public function __construct(Router $router)
@@ -33,6 +35,20 @@ class UserNormalizer implements NormalizerInterface
             'club' => $this->club($object),
             'coach' => $this->coach($object),
             'type' => $object->getType(),
+            'users' => array_map(
+                function (User $user) {
+                    return [
+                            'href' => $this->router->generate('user_show', ['id' => $user->getId()]),
+                            'name' => $user->getName(),
+                            'surname' => $user->getSurname(),
+                            'male' => $user->getMale(),
+                            'birthDay' => $user->getBirthDay(),
+                            'record' => $this->countRecord($user),
+                            'club' => $this->club($user),
+                            'type' => $user->getType(),
+                    ];
+                }, $object->getUsers()->toArray()),
+            'usersRecord' => $this->countUsersRecord($object),
             'fights' => array_map(
                 function (Fight $fight) {
                     return [
@@ -47,9 +63,6 @@ class UserNormalizer implements NormalizerInterface
                         'usersFight' => array_map(
                             function (UserFight $userFight) {
                                 return [
-                                    'isWinner' => $userFight->isWinner(),
-                                    'isDraw' => $userFight->isDraw(),
-                                    'isDisqualified' => $userFight->isDisqualified(),
                                     'isRedCorner' => $userFight->isRedCorner(),
                                     'result' => $userFight->getResult(),
                                     'user' => [
@@ -68,8 +81,9 @@ class UserNormalizer implements NormalizerInterface
                     ];
                 }, $object->getFights()->toArray())
         ];
-
     }
+
+
 
     private function club(User $user)
     {
@@ -94,45 +108,32 @@ class UserNormalizer implements NormalizerInterface
         ];
     }
 
-
-    private function countRecord(User $user)
-    {
-        $userRecord = new UserRecord();
-
-        foreach ($user->getUserFights() as $userFight) {
-            if ($this->isDraw($userFight)) {
-                $userRecord->addDraw();
-
-            } elseif ($this->isWinner($userFight)) {
-                $userRecord->addWin();
-            } elseif ($this->isLose($userFight)) {
-                $userRecord->addLose();
-            }
-        }
-        return [
-            'win' => $userRecord->win,
-            'draw' => $userRecord->draw,
-            'lose' => $userRecord->lose
-        ];
-    }
-
-    private function isDraw(UserFight $userFight): bool
-    {
-        return $userFight->getFight()->getIsDraw();
-    }
-
-    private function isLose(UserFight $userFight): bool
-    {
-        return !$userFight->isWinner() || $userFight->isDisqualified();
-    }
-
-    private function isWinner(UserFight $userFight): bool
-    {
-        return $userFight->isWinner();
-    }
-
     public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof User;
     }
+
+    private function countUsersRecord(User $object)
+    {
+        $result = [
+            'win' => 0,
+            'draw' => 0,
+            'lose' => 0
+        ];
+
+
+        foreach ($object->getUsers() as $user)
+        {
+
+            $temp = $this->countRecord($user);
+
+            $result['win'] += $temp['win'];
+            $result['draw'] += $temp['draw'];
+            $result['lose'] += $temp['lose'];
+
+        }
+
+        return $result;
+    }
+
 }

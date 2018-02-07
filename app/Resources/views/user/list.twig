@@ -6,18 +6,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <table id="table-users" class="table">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>Imię i Nazwisko</th>
-                        <th class="text-center">Rekord</th>
-                        <th class="text-center">Płeć</th>
-                        <th class="text-center">Wiek</th>
-                        <th class="text-center">Klub</th>
-                    </tr>
-                    </thead>
-                </table>
+                <table id="table-users" class="table"></table>
             </div>
         </div>
     </div>
@@ -34,50 +23,65 @@
     });
 
     function insertForm (type){
-        var t = $('#table-users').DataTable({
-            "destroy": true,
-            "ajax": {
-                "url": "{{ path('api_user_list')}}",
-                "type": "GET",
-                "data": {type: type}
-            },
-            'columnDefs': [
-                {
-                    "targets": [2,3,4,5],
-                    "className": "text-center"
-                }],
-            "columns": [
-                { data : null },
-                { mData : function (data){
-                        return "<a href='"+ data._self +"'>" + data.name +' '+ data.surname + "</a>";
-                    }},
-                { mData: function (data) {
-                        return'<span style="color: #5cb85c">'+ data.win +'</span> ' +
-                            '<span style="color: #f0ad4e">'+ data.draw +'</span> ' +
-                            '<span style="color: #d9534f">'+ data.lose +'</span>'
-                    }},
-                { data : 'male'},
-                { data : 'age'},
-                { mData: function (data){
-                    if (data.club_url) {
-                        return "<a href='"+ data.club_url +"'>" + data.club_name + "</a>";
+
+            var t =  $('#table-users').DataTable({
+                "destroy": true,
+                "ajax": {
+                    "url": "{{ path('api_user_list')}}",
+                    "type": "GET",
+                    "data": {type: type}
+                },
+
+                'columnDefs': [
+                    {
+                        "targets": [2,3,4,5],
+                        "className": "text-center"
+                    }],
+                "columns": [
+                    { data : null },
+                    { title: 'Imię i Nazwisko',
+                        mData : function (data){
+                            return "<a href='"+ data._self +"'>" + data.name +' '+ data.surname + "</a>";
+                        }},
+                    { title: 'Rekord',
+                        mData: function (data) {
+                            return'<span style="color: #5cb85c">'+ data.win +'</span> ' +
+                                '<span style="color: #f0ad4e">'+ data.draw +'</span> ' +
+                                '<span style="color: #d9534f">'+ data.lose +'</span>'
+                        }},
+                    { title: 'Płeć',
+                        data : 'male'},
+                    { title: 'Wiek',
+                        data : 'age'},
+                    { title: 'Klub',
+                        mData: function (data){
+                            if (data.club_url) {
+                                return "<a href='"+ data.club_url +"'>" + data.club_name + "</a>";
+                            }
+                            else return '';
+                        }
                     }
-                    else return '';
-                    }
-                }
-            ],
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
-            },
-            "bPaginate": false,
-            "dom": 'lifrtp'
-        });
+                ],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+                },
+                "bPaginate": false,
+                "dom": 'lifrtp'
+            });
+
+
+
+
 
         t.on( 'order.dt search.dt', function () {
             t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                 cell.innerHTML = i+1;
             } );
         } ).draw();
+
     }
+
+
+
 </script>
 {% endblock %}

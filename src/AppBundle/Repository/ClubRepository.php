@@ -16,9 +16,9 @@ class ClubRepository extends EntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = "SELECT CONCAT('/kluby/', c.id) as _self, c.name , count(DISTINCT(us.id)) as user_count
-  ,sum(case when uf.is_winner is true then 1 else 0 end) as win
-  ,sum(case when f.is_draw is true then 1 else 0 end) AS draw
-  ,sum(case when uf.is_winner is not true then 1 else 0 end) as lose
+          ,sum(case when uf.result = 'win' then 1 else 0 end) as win
+          ,sum(case when uf.result = 'draw' then 1 else 0 end) AS draw
+          ,sum(case when uf.result = 'lose' or uf.result = 'disqalify' then 1 else 0 end) as lose
 FROM user as us
   LEFT JOIN user_fight AS uf ON uf.user_id = us.id
   LEFT JOIN fight as f ON f.id = uf.fight_id

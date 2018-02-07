@@ -76,15 +76,13 @@
 
             var result = '';
 
-            if (userFight.isWinner === true) {
+            if (userFight.result === 'win') {
                 result = '<span class="label label-success">W</span>';
-            } else if (userFight.isWinner === false && userFight.isDraw === false && userFight.isDisqualified === false ) {
+            } else if (userFight.result === 'lose') {
                 result = '<span class="label label-danger">L</span>'
-            }
-
-            if (userFight.isDraw === true){
+            }else if (userFight.result === 'draw'){
                 result = '<span class="label label-warning">D</span>';
-            }else if (userFight.isDisqualified === true ){
+            }else if (userFight.result === 'disqualify' ){
                 result = '<span class="label label-dark">DQ</span>';
             }
 

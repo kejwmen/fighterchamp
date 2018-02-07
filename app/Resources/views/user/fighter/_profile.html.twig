@@ -27,9 +27,11 @@
             {% endif %}
         </td>
     </tr>
+    {% if user.type != 2 %}
     <tr>
         <td><b>Wiek:</b>{% if user.birthDay %} {{ user.birthDay | getAge }} lat {% endif %}</td>
     </tr>
+    {% endif %}
     <tr>
         <td><b>Płeć:</b> {{ user.male ?  'mężczyzna' : 'kobieta' }}</td>
     </tr>
