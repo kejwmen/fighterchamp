@@ -12,14 +12,17 @@
 
 
 {% macro fightResultForUserFight(userFight) %}
-    {% if userFight.isWinner %}
+
+    {% if userFight.result == 'win' %}
         <span class="label label-success">W</span>
-    {% elseif userFight.isWinner == false and userFight.isDraw == false and userFight.isDisqualified == false %}
+    {% elseif userFight.result == 'lose' %}
         <span class="label label-danger">L</span>
+    {% elseif userFight.result == 'draw' %}
+        <span class="label label-warning">D</span>
+    {% elseif userFight.result == 'disqualify'%}
+        <span class="label label-dark">DQ</span>
     {% endif %}
 
-    {{ userFight.isDraw ? '<span class="label label-warning">D</span>' }}
-    {{ userFight.isDisqualified ? '<span class="label label-dark">DQ</span>' }}
 {% endmacro %}
 
 {% macro fightResult(usersFight) %}

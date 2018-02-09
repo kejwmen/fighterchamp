@@ -1,6 +1,10 @@
 imports:
     - { resource: config_dev.yml }
 
+doctrine:
+    dbal:
+        url: 'sqlite:///%kernel.project_dir%/var/data/test.sqlite'
+
 framework:
     test: true
     session:

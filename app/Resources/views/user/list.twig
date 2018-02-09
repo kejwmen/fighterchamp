@@ -12,56 +12,133 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-{{ parent() }}
-<script>
-    $(document).ready(function () {
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
 
-        $(".radio-inline").change(function() {
-            insertForm($('input:radio:checked').val());
+            $(".radio-inline").change(function () {
+                insertForm($('input:radio:checked').val());
+            });
+            $("input:radio:first").prop("checked", true).trigger("change");
         });
-        $("input:radio:first").prop("checked", true).trigger("change");
-    });
 
-    function insertForm (type){
+        function insertForm(type) {
 
-            var t =  $('#table-users').DataTable({
+            if ($.fn.DataTable.isDataTable('#table-users')) {
+                $('#table-users').DataTable().destroy();
+                $('#table-users').empty();
+            }
+            ;
+
+            if (type == 1) {
+
+                var columns = [
+                    {data: null},
+                    {
+                        title: 'Imię i Nazwisko',
+                        mData: function (data) {
+                            return "<a href='" + data.href + "'>" + data.name + ' ' + data.surname + "</a>";
+                        }
+                    },
+                    {
+                        title: 'Rekord',
+                        mData: function (data) {
+                            return '<span style="color: #5cb85c">' + data.record.win + '</span> ' +
+                                '<span style="color: #f0ad4e">' + data.record.draw + '</span> ' +
+                                '<span style="color: #d9534f">' + data.record.lose + '</span>'
+                        }
+                    },
+                    {
+                        title: 'Płeć',
+                        mData: function (data) {
+                            return data.male? 'M' : 'K';
+                        }
+                    },
+                    {
+                        title: 'Wiek',
+                        mData: function (data) {
+                            return age(data);
+                        }
+                    },
+                    {
+                        title: 'Klub',
+                        mData: function (data) {
+                            if (data.club) {
+                                return "<a href='" + data.club.href + "'>" + data.club.name + "</a>";
+                            }
+                            else return '';
+                        }
+                    }
+                ];
+            } else if(type == 2) {
+
+                var columns = [
+                    {data: null},
+                    {
+                        title: 'Imię i Nazwisko',
+                        mData: function (data) {
+                            return "<a href='" + data._self + "'>" + data.name + ' ' + data.surname + "</a>";
+                        }
+                    },
+                    {
+                        title: 'Rekord Zawodników',
+                        mData: function (data) {
+                            return '<span style="color: #5cb85c">' + data.usersRecord.win + '</span> ' +
+                                '<span style="color: #f0ad4e">' + data.usersRecord.draw + '</span> ' +
+                                '<span style="color: #d9534f">' + data.usersRecord.lose + '</span>'
+                        }
+                    },
+                    {
+                        title: 'Płeć',
+                        data: 'male'
+                    },
+                    {
+                        title: 'Klub',
+                        mData: function (data) {
+                            if (data.club_url) {
+                                return "<a href='" + data.club_url + "'>" + data.club_name + "</a>";
+                            }
+                            else return '';
+                        }
+                    }
+                ];
+            }else if(type == 3){
+                var columns = [
+                    {data: null},
+                    {
+                        title: 'Imię i Nazwisko',
+                        mData: function (data) {
+                            return "<a href='" + data._self + "'>" + data.name + ' ' + data.surname + "</a>";
+                        }
+                    },
+                    {
+                        title: 'Klub',
+                        mData: function (data) {
+                            if (data.club_url) {
+                                return "<a href='" + data.club_url + "'>" + data.club_name + "</a>";
+                            }
+                            else return '';
+                        }
+                    }
+                ];
+            }
+
+
+
+            var t = $('#table-users').DataTable({
                 "destroy": true,
                 "ajax": {
-                    "url": "{{ path('api_user_list')}}",
+                    "url": "{{ path('api_user_list') }}",
                     "type": "GET",
                     "data": {type: type}
                 },
 
                 'columnDefs': [
                     {
-                        "targets": [2,3,4,5],
+                        "targets": [2, 3, 4],
                         "className": "text-center"
                     }],
-                "columns": [
-                    { data : null },
-                    { title: 'Imię i Nazwisko',
-                        mData : function (data){
-                            return "<a href='"+ data._self +"'>" + data.name +' '+ data.surname + "</a>";
-                        }},
-                    { title: 'Rekord',
-                        mData: function (data) {
-                            return'<span style="color: #5cb85c">'+ data.win +'</span> ' +
-                                '<span style="color: #f0ad4e">'+ data.draw +'</span> ' +
-                                '<span style="color: #d9534f">'+ data.lose +'</span>'
-                        }},
-                    { title: 'Płeć',
-                        data : 'male'},
-                    { title: 'Wiek',
-                        data : 'age'},
-                    { title: 'Klub',
-                        mData: function (data){
-                            if (data.club_url) {
-                                return "<a href='"+ data.club_url +"'>" + data.club_name + "</a>";
-                            }
-                            else return '';
-                        }
-                    }
-                ],
+                "columns": columns,
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
                 },
@@ -70,18 +147,22 @@
             });
 
 
+            t.on('order.dt search.dt', function () {
+                t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+
+        }
+
+        function age(user) {
+            if (user.birthDay === null) {
+                return '';
+            }
+
+            return new Date(new Date - new Date(user.birthDay.date)).getFullYear() - 1970;
+        }
 
 
-
-        t.on( 'order.dt search.dt', function () {
-            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                cell.innerHTML = i+1;
-            } );
-        } ).draw();
-
-    }
-
-
-
-</script>
+    </script>
 {% endblock %}

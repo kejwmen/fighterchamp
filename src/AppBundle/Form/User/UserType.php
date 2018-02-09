@@ -74,6 +74,7 @@ class UserType extends AbstractType
 
             ->add('club', EntityType::class, [
                 'required' => false,
+                'empty_data'  => null,
                 'class' => 'AppBundle:Club',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')

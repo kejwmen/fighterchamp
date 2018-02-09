@@ -3,8 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -57,6 +59,7 @@ class Club
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="club")
+     * @var Collection|User[]
      */
     private $users;
 

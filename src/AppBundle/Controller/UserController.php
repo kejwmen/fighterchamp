@@ -39,9 +39,11 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
+        $json = $this->get('serializer.my')->normalize($user);
+
         return $this->render($this->getShowViewType($user),
             [
-                'user' => $this->get('serializer.my')->normalize($user)
+                'user' => $json
             ]);
     }
 
@@ -56,9 +58,11 @@ class UserController extends Controller
             return $this->redirectToRoute("login");
         }
 
+        $json = $this->get('serializer.my')->normalize($this->getUser());
+
         return $this->render('user/edit.html.twig',
             [
-                'user' => $this->getUser()
+                'user' => $json
             ]);
     }
 
@@ -108,19 +112,6 @@ class UserController extends Controller
     public function formUpdateAction($type)
     {
         $user = $this->getUser();
-
-        if(!$user) {
-            $session = $this->get('session');
-            $user = new User();
-            $user->setFacebookId($session->get('facebookId'));
-            $user->setName($session->get('name'));
-            $user->setSurname($session->get('surname'));
-            $user->setMale($session->get('male'));
-//        $imageName = $session->get('imageName');
-            $user->setEmail($session->get('email'));
-        }
-
-
 
         $form = $this->createForm($this->getFormType($type), $user, [
             'action' => $this->generateUrl('api_user_update'),

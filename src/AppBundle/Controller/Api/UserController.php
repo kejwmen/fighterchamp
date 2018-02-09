@@ -121,18 +121,14 @@ class UserController extends Controller
      */
     public function listAction(EntityManagerInterface $em, Request $request)
     {
-        $queryType = $request->query->get('type');
+        $type = $request->query->get('type');
 
-        $type = null;
-        if($queryType === '1' || $queryType === '2' || $queryType === '3'){
-            $type = (int)$queryType;
-        }
+        $users = $em->getRepository(User::class)->findBy(['type' => $type]);
 
+        $json = $this->get('serializer.my')->normalize($users, 'json');
 
 
-        $users = $em->getRepository(User::class)->findAllByType($type);
-
-        return new JsonResponse(['data' => $users]);
+        return new JsonResponse(['data' => $json]);
     }
 
 

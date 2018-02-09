@@ -35,8 +35,8 @@
             label : 'Zdjęcie Profilowe (opcjonalnie)'
         }) }}
         {{ form_row(form.club, {
-            label: 'Klub (opcjonalnie)',
-            placeholder: 'Wybierz klub albo wpisz nowy',
+            label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy - wybierz albo wpisz nowy',
+            placeholder: 'Bez klubu',
             attr: {'class': 'select2'}
         }) }}
 
@@ -62,7 +62,7 @@
 <script>
     $(document).ready(function () {
 
-        $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
+        $('.select2').select2({tags: true});
         initAjaxForm();
     });
 

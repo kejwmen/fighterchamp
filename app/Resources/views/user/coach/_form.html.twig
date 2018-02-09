@@ -36,7 +36,7 @@
             label : 'Zdjęcie Profilowe (opcjonalnie)'
         }) }}
         {{ form_row(form.club, {
-            label: 'Klub (opcjonalnie)',
+            label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy',
             placeholder: 'Wybierz klub albo wpisz nowy',
             attr: {'class': 'select2'}
         }) }}
@@ -54,7 +54,7 @@
 {{ form_end(form) }}
 
 <script>
-    $('.select2').select2({placeholder: "Wybierz klub albo wpisz nowy", tags: true});
+    $('.select2').select2({tags: true});
     initAjaxForm();
 </script>
 
