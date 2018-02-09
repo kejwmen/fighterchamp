@@ -77,7 +77,7 @@
                     {
                         title: 'Imię i Nazwisko',
                         mData: function (data) {
-                            return "<a href='" + data._self + "'>" + data.name + ' ' + data.surname + "</a>";
+                            return "<a href='" + data.href + "'>" + data.name + ' ' + data.surname + "</a>";
                         }
                     },
                     {
@@ -90,13 +90,15 @@
                     },
                     {
                         title: 'Płeć',
-                        data: 'male'
+                        mData: function (data) {
+                            return data.male? 'M' : 'K';
+                        }
                     },
                     {
                         title: 'Klub',
                         mData: function (data) {
-                            if (data.club_url) {
-                                return "<a href='" + data.club_url + "'>" + data.club_name + "</a>";
+                            if (data.club) {
+                                return "<a href='" + data.club.href + "'>" + data.club.name + "</a>";
                             }
                             else return '';
                         }
@@ -108,14 +110,14 @@
                     {
                         title: 'Imię i Nazwisko',
                         mData: function (data) {
-                            return "<a href='" + data._self + "'>" + data.name + ' ' + data.surname + "</a>";
+                            return "<a href='" + data.href + "'>" + data.name + ' ' + data.surname + "</a>";
                         }
                     },
                     {
                         title: 'Klub',
                         mData: function (data) {
-                            if (data.club_url) {
-                                return "<a href='" + data.club_url + "'>" + data.club_name + "</a>";
+                            if (data.club) {
+                                return "<a href='" + data.club.href + "'>" + data.club.name + "</a>";
                             }
                             else return '';
                         }
