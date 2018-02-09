@@ -58,10 +58,7 @@ class Fight
      */
     private $isVisible = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isDraw = false;
+
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -160,24 +157,6 @@ class Fight
     {
         $this->position = $position;
     }
-
-
-    public function getIsDraw(): bool
-    {
-        return $this->isDraw;
-    }
-
-
-    public function setIsDraw(bool $isDraw)
-    {
-        $this->isDraw = $isDraw;
-    }
-
-    public function resetDraw()
-    {
-        $this->isDraw = false;
-    }
-
 
     public function __toString()
     {
