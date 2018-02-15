@@ -11,6 +11,9 @@
                         <th></th>
                         <th>Zawodnik 1</th>
                         <th>Zawodnik 2</th>
+                        <th>Płeć</th>
+                        <th>Klasa</th>
+                        <th>Kat. Wagowa</th>
                     </tr>
                     </thead>
                 </table>
@@ -51,6 +54,21 @@
                                 ;
                         }
                     },
+                    {
+                        mData: function (data) {
+                            return data.usersFight[1].user.male? 'M' : 'K';
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return data.formula;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return data.weight;
+                        }
+                    }
                 ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"

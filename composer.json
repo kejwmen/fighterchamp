@@ -55,11 +55,10 @@
     "deployer/recipes": "^6.0",
     "doctrine/data-fixtures": "^1.3",
     "doctrine/doctrine-fixtures-bundle": "^2.3",
-    "lmc/steward": "*",
     "nelmio/alice": "dev-master",
     "phploc/phploc": "^4.0",
     "phpmd/phpmd": "@dev",
-    "phpunit/phpunit": "^5.6",
+    "phpunit/phpunit": "^6.0",
     "sensio/generator-bundle": "^3.0",
     "symfony/phpunit-bridge": "^3.0"
   },

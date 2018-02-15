@@ -11,6 +11,9 @@
                         <th></th>
                         <th>Zawodnik 1</th>
                         <th>Zawodnik 2</th>
+                        <th>Płeć</th>
+                        <th>Klasa</th>
+                        <th>Kat. Wagowa</th>
                         <th>Turniej</th>
                     </tr>
                     </thead>
@@ -50,6 +53,21 @@
                                 "<a href='" + data.usersFight[1].user.href + "'>" + data.usersFight[1].user.surname + ' ' + data.usersFight[1].user.name + '</a> ' +
                                 fightResult(data.usersFight[1]) + club(data.usersFight[1].user) + '<br>' + age(data.usersFight[1].user)
                                 ;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return data.usersFight[1].user.male? 'M' : 'K';
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return data.formula;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return data.weight;
                         }
                     },
                     {

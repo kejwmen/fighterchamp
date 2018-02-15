@@ -23,7 +23,7 @@ class FeatureContext extends RawMinkContext implements Context
 
     public function __construct()
     {
-        $kernel = new AppKernel('test', true);
+        $kernel = new AppKernel('StandUpTest', true);
         $kernel->boot();
         $this->em = $kernel->getContainer()->get('doctrine')->getManager();
     }

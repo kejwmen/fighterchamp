@@ -14,7 +14,7 @@ use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -405,7 +405,7 @@ class User implements UserInterface, Serializable
 
     public function getPlec()
     {
-        return ($this->getMale()) ? 'M' : 'K';
+        return $this->getMale() ? 'M' : 'K';
     }
 
     public function getAge()

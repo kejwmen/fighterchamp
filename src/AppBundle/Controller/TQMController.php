@@ -37,7 +37,7 @@ class TQMController extends Controller
         return $this->render('tqm/news.html.twig', [
             'tasks' => $json,
             'ideas' => $tasks,
-            'test' => true,
+            'StandUpTest' => true,
         ]);
     }
 

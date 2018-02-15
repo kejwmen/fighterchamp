@@ -11,7 +11,7 @@ class CreateNewFightTest extends PHPUnit_Framework_TestCase
 
     public function testCreateNewFight()
     {
-        $kernel = new AppKernel('test', true);
+        $kernel = new AppKernel('StandUpTest', true);
         $kernel->boot();
         $em = $kernel->getContainer()->get('doctrine')->getManager();
 
