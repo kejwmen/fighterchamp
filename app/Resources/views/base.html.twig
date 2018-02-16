@@ -1,24 +1,5 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Fighter Champ | Amatorska liga turniejów sportów walki{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}"/>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css"
-          integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.16/b-1.5.1/b-html5-1.5.1/r-2.2.1/datatables.min.css"/>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-    {#<script src="https://unpkg.com/axios/dist/axios.min.js"></script>#}
-    <meta property="og:image" content=""/>
-    <meta property="og:title" content="Fighter Champ | Amatorska liga turniejów sportów walki"/>
-    <meta property="og:description" content="Fighter Champ | Amatorska liga turniejów sportów walki"/>
-    <meta property="og:url" content="http://fighterchamp.pl"/>
-</head>
 <body>
 
 <div class="container-fluid">
@@ -53,7 +34,7 @@
                 <li {{ (app.request.attributes.get('_route') == 'club_list') ? 'class="active"' }}><a
                             href="{{ path ('club_list') }}">Kluby</a></li>
                 {#<li {{ (app.request.attributes.get('_route') == 'tqm_nowosci') ? 'class="active"' }}><a#}
-                            {#href="{{ path ('tqm_nowosci') }}">TQM</a></li>#}
+                {#href="{{ path ('tqm_nowosci') }}">TQM</a></li>#}
                 <li {{ (app.request.attributes.get('_route') == 'fight_list') ? 'class="active"' }}><a
                             href="{{ path ('fight_list') }}">Walki</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a
@@ -62,12 +43,12 @@
                             href="{{ path ('contact') }}">Kontakt</a></li>
                 {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')  %}
                     {% if is_granted('ROLE_USER') %}
-                    <li {{ (app.request.attributes.get('_route') == 'user_edit_view') ? 'class="active"' }}><a
-                                href="{{ path ('user_edit_view') }}">Mój Profil</a></li>
-                        {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li {{ (app.request.attributes.get('_route') == 'admin_tournament_sign_up') ? 'class="active"' }}><a
-                                href="{{ path ('admin_tournament_sign_up',{'id' : 4}) }}">Admin</a></li>
+                        <li {{ (app.request.attributes.get('_route') == 'user_edit_view') ? 'class="active"' }}><a
+                                    href="{{ path ('user_edit_view') }}">Mój Profil</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li {{ (app.request.attributes.get('_route') == 'admin_tournament_sign_up') ? 'class="active"' }}><a
+                                    href="{{ path ('admin_tournament_sign_up',{'id' : 4}) }}">Admin</a></li>
                     {% endif %}
                     <li {{ (app.request.attributes.get('_route') == 'logout') ? 'class="active"' }}><a
                                 href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
@@ -81,8 +62,14 @@
     </nav>
 </div>
 
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TB4MCMD"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-        {% block body %}{% endblock %}
+{% block body %}{% endblock %}
+</body>
 
 
 
@@ -107,7 +94,7 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script>
         $(document).ready(function(){
-           var t = $('#table').DataTable({
+            var t = $('#table').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
                 },
@@ -118,4 +105,30 @@
     </script>
 {% endblock %}
 </body>
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TB4MCMD');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Fighter Champ | Amatorska liga turniejów sportów walki{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}"/>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css"
+          integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.16/b-1.5.1/b-html5-1.5.1/r-2.2.1/datatables.min.css"/>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    {#<script src="https://unpkg.com/axios/dist/axios.min.js"></script>#}
+    <meta property="og:image" content=""/>
+    <meta property="og:title" content="Fighter Champ | Amatorska liga turniejów sportów walki"/>
+    <meta property="og:description" content="Fighter Champ | Amatorska liga turniejów sportów walki"/>
+    <meta property="og:url" content="http://fighterchamp.pl"/>
+</head>
 </html>
