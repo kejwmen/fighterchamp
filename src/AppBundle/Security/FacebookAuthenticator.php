@@ -64,13 +64,16 @@ class FacebookAuthenticator extends SocialAuthenticator
 
         $id = $facebookUser->getId();
 
-        $facebook = $this->em->getRepository('AppBundle:Facebook')
+        $facebook = $this->em->getRepository(Facebook::class)
                     ->findOneBy(['facebookId' => $id]);
+
+
+
 
         $user = $facebook ? $facebook->getUser() : null;
 
         if(!$user){
-                $facebook = new Facebook(
+            $facebook = new Facebook(
                     $facebookUser->getId(),
                     $facebookUser->getFirstName(),
                     $facebookUser->getLastName(),
@@ -78,16 +81,24 @@ class FacebookAuthenticator extends SocialAuthenticator
                     $facebookUser->getGender() === 'male'
                 );
 
-            $user = new User();
-            $user->setName($facebook->getName());
-            $user->setSurname($facebook->getSurname());
-            $user->setEmail($facebook->getEmail());
-            $user->setMale($facebook->isMale());
-            $user->setType(3);
 
-            $this->em->persist($user);
-            $this->em->persist($facebook);
-            $facebook->setUser($user);
+            $user = $this->em->getRepository(User::class)
+                ->findOneBy(['email' => $facebookUser->getEmail()]);
+
+            if(!$user) {
+                $user = new User();
+                $user->setName($facebook->getName());
+                $user->setSurname($facebook->getSurname());
+                $user->setEmail($facebook->getEmail());
+                $user->setMale($facebook->isMale());
+                $user->setType(3);
+
+                $this->em->persist($user);
+                $this->em->persist($facebook);
+                $facebook->setUser($user);
+            }else{
+                $user->setFacebook($facebook);
+            }
 
             $this->em->flush();
         }
