@@ -70,6 +70,13 @@
                         }
                     }
                 ];
+
+                var columnDefs = [
+                    {
+                        "targets": [2, 3, 4, 5],
+                        "className": "text-center"
+                    }];
+
             } else if(type == 2) {
 
                 var columns = [
@@ -104,8 +111,16 @@
                         }
                     }
                 ];
+
+                var columnDefs = [
+                    {
+                        "targets": [2, 3, 4],
+                        "className": "text-center"
+                    }];
+
             }else if(type == 3){
                 var columns = [
+
                     {data: null},
                     {
                         title: 'Imię i Nazwisko',
@@ -123,6 +138,12 @@
                         }
                     }
                 ];
+
+                var columnDefs = [
+                    {
+                        "targets": [2],
+                        "className": "text-center"
+                    }];
             }
 
 
@@ -135,11 +156,7 @@
                     "data": {type: type}
                 },
 
-                'columnDefs': [
-                    {
-                        "targets": [2, 3, 4],
-                        "className": "text-center"
-                    }],
+                'columnDefs': columnDefs,
                 "columns": columns,
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
