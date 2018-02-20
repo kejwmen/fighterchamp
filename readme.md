@@ -26,3 +26,14 @@ FROM user as us
     ON f.id = uf.fight_id
 group by us.surname, us.name
 
+SELECT user.email
+FROM user
+JOIN signuptournament ON signuptournament.user_id = user.id
+WHERE signuptournament.tournament_id =4 and is_paid=false and signuptournament.deleted_at IS NULL
+
+UBEZPIECZENIE
+SELECT name, surname, pesel, mother_name, father_name FROM user
+join user_fight ON user_fight.user_id = user.id
+join fight ON user_fight.fight_id = fight.id
+WHERE fight.tournament_id = 4
+
