@@ -176,7 +176,7 @@ class UserController extends Controller
             case 2:
                 return 'user/coach/show.html.twig';
             case 3:
-                return 'user/fan/fan.html.twig';
+                return 'user/fan/show.html.twig';
             default:
                 return 'Nie ma takiego typu';
         }
