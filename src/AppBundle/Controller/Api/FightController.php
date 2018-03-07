@@ -23,7 +23,7 @@ class FightController extends Controller
         if((int)$id > 0){
             $tournament = $em->getRepository('AppBundle:Fight')->find($id);
 
-            $fights = $em->getRepository('AppBundle:Fight')->findBy(['tournament' => $tournament]);
+            $fights = $em->getRepository('AppBundle:Fight')->findBy(['tournament' => $tournament],['position'=>'ASC']);
         }else{
 
             $fights = $em->getRepository('AppBundle:Fight')->findAll();
