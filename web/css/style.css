@@ -462,3 +462,7 @@ a.deco-none {
         margin-top: -20px;
     }
 }
+
+.modal{
+    color: black !important;
+}

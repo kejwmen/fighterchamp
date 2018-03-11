@@ -20,9 +20,9 @@
             {{ form_row(form.phone, {
                 label: 'Telefon'
             }) }}
-        {{ form_row(form.imageFile, {
-            label : 'Zdjęcie Profilowe (opcjonalnie)'
-        }) }}
+        {#{{ form_row(form.imageFile, {#}
+            {#label : 'Zdjęcie Profilowe (opcjonalnie)'#}
+        {#}) }}#}
         {{ form_row(form.club, {
             label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy',
             placeholder: 'Bez klubu',
@@ -34,6 +34,9 @@
         placeholder: 'Bez trenera'
     }) }}
 
+
+{% include ':user/_macros:insurance.html.twig' %}
+<br>
 
 <button type="submit" name="submit" class="btn btn-primary" formnovalidate>
      Zapisz

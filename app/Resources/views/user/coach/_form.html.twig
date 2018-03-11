@@ -32,14 +32,19 @@
             {{ form_row(form.phone, {
                 label: 'Telefon'
             }) }}
-        {{ form_row(form.imageFile, {
-            label : 'Zdjęcie Profilowe (opcjonalnie)'
-        }) }}
+
+        {#{{ form_row(form.imageFile, {#}
+            {#label : 'Zdjęcie Profilowe (opcjonalnie)'#}
+        {#}) }}#}
+
         {{ form_row(form.club, {
             label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy',
-            placeholder: 'Wybierz klub albo wpisz nowy',
+            placeholder: 'Bez klubu',
             attr: {'class': 'select2'}
         }) }}
+
+{% include ':user/_macros:insurance.html.twig' %}
+<br>
 
 {% if form.plain_password is defined %}
     <a href="{{ path('rules') }}">Regulamin</a>

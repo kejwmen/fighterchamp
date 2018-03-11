@@ -69,8 +69,8 @@ class UserType extends AbstractType
             ->add('surname', TextType::class,[
                 'constraints' => [new NotBlank()]
             ])
-            ->add('imageFile', FileType::class,
-                ['required' => false])
+//            ->add('imageFile', FileType::class,
+//                ['required' => false])
 
             ->add('club', EntityType::class, [
                 'required' => false,
@@ -80,6 +80,8 @@ class UserType extends AbstractType
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.name', 'ASC');
                 }])
+
+
         ;
 
         $builder->addEventSubscriber(new CreateClubIfDosentExist($this->em));

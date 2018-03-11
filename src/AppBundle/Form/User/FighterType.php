@@ -53,6 +53,10 @@ class FighterType extends AbstractType
                 ->andWhere('u.type = 2')
                 ->orderBy('u.name', 'ASC');
         }])
+
+            ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
+            ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
+            ->add('pesel', TextType::class, ['label' => 'Pesel'])
 ;
     }
 

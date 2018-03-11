@@ -43,6 +43,10 @@ class CoachType extends AbstractType
             'constraints' => [new NotBlank()]
         ])
 
+            ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
+            ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
+            ->add('pesel', TextType::class, ['label' => 'Pesel'])
+
 ;
     }
 

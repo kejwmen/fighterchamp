@@ -31,11 +31,13 @@
             {{ form_row(form.phone, {
                 label: 'Telefon'
             }) }}
-        {{ form_row(form.imageFile, {
-            label : 'Zdjęcie Profilowe (opcjonalnie)'
-        }) }}
+
+        {#{{ form_row(form.imageFile, {#}
+            {#label : 'Zdjęcie Profilowe (opcjonalnie)'#}
+        {#}) }}#}
+
         {{ form_row(form.club, {
-            label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy - wybierz albo wpisz nowy',
+            label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy',
             placeholder: 'Bez klubu',
             attr: {'class': 'select2'}
         }) }}
@@ -46,6 +48,9 @@
         placeholder: 'Bez trenera'
     }) }}
 </div>
+
+{% include ':user/_macros:insurance.html.twig' %}
+<br>
 
 {% if form.plain_password is defined %}
     <a href="{{ path('rules') }}">Regulamin</a>
@@ -67,7 +72,3 @@
     });
 
 </script>
-
-          {#{% if user.imageName %}#}
-              {#<button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>#}
-          {#{% endif %}#}

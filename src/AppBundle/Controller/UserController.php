@@ -78,12 +78,9 @@ class UserController extends Controller
             return $this->redirectToRoute('homepage');
         }
 
-        $facebookId = $session->get('facebookId');
-        $session->clear();
-
 
         return $this->render('security/register.html.twig',[
-            'facebookId' => $facebookId
+
         ]);
     }
 

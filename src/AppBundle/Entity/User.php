@@ -200,8 +200,6 @@ class User implements UserInterface, Serializable
      */
     private $type = 1;
 
-
-
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
@@ -219,16 +217,37 @@ class User implements UserInterface, Serializable
      */
     private $pesel;
 
+    public function getPesel(): ?string
+    {
+        return $this->pesel;
+    }
 
-    public function getFatherName(): string
+    public function setPesel(?string $pesel): void
+    {
+        $this->pesel = $pesel;
+    }
+
+    public function getFatherName(): ?string
     {
         return $this->fatherName;
     }
 
-    public function getMotherName(): string
+    public function getMotherName(): ?string
     {
         return $this->motherName;
     }
+
+    public function setFatherName(?string $fatherName): void
+    {
+        $this->fatherName = $fatherName;
+    }
+
+    public function setMotherName(?string $motherName): void
+    {
+        $this->motherName = $motherName;
+    }
+
+
 
 //    /**
 //     * @var UserInsuranceData
