@@ -104,7 +104,7 @@ class UserNormalizer implements NormalizerInterface
         return [
             'href' => $this->router->generate('user_show', ['id' => $user->getCoach()->getId()]),
             'name' => $user->getCoach()->getName(),
-            'surname' => $user->getCoach()->getName()
+            'surname' => $user->getCoach()->getSurname()
         ];
     }
 

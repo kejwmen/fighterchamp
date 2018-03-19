@@ -29,6 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 
 class UserType extends AbstractType
@@ -69,8 +70,13 @@ class UserType extends AbstractType
             ->add('surname', TextType::class,[
                 'constraints' => [new NotBlank()]
             ])
-//            ->add('imageFile', FileType::class,
-//                ['required' => false])
+
+//            ->add('imageFile', VichImageType::class,[
+//                'required'      => false,
+//                    'allow_delete'  => true, // not mandatory, default is true
+//                    'download_link' => true, // not mandatory, default is true
+//                ]
+//            )
 
             ->add('club', EntityType::class, [
                 'required' => false,
