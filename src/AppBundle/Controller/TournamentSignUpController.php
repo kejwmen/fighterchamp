@@ -40,7 +40,9 @@ class TournamentSignUpController extends Controller
             ->fightReadyOrderBy($tournament);
 
 
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER') && ($this->getUser())->getType() != 3) {
 
             $user = $this->getUser();
 
@@ -151,6 +153,7 @@ class TournamentSignUpController extends Controller
             'tournament' => $tournament,
             'users' => $users,
             'fights' => $fights,
+            'isUserRegister' => null,
             'signUpTournament' => $this->get('serializer.my')->normalize($signUpTournament),
         ));
 
