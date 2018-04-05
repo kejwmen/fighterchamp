@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TournamentController extends Controller
 {
     /**
-     * @Route("/", name="tournament_list")
+     * @Route("", name="tournament_list")
      */
     public function listAction(EntityManagerInterface $em): Response
     {

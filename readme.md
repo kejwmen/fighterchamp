@@ -2,6 +2,8 @@ A w co mam się ubrać? Jaki strój sportowy jest dopuszczony?
 Czy muszę mieć swoje rękawice? Kaski? Ochraniacze?
 Czy walki będą nagrywane?
 
+Aby zrezygnować z wiadomości wysyłanych przez sportbonus.pl, wystarczy kliknąć w kliknąć w link.
+
 
 https://allegro.pl/regulamin/pl - zgoda na otrzymwanie maili reklamowych
 
@@ -37,3 +39,4 @@ join user_fight ON user_fight.user_id = user.id
 join fight ON user_fight.fight_id = fight.id
 WHERE fight.tournament_id = 4
 
+Sędziują licencjonowani sędziowie PZB.

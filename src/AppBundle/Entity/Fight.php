@@ -58,8 +58,6 @@ class Fight
      */
     private $isVisible = false;
 
-
-
     /**
      * @ORM\Column(type="date", nullable=true)
      */
@@ -71,7 +69,7 @@ class Fight
     private $youtubeId;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="fight")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="fight", cascade={"remove"})
      * @OrderBy({"isRedCorner" = "DESC"})
      */
     private $usersFight;
@@ -128,12 +126,6 @@ class Fight
     {
         $this->tournament = $tournament;
     }
-
-    public function resetWinner()
-    {
-        $this->winner = null;
-    }
-
 
     public function getFormula()
     {

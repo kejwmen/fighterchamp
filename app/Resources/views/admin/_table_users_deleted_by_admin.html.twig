@@ -8,7 +8,7 @@
         <th>Nazwisko i Imię</th>
         <th>Rekord</th>
         <th>Płeć</th>
-        <th>Formuła</th>
+        <th>Klasa</th>
         <th>Kat. Wagowa</th>
         <th>Staż [miesiące]</th>
         <th>Wiek</th>
@@ -21,24 +21,22 @@
             <tr id="{{ signUp.id }}">
                 <td>
                     <a href="{{ path("admin_tournament_toggle_delete_by_admin", {'id' : signUp.id }) }}"
-                       class="btn btn-success"><i class="fa fa-recycle fa-lg"></i> Przywróć</a>
+                       class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Skasuj</a>
                 </td>
                 <td> {{ signUp.isPaid ? 'Tak' : 'Nie' }} </td>
                 <td> {{ signUp.weighted ? 'Tak' : 'Nie' }} </td>
-                <td>
-                    <a href="{{ path('user_show', {'id': signUp.User.id }) }}"> {{ signUp.User.surname }} {{ signUp.User.name }}</a>
-                </td>
+                <td><a href="{{ signUp.user.href }}"> {{ signUp.user.surname }} {{ signUp.user.name }}</a></td>
                 <td>
                     {{ macro.record(signUp.user) }}
                 </td>
-                <td> {{ signUp.User.male ?  'M' : 'K' }} </td>
+                <td> {{ signUp.user.male ?  'M' : 'K' }} </td>
                 <td> {{ signUp.formula }} </td>
                 <td> {{ signUp.weighted ?: signUp.weight }} </td>
                 <td> {{ signUp.trainingTime }} </td>
-                <td> {{ signUp.User.birthDay |getAge }} </td>
+                <td> {{ signUp.user.birthDay |getAge }} </td>
                 <td>
-                    {% if signUp.User.club %}
-                        <a href="{{ path('club_show', {'id': signUp.User.club.id }) }}"> {{ signUp.User.getClub() }}</a>
+                    {% if signUp.user.club %}
+                        <a href="{{ signUp.user.club.href }}"> {{ signUp.user.club.name }} </a>
                     {% endif %}
                 </td>
             </tr>

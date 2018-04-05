@@ -8,19 +8,15 @@
 
 namespace AppBundle\Controller\Admin;
 
-
+use AppBundle\Entity\Enum\UserFightResult;
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
-use AppBundle\Entity\User;
 use AppBundle\Entity\UserFight;
-use AppBundle\Form\FightType;
-use Doctrine\Common\Collections\ArrayCollection;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -60,17 +56,15 @@ class AdminTournamentFightController extends Controller
     /**
      * @Route("/toggle-corner/walki/{id}", name="toggle_corners")
      */
-    public function toggleCornersAction(Fight $fight)
+    public function toggleCornersAction(Fight $fight, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $usersFight = $fight->getUsersFight();
 
         $this->toggleCorners($usersFight[0], $usersFight[1]);
 
         $em->flush();
 
-        return $this->redirectToRoute('admin_tournament_fights', ['id' => 4]);
+        return $this->redirectToRoute('admin_tournament_fights', ['id' => 5]);
     }
 
 
@@ -101,17 +95,13 @@ class AdminTournamentFightController extends Controller
     }
 
 
-
-
     /**
      * @Route("/turniej/{id}/walki", name="admin_tournament_fights")
      */
-    public function listAction(Tournament $tournament)
+    public function listAction(Tournament $tournament, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForTournamentAdmin($tournament);
-
 
         return $this->render('admin/fight.html.twig', [
             'fights' => $fights,
@@ -125,18 +115,20 @@ class AdminTournamentFightController extends Controller
      */
     public function pairAction(Request $request, Tournament $tournament)
     {
-        $freeUsers = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet();
+        $freeSignUpIds = $this->getDoctrine()
+            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet(); //zmienić id!!!!
 
-        $users = [];
+        $signUps = [];
 
-        foreach($freeUsers as $user)
+        foreach($freeSignUpIds as $user)
         {
-            $users [] = $this->getDoctrine()->getRepository('AppBundle:SignUpTournament')->find($user['id']);
+            $signUps [] = $this->getDoctrine()->getRepository('AppBundle:SignUpTournament')->find($user['id']);
         }
 
+       $normalizeSignUps = $this->get('serializer.my')->normalize($signUps);
+
         return $this->render(':admin:pair.html.twig', array(
-            'freeUsers' => $users,
+            'freeUsers' => $normalizeSignUps,
             'tournament' => $tournament
         ));
     }
@@ -161,13 +153,9 @@ class AdminTournamentFightController extends Controller
 
         $fight = new Fight($formula, $weight);
 
-        $userFightOne = new UserFight();
-        $userFightOne->setFight($fight);
-        $userFightOne->setUser($signUp0->getUser());
+        $userFightOne = new UserFight($signUp0->getUser(), $fight);
+        $userFightTwo = new UserFight($signUp1->getUser(), $fight);
 
-        $userFightTwo = new UserFight();
-        $userFightTwo->setFight($fight);
-        $userFightTwo->setUser($signUp1->getUser());
 
 
         $fight->setTournament($tournament);
@@ -223,26 +211,32 @@ class AdminTournamentFightController extends Controller
     /**
      * @Route("/fight/set-winner", name="setWinner")
      */
-    public function setWinnerAction(Request $request)
+    public function setWinnerAction(Request $request, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
+        $fightId = $request->request->get('userFightId');
+        $result = $request->request->get('result');
 
-        $fightId = $request->request->get('fightId');
-        $userId = $request->request->get('userId');
-        $draw = $request->request->get('draw');
+        $userFight1 = $em->getRepository(UserFight::class)->find($fightId);
+        $userFight2 = $userFight1->getOpponentUserFight();
 
+        switch ($result){
+            case 'reset':
+                $userFight1->resetResult();
+                $userFight2->resetResult();
+                break;
+            case 'win':
+                $userFight1->setResult(UserFightResult::WIN());
+                $userFight2->setResult(UserFightResult::LOSE());
+                break;
+            case 'draw':
+                $userFight1->setResult(UserFightResult::DRAW());
+                $userFight2->setResult(UserFightResult::DRAW());
+                break;
 
-        $fight = $em->getRepository('AppBundle:Fight')
-            ->findOneBy(['id' => $fightId]);
+            default:
+                throw new \Exception('No fight result');
+        }
 
-        $user = $em->getRepository('AppBundle:User')
-            ->findOneBy(['id' => $userId]);
-
-        $user ? $fight->setWinner($user) : $fight->resetWinner();
-
-        $draw ? $fight->setIsDraw(true) : $fight->resetDraw();
-
-        $em->persist($fight);
         $em->flush();
 
         return new Response(200);

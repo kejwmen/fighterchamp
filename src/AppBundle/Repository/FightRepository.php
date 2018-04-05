@@ -80,7 +80,7 @@ class FightRepository extends EntityRepository
 
         $em = $this->getEntityManager();
 
-        $q = $em->createQuery('update AppBundle:Fight fight set fight.is_ready = ?1 where fight.is_ready = ?2 and fight.tournament = ?3')
+        $q = $em->createQuery('update AppBundle:Fight fight set fight.is_visible = ?1 where fight.is_visible = ?2 and fight.tournament = ?3')
             ->setParameter(1, true)
             ->setParameter(2, false)
             ->setParameter(3, $tournament);

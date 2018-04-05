@@ -83,13 +83,13 @@ class SignUpTournamentRepository extends EntityRepository
 
         $stmt = $conn->prepare('SELECT sut.id FROM signuptournament sut
 LEFT JOIN user u ON sut.user_id = u.id
-WHERE sut.tournament_id = 4
+WHERE sut.tournament_id = 5
 AND sut.deleted_at IS NULL
 AND u.id NOT IN (
 SELECT uu.id FROM user uu
 JOIN user_fight uf ON uf.user_id = uu.id
 JOIN fight f ON uf.fight_id = f.id
-WHERE f.tournament_id = 4)');
+WHERE f.tournament_id = 5)');
 
 
 

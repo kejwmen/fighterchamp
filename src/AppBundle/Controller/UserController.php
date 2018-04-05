@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class UserController extends Controller
 {
     /**
-     * @Route("/", name="user_list")
+     * @Route("", name="user_list")
      * @Method("GET")
      */
     public function listAction()

@@ -125,6 +125,8 @@ class TournamentSignUpController extends Controller
             $formDelete->handleRequest($request);
 
             if ($formDelete->isValid()) {
+
+                //todo sometimes isUserRegister is null - error 500
                 $isUserRegister->delete();
                 $em->flush();
                 return $this->redirectToRoute("tournament_sign_up", ['id' => $tournament->getId()]);

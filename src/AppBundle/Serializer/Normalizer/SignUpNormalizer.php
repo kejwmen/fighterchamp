@@ -38,6 +38,9 @@ class SignUpNormalizer implements NormalizerInterface
             'youtubeId' => $object->getYouTubeId(),
             'musicArtistAndTitle' => $object->getMusicArtistAndTitle(),
             'isPaid' => $object->isPaid(),
+            'deletedAtByAdmin' => $object->getDeletedAtByAdmin(),
+            'weighted' => $object->getWeighted(),
+            'trainingTime' => $object->getTrainingTime(),
             'user'=> [
                 'href' => $this->router->generate('user_show', ['id' => $object->getUser()->getId()]),
                 'name' => $object->getUser()->getName(),

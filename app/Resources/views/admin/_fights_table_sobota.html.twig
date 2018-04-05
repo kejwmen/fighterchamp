@@ -1,3 +1,4 @@
+{% import '_macros/macro.html.twig' as macro %}
 <div class="col-xs-12">
     <div>
         <span class="label label-success">W</span> - Win (Wygrana)
@@ -21,7 +22,7 @@
                 <span class="label label-primary">Narożnik Niebieski</span>
             </th>
             <th>Wygrany</th>
-            <th>Formuła</th>
+            <th>Klasa</th>
             <th>Kat. wagowa</th>
         </tr>
         </thead>
@@ -32,21 +33,23 @@
                     <a href="{{ path("admin_remove_fight", { 'fight_id' : fight.id, 'id' : tournament.id }) }}" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Rozparuj</a>
                 </td>
                 <td>
-                    <input class="checkbox_ready" type="checkbox" {{ fight.ready? 'checked' : '' }} value="{{ fight.id }}">
+                    <input class="checkbox_ready" type="checkbox" {{ fight.isVisible? 'checked' : '' }} value="{{ fight.id }}">
                 </td>
                 {#<td><select class="select_day">#}
                         {#<option value="{{ fight.id }}|Sobota" {{ fight.day == 'Sobota'? 'selected' }}>Sobota</option>#}
                         {#<option value="{{ fight.id }}|Niedziela"{{ fight.day == 'Niedziela'? 'selected' }} >Niedziela</option>#}
                     {#</select></td>#}
-                <td><select class="select_order" id="{{ loop.index }}">
+                <td><select class="select_order" id="{{ loop.index }}" autocomplete="off">
                         {% for i in 1..fights|length %}
                             <option value="{{ i }}|Sobota" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>
                         {% endfor %}
                     </select>
                 </td>
 
-                {% for user in fight.users %}
-                    {% set signUp = user.user.getSignUpTournament(tournament)  %}
+                {% for userFight in fight.usersFight %}
+                    {% set signUp = userFight.user.getSignUpTournament(tournament)  %}
+
+                    {% set user = userFight.user %}
 
                     {% if loop.index == 2 %}
                         <td>
@@ -56,34 +59,42 @@
                         </td>
                     {% endif %}
 
-
                     <td>
-                        <a href="{{ path('user_show', {'id': user.user.id }) }}"> {{ user.user.name }} {{ user.user.surname }}
-                            {% include '_macros/_fight_result_icon.html.twig' %}
-                    {% if user.user.club %} <br> ({{ user.user.club }}) {% endif %}
+                        <a href="{{ path('user_show', {'id': user.id }) }}"> {{ user.name }} {{ user.surname }}
+
+                            {{ macro.fightResultForUserFight(userFight) }}
+
+                    {% if user.club %} <br> ({{ user.club }}) {% endif %}
                             <br>
-                            {{ signUp.formula }}
-                            {{ signUp.getFinallWeight }} </a>
+                            {{ signUp? signUp.formula }}
+                            {{ signUp? signUp.getFinallWeight }} </a>
                         <br>
-                        {% if user.user.birthDay %}
-                            {% set age = user.user.birthDay |getAge %}
+                        {% if user.birthDay %}
+                            {% set age = user.birthDay |getAge %}
                             {{ age }} lat {{ age <= 18 ? '(Junior)' }}
                         {% endif %}
                         <br>
+                        {% if signUp %}
                         {{ signUp.isPaid ? '' : 'Niezapłacone'  }}
+                        {% endif %}
                     </td>
 
                 {% endfor %}
 
-                <td><select class="select_winner"> <option value="{{ fight.id }}"></option>
-                        {% for user in fight.users %}
-                            {% if fight.winner %}
-                                <option {{ user.user.id == fight.winner.id? 'selected' : '' }} value="{{ fight.id }}|{{ user.user.id }}|{{ fight.draw }}">{{ user.user.surname }} {{ user.user.name }}</option>
-                            {% else %}
-                                <option value="{{ fight.id }}|{{ user.user.id }}|{{ fight.draw }}">{{ user.user.surname }} {{ user.user.name }}</option>
-                            {% endif %}
+                <td>
+                    <select class="select_winner" autocomplete="off"> <option value="{{ fight.usersFight[0].id }}|reset"></option>
+                        {% for userFight in fight.usersFight %}
+
+                            <option {{ userFight.result == 'win' ? 'selected' }} value="{{ userFight.id }}|win">
+                                {{ userFight.user.surname }} {{ userFight.user.name }}
+                            </option>
+
                         {% endfor %}
-                        <option {{ fight.draw? 'selected' : '' }} value="{{ fight.id }}||true" >Remis</option></select></td>
+
+                        <option {{ fight.usersFight[0].result == 'draw' ? 'selected' : '' }} value="{{ fight.usersFight[0].id }}|draw" >Remis</option>
+
+                    </select>
+                </td>
 
                 <td>{{ fight.formula }}</td>
                 <td>{{ fight.weight }}</td>

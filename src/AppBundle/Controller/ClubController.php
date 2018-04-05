@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Serializer;
 class ClubController extends Controller
 {
     /**
-     * @Route("/", name="club_list")
+     * @Route("", name="club_list")
      */
     public function listAction()
     {

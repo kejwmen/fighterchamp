@@ -72,6 +72,7 @@ class FacebookAuthenticator extends SocialAuthenticator
 
         $user = $facebook ? $facebook->getUser() : null;
 
+        //todo 4 argument sometimes is missing
         if(!$user){
             $facebook = new Facebook(
                     $facebookUser->getId(),

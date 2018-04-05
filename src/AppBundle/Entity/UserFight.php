@@ -38,9 +38,20 @@ class UserFight
     private $isRedCorner = false;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      */
-    private $result;
+    private $result = '';
+
+    public function __construct(User $user, Fight $fight)
+    {
+        $this->user = $user;
+        $this->fight = $fight;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     public function getResult(): string
     {
@@ -50,11 +61,6 @@ class UserFight
     public function setResult(UserFightResult $result): void
     {
         $this->result = $result->getValue();
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     public function getUser(): User
@@ -67,18 +73,29 @@ class UserFight
         return $this->fight;
     }
 
-    public function setFight(Fight $fight): void
-    {
-        $this->fight = $fight;
-    }
-
-    public function setUser(User $user): void
-    {
-        $this->user = $user;
-    }
-
-    public function isRedCorner(): ?bool
+    public function isRedCorner(): bool
     {
         return $this->isRedCorner;
+    }
+
+    public function getOpponentUserFight(): UserFight
+    {
+        $usersFight = $this->getFight()->getUsersFight();
+
+        return $usersFight->filter(function (UserFight $userFight)
+        {
+           return  $this !== $userFight;
+
+        })->first();
+    }
+
+    public function resetResult(): void
+    {
+        $this->result = '';
+    }
+
+    public function setIsRedCorner(bool $isRedCorner): void
+    {
+        $this->isRedCorner = $isRedCorner;
     }
 }

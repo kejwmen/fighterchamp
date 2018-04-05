@@ -57,7 +57,7 @@
         $.ajax({
             type: 'POST',
             url: "{{  path('setWinner') }}",
-            data: {fightId: arrValues[0], userId: arrValues[1], draw: arrValues[2] },
+            data: {userFightId: arrValues[0], result: arrValues[1] },
             success: function () {
                 location.reload();
             }

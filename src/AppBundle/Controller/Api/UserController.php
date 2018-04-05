@@ -18,10 +18,8 @@ use AppBundle\Form\User\FighterType;
 use Symfony\Component\Serializer\Serializer;
 
 
-// condition="request.isXmlHttpRequest()
-
 /**
- * @Route("/api")
+ * @Route("/api", condition="request.isXmlHttpRequest()")
  */
 class UserController extends Controller
 {
