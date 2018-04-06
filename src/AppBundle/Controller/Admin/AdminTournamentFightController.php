@@ -14,6 +14,7 @@ use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\UserFight;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -112,11 +113,12 @@ class AdminTournamentFightController extends Controller
 
     /**
      * @Route("/{id}/parowanie", name="admin_tournament_pair")
+     * @Method("GET")
      */
-    public function pairAction(Request $request, Tournament $tournament)
+    public function pairAction(Tournament $tournament)
     {
         $freeSignUpIds = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet(); //zmienić id!!!!
+            ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament->getId());
 
         $signUps = [];
 
@@ -270,9 +272,8 @@ class AdminTournamentFightController extends Controller
     /**
      * @Route("/{id}/setwalki", name="allFightsReady")
      */
-    public function publishFights(Tournament $tournament)
+    public function publishFights(Tournament $tournament, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
         $em->getRepository('AppBundle:Fight')->setAllFightsReady($tournament);
 
         return $this->redirectToRoute('admin_tournament_fights', ['id' => $tournament->getId()]);
@@ -282,12 +283,11 @@ class AdminTournamentFightController extends Controller
     /**
      * @Route("/fight/toggleready", name="toggleFightReady")
      */
-    public function toggleFightReady(Request $request)
+    public function toggleFightReady(Request $request, EntityManagerInterface $em)
     {
 
         $fightId = $request->request->get('fightId');
 
-        $em = $this->getDoctrine()->getManager();
         $fight = $em->getRepository('AppBundle:Fight')
             ->findOneBy(['id' => $fightId]);
 
@@ -302,12 +302,10 @@ class AdminTournamentFightController extends Controller
      * @Route("/fight/setday", name="setDay")
      * @return Response
      */
-    public function setDayAction(Request $request)
+    public function setDayAction(Request $request, EntityManagerInterface $em)
     {
         $fightId = $request->request->get('fightId');
         $day = $request->request->get('day');
-
-        $em = $this->getDoctrine()->getManager();
 
         $tournament = $em->getRepository('AppBundle:Tournament')
             ->findOneBy(['id' => 1]);

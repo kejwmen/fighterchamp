@@ -75,21 +75,21 @@ class SignUpTournamentRepository extends EntityRepository
         return $query->execute();
     }
 
-    public function findAllSignUpButNotPairYet()
+    public function findAllSignUpButNotPairYet(int $tournamentId)
     {
 
         $conn = $this->getEntityManager()
             ->getConnection();
 
-        $stmt = $conn->prepare('SELECT sut.id FROM signuptournament sut
+        $stmt = $conn->prepare("SELECT sut.id FROM signuptournament sut
 LEFT JOIN user u ON sut.user_id = u.id
-WHERE sut.tournament_id = 5
+WHERE sut.tournament_id = $tournamentId
 AND sut.deleted_at IS NULL
 AND u.id NOT IN (
 SELECT uu.id FROM user uu
 JOIN user_fight uf ON uf.user_id = uu.id
 JOIN fight f ON uf.fight_id = f.id
-WHERE f.tournament_id = 5)');
+WHERE f.tournament_id = $tournamentId)");
 
 
 
@@ -126,6 +126,7 @@ WHERE f.tournament_id = 5)');
             ->leftJoin('signUpTournament . user', 'user')
             ->andWhere('signUpTournament . tournament = :tournament')
             ->andWhere('signUpTournament . deleted_at is null')
+            ->andWhere('signUpTournament.deletedAtByAdmin is null')
             ->setParameter('tournament', $tournament)
             ->addSelect('user')
             ->addOrderBy('signUpTournament . weighted')

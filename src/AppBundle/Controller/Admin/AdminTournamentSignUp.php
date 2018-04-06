@@ -1,20 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 14.01.17
- * Time: 04:55
- */
 
 namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use DateTime;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -56,6 +49,10 @@ class AdminTournamentSignUp extends Controller
             ->getRepository('AppBundle:Ruleset')
             ->getWeight();
 
+//        $form = $this->createForm(SignUpTournamentType::class, null,
+//            ['trait_choices' => $weights]
+//        );
+
         return $this->render('admin/sign_up.html.twig', [
             'signUpsTournament' => $signUpsTournament,
             'signUpsPaid' => $signUpsPaid,
@@ -66,28 +63,12 @@ class AdminTournamentSignUp extends Controller
         ]);
     }
 
-    /**
-     * @Route("/{id}/toggle-ready", name="toggleReady")
-     * @Method("GET")
-     */
-    public function toggleReady(SignUpTournament $signUpTournament)
-    {
-        $signUpTournament->toggleReady();
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        $tournament = $signUpTournament->getTournament();
-
-        return $this->redirectToRoute('admin_tournament_sign_up',['id'=>$tournament->getId()]);
-    }
 
     /**
      * @Route("/set-is-paid", name="set_is_paid")
      */
-    public function isPaid(Request $request)
+    public function isPaid(Request $request, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $signUpId = $request->request->get('signUpId');
         $isPaid =  $request->request->get('isPaid');
 
@@ -104,15 +85,13 @@ class AdminTournamentSignUp extends Controller
     /**
      * @Route("/sign-up-delete-by-admin/{id}", name="admin_tournament_toggle_delete_by_admin")
      */
-    public function toggleDeleteByAdminAction(SignUpTournament $signUpTournament)
+    public function toggleDeleteByAdminAction(SignUpTournament $signUpTournament, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $signUpTournament->setDeleteByAdmin($signUpTournament->getDeletedAtByAdmin() ? null : new DateTime('now'));
 
         $em->flush();
 
-        return $this->redirectToRoute('admin_tournament_pair',['id' => 4]);
+        return $this->redirectToRoute('admin_tournament_pair',['id' => 5]); //todo change to 200 and js reload page
     }
 
 

@@ -35,8 +35,4 @@ class FightController extends Controller
 
         return new JsonResponse(['data' => $result]);
     }
-
-
-
-
 }

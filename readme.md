@@ -35,8 +35,11 @@ WHERE signuptournament.tournament_id =4 and is_paid=false and signuptournament.d
 
 UBEZPIECZENIE
 SELECT name, surname, pesel, mother_name, father_name FROM user
-join user_fight ON user_fight.user_id = user.id
-join fight ON user_fight.fight_id = fight.id
-WHERE fight.tournament_id = 4
+join signuptournament ON signuptournament.user_id = user.id
+WHERE signuptournament.tournament_id = 5
+AND signuptournament.deleted_at is null 
+AND signuptournament.deleted_at_by_admin is null
+AND signuptournament.is_paid = true
 
 Sędziują licencjonowani sędziowie PZB.
+

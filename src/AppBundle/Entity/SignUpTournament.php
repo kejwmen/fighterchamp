@@ -66,11 +66,6 @@ class SignUpTournament
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isReady = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
     private $isPaid = false;
 
     /**
