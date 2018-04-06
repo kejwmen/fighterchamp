@@ -523,8 +523,18 @@ class User implements UserInterface, Serializable
 
     public function getFights() : Collection
     {
-        return $this->userFights->map(function (UserFight $userFight){
-           return $userFight->getFight();
-        });
+
+        $fights = new ArrayCollection();
+
+        foreach ($this->userFights as $userFight)
+        {
+            if($userFight->getFight()->getIsVisible()){
+
+                $fights[]= $userFight->getFight();
+            }
+
+        }
+
+        return $fights;
     }
 }
