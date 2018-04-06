@@ -23,7 +23,7 @@ class HomepageController extends Controller
             ->findBy(array(), array('date' => 'DESC'));
 
         $tournament = $em->getRepository('AppBundle:Tournament')
-            ->find(4);
+            ->find(5);
 
         return $this->render(':main:homepage.html.twig', [
             'news' => $news,
