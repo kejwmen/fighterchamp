@@ -10,6 +10,7 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\Tournament;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,19 +24,17 @@ class AdminTournamentWeight extends Controller
     /**
      * @Route("/set-weighted", name="set_weighted")
      */
-    public function setWeighted(Request $request)
+    public function setWeighted(Request $request, EntityManagerInterface $em)
     {
         $signUpId = $request->request->get('signUpId');
         $weighted = $request->request->get('weighted');
-
-        $em = $this->getDoctrine()->getManager();
 
         $signUp = $em->getRepository('AppBundle:SignUpTournament')
             ->find($signUpId);
 
         $signUp->setWeighted($weighted);
 
-        //TODO naprawić
+        //TODO naprawić powinien pytać czy ma rozparować walkę a nie robić to automatycznie
 //        $tournament = $em->getRepository('AppBundle:Tournament')->find(4);
 //
 //        if($weighted != $signUp->getWeight()){

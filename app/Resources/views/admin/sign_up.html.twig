@@ -40,8 +40,13 @@
                             {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
                     <td> {{ signUp.weight }} </td>
                     <td>
+
                         <select autocomplete="off" class="select_weighted">
                             <option value="{{ signUp.id }}"></option>
+                            <option value="{{ signUp.id }}|{{ signUp.weight }}"
+                                    {{ signUp.weighted == signUp.weight ? ' selected' }}
+                            >{{ signUp.weight }}
+                            </option>
                             {% for weight in weights %}
                                 <option value="{{ signUp.id }}|{{ weight.weight }}"
                                         {{ signUp.weighted == weight.weight ? ' selected' }}
@@ -49,6 +54,7 @@
                                 </option>
                             {% endfor %}
                         </select>
+
                     </td>
                     <td> {{ signUp.formula }} </td>
                     <td> {{ signUp.trainingTime }}</td>
@@ -59,6 +65,7 @@
             </tbody>
         </table>
         <br>
+
         {#<button class="btn btn-danger" id="unpair-notweighted">#}
             {#<a href="{{ path('fights_not_weighted_remove') }}"#}
                {#style="color: white"> Rozparuj walki zawodników którzy nie zostali zważeni</a></button>#}
@@ -86,7 +93,7 @@
                 url: "{{ path('set_is_paid') }}",
                 data: {signUpId: arrValues[0], isPaid: arrValues[1]},
                 success: function () {
-                    location.reload();                 }
+                    location.reload(); }
             });
         });
 
