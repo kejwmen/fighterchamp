@@ -76,7 +76,7 @@ class AdminTournamentFightController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $tournament = $em->getRepository('AppBundle:Tournament')
-            ->find(3);
+            ->find(5);
 
         $fightsWhereFightersAreNotWeighted = $this->getDoctrine()
             ->getRepository('AppBundle:Fight')

@@ -65,9 +65,10 @@
                             {{ macro.fightResultForUserFight(userFight) }}
 
                     {% if user.club %} <br> ({{ user.club }}) {% endif %}
-                            <br>
-                            {{ signUp? signUp.formula }}
-                            {{ signUp? signUp.getFinallWeight }} </a>
+                            </a>
+                        <br>
+                        {{ signUp? signUp.formula }}
+                        {{ signUp? signUp.getFinallWeight }}
                         <br>
                         {% if user.birthDay %}
                             {% set age = user.birthDay |getAge %}

@@ -26,6 +26,7 @@ class FightNormalizer implements NormalizerInterface, SerializerAwareInterface
     {
         return [
             'href' => $this->router->generate('fight_show', ['id' => $object->getId()]),
+            'id' => $object->getId(),
             'formula' => $object->getFormula(),
             'weight' => $object->getWeight(),
             'youtubeId' => $object->getYoutubeId(),
@@ -34,6 +35,8 @@ class FightNormalizer implements NormalizerInterface, SerializerAwareInterface
                 'name' => $object->getTournament()->getName(),
                 'start' => $object->getTournament()->getStart()
             ],
+            'isVisible' => $object->getIsVisible(),
+            'position' => $object->getPosition(),
             'usersFight' => array_map(
                 function (UserFight $userFight) {
                     return [
