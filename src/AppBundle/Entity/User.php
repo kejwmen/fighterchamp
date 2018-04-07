@@ -175,7 +175,7 @@ class User implements UserInterface, Serializable
     private $male;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Facebook", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Facebook", mappedBy="user", cascade={"persist"})
      */
     private $facebook;
 

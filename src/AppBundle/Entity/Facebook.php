@@ -54,7 +54,7 @@ class Facebook
     private $male;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="facebook")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", inversedBy="facebook", cascade={"persist"})
      */
     private $user;
 
