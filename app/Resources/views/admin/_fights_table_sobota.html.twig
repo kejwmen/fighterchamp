@@ -77,6 +77,7 @@
                         <br>
                         {% if signUp %}
                         {{ signUp.isPaid ? '' : 'Niezapłacone'  }}
+                            {{ signUp.weighted ? '' : 'Niezważony' }}
                         {% endif %}
                     </td>
 
