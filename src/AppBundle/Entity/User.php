@@ -217,6 +217,38 @@ class User implements UserInterface, Serializable
      */
     private $pesel;
 
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $valid = false;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $hash;
+
+    public function isValid(): bool
+    {
+        return $this->valid;
+    }
+
+    public function setValid(bool $valid): void
+    {
+        $this->valid = $valid;
+    }
+
+    public function getHash(): string
+    {
+        return $this->hash;
+    }
+
+    public function setHash(string $hash): void
+    {
+        $this->hash = $hash;
+    }
+
     public function getPesel(): ?string
     {
         return $this->pesel;
@@ -416,32 +448,15 @@ class User implements UserInterface, Serializable
      */
     private $tournamentAdmin;
 
-
     public function getTournamentAdmin()
     {
         return $this->tournamentAdmin;
     }
 
-    public function getPlec()
-    {
-        return $this->getMale() ? 'M' : 'K';
-    }
-
-    public function getAge()
-    {
-        $referenceDateTimeObject = new \DateTime('now');
-
-        $diff = $referenceDateTimeObject->diff($this->getBirthDay());
-
-        return $diff->y;
-    }
-
-
     public function getUserFights()
     {
         return $this->userFights;
     }
-
 
     public function __toString()
     {

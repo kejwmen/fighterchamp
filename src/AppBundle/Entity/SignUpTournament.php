@@ -142,21 +142,9 @@ class SignUpTournament
     }
 
 
-
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
 
@@ -219,16 +207,6 @@ class SignUpTournament
         $this->user = $user;
     }
 
-    public function howOldUserIs()
-    {
-        $birthDay = $this->user->getBirthDay();
-        $tournamentDay = $this->tournament->getStart();
-
-        $date_diff =  date_diff($birthDay, $tournamentDay);
-
-        return $date_diff->format("%y");
-    }
-
     public function getStazTreningowy()
     {
         if($this->getTrainingTime()){
@@ -274,31 +252,13 @@ class SignUpTournament
         $this->musicArtistAndTitle = $musicArtistAndTitle;
     }
 
-
     public function getDeletedAtByAdmin(): ?\DateTime
     {
         return $this->deletedAtByAdmin;
     }
 
-
     public function setDeleteByAdmin(?\DateTime $dateTime): void
     {
         $this->deletedAtByAdmin = $dateTime;
     }
-
-
-
-
-
-
-    public function __toString()
-    {
-        return (string) $this->user->getPlec() . "  ". $this->user->getSurname() . " " . $this->user->getName() .
-             " " . $this->getFormula() . " " . $this->getFinallWeight() . "kg" .
-            " " . $this->getStazTreningowy() . $this->howOldUserIs() . 'lat ' . $this->user->getClub();
-    }
-
-
-
-
 }
