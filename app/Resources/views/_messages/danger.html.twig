@@ -1,0 +1,7 @@
+{% if app.request.hasPreviousSession %}
+    {% for msg in app.session.flashBag.get('danger') %}
+        <div class="alert alert-danger">
+            {{ msg }}
+        </div>
+    {% endfor %}
+{%  endif %}

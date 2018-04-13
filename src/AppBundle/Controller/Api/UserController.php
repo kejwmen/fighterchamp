@@ -3,12 +3,16 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\User;
+use AppBundle\Event\Events;
+use AppBundle\Event\UserCreatedEvent;
+use AppBundle\Event\UserEvent;
 use AppBundle\Form\User\CoachType;
 use AppBundle\Form\User\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,7 +43,7 @@ class UserController extends Controller
      * @Route("/user-create", name="user_create")
      * @Method("POST")
      */
-    public function createAction(Request $request, EntityManagerInterface $em)
+    public function createAction(Request $request, EntityManagerInterface $em, EventDispatcherInterface $eventDispatcher)
     {
         $form = $this->createForm($this->getFormType($request), null, [
             'method' => 'POST',
@@ -75,10 +79,19 @@ class UserController extends Controller
 //                $user->setImageFile($image_file);
 //            }
 
+            $user->setHash(hash('sha256', md5(rand())));
+
             $em->persist($user);
             $em->flush();
 
+            $eventDispatcher->dispatch(
+                Events::USER_REGISTERED,
+                new UserCreatedEvent($user)
+            );
+
             $this->addFlash('success', 'Sukces! Twój profil został utworzony! Jesteś zalogowany!');
+            $this->addFlash('danger',
+                "Na twój email {$user->getEmail()} został wysłany link który musisz kliknąć aby twoje konto było aktywne");
 
             $this->get('security.authentication.guard_handler')
                 ->authenticateUserAndHandleSuccess(

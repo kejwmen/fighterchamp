@@ -234,9 +234,9 @@ class User implements UserInterface, Serializable
         return $this->valid;
     }
 
-    public function setValid(bool $valid): void
+    public function validate(): void
     {
-        $this->valid = $valid;
+        $this->valid = true;
     }
 
     public function getHash(): string

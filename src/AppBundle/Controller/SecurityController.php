@@ -11,20 +11,48 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Form\Security\LoginForm;
 use AppBundle\Form\Security\PasswordResetType;
-use AppBundle\Form\User\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swift_Mailer;
 use Swift_SmtpTransport;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class SecurityController extends Controller
 {
+
+    /**
+     * @Route("/walidacja", name="user_validation")
+     */
+    public function validateAction(EntityManagerInterface $em, Request $request)
+    {
+        $hash = $request->query->get('hash');
+        $email = $request->query->get('email');
+
+        /**
+         * @var $user User
+         */
+        $user = $em->getRepository(User::class)
+            ->findOneBy(
+                ['email' => $email,
+                    'hash' => $hash]);
+
+        if ($user) {
+            $user->validate();
+            $em->flush();
+            $this->addFlash
+            ('success_info', 'Sukces. Twoje konto jest już aktywne.');
+        }else{
+            $this->addFlash
+            ('danger_info', 'Niepoprawne dane. Użyj linka który został wysłany na twojego maila.');
+        }
+
+        return $this->render('security/validate.html.twig');
+    }
+
+
     /**
      * @Route("/login", name="login")
      */
@@ -67,38 +95,37 @@ class SecurityController extends Controller
                 ->findOneBy(['email' => $userEmail]);
 
 
-             if($user) {
-                 $new_password = time();
+            if ($user) {
+                $new_password = time();
 
-                 $user->setPlainPassword($new_password);
+                $user->setPlainPassword($new_password);
 
-                 $em = $this->getDoctrine()->getManager();
-                 $em->persist($user);
-                 $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
 
-                 $transport = (new Swift_SmtpTransport('smtp.zenbox.pl', 587))
-                     ->setUsername('fighterchamp@fighterchamp.pl')
-                     ->setPassword('Cortez1634')
-                 ;
+                $transport = (new Swift_SmtpTransport('smtp.zenbox.pl', 587))
+                    ->setUsername('fighterchamp@fighterchamp.pl')
+                    ->setPassword('Cortez1634');
 
-                 $mailer = new Swift_Mailer($transport);
+                $mailer = new Swift_Mailer($transport);
 
-                 $message = \Swift_Message::newInstance()
-                     ->setSubject('Password Reset')
-                     ->setFrom('fighterchamp@fighterchamp.pl', 'FighterChamp')
-                     ->setTo($userEmail)
-                     ->setBody("Nowe Hasło: " . $new_password, 'text/html');
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Password Reset')
+                    ->setFrom('fighterchamp@fighterchamp.pl', 'FighterChamp')
+                    ->setTo($userEmail)
+                    ->setBody("Nowe Hasło: " . $new_password, 'text/html');
 
-                 $numberOfSuccessfulSent = $mailer->send($message);
+                $numberOfSuccessfulSent = $mailer->send($message);
 
-                 $this->addFlash('success_info', 'Sukces. Twoje nowe hasło zostało wysłane na ' . $userEmail);
+                $this->addFlash('success_info', 'Sukces. Twoje nowe hasło zostało wysłane na ' . $userEmail);
 
-             }else {
-                     $this->addFlash('danger_info', 'Użytkownik o podanej nazwie nie istnieje.');
-             }
-
-                return $this->redirectToRoute('login');
+            } else {
+                $this->addFlash('danger_info', 'Użytkownik o podanej nazwie nie istnieje.');
             }
+
+            return $this->redirectToRoute('login');
+        }
 
         return $this->render('security/password_reset.html.twig', [
             'form' => $form->createView(),
