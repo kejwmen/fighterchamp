@@ -23,11 +23,13 @@ class TQMController extends Controller
      */
     public function listAction(EntityManagerInterface $em)
     {
-        $tasks = $em->getRepository('AppBundle:Task')->findAllTasks();
+        $tasks = $em->getRepository('AppBundle:Task')->findAll();
 
 //
 //        $serializer = $this->get('serializer.my');
 //        $json = $serializer->serialize($tasks,'json');
+
+        dump($tasks);
 
         return $this->render('tqm/news.html.twig', [
             'tasks' => $tasks,
