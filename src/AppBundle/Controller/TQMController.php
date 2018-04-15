@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use AppBundle\Entity\UserTask;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,21 +21,16 @@ class TQMController extends Controller
     /**
      * @Route("/tqm", name="tqm_nowosci")
      */
-    public function listAction()
+    public function listAction(EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
+        $tasks = $em->getRepository('AppBundle:Task')->findAllTasks();
 
-        $tasksDone = $em->getRepository('AppBundle:Task')->findAllTasks();
-
-        $tasks = $em->getRepository('AppBundle:Task')->findAllIdeas();
-
-        $serializer = $this->get('serializer.my');
-        $json = $serializer->serialize($tasks,'json');
+//
+//        $serializer = $this->get('serializer.my');
+//        $json = $serializer->serialize($tasks,'json');
 
         return $this->render('tqm/news.html.twig', [
-            'tasks' => $json,
-            'ideas' => $tasks,
-            'StandUpTest' => true,
+            'tasks' => $tasks,
         ]);
     }
 
