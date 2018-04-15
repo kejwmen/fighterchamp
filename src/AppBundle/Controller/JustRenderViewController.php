@@ -57,5 +57,12 @@ class JustRenderViewController extends Controller
         return $this->render('rules/rules.html.twig');
     }
 
+    /**
+     * @Route("/wesprzyj-projekt", name="support_project")
+     */
+    public function supportController()
+    {
+        return $this->render('wesprzyj-projekt/index.html.twig');
+    }
 }
 

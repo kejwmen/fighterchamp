@@ -22,17 +22,14 @@ class TQMController extends Controller
      */
     public function listAction()
     {
-
         $em = $this->getDoctrine()->getManager();
 
         $tasksDone = $em->getRepository('AppBundle:Task')->findAllTasks();
 
         $tasks = $em->getRepository('AppBundle:Task')->findAllIdeas();
 
-        $serializer = $this->get('serializer_task');
+        $serializer = $this->get('serializer.my');
         $json = $serializer->serialize($tasks,'json');
-
-
 
         return $this->render('tqm/news.html.twig', [
             'tasks' => $json,
@@ -62,11 +59,7 @@ class TQMController extends Controller
             return new Response(200);
         }
 
-
-
         return new Response(403);
-
-
     }
 
 
