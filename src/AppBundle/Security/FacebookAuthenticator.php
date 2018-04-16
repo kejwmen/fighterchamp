@@ -93,7 +93,7 @@ class FacebookAuthenticator extends SocialAuthenticator
                 $user->setEmail($facebook->getEmail());
                 $user->setMale($facebook->isMale());
                 $user->setType(3);
-                $user->setHash((string) hash('sha256', md5(rand())));
+                $user->setHash(hash('sha256', md5((string)rand())));
 
                 $this->em->persist($user);
                 $this->em->persist($facebook);
