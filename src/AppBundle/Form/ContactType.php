@@ -14,12 +14,13 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, array('attr' => array('placeholder' => 'Twój adres email'),
-                'constraints' => array(
-                    new NotBlank(array("message" => "Please provide a valid email")),
-                    new Email(array("message" => "Your email doesn't seems to be valid")),
-                )
-            ))
+            ->add('email', EmailType::class,
+                ['attr' => ['placeholder' => 'Twój adres email'],
+                'constraints' => [
+                    new NotBlank(["message" => "Please provide a valid email"]),
+                    new Email(["message" => "Your email doesn't seems to be valid"]),
+                ]
+                ])
         ;
     }
 

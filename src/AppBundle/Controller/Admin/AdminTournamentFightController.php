@@ -13,6 +13,7 @@ use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\UserFight;
+use AppBundle\Service\FightService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -28,40 +29,12 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminTournamentFightController extends Controller
 {
 
-    public function toggleCorners(UserFight $userOneFight, UserFight $userTwoFight): void
-    {
-        $one = $userOneFight->isRedCorner();
-        $two = $userTwoFight->isRedCorner();
-
-        $this->convertNullToFalse($one);
-        $this->convertNullToFalse($two);
-
-        if($one === $two){
-            $one = true;
-            $two = false;
-        }
-
-        $one = ($one === true) ? false : true;
-        $two = ($two === false) ? true : false;
-
-        $userOneFight->setIsRedCorner($one);
-        $userTwoFight->setIsRedCorner($two);
-    }
-
-    public function convertNullToFalse(&$arg)
-    {
-        $arg = $arg ?? false;
-    }
-
-
     /**
      * @Route("/toggle-corner/walki/{id}", name="toggle_corners")
      */
-    public function toggleCornersAction(Fight $fight, EntityManagerInterface $em)
+    public function toggleCornersAction(Fight $fight, EntityManagerInterface $em, FightService $fightService)
     {
-        $usersFight = $fight->getUsersFight();
-
-        $this->toggleCorners($usersFight[0], $usersFight[1]);
+        $fightService->toggleCorners($fight);
 
         $em->flush();
 
@@ -139,10 +112,8 @@ class AdminTournamentFightController extends Controller
     /**
      * @Route("/turniej/{id}", name="admin_tournament_create_fight")
      */
-    public function createFight(Request $request, Tournament $tournament)
+    public function createFight(Request $request, Tournament $tournament, EntityManagerInterface $em)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $data = $request->request->all();
 
         $signUpRepo = $em->getRepository('AppBundle:SignUpTournament');
