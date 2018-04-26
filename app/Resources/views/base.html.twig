@@ -63,7 +63,7 @@
                             href="{{ path ('fight_list') }}">Walki</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'tqm_nowosci') ? 'class="active"' }}><a
                             href="{{ path ('tqm_nowosci') }}">TQM</a></li>
-                <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a
+                <li {{ (app.request.attributes.get('_route') == 'support_project') ? 'class="active"' }}><a
                             href="{{ path ('support_project') }}">Wesprzyj Projekt</a></li>
                 <li {{ (app.request.attributes.get('_route') == 'rules') ? 'class="active"' }}><a
                             href="{{ path ('rules') }}">Regulamin</a></li>
@@ -101,20 +101,12 @@
 
 
 
-<footer class="container-fluid">Copyright 2016</footer>
+<footer class="container-fluid">Copyright 2016. Ta strona korzysta z plików cookies (tzw. ciasteczka).</footer>
 
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript"
-            id="cookieinfo"
-            src="//cookieinfoscript.com/js/cookieinfo.min.js"
-            data-message="Ta strona korzysta z plików cookies (tzw. ciasteczka)."
-            data-linkmsg="Więcej"
-            data-position="bottom"
-            data-close-text="Rozumiem">
-    </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.16/b-1.5.1/b-html5-1.5.1/r-2.2.1/datatables.min.js"></script>

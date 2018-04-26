@@ -17,6 +17,7 @@
         {#<div id="status"></div>#}
     {#</div>#}
 
+
     <div class="container">
         <div class="row">
             {% for msg in app.session.flashBag.get('success') %}
@@ -24,19 +25,46 @@
                     {{ msg }}
                 </div>
             {% endfor %}
+            {##}
+            {#Serwis powstał aby zawodnicy mogli w łatwy i wygodny sposób zapisać się na turniej bokserski,#}
+            {#a organizator turnieju mógł sprawnie sparować zawodników.#}
+
+
+            {#- zapisy na turniej - dotychczasowo widziałem po prostu ogłoszenia na Facebooku#}
+            {#z data wydarzenia i prośbą o zapisy podając, swoje dane osobowe kat. wag. oraz stopień zaawansowania drogą mailową.#}
+
+            {#Taki sposób zajmuje sporo czasu oraz jest narażony na licznę błędy i pomyłki. Co najgorsze zawodnicy oraz ich rekord walk nigdzie nie jest gromadzony,#}
+            {#ponieważ ręczne zbieranie tych wszystkich danych zabiera bardzo dużo czasu.#}
+
+            {#W dodatku największą bolączka zapisywanych, jest to, że nie wiadomo ile osób już się zapisało oraz czy znajdę zawodnika#}
+            {#do walki w mojej kat. wag i zbliżonego doświadczeniem.#}
+
+            {#odp - wyświetla na bieżąco wszystkich zapisanych zawodników#}
+
+            {#- wszystkie walki powinny być nagrywane,#}
+
+            {#- gromadzenie danych dotyczących przebiegu walk oraz możliwość obejrzenia z nich nagrania video#}
+
+            {#- umożliwia automatyczne tworzenie statystyk dla zawodników, klubów, trenerów#}
+
+            {#- osadzenie zawodnika w środowisku konkurencji, podjęcia próby ustawienia swojej dotychczasowej wartości i ukazanie możliwości pnięcia się wyżej w drabinie#}
+            {##}
+            {#Rozpocząć pracę u podstaw w obszarze sportu rekreacyjnego i amatorskiego dostarczjąc odpowiednich narzędzi dla zawodników#}
+            {#i organizatorów turniejów.#}
+
         <address class="text-center col-xs-12">
             <i class="fa fa-facebook" ><a href="https://www.facebook.com/FighterChampPL/">
                     Strona na Facebooku</a></i><br/>
                 slawomir.grochowski@gmail.com
         </address>
         </div>
-        
+
         <div class="row">
             <div class="text-center col-xs-12">
                 <h1>NASZ ZESPÓŁ</h1>
             </div>
         </div>
-        
+
         <div class="row team">
             <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member">
                 <img src="{{ asset('img/about/slawomir_grochowski.jpg') }}">
@@ -68,6 +96,7 @@
             <input type="submit" class="btn btn-primary" value="Wyślij" formnovalidate>
             {{ form_end(form) }}
             </div>
+
         </div>
     </div>
 {% endblock %}
