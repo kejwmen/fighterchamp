@@ -42,6 +42,11 @@ class UserFight
      */
     private $result = '';
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Award", mappedBy="userFight")
+     */
+    private $awards;
+
     public function __construct(User $user, Fight $fight)
     {
         $this->user = $user;
@@ -97,5 +102,15 @@ class UserFight
     public function setIsRedCorner(bool $isRedCorner): void
     {
         $this->isRedCorner = $isRedCorner;
+    }
+
+    public function getAwards()
+    {
+        return $this->awards;
+    }
+
+    public function setAwards($awards): void
+    {
+        $this->awards = $awards;
     }
 }

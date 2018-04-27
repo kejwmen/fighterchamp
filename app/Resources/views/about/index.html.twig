@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+
+
+            <div class="text-center">Serwis powstał aby zawodnicy mogli w łatwy i wygodny sposób zapisać się na turniej
+                bokserski,
+                a organizator turnieju mógł sprawnie sparować zawodników.
+            </div>
+
+            <h2>Dla Organizatora</h2>
+<span>Przykład turnieju ze 100 uczestnikami</span>
+            <table class="table">
+                <tr>
+                    <th>opis</th>
+                    <th>bez</th>
+                    <th>czas</th>
+                    <th>z FighterChamp.pl</th>
+                    <th>czas</th>
+                </tr>
+                <tr>
+                    <td>zapisy na turniej</td>
+                    <td>przez email. Możliwość wystąpienia błędów podając niewłaściwą
+                        kat. wagową dla danej klasy czy niekompletne dane. Przy każdym turnieju zawodnik ciągle na nowo
+                        podaje swoję dane osobowe.
+                    </td>
+                    <td>10 godzin</td>
+                    <td>na stronie. Walidacja danych, zapis tylko przy podaniu poprawnych i kompletnych danych. Zawodnik
+                        tylko raz podaje swoję dane.
+                    </td>
+                    <td>0 min - zawodnik sam się zapisuję</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>niewiadomo ile w danym momencie zapisało się osób, albo lista jest aktualizowana co kilka
+                        godzin
+                    </td>
+                    <td>3 godziny</td>
+                    <td>aktualna lista jest zawsze widoczna na stronie</td>
+                    <td>0 min - lista sama się generuję</td>
+                </tr>
+                <tr>
+                    <td>parowanie</td>
+                    <td>żmudne i mozolne, kopiuj, wklej czy na kartce papieru. Parowanie zawodników oparte na informacji
+                        o poziomie umiejętnośći otrzymanej od zawodnika / trenera
+                    </td>
+                    <td>4 godziny</td>
+                    <td>parowanie zawodników, którzy posiadają już rekord, nagrania z poprzednich walk</td>
+                    <td>1 godzina</td>
+                </tr>
+                <tr>
+                    <td>historia walk</td>
+                    <td>w czasie turnieju rzadko jest aktualizowana a po często niepublikowana, albo wrzucona na FB w
+                        niesformatowanej formie
+                    </td>
+                    <td>3 godziny</td>
+                    <td>na bieżąco można sledzić przebieg walk, historia wszystkich walk jest na stronie</td>
+                    <td>0 min - lista sama się generuj</td>
+                </tr>
+                <tr>
+                    <td>czas potrzebny do organizacji turnieju</td>
+                    <td>
+                    </td>
+                    <td>20 godzin</td>
+                    <td></td>
+                    <td>1 godzina</td>
+                </tr>
+
+            </table>
+
+            <span>Jeśli chciałbyś zorganizować turniej z użyciem FighterChamp.pl to skontaktuj się z slawomir.grochowski@gmail.com tel: 663 269 563</span>
+
+            <h2>Dla Zawodników</h2>
+
+            <ul>
+
+
+            </ul>
+
+
+            <li> w czasie rzeczywistym widać ile osób się zapisało w danej kat. wagowej i formule - czy zawodnik będzie miał z kim walczyć </li>
+
+            <li> gromadzenie danych dotyczących przebiegu walk oraz możliwość obejrzenia nagrania video z konkretnej walki </li>
+
+            <li> umożliwia automatyczne tworzenie statystyk dla zawodników, klubów, trenerów </li>
+
+            <li> osadzenie zawodnika w środowisku konkurencji, podjęcia próby ustawienia swojej dotychczasowej wartości i
+                ukazanie możliwości pnięcia się wyżej w swojej sportowej karierze </li>
+
+            <h2>Dla Kibiców</h2>
+            ...
+
+            <h1><a href="{{ path('support_project') }}"> Wesprzyj Serwis Finansowo</a></h1>
+        </div>
+    </div>
+{% endblock %}
