@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TQMController extends Controller
 {
     /**
-     * @Route("/tqm", name="tqm_nowosci")
+     * @Route("/pomysly", name="pomysly")
      */
     public function listAction(EntityManagerInterface $em, Request $request)
     {

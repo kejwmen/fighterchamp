@@ -5,8 +5,9 @@
         <th>strona</th>
         <th>pomysłodawcy</th>
         <th>wykonawcy</th>
-        <th>czas wykonania (godziny:minuty)</th>
-        <th>data</th>
+        <th>czas wykonania (godziny)</th>
+        <th>utworzone</th>
+        <th>zrobione</th>
     </tr>
     {% for task in tasks %}
     <tr>
@@ -15,17 +16,17 @@
         <td><a href="{{ task.www }}">{{ task.www }}</a></td>
         <td>
         {% for userTask in task.userTasks %}
-            {{ userTask.idea ? userTask.User }}
+
+            <a href="{{ path('user_show', {id: userTask.User.id}) }}">{{ userTask.User }}</a>
+
         {%  endfor %}
         </td>
         <td>
-        {% for userTask in task.userTasks %}
-            {{ userTask.idea ? '' : userTask.User }}
-        {%  endfor %}
+            <a href="{{ path('user_show', { id: 481 }) }}"> Sławomir Grochowski</a>
         </td>
-        <td>{{ task.minutes|hoursToMins }}</td>
+        <td>{{ task.minutes }}</td>
         <td>{{ task.createdAt|date('d-m-Y') }}</td>
-        <th></th>
+        <td>{{ task.finishedAt ? task.finishedAt|date('d-m-Y') }}</td>
     </tr>
     {% endfor %}
 </table>

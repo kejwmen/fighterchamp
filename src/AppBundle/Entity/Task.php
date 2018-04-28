@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 16.04.17
- * Time: 08:15
- */
 
 namespace AppBundle\Entity;
 
@@ -66,14 +60,6 @@ class Task
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -172,8 +158,4 @@ class Task
     {
         $this->finishedAt = $finishedAt;
     }
-
-
-
-
 }
