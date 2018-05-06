@@ -12,7 +12,8 @@ class ImageController extends Controller
     {
         $upload_images = array();
         $upload_dir = "img/user";
-        foreach($_FILES['images_upload']['name'] as $key=>$val){
+
+
             $file_path = $upload_dir.$_FILES['images_upload']['name'][$key];
             $filename = $_FILES['images_upload']['name'][$key];
             if(is_uploaded_file($_FILES['images_upload']['tmp_name'][$key])) {
@@ -20,7 +21,9 @@ class ImageController extends Controller
                     $upload_images[] = $file_path;
                 }
             }
-        }
+
+
+
 
         return new Response();
     }

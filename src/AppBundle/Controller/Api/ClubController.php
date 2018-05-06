@@ -2,19 +2,16 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\Club;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use AppBundle\Service\StandUp;
 
 class ClubController extends Controller
 {
     public function listAction(EntityManagerInterface $em)
     {
-        $clubs = $em->getRepository('AppBundle:Club')->findAll();
+        $clubs = $em->getRepository(Club::class)->findAll();
 
-        $result = $this->get('serializer.my')->normalize($clubs, 'json');
-
-        return new JsonResponse(['data' => $result]);
+        return $clubs;
     }
 }

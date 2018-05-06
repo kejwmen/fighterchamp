@@ -33,9 +33,7 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        $user = $this->get('serializer.my')->serialize($user, 'json');
-
-        return new Response($user, 200, ['Content-Type' => 'application/json']);
+        return $user;
     }
 
 
@@ -153,11 +151,8 @@ class UserController extends Controller
         $type = $request->query->get('type');
 
         $users = $em->getRepository(User::class)->findBy(['type' => $type]);
-
-        $json = $this->get('serializer.my')->normalize($users, 'json');
-
-
-        return new JsonResponse(['data' => $json]);
+        
+        return $users;
     }
 
 

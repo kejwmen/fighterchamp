@@ -45,7 +45,7 @@ class TQMController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirectToRoute('tqm_nowosci');
+            return $this->redirectToRoute('pomysly');
         }
 
         return $this->render('tqm/news.html.twig', [
@@ -66,7 +66,6 @@ class TQMController extends Controller
 
             $taskUser = new UserTask();
             $taskUser->setUser($user);
-            $taskUser->setIdea(false);
             $taskUser->setTask($task);
 
             $em = $this->getDoctrine()->getManager();
