@@ -15,6 +15,9 @@ services:
     resource: '../../src/AppBundle/*'
     exclude: '../../src/AppBundle/{Entity,Repository,Tests,DataFixtures,Twig}'
 
+  AppBundle\Repository\:
+    resource: '../../src/AppBundle/Repository/ClubRepository.php'
+
   AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
         tags: ['controller.service_arguments']

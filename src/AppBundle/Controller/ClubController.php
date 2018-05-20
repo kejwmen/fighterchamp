@@ -3,10 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Club;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/kluby")
@@ -24,9 +23,9 @@ class ClubController extends Controller
     /**
      * @Route("/{id}", name="club_show", options={"expose"=true})
      */
-    public function showAction(Club $club)
+    public function showAction(Club $club, NormalizerInterface $normalizer)
     {
-        $club = $this->get('serializer.my')->normalize($club);
+        $club = $normalizer->normalize($club);
 
         return $this->render('club/show.twig',
             [

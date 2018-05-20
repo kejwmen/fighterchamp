@@ -2,15 +2,14 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Club;
-use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Repository\ClubRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ClubController extends Controller
 {
-    public function listAction(EntityManagerInterface $em)
+    public function listAction(ClubRepository $clubRepository)
     {
-        $clubs = $em->getRepository(Club::class)->findAll();
+        $clubs = $clubRepository->findAll();
 
         return $clubs;
     }

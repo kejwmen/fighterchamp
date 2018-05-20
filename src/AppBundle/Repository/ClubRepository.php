@@ -1,35 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 04.02.17
- * Time: 18:53
- */
 
 namespace AppBundle\Repository;
+
+use AppBundle\Entity\Club;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class ClubRepository extends EntityRepository
+final class ClubRepository
 {
-    public function findAllOrderByNumberOfUsers()
+    /**
+     * @var EntityRepository
+     */
+    private $repository;
+
+    public function __construct(EntityManager $entityManager)
     {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = "SELECT CONCAT('/kluby/', c.id) as _self, c.name , count(DISTINCT(us.id)) as user_count
-          ,sum(case when uf.result = 'win' then 1 else 0 end) as win
-          ,sum(case when uf.result = 'draw' then 1 else 0 end) AS draw
-          ,sum(case when uf.result = 'lose' or uf.result = 'disqalify' then 1 else 0 end) as lose
-FROM user as us
-  LEFT JOIN user_fight AS uf ON uf.user_id = us.id
-  LEFT JOIN fight as f ON f.id = uf.fight_id
-  JOIN club c ON us.club_id = c.id
-GROUP BY c.id";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-
-        return $stmt->fetchAll();
-
+        $this->repository = $entityManager->getRepository(Club::class);
     }
 
+    public function find(int $id): Club
+    {
+        return $this->repository->find($id);
+    }
+
+    public function findAll(): array
+    {
+        return $this->repository->findAll();
+    }
 }

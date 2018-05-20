@@ -131,7 +131,7 @@ class UserController extends Controller
 
             $this->addFlash('success', 'Sukces! Zmiany na twoim profilu zostały zapisane!!');
 
-            return new JsonResponse(200);
+            return new JsonResponse(null,200);
         }
 
         return new JsonResponse(

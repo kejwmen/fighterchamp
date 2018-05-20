@@ -11,7 +11,7 @@ namespace AppBundle\Repository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
-class UserRepository
+class UserRepository extends EntityRepository
 {
     public static function createCoachCriteria()
     {
