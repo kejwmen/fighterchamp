@@ -91,7 +91,7 @@ class AdminTournamentSignUp extends Controller
 
         $em->flush();
 
-        return $this->redirectToRoute('admin_tournament_pair',['id' => 5]); //todo change to 200 and js reload page
+        return $this->redirectToRoute('admin_tournament_pair',['id' => 6]); //todo change to 200 and js reload page
     }
 
 

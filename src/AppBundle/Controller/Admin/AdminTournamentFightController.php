@@ -38,7 +38,7 @@ class AdminTournamentFightController extends Controller
 
         $em->flush();
 
-        return $this->redirectToRoute('admin_tournament_fights', ['id' => 5]);
+        return $this->redirectToRoute('admin_tournament_fights', ['id' => 6]);
     }
 
 
@@ -49,7 +49,7 @@ class AdminTournamentFightController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $tournament = $em->getRepository('AppBundle:Tournament')
-            ->find(5);
+            ->find(6);
 
         $fightsWhereFightersAreNotWeighted = $this->getDoctrine()
             ->getRepository('AppBundle:Fight')
