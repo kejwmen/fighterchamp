@@ -56,12 +56,14 @@
     "deployer/recipes": "^6.0",
     "doctrine/data-fixtures": "^1.3",
     "doctrine/doctrine-fixtures-bundle": "^2.3",
+    "liip/functional-test-bundle": "~1.9.5",
     "nelmio/alice": "dev-master",
     "phploc/phploc": "^4.0",
     "phpmd/phpmd": "@dev",
     "phpunit/phpunit": "^6.0",
     "sensio/generator-bundle": "^3.0",
-    "symfony/phpunit-bridge": "^3.0"
+    "shopsys/http-smoke-testing": "dev-master",
+    "symfony/phpunit-bridge": "^4.0"
   },
   "scripts": {
     "post-install-cmd": [

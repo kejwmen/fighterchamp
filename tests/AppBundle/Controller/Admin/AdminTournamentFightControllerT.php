@@ -2,6 +2,7 @@
 
 use AppBundle\Controller\Admin\AdminTournamentFightController;
 use AppBundle\Entity\UserFight;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Created by PhpStorm.
@@ -11,16 +12,16 @@ use AppBundle\Entity\UserFight;
  */
 
 
-class AdminTournamentFightControllerTest extends PHPUnit_Framework_TestCase
+class AdminTournamentFightControllerT extends TestCase
 {
     /**
-     * @var AdminTournamentFightController
+     * @var AdminTournamentFightControllerT
      */
     private $controller;
 
     public function setUp()
     {
-        $this->controller = new AdminTournamentFightController();
+        $this->controller = new AdminTournamentFightControllerT();
     }
 
     /**
