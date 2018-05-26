@@ -2,13 +2,13 @@
 
 namespace AppBundle\Form\EventListener;
 
-use AppBundle\Entity\Club;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-class CreateClubIfDosentExist implements EventSubscriberInterface
+class CreateCoachIfDosentExist implements EventSubscriberInterface
 {
     /**
      * @var EntityManagerInterface
@@ -33,24 +33,27 @@ class CreateClubIfDosentExist implements EventSubscriberInterface
             return;
         }
 
-        $clubId = $data['club'];
+        $userId = $data['users'];
 
 
-        if ($this->em->getRepository(Club::class)->find($clubId)) {
+        if ($this->em->getRepository(User::class)->find($userId)) {
             return;
         }
 
-        if(!$clubId) {
+        if(!$userId) {
             return;
         }
-        $clubName = $clubId;
 
-        $club = new Club();
-        $club->setName($clubName);
-        $this->em->persist($club);
+        $clubName = $userId;
+
+        $user = new User();
+        $user->setName($clubName);
+        $user->setSurname('');
+        $user->setHash('');
+        $this->em->persist($user);
         $this->em->flush();
 
-        $data['club'] = $club->getId();
+        $data['users'] = $user->getId();
         $event->setData($data);
     }
 }

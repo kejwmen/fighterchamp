@@ -41,11 +41,11 @@ class UserTypeTest extends \Symfony\Component\Form\Test\TypeTestCase
 
         $form = $this->factory->create(UserType::class);
 
-        $object = new User
-        (
-            $formData['email'],
-            $formData['name']
-    );
+        $object = new User();
+        $object->setEmail($formData['email']);
+        $object->setName($formData['name']);
+
+
 
 
         // submit the data to the form directly

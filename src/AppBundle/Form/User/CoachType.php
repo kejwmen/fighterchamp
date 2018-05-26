@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\User;
 
+use AppBundle\Form\EventListener\CreateCoachIfDosentExist;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -31,25 +32,22 @@ class CoachType extends AbstractType
         $user = $builder->getData();
 
         $builder
-            ->add('type', HiddenType::class,[
+            ->add('type', HiddenType::class, [
                 'data' => 2])
-        ->add('birthDay', BirthdayType::class,[
-        'translation_domain' => true,
-        'constraints' => [
-            new NotBlank()
-        ]
-    ])
-        ->add('phone', TextType::class,[
-            'constraints' => [new NotBlank()]
-        ])
-
+            ->add('birthDay', BirthdayType::class, [
+                'translation_domain' => true,
+                'constraints' => [
+                    new NotBlank()
+                ]
+            ])
+            ->add('phone', TextType::class, [
+                'constraints' => [new NotBlank()]
+            ])
             ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
             ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
-            ->add('pesel', TextType::class, ['label' => 'Pesel'])
+            ->add('pesel', TextType::class, ['label' => 'Pesel']);
 
-;
     }
-
 
 
     public function configureOptions(OptionsResolver $resolver)

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\User;
 
+use AppBundle\Form\EventListener\CreateCoachIfDosentExist;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -31,35 +32,33 @@ class FighterType extends AbstractType
         $user = $builder->getData();
 
         $builder
-            ->add('type', HiddenType::class,[
+            ->add('type', HiddenType::class, [
                 'data' => 1])
-        ->add('birthDay', BirthdayType::class,[
-        'translation_domain' => true,
-        'constraints' => [
-            new NotBlank()
-        ]
-    ])
-        ->add('phone', TextType::class,[
-            'constraints' => [new NotBlank()]
-        ])
-
-        ->add('users', EntityType::class, [
-        'required' => false,
-        'empty_data'  => null,
-        'class' => 'AppBundle:User',
-        'data' => $user ? $user->getCoach() : null,
-        'query_builder' => function(EntityRepository $er) {
-            return $er->createQueryBuilder('u')
-                ->andWhere('u.type = 2')
-                ->orderBy('u.name', 'ASC');
-        }])
-
+            ->add('birthDay', BirthdayType::class, [
+                'translation_domain' => true,
+                'constraints' => [
+                    new NotBlank()
+                ]
+            ])
+            ->add('phone', TextType::class, [
+                'constraints' => [new NotBlank()]
+            ])
+            ->add('users', EntityType::class, [
+                'required' => false,
+                'empty_data' => null,
+                'class' => 'AppBundle:User',
+//                'data' => $user ? $user->getCoach() : null,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->andWhere('u.type = 2')
+                        ->orderBy('u.name', 'ASC');
+                }])
             ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
             ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
-            ->add('pesel', TextType::class, ['label' => 'Pesel'])
-;
-    }
+            ->add('pesel', TextType::class, ['label' => 'Pesel']);
 
+              $builder->addEventSubscriber(new CreateCoachIfDosentExist($this->em));
+    }
 
 
     public function configureOptions(OptionsResolver $resolver)
