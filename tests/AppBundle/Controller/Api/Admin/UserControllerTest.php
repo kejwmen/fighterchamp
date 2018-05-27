@@ -16,7 +16,7 @@ class UserControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET','api/admin/users');
+        $client->request('GET','/admin/api/users');
 
         $this->assertEquals(401, $client->getResponse()->getStatusCode());
     }

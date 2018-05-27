@@ -9,39 +9,34 @@
 namespace AppBundle\DataFixtures\ORM;
 
 
+use AppBundle\DataFixtures\BaseFixture;
 use AppBundle\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+
 use Doctrine\Common\Persistence\ObjectManager;
-use Faker;
 
-class UserFixtures extends Fixture
+
+class UserFixtures extends BaseFixture
 {
-    public function load(ObjectManager $manager)
+    public function loadData(ObjectManager $manager)
     {
-        $faker = Faker\Factory::create();
-
         $user = new User();
-        $user->setHash($faker->sha1);
+        $user->setHash($this->faker->sha1);
         $user->setEmail('admin@admin.pl');
         $user->setName('admin');
         $user->setSurname('admin');
         $user->setMale(true);
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPlainPassword('password');
-        $manager->persist($user);
 
-        foreach (range(1,20) as $i)
-        {
-            $user = new User();
-            $user->setHash($faker->sha1);
-            $user->setEmail($faker->email);
-            $user->setName($faker->firstName);
-            $user->setSurname($faker->lastName);
-            $user->setMale($faker->boolean());
+        $this->createMany(User::class, 10, function (User $user, $count){
 
-            $manager->persist($user);
-        }
+            $user->setHash($this->faker->sha1);
+            $user->setEmail($this->faker->email);
+            $user->setName($this->faker->firstName);
+            $user->setSurname($this->faker->lastName);
+            $user->setMale($this->faker->boolean());
 
+        });
 
         $manager->flush();
     }

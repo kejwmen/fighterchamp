@@ -50,8 +50,9 @@ class TokenControllerTest extends WebTestCase
             ->get('lexik_jwt_authentication.encoder')
             ->encode(['userId' => 1]);
 
-        $this->client->request('GET', '/api/admin/users',[],[],[
+        $this->client->request('GET', 'admin/api/users',[],[],[
             'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ]);
 
         $this->assertStatusCode(200, $this->client);
