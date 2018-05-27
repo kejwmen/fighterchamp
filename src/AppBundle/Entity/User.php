@@ -229,6 +229,12 @@ class User implements UserInterface, Serializable
      */
     private $hash;
 
+    /**
+     * @var array
+     * @ORM\Column(type="array")
+     */
+    private $roles = ['ROLE_USER'];
+
     public function isValid(): bool
     {
         return $this->valid;
@@ -298,9 +304,14 @@ class User implements UserInterface, Serializable
         return $this->email;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
     }
 
     public function getPassword()

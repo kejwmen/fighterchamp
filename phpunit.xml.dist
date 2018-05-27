@@ -5,6 +5,17 @@
         backupGlobals="false"
         colors="true"
         bootstrap="vendor/autoload.php"
+        convertErrorsToException="true"
+        convertNoticesToException="true"
+        convertWarningsToException="true"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        timeoutForSmallTests="1"
+        timeoutForMediumTests="10"
+        timeoutForLargeTests="30"
+        verbose="true"
 >
     <testsuites>
         <testsuite name="Test Suite">
@@ -19,7 +30,9 @@
     </filter>
 
     <php>
-        <!-- the value is the FQCN of the application kernel -->
         <env name="KERNEL_CLASS" value="AppKernel" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
+        <ini name="display_errors" value="On" />
+        <ini name="display_startup_errors" value="On" />
     </php>
 </phpunit>
