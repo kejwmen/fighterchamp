@@ -84,11 +84,23 @@ class SmokeTest extends HttpSmokeTestCase
                 }
 
 
-                if($info->getRouteParameterNames()) $config->skipRoute();
+//                if($info->getRouteName() === 'admin_tournament_fights'){
+//                    $config->addExtraRequestDataSet('Edit product that is a main variant (ID 149).')
+//                        ->setParameter('id', 1);
+//                }
+
+                if($info->getRouteName() === 'tournament_show'){
+                    $config->addExtraRequestDataSet('Edit product that is a main variant (ID 149).')
+                        ->setParameter('id', 1);
+                }
 
 
                 if(in_array($info->getRouteName(), $redirectsRoute)) $config->skipRoute();
                 if(in_array($info->getRouteName(), $postRoute)) $config->skipRoute();
+
+                if($info->getRouteName() === 'user_create_view'){
+                    $config->skipRoute('IS_AUTHENTICATED_FULLY');
+                }
 
 
                 if (!$info->isHttpMethodAllowed('GET')) {

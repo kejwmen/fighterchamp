@@ -17,7 +17,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class UserFixtures extends BaseFixture
 {
-    public function loadData(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager)
     {
         $user = new User();
         $user->setHash($this->faker->sha1);

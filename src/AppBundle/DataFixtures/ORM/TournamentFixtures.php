@@ -17,7 +17,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class TournamentFixtures extends BaseFixture
 {
-    public function loadData(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager)
     {
         $this->createMany(Tournament::class, 10, function (Tournament $tournament, $count) {
 

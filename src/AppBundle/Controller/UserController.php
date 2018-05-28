@@ -71,7 +71,7 @@ class UserController extends Controller
      * @Route("/rejestracja", name="user_create_view")
      * @Method("GET")
      */
-    public function newAction(SessionInterface $session)
+    public function newAction()
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
 
