@@ -58,7 +58,7 @@
                         return element.id
                     }).get();
 
-                    $.post("{{ path('admin_tournament_create_fight', {'id': tournament.id }) }}",
+                    $.post("{{ path('admin_tournament_create_fight') }}",
                         {ids: ids}, function (data, status) {
 
                         });

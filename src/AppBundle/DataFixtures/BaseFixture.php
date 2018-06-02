@@ -36,10 +36,10 @@ abstract class BaseFixture extends Fixture
 
     abstract protected function loadData(ObjectManager $manager);
 
-    protected function createMany(string $className, int $count, callable $factory)
+    protected function createMany(string $className, int $count, callable $factory, array $contructorArgs = [])
     {
         for ($i = 0; $i < $count; $i++) {
-            $entity = new $className();
+            $entity = $contructorArgs ? new $className(...$contructorArgs) :  new $className();
             $factory($entity, $i);
 
             $this->manager->persist($entity);
