@@ -4,26 +4,48 @@ namespace AppBundle\DataFixtures\ORM;
 
 
 use AppBundle\DataFixtures\BaseFixture;
+use AppBundle\Entity\Enum\UserFightResult;
 use AppBundle\Entity\Fight;
-use AppBundle\Entity\Place;
-use AppBundle\Entity\Tournament;
+use AppBundle\Entity\User;
 use AppBundle\Entity\UserFight;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 
-class UserFightFixtures extends BaseFixture
+class UserFightFixtures extends BaseFixture implements DependentFixtureInterface
 {
-    protected function loadData(ObjectManager $manager)
+
+    public function load(ObjectManager $manager)
     {
-        $this->createMany(UserFight::class, 20, function (UserFight $userFight, $count) {
+
+        foreach (range(1, 100) as $i) {
+
+            $userReference = ($i % 10 === 0) ? 10 : $i % 10;
+            $fightReference = round($i / 2);
+
+            $userFight = new UserFight(
+                $this->getReference(User::class . '_' . $userReference),
+                $this->getReference(Fight::class . '_' . $fightReference)
+            );
+
+            if($i % 2 === 0 ) {
+                $userFight->setResult(UserFightResult::WIN());
+            };
 
 
-            $userFight->
+            $manager->persist($userFight);
+        }
 
-            $userFight->setFight($this->getReference(UserFight::class . '_' . $count));
-
-        });
 
         $manager->flush();
+    }
+
+
+    public function getDependencies()
+    {
+        return array(
+            UserFixtures::class,
+            FightFixtures::class
+        );
     }
 }

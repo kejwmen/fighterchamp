@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class UserFixtures extends BaseFixture
 {
-    protected function loadData(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $user = new User();
         $user->setHash($this->faker->sha1);
@@ -22,16 +22,22 @@ class UserFixtures extends BaseFixture
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPlainPassword('password');
 
-        $this->createMany(User::class, 10, function (User $user, $count){
 
+        foreach (range(1,10) as $i) {
+            $user = new User();
             $user->setHash($this->faker->sha1);
             $user->setEmail($this->faker->email);
             $user->setName($this->faker->firstName);
             $user->setSurname($this->faker->lastName);
             $user->setMale($this->faker->boolean());
 
-        });
+            $manager->persist($user);
+
+            $this->addReference(User::class . '_' . $i, $user);
+
+        }
 
         $manager->flush();
     }
+
 }

@@ -6,22 +6,38 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\DataFixtures\BaseFixture;
 use AppBundle\Entity\Place;
 use AppBundle\Entity\Tournament;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 
-class TournamentFixtures extends BaseFixture
+class TournamentFixtures extends BaseFixture implements DependentFixtureInterface
 {
-    protected function loadData(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
-        $this->createMany(Tournament::class, 10, function (Tournament $tournament, $count) {
 
-            $tournament->setName('Granda ' . $count);
+        foreach (range(1,10) as $i) {
+            $tournament = new Tournament();
+
+
+            $tournament->setName('Turniej ' . $i);
             $tournament->setStart(new \DateTime('now'));
 
-            $tournament->setPlace($this->getReference(Place::class . '_' . $count));
+            $tournament->setPlace($this->getReference(Place::class . '_' . $i));
 
-        });
+
+            $manager->persist($tournament);
+
+            $this->addReference(Tournament::class . '_' . $i, $tournament);
+
+        }
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return array(
+            PlaceFixtures::class,
+        );
     }
 }
