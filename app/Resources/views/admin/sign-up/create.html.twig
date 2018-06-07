@@ -75,8 +75,7 @@
             url: "{{ path('api_signup_new') }}",
             data: { userId: id, formula: formula, weight: weight, tournamentId: 6 },
                 success: function (response) {
-                    // location.reload();
-                    alert(response);
+                    location.reload();
                 }
             });
 
