@@ -8,6 +8,13 @@
                 {{ msg }}
             </div>
         {% endfor %}
+
+
+           <a style="color: white" href="{{ path('admin_create_signUp', {id: 6}) }}">
+               <button class="btn btn-danger"> Dodaj Zgłoszenie Zawodnika </button>
+           </a>
+
+
         <h3>Zapłaciło {{ signUpsPaid|length }} na {{ signUpsTournament|length }} zawodników</h3>
         <h3>Zważono {{ howManyWeighted }} na {{ signUpsTournament|length }} zawodników</h3>
         <table id="table" class="table table-striped">
@@ -72,7 +79,7 @@
         {#<strong>   {{ fightsWhereFightersAreNotWeighted|length }}</strong>#}
 
         <h3>Zgłoszenia zapłacone ale zawodnik później się wycofał {{ signUpsPaidBuTDeleted|length }}</h3>
-        {% include 'admin/_sign_ups.html.twig' with {signUps : signUpsPaidBuTDeleted} %}
+        {% include 'admin/sign-up/_sign_ups.html.twig' with {signUps : signUpsPaidBuTDeleted} %}
 
 
     </div>

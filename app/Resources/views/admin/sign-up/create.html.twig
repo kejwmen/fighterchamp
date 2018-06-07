@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'admin/base.html.twig' %}
+    <div class="col-xs-12">
+        {% import '_macros/macro.html.twig' as macro %}
+        <table id="table-pair" class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Nazwisko i Imię</th>
+                <th>Klasa</th>
+                <th>Kat. Wagowa</th>
+                <th>Rekord</th>
+                <th>Płeć</th>
+                <th>Wiek</th>
+                <th>Klub</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>
+                        <button class="btn btn-success js-add-sign-up" id="{{ user.id }}"> Dodaj </button>
+                    </td>
+                    <td>{{ user.surname }} {{ user.name }}</td>
+
+                    <td><select autocomplete="off" class="select_class" id="sign_up_formula_{{ user.id }}">
+
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+
+                        </select></td>
+                    <td>
+                        <select autocomplete="off" class="select_weighted" id="sign_up_weight_{{ user.id }}">
+                            {% for weight in weights %}
+                                <option value="{{ weight.weight }}">
+                                    {{ weight.weight }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        {{ macro.record(user) }}
+                    </td>
+                    <td> {{ user.male ?  'M' : 'K' }} </td>
+
+                    <td> {{ user.birthDay |getAge }} </td>
+                    <td>
+                        {% if user.club %}
+                            <a href="{{ user.club.href }}"> {{ user.club.name }} </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+ {{ parent() }}
+<script>
+
+    $(".js-add-sign-up").click(function () {
+
+        var id = this.id;
+
+        var formula = $("#sign_up_formula_" + id).val();
+
+        var weight = $("#sign_up_weight_" + id).val();
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('api_signup_new') }}",
+            data: { userId: id, formula: formula, weight: weight, tournamentId: 6 },
+                success: function (response) {
+                    // location.reload();
+                    alert(response);
+                }
+            });
+
+
+    });
+</script>
+{% endblock %}

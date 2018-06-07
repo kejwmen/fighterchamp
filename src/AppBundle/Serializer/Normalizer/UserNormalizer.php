@@ -25,6 +25,7 @@ class UserNormalizer implements NormalizerInterface
     {
 
         return [
+            'id' => $object->getId(),
             'href' => $this->router->generate('user_show', ['id' => $object->getId()]),
             'name' => $object->getName(),
             'surname' => $object->getSurname(),

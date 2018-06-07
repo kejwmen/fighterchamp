@@ -27,6 +27,11 @@ api_signup_show:
     requirements:
             id: '\d+'
 
+api_signup_new:
+    path:     /api/zapisy/
+    controller: AppBundle\Controller\Api\SignUpController::newAction
+    condition: 'request.isXmlHttpRequest()'
+
 api_club_list:
     path:     /api/kluby
     condition: 'request.isXmlHttpRequest()'

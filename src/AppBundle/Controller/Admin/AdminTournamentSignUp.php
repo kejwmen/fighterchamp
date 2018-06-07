@@ -4,12 +4,14 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
+use AppBundle\Entity\User;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/admin")
@@ -53,7 +55,7 @@ class AdminTournamentSignUp extends Controller
 //            ['trait_choices' => $weights]
 //        );
 
-        return $this->render('admin/sign_up.html.twig', [
+        return $this->render(':admin/sign-up:list.html.twig', [
             'signUpsTournament' => $signUpsTournament,
             'signUpsPaid' => $signUpsPaid,
             'signUpsPaidBuTDeleted' => $signUpsPaidBuTDeleted,
@@ -61,6 +63,27 @@ class AdminTournamentSignUp extends Controller
             'howManyWeighted' => $howManyWeighted,
 //            'fightsWhereFightersAreNotWeighted' => $fightsWhereFightersAreNotWeighted
         ]);
+    }
+
+    /**
+     * @Route("/turniej/{id}/lista/dodaj", name="admin_create_signUp")
+     */
+    public function createSignUp(Request $request, EntityManagerInterface $em, Tournament $tournament,
+                                 NormalizerInterface $serializer)
+    {
+        $users = $em->getRepository(User::class)
+            ->findBy([],['surname' => 'asc']);
+
+        $weights = $this->getDoctrine()
+            ->getRepository('AppBundle:Ruleset')
+            ->getWeight();
+
+        return $this->render('admin/sign-up/create.html.twig', [
+            'users' => $serializer->normalize($users),
+            'weights' => $weights,
+            'tournament' => $tournament
+        ]);
+
     }
 
 
@@ -72,7 +95,7 @@ class AdminTournamentSignUp extends Controller
         $signUpId = $request->request->get('signUpId');
         $isPaid =  $request->request->get('isPaid');
 
-        $signUp = $em->getRepository('AppBundle:SignUpTournament')
+        $signUp = $em->getRepository(SignUpTournament::class)
             ->find($signUpId);
 
         $signUp->setIsPaid($isPaid);

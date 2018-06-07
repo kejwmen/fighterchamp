@@ -18,4 +18,17 @@ class UserRepository extends EntityRepository
         return Criteria::create()
             ->where(Criteria::expr()->eq('type', 2));
     }
+
+
+    public function findAllNotSignUpForTournament($tournament)
+    {
+        $qb = $this->createQueryBuilder('user')
+            ->leftJoin('user.signUpTournaments', 'signUpTournament')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->setParameter('tournament', $tournament);
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
 }
