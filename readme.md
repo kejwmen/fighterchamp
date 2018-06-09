@@ -1,15 +1,13 @@
 A w co mam się ubrać? Jaki strój sportowy jest dopuszczony?
-Czy muszę mieć swoje rękawice? Kaski? Ochraniacze?
 Czy walki będą nagrywane?
+Sędziują licencjonowani sędziowie PZB.
 
 Aby zrezygnować z wiadomości wysyłanych przez sportbonus.pl, wystarczy kliknąć w kliknąć w link.
-
 
 https://allegro.pl/regulamin/pl - zgoda na otrzymwanie maili reklamowych
 
 https://github.com/Behatch/contexts
 java -jar selenium-server-standalone-3.8.1.jar
-
 
 select u.name, u.surname,
   sum(f.winner_id = u.id) as w,
@@ -34,12 +32,18 @@ JOIN signuptournament ON signuptournament.user_id = user.id
 WHERE signuptournament.tournament_id =4 and is_paid=false and signuptournament.deleted_at IS NULL
 
 UBEZPIECZENIE
-SELECT name, surname, pesel, mother_name, father_name FROM user
+SET @row_number = 0;
+ 
+SELECT 
+     @curRow := @curRow + 1 AS row_numbe,
+
+name, surname, pesel, mother_name, father_name FROM user
 join signuptournament ON signuptournament.user_id = user.id
-WHERE signuptournament.tournament_id = 5
+JOIN    (SELECT @curRow := 0) r
+WHERE signuptournament.tournament_id = 6
 AND signuptournament.deleted_at is null 
 AND signuptournament.deleted_at_by_admin is null
-AND signuptournament.is_paid = true
 
-Sędziują licencjonowani sędziowie PZB.
+
+
 
