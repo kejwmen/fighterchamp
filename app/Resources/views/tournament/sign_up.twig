@@ -106,13 +106,25 @@
                 embedYouTube('{{ isUserRegister.getYoutubeId }}');
                 {% endif %}
             });
-        </script>
 
-        <script>
+
             $("#edit_box").hide();
 
             $("#edit_button").click(function () {
                 $("#edit_box").toggle();
             });
+
+            $(document).ready(function(){
+                var t = $('#table-signups').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+                    },
+                    "bPaginate": false,
+                    "dom": 'lifrtp',
+                    "order": [[ 2, "asc" ],[ 3, "asc" ],[ 4, "asc" ],[ 5, "asc" ] ]
+                });
+            });
+
+
         </script>
     {% endblock %}

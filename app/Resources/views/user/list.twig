@@ -96,6 +96,12 @@
                         }
                     },
                     {
+                        title: 'l. Zawodników',
+                        mData: function (data) {
+                            return data.users.length;
+                        }
+                    },
+                    {
                         title: 'Płeć',
                         mData: function (data) {
                             return data.male? 'M' : 'K';
