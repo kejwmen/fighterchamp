@@ -15,7 +15,7 @@ api_fight_show:
 api_fight_list:
     path:     /api/walki/{slug}/{id}
     controller: AppBundle\Controller\Api\FightController::listAction
-#    condition: 'request.isXmlHttpRequest()'
+    condition: 'request.isXmlHttpRequest()'
     defaults:
             slug: turnieje
             id: all

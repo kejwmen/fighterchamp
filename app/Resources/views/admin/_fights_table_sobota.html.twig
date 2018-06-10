@@ -30,7 +30,9 @@
         {% for fight in fights %}
             <tr>
                 <td>
-                    <a href="{{ path("admin_remove_fight", { 'fight_id' : fight.id, 'id' : tournament.id }) }}" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Rozparuj</a>
+                    <button class="btn btn-danger js-fight-delete" value="{{ fight.id }}">
+                        <i class="fa fa-trash-o fa-lg"></i> Rozparuj
+                    </button>
                 </td>
                 <td>
                     <input class="checkbox_ready" type="checkbox" {{ fight.isVisible? 'checked' : '' }} value="{{ fight.id }}">

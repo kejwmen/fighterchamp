@@ -76,6 +76,18 @@
         });
     });
 
+    $( ".js-fight-delete" ).click(function() {
+
+        $.ajax({
+            type: 'DELETE',
+            url: "{{ path('admin_remove_fight') }}",
+            data: {fightId: this.value},
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+
 </script>
 {% endblock %}
 

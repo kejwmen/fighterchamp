@@ -126,13 +126,13 @@ class AdminTournamentFightController extends Controller
      * @Route("/walki", name="admin_remove_fight")
      * @Method("DELETE")
      */
-    public function removeFight(Request $request, EntityManagerInterface $entityManager)
+    public function deleteFight(Request $request, EntityManagerInterface $entityManager)
     {
-        $data = $request->request->all();
+        $fightId = $request->request->get('fightId');
 
         $fightRepository = $entityManager->getRepository(Fight::class);
 
-        $fight = $fightRepository->find($data['fight_id']);
+        $fight = $fightRepository->find($fightId);
 
         $entityManager->remove($fight);
         $entityManager->flush();
