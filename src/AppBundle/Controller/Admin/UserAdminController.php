@@ -36,103 +36,11 @@ class UserAdminController extends Controller
         $users = $this->getDoctrine()->getRepository('AppBundle:User')
             ->findAll();
 
-        return $this->render('admin/user/list.html.twig', [
-            'users' => $users
-        ]
-        );
-    }
-
-    /**
-     * @Route("/zawodnik/nowy", name="admin_user_new")
-     */
-    public function newAction(Request $request)
-    {
-            $em = $this->getDoctrine()->getManager();
-
-            $form = $this->createForm(RegistrationType::class, new User(),
-                [
-                    'entity_manager' => $this->get('doctrine.orm.entity_manager')
-                ]
-            );
-
-
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-
-
-                $user = $form->getData();
-                $em->persist($user);
-                $em->flush();
-
-            return $this->redirectToRoute('admin_user_list');
-        }
-
-        return $this->render('admin/user/new.html.twig', [
-            'userForm' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/zawodnik/{id}/edit", name="admin_user_edit")
-     */
-    public function editAction(Request $request, User $user)
-    {
-
-        $form = $this->createForm(EditUser::class, $user,
+        return $this->render('admin/user/list.html.twig',
             [
-                'entity_manager' => $this->get('doctrine.orm.entity_manager')
+                'users' => $users
             ]
         );
-
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            return $this->redirectToRoute('admin_user_list');
-        }
-
-        return $this->render('admin/user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-            'fights' => null
-        ]);
     }
-
-
-
-//    /**
-//     * @Route("/{id}/toggle-ready", name="admin_toggleReady")
-//     * @Method("GET")
-//     */
-//    public function toggleReady(SignUpTournament $signUpTournament)
-//    {
-//
-//        $signUpTournament->toggleReady();
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($signUpTournament);
-//        $em->flush();
-//
-//        return $this->redirectToRoute('admin_ready_List');
-//    }
-
-
-    /**
-     * @Route("/{id}/edit-complete", name="editSignUpComplete")
-     */
-    public function editSignUpTournament($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $signUpTournament = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')->find($id);
-
-        $editForm = $this->createForm(new SignUpTournamentType(), $signUpTournament);
-    }
-
 
 }

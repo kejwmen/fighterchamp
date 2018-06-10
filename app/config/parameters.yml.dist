@@ -20,3 +20,5 @@ parameters:
 
     fb_client_id: 636490383199278
     fb_client_secret: 52640f7911d8f29d0c2dec6e1bd5c8ba
+
+    jwt_key_pass_phrase: ~

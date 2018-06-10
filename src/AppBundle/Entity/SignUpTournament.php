@@ -175,10 +175,8 @@ class SignUpTournament
         $this->formula = $formula;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTournament()
+
+    public function getTournament() : Tournament
     {
         return $this->tournament;
     }

@@ -15,7 +15,7 @@ api_fight_show:
 api_fight_list:
     path:     /api/walki/{slug}/{id}
     controller: AppBundle\Controller\Api\FightController::listAction
-    condition: 'request.isXmlHttpRequest()'
+#    condition: 'request.isXmlHttpRequest()'
     defaults:
             slug: turnieje
             id: all
@@ -41,6 +41,11 @@ api_tournament_show:
     path:     /api/turnieje/{id}
     condition: 'request.isXmlHttpRequest()'
     controller: AppBundle\Controller\Api\TournamentController::showAction
+
+admin_api_user_list:
+    path:     /admin/api/users
+    condition: 'request.isXmlHttpRequest()'
+    controller: AppBundle\Controller\Admin\Api\UserController::indexAction
 
 api_image_upload:
     path:     /api/images

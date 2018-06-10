@@ -104,80 +104,45 @@ class AdminTournamentFightController extends Controller
 
         return $this->render(':admin:pair.html.twig', array(
             'freeUsers' => $normalizeSignUps,
-            'tournament' => $tournament
         ));
     }
 
 
     /**
-     * @Route("/turniej/{id}", name="admin_tournament_create_fight")
+     * @Route("/walki", name="admin_tournament_create_fight")
+     * @Method("POST")
      */
-    public function createFight(Request $request, Tournament $tournament, EntityManagerInterface $em)
+    public function createFight(Request $request, FightService $fightService)
     {
         $data = $request->request->all();
 
-        $signUpRepo = $em->getRepository('AppBundle:SignUpTournament');
+        $fight = $fightService->createFight($data);
 
-        $signUp0 = $signUpRepo->find($data['ids'][0]);
-        $signUp1 = $signUpRepo->find($data['ids'][1]);
-
-        $formula = $this->getHighestFormula($signUp0, $signUp1);
-        $weight = $this->getHighestWeight($signUp0, $signUp1);
-
-        $fight = new Fight($formula, $weight);
-
-        $userFightOne = new UserFight($signUp0->getUser(), $fight);
-        $userFightTwo = new UserFight($signUp1->getUser(), $fight);
-
-
-
-        $fight->setTournament($tournament);
-
-        $numberOfFights = count($this->getDoctrine()
-            ->getRepository('AppBundle:Fight')->findBy(['tournament' => $tournament]));
-
-        $fight->setPosition($numberOfFights + 1);
-
-        $fight->setTournament($tournament);
-        $fight->setDay($tournament->getStart());
-
-        $em->persist($fight);
-        $em->persist($userFightOne);
-        $em->persist($userFightTwo);
-        $em->flush();
-
-
-        return new Response();
+        return $fight;
     }
 
 
     /**
-     * @Route("/{id}/fight/{fight_id}/remove", name="admin_remove_fight")
-     * @ParamConverter("fight", options={"id" = "fight_id"})
+     * @Route("/walki", name="admin_remove_fight")
+     * @Method("DELETE")
      */
-    public function removeFight(Fight $fight, Tournament $tournament)
+    public function removeFight(Request $request, EntityManagerInterface $entityManager)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($fight);
-        $em->flush();
+        $data = $request->request->all();
 
+        $fightRepository = $entityManager->getRepository(Fight::class);
 
-//        $fights = $em->getRepository('AppBundle:Fight')
-//            ->findAllFightByDayAdmin($tournament, 'Sobota');
-//
-//        $this->refreshFightPosition($fights);
-//
-//
-//        $fights = $em->getRepository('AppBundle:Fight')
-//            ->findAllFightByDayAdmin($tournament, 'Niedziela');
+        $fight = $fightRepository->find($data['fight_id']);
 
-        $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsForTournamentAdmin($tournament);
+        $entityManager->remove($fight);
+        $entityManager->flush();
+
+        $fights = $fightRepository->findAllFightsForTournamentAdmin($fight->getTournament());
 
         $this->refreshFightPosition($fights);
 
 
-        return $this->redirectToRoute('admin_tournament_fights', ['id' => $tournament->getId()]);
+        return new Response(null, 204);
     }
 
 
@@ -320,16 +285,6 @@ class AdminTournamentFightController extends Controller
     }
 
 
-    public function getHighestFormula(SignUpTournament $signUp0, SignUpTournament $signUp1): string
-    {
-        return ($signUp0->getFormula() <= $signUp1->getFormula()) ? $signUp0->getFormula() : $signUp1->getFormula();
-    }
-
-    public function getHighestWeight(SignUpTournament $signUp0, SignUpTournament $signUp1): string
-    {
-        return ($signUp0->getWeight() >= $signUp1->getWeight()) ? $signUp0->getWeight() : $signUp1->getWeight();
-    }
-
 
     public function refreshFightPosition($fights): void
     {
@@ -340,9 +295,9 @@ class AdminTournamentFightController extends Controller
 
             /**@var Fight $fight */
             $fight->setPosition($i);
-            $em->flush();
             $i++;
         }
+        $em->flush();
     }
 
 

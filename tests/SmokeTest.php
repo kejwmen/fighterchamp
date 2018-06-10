@@ -8,15 +8,44 @@
 
 namespace Tests;
 
-
 use Shopsys\HttpSmokeTesting\Auth\BasicHttpAuth;
 use Shopsys\HttpSmokeTesting\HttpSmokeTestCase;
+use Shopsys\HttpSmokeTesting\RequestDataSet;
 use Shopsys\HttpSmokeTesting\RouteConfig;
 use Shopsys\HttpSmokeTesting\RouteConfigCustomizer;
 use Shopsys\HttpSmokeTesting\RouteInfo;
+use Symfony\Component\HttpFoundation\Request;
 
 class SmokeTest extends HttpSmokeTestCase
 {
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        static::bootKernel([
+            'environment' => 'test',
+            'debug' => true,
+        ]);
+    }
+
+    protected function createRequest(RequestDataSet $requestDataSet)
+    {
+        $token = self::$kernel->getContainer()->get('lexik_jwt_authentication.encoder')->encode(['userId' => 1]);
+
+        $uri = $this->getRouterAdapter()->generateUri($requestDataSet);
+
+        $request = Request::create($uri);
+
+        $request->headers->set('X-Requested-With', 'XMLHttpRequest');
+        $request->headers->set('Authorization', 'Bearer ' . $token);
+
+        $requestDataSet->getAuth()
+            ->authenticateRequest($request);
+
+        return $request;
+    }
+
 
     protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
     {
@@ -51,22 +80,28 @@ class SmokeTest extends HttpSmokeTestCase
                 // This function will be called on every RouteConfig provided by RouterAdapter
                 if ($info->getRouteName()[0] === '_') {
                     // You can use RouteConfig to change expected behavior or skip testing particular routes
-                    $config->skipRoute('Route name is prefixed with "_" meaning internal route.');
+                    $config->skipRoute();
                 }
 
 
-                if($info->getRouteParameterNames()) $config->skipRoute();
+//                if($info->getRouteName() === 'admin_tournament_fights'){
+//                    $config->addExtraRequestDataSet('Edit product that is a main variant (ID 149).')
+//                        ->setParameter('id', 1);
+//                }
+
+                if($info->getRouteName() === 'tournament_show'){
+                    $config->addExtraRequestDataSet('Edit product that is a main variant (ID 149).')
+                        ->setParameter('id', 1);
+                }
 
 
                 if(in_array($info->getRouteName(), $redirectsRoute)) $config->skipRoute();
                 if(in_array($info->getRouteName(), $postRoute)) $config->skipRoute();
 
-                if ($info->getRouteName()[0] === 'admin') {
-
-                    $config->changeDefaultRequestDataSet('Log in as "user".')
-                        ->setAuth(new BasicHttpAuth('admin', 'Cortez1634'));
-
+                if($info->getRouteName() === 'user_create_view'){
+                    $config->skipRoute('IS_AUTHENTICATED_FULLY');
                 }
+
 
                 if (!$info->isHttpMethodAllowed('GET')) {
                     $config->skipRoute('Only routes supporting GET method are tested.');

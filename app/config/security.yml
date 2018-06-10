@@ -34,6 +34,7 @@ security:
                 authenticator:
                    - app.security.login_form_authenticator
                    - app.security.facebook_authenticator
+                   - AppBundle\Security\JwtTokenAuthenticator
                 entry_point: app.security.login_form_authenticator
 
             logout:
@@ -41,3 +42,4 @@ security:
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/api/admin, roles: ROLE_ADMIN }

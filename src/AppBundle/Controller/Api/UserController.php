@@ -45,7 +45,7 @@ class UserController extends Controller
     {
         $form = $this->createForm($this->getFormType($request), null, [
             'method' => 'POST',
-            'action' => $this->generateUrl('user_create'),
+            'action' => $this->generateUrl('user_create')
         ]);
 
         $form->handleRequest($request);
@@ -61,21 +61,6 @@ class UserController extends Controller
                 if(!$user->getType() === 1) $user->removeUser($coach);
             }
 
-            //PHP Inspection EA
-
-//            if($user->getImageName()){
-//
-//                $file_name = 'fb_temp';
-//
-//                $this->download_image1($user->getImageName(),$file_name);
-//
-//                $file = new File($file_name,true);
-//                $ext = $file->getExtension();
-//
-//                $image_file = new UploadedFile($file_name.$ext, $file_name.$ext, null, null, null, true);
-//
-//                $user->setImageFile($image_file);
-//            }
 
             $user->setHash(hash('sha256', md5(rand())));
 
