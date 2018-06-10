@@ -45,5 +45,25 @@ AND signuptournament.deleted_at is null
 AND signuptournament.deleted_at_by_admin is null
 
 
+*****MUZIK
 
+SELECT 
+     @curRow := @curRow + 1 AS row_numbe,
+
+concat(surname," " ,name) as nameConcat, youtube_id FROM user
+join signuptournament ON signuptournament.user_id = user.id
+JOIN    (SELECT @curRow := 0) r
+WHERE signuptournament.tournament_id = 6
+AND signuptournament.deleted_at is null 
+AND signuptournament.deleted_at_by_admin is null
+ORDER BY nameConcat
+
+SELECT
+  GROUP_CONCAT('youtube-dl ', youtube_id, ' -x -o "',surname,' ' ,name,'.%(ext)s"' SEPARATOR ' && ') as nameConcat FROM user
+  join signuptournament ON signuptournament.user_id = user.id
+WHERE signuptournament.tournament_id = 6
+      AND signuptournament.deleted_at is null
+      AND signuptournament.deleted_at_by_admin is null
+      AND signuptournament.youtube_id is not null
+ORDER BY nameConcat
 

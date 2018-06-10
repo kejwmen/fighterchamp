@@ -191,10 +191,8 @@ class SignUpTournament
         $this->tournament = $tournament;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+
+    public function getUser() : User
     {
         return $this->user;
     }

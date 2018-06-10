@@ -8,6 +8,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Tournament;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -131,6 +132,21 @@ WHERE f.tournament_id = $tournamentId)");
             ->addSelect('user')
             ->addOrderBy('signUpTournament . weighted')
             ->addOrderBy('user . surname')
+        ;
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
+    public function findMusicForTournament(Tournament $tournament)
+    {
+        $qb = $this->createQueryBuilder('signUpTournament')
+            ->leftJoin('signUpTournament . user', 'user')
+            ->andWhere('signUpTournament . tournament = :tournament')
+            ->andWhere('signUpTournament . deleted_at is null')
+            ->andWhere('signUpTournament.deletedAtByAdmin is null')
+            ->andWhere('signUpTournament.youtubeId is not null')
+            ->setParameter('tournament', $tournament)
         ;
 
         $query = $qb->getQuery();
