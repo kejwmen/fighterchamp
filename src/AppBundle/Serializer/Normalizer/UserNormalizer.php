@@ -2,6 +2,7 @@
 
 namespace AppBundle\Serializer\Normalizer;
 
+use AppBundle\Entity\Award;
 use AppBundle\Entity\Fight;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserFight;
@@ -21,6 +22,9 @@ class UserNormalizer implements NormalizerInterface
         $this->router = $router;
     }
 
+    /**
+     * @param User $object
+     */
     public function normalize($object, $format = null, array $context = array())
     {
 
@@ -49,7 +53,7 @@ class UserNormalizer implements NormalizerInterface
                             'type' => $user->getType(),
                     ];
                 }, $object->getUsers()->toArray()),
-            'usersRecord' => $this->countUsersRecord($object),
+            'usersRecord' => $this->countUsersRecordCouch($object),
             'fights' => array_map(
                 function (Fight $fight) {
                     return [
@@ -66,6 +70,12 @@ class UserNormalizer implements NormalizerInterface
                                 return [
                                     'isRedCorner' => $userFight->isRedCorner(),
                                     'result' => $userFight->getResult(),
+                                    'awards' => array_map(
+                                        function (Award $award){
+                                            return [
+                                                'name' => $award->getName(),
+                                            ];
+                                        }, $userFight->getAwards()->toArray()),
                                     'user' => [
                                         'href' => $this->router->generate('user_show', ['id' => $userFight->getUser()->getId()]),
                                         'name' => $userFight->getUser()->getName(),
@@ -83,6 +93,7 @@ class UserNormalizer implements NormalizerInterface
                 }, $object->getFights()->toArray())
         ];
     }
+
 
 
 
@@ -114,7 +125,7 @@ class UserNormalizer implements NormalizerInterface
         return $data instanceof User;
     }
 
-    private function countUsersRecord(User $object)
+    private function countUsersRecordCouch(User $object)
     {
         $result = [
             'win' => 0,

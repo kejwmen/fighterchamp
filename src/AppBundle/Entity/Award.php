@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk
- * Date: 4/27/18
- * Time: 1:05 PM
- */
 
 namespace AppBundle\Entity;
-
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,7 +28,13 @@ class Award
      * @var string
      * @ORM\Column(type="string")
      */
-    private $description;
+    private $name;
+
+    public function __construct(UserFight $userFight, string $description)
+    {
+        $this->userFight = $userFight;
+        $this->name = $description;
+    }
 
     public function getId(): int
     {
@@ -47,18 +46,8 @@ class Award
         return $this->userFight;
     }
 
-    public function setUserFight(UserFight $userFight): void
+    public function getName(): string
     {
-        $this->userFight = $userFight;
-    }
-
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
+        return $this->name;
     }
 }

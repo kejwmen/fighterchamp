@@ -20,6 +20,7 @@
                         Szczegóły {% if fight.youtubeId %}
                             <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}
                     </a>
+                    <div>{{ macro.awards(fight.usersFight) }}</div>
                 </td>
                 <td class="text-center"> {{ macro.opponent(fight.usersFight) }} </td>
                 <td class="text-center"> {{ fight.formula }} </td>

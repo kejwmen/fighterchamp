@@ -9,40 +9,10 @@
 
             <div class="col-xs-12 col-sm-6">
                 {% include 'user/fighter/_profile.html.twig' %}
-
-                {#{% if  %}#}
-                {#<table class="table">#}
-                {#<tr>#}
-                    {#<th class="text-center">#</th>#}
-                    {#<th class="text-center">Nagroda</th>#}
-                    {#<th class="text-center">Turniej</th>#}
-                {#</tr>#}
-                    {##}
-                {#{% for fight in user.fights %}#}
-                    {#<tr>#}
-                        {#<td class="text-center">#}
-                            {#{{ "%02d"|format(loop.index) }}#}
-                            {#<a href="{{ fight.href }}">#}
-                                {#Szczegóły {% if fight.youtubeId %}#}
-                                    {#<img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'>{% endif %}#}
-                            {#</a>#}
-                        {#</td>#}
-                        {#<td class="text-center"> {{ macro.opponent(fight.usersFight) }} </td>#}
-                        {#<td class="text-center"> {{ fight.formula }} </td>#}
-                        {#<td class="text-center"> {{ fight.weight }} </td>#}
-                        {#<td class="text-center"> {{ macro.fightResult(fight.usersFight) }} </td>#}
-                        {#<td class="text-center"> <a href="{{ fight.tournament.href }}"> {{ fight.tournament.name }} </a> </td>#}
-                    {#</tr>#}
-                {#{% endfor %}#}
-                {#</table>#}
-                {#<i class="fa fa-trophy fa-2x"></i> Najlepszy Zawodnik klasy B#}
-
             </div>
 
 
             {% include ':user/fighter:_record_table.html.twig' %}
-
-
 
 
         </div>

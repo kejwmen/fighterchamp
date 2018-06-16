@@ -58,6 +58,18 @@
 
 {% endmacro %}
 
+{% macro awards(usersFight) %}
+
+    {% for userFight in usersFight %}
+        {% if app.request.pathinfo == userFight.user.href and userFight.awards %}
+
+            <i class="fas fa-trophy fa"></i> <small> {{ userFight.awards[0].name}} </small>
+
+        {% endif %}
+    {% endfor %}
+
+{% endmacro %}
+
 
 
 {% macro formatYMDdzienTygodnia(dateVar) %}
