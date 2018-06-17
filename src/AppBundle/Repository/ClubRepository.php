@@ -25,6 +25,16 @@ final class ClubRepository
 
     public function findAll(): array
     {
-        return $this->repository->findAll();
+        return $this->repository->createQueryBuilder('club')
+            ->leftJoin('club.users', 'users')
+            ->leftJoin('users.userFights', 'userFights')
+            ->leftJoin('userFights.fight', 'fights')
+            ->leftJoin('userFights.awards', 'awards')
+            ->leftJoin('fights.tournament', 'tournament')
+            ->addSelect('fights')
+            ->addSelect('userFights')
+            ->addSelect('awards')
+            ->addSelect('users')
+            ->getQuery()->execute();
     }
 }

@@ -31,4 +31,25 @@ class UserRepository extends EntityRepository
         return $query->execute();
     }
 
+    public function findAllListAction(int $type)
+    {
+        $qb = $this->createQueryBuilder('user')
+            ->leftJoin('user.userFights', 'userFights')
+            ->leftJoin('userFights.fight', 'fights')
+            ->leftJoin('userFights.awards', 'awards')
+            ->leftJoin('user.club', 'club')
+            ->leftJoin('fights.tournament', 'tournament')
+            ->addSelect('fights')
+            ->addSelect('userFights')
+            ->addSelect('awards')
+            ->addSelect('club')
+            ->andWhere('user.type = :type')
+            ->setParameter('type', $type)
+        ;
+
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
 }

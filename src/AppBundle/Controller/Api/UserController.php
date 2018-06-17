@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -20,10 +21,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\User\FighterType;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 /**
- * @Route("/api", condition="request.isXmlHttpRequest()")
+ * @Route("/api"))
  */
 class UserController extends Controller
 {
@@ -131,12 +133,30 @@ class UserController extends Controller
      * @Route("/ludzie", name="api_user_list")
      * @Method("GET")
      */
-    public function listAction(EntityManagerInterface $em, Request $request)
+    public function listAction(Request $request, EntityManagerInterface $em,
+                               AdapterInterface $cache, SerializerInterface $serializer )
     {
         $type = $request->query->get('type');
 
-        $users = $em->getRepository(User::class)->findBy(['type' => $type]);
-        
+//        $item = $cache->getItem('users');
+
+//        if (!$item->isHit()) {
+//            $users = $em->getRepository(User::class)->findAllListAction();
+//
+//            $item->set(
+//                $users
+//            );
+//            $cache->save($item);
+//        }
+//        $users = $item->get();
+//
+//        $array = $serializer->normalize($users);
+//
+//        $response = new JsonResponse(['data' => $array]);
+
+        $users = $em->getRepository(User::class)->findAllListAction($type);
+
+
         return $users;
     }
 
