@@ -45,6 +45,8 @@ class UserRepository extends EntityRepository
             ->addSelect('club')
             ->andWhere('user.type = :type')
             ->setParameter('type', $type)
+//            ->setCacheable(true)
+//            ->setMaxResults(10)
         ;
 
 

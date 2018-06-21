@@ -254,7 +254,7 @@ nav .glyphicon {
 .facebook a:hover, .youtube a:hover {
     color: #DA1D1D;
 }
-.wrapper .fa {
+.wrapper .fab {
     font-size: 133px;
     position: relative;
     -webkit-transform: translateY(25%);

@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
+use Doctrine\ORM\Mapping\Cache;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -173,11 +174,6 @@ class User implements UserInterface, Serializable
      * @ORM\Column(type="boolean")
      */
     private $male;
-
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Facebook", mappedBy="user", cascade={"persist"})
-     */
-    private $facebook;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -421,16 +417,6 @@ class User implements UserInterface, Serializable
     {
         $this->plain_password = $plain_password;
         $this->password = null;
-    }
-
-    public function getFacebook()
-    {
-        return $this->facebook;
-    }
-
-    public function setFacebook($facebook): void
-    {
-        $this->facebook = $facebook;
     }
 
     public function getSignUpTournaments()
