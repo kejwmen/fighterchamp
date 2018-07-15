@@ -16,6 +16,7 @@ class AppExtension extends Twig_Extension
         return array(
             new \Twig_SimpleFilter('getAge', array($this, 'getAgefilter')),
             new \Twig_SimpleFilter('hoursToMins', array($this, 'hoursToMins')),
+            new \Twig_SimpleFilter('getAgeAtTournament', array($this, 'getAgeAtTournament')),
         );
     }
 
@@ -26,7 +27,6 @@ class AppExtension extends Twig_Extension
             return null;
         }
 
-        //$referenceDate = date('01-01-Y');
         $referenceDateTimeObject = new \DateTime('now');
 
         $diff = $referenceDateTimeObject->diff($date);
@@ -34,10 +34,21 @@ class AppExtension extends Twig_Extension
         return $diff->y;
     }
 
+    public function getAgeAtTournament($birthday, $tournamentDay)
+    {
+        if (!$birthday || !$tournamentDay instanceof \DateTime) {
+            return null;
+        }
+
+        $diff = $tournamentDay->diff($birthday);
+
+        return $diff->y;
+    }
+
 
     function hoursToMins($time, $format = '%2d:%02d') {
         if ($time < 1) {
-            return;
+            return null;
         }
         $hours = floor($time / 60);
         $minutes = ($time % 60);

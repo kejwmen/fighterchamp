@@ -18,18 +18,29 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class AdminTournamentSignUp extends Controller
 {
+
+    private function getAgeAtTournament($birthday, $tournamentDay)
+    {
+        if (!$birthday || !$tournamentDay instanceof \DateTime) {
+            return null;
+        }
+
+        $diff = $tournamentDay->diff($birthday);
+
+        return $diff->y;
+    }
+
+
     /**
      * @Route("/turniej/{id}/lista", name="admin_tournament_sign_up")
      */
     public function signUp(Tournament $tournament)
     {
         $signUpsTournament = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')
+            ->getRepository(SignUpTournament::class)
             ->findAllForTournament($tournament);
 
-        $signUpsPaid = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')
-            ->findAllSignUpsPaid($tournament);
+        $signUpsPaid = $this->getSignUpsPaid($signUpsTournament);
 
         $signUpsPaidBuTDeleted = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')
@@ -39,13 +50,7 @@ class AdminTournamentSignUp extends Controller
 //            ->getRepository('AppBundle:Fight')
 //            ->findAllTournamentFightsWhereFightersAreNotWeighted($tournament);
 
-        $howManyWeighted = 0;
-        foreach($signUpsTournament as $signUp){
-            if($signUp->getWeighted() != null)
-            {
-                $howManyWeighted++;
-            }
-        }
+        $howManyWeighted = $this->howManyWeighted($signUpsTournament);
 
         $weights = $this->getDoctrine()
             ->getRepository('AppBundle:Ruleset')
@@ -55,12 +60,41 @@ class AdminTournamentSignUp extends Controller
 //            ['trait_choices' => $weights]
 //        );
 
+       $seniors = 0;
+       $seniorsPaid = 0;
+       $juniors = 0;
+       $juniorsPaid = 0;
+
+        foreach ($signUpsTournament as $signUp){
+            $user = $signUp->getUser();
+
+            $age = $this->getAgeAtTournament($user->getBirthDay(), $tournament->getStart());
+
+            if($age > 18){
+                $seniors++;
+                if($signUp->isPaid()) $seniorsPaid++;
+            }else{
+                $juniors++;
+                if($signUp->isPaid()) $juniorsPaid++;
+            }
+
+        }
+
+        $finance = [
+            'seniors' => $seniors,
+            'seniorsPaid' => $seniorsPaid,
+            'juniors' => $juniors,
+            'juniorsPaid' => $juniorsPaid
+        ];
+
         return $this->render(':admin/sign-up:list.html.twig', [
+            'tournament' => $tournament,
             'signUpsTournament' => $signUpsTournament,
             'signUpsPaid' => $signUpsPaid,
             'signUpsPaidBuTDeleted' => $signUpsPaidBuTDeleted,
             'weights' => $weights,
             'howManyWeighted' => $howManyWeighted,
+            'finance' => $finance
 //            'fightsWhereFightersAreNotWeighted' => $fightsWhereFightersAreNotWeighted
         ]);
     }
@@ -118,5 +152,23 @@ class AdminTournamentSignUp extends Controller
     }
 
 
+    private function getSignUpsPaid($signUpsTournament): int
+    {
+        $signUpsPaid = 0;
+        foreach ($signUpsTournament as $signUp) {
+            if ($signUp->isPaid()) $signUpsPaid++;
+        }
+        return $signUpsPaid;
+    }
 
+    private function howManyWeighted($signUpsTournament): int
+    {
+        $howManyWeighted = 0;
+        foreach ($signUpsTournament as $signUp) {
+            if ($signUp->getWeighted() != null) {
+                $howManyWeighted++;
+            }
+        }
+        return $howManyWeighted;
+    }
 }

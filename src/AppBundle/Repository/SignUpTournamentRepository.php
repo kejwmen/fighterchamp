@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 11.08.16
- * Time: 11:41
- */
+
 
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Tournament;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\Query\ResultSetMapping;
+
 
 class SignUpTournamentRepository extends EntityRepository
 {

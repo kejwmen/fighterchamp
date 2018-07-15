@@ -1,11 +1,5 @@
 <?php
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 2016-06-19
- * Time: 13:06
- */
 
 namespace AppBundle\Entity;
 

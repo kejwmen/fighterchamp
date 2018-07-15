@@ -9,13 +9,19 @@
             </div>
         {% endfor %}
 
-
            <a style="color: white" href="{{ path('admin_create_signUp', {id: 6}) }}">
                <button class="btn btn-danger"> Dodaj Zgłoszenie Zawodnika </button>
            </a>
 
+        <h3>Zapłaciło {{ signUpsPaid }} na {{ signUpsTournament|length }} zawodników</h3>
 
-        <h3>Zapłaciło {{ signUpsPaid|length }} na {{ signUpsTournament|length }} zawodników</h3>
+        <span>Seniorzy: {{ finance.seniorsPaid }} / {{ finance.seniors }}</span> <br>
+        {{ finance.seniorsPaid * tournament.ticketFighterAdult.price  }} zł / {{ finance.seniors * tournament.ticketFighterAdult.price }} zł<br>
+
+        <span>Juniorzy: {{ finance.juniorsPaid }} / </span> {{ finance.juniors }} <br>
+        {{ finance.juniorsPaid * tournament.ticketFighterChild.price  }} zł / {{ finance.juniors * tournament.ticketFighterChild.price }} zł<br>
+
+        <span>Suma: {{ finance.seniors * tournament.ticketFighterAdult.price  + finance.juniors * tournament.ticketFighterChild.price}} zł </span>
         <h3>Zważono {{ howManyWeighted }} na {{ signUpsTournament|length }} zawodników</h3>
         <table id="table" class="table table-striped">
             <thead>

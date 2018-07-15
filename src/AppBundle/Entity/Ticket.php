@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 9/4/17
- * Time: 11:17 PM
- */
 
 namespace AppBundle\Entity;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
