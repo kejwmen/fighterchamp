@@ -62,50 +62,49 @@ class FacebookAuthenticator extends SocialAuthenticator
         /** @var FacebookUser $facebookUser */
         $facebookUser = $this->getFacebookClient()->fetchUserFromToken($credentials);
 
-        $id = $facebookUser->getId();
+        file_put_contents('file', $facebookUser);
 
-        $facebook = $this->em->getRepository(Facebook::class)
-                    ->findOneBy(['facebookId' => $id]);
+//        $id = $facebookUser->getId();
+//
+//        $facebook = $this->em->getRepository(Facebook::class)
+//                    ->findOneBy(['facebookId' => $id]);
+//
+//        $user = $facebook ? $facebook->getUser() : null;
+//
+//        //todo 4 argument sometimes is missing
+//        if(!$user){
+//            $facebook = new Facebook(
+//                    $facebookUser->getId(),
+//                    $facebookUser->getFirstName(),
+//                    $facebookUser->getLastName(),
+//                    $facebookUser->getEmail(),
+//                    $facebookUser->getGender() === 'male'
+//                );
+//
+//
+//            $user = $this->em->getRepository(User::class)
+//                ->findOneBy(['email' => $facebookUser->getEmail()]);
+//
+//            if(!$user) {
+//                $user = new User();
+//                $user->setName($facebook->getName());
+//                $user->setSurname($facebook->getSurname());
+//                $user->setEmail($facebook->getEmail());
+//                $user->setMale($facebook->isMale());
+//                $user->setType(3);
+//                $user->setHash(hash('sha256', md5((string)rand())));
+//
+//                $this->em->persist($user);
+//                $this->em->persist($facebook);
+//                $facebook->setUser($user);
+//            }else{
+//                $user->setFacebook($facebook);
+//            }
+//
+//            $this->em->flush();
+//        }
 
-
-
-
-        $user = $facebook ? $facebook->getUser() : null;
-
-        //todo 4 argument sometimes is missing
-        if(!$user){
-            $facebook = new Facebook(
-                    $facebookUser->getId(),
-                    $facebookUser->getFirstName(),
-                    $facebookUser->getLastName(),
-                    $facebookUser->getEmail(),
-                    $facebookUser->getGender() === 'male'
-                );
-
-
-            $user = $this->em->getRepository(User::class)
-                ->findOneBy(['email' => $facebookUser->getEmail()]);
-
-            if(!$user) {
-                $user = new User();
-                $user->setName($facebook->getName());
-                $user->setSurname($facebook->getSurname());
-                $user->setEmail($facebook->getEmail());
-                $user->setMale($facebook->isMale());
-                $user->setType(3);
-                $user->setHash(hash('sha256', md5((string)rand())));
-
-                $this->em->persist($user);
-                $this->em->persist($facebook);
-                $facebook->setUser($user);
-            }else{
-                $user->setFacebook($facebook);
-            }
-
-            $this->em->flush();
-        }
-
-        return $user;
+        return new User();
     }
 
 

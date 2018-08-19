@@ -1,3 +1,36 @@
+** Pomysły na rigger class
+ 
+trigger MasterOpportunityTrigger on Opportunity (
+  before insert, after insert, 
+  before update, after update, 
+  before delete, after delete) {
+
+  if (Trigger.isBefore) {
+    if (Trigger.isInsert) {
+      // Call class logic here!
+    } 
+    if (Trigger.isUpdate) {
+      // Call class logic here!
+    }
+    if (Trigger.isDelete) {
+      // Call class logic here!
+    }
+  }
+
+  if (Trigger.IsAfter) {
+    if (Trigger.isInsert) {
+      // Call class logic here!
+    } 
+    if (Trigger.isUpdate) {
+      // Call class logic here!
+    }
+    if (Trigger.isDelete) {
+      // Call class logic here!
+    }
+  }
+}
+
+
 A w co mam się ubrać? Jaki strój sportowy jest dopuszczony?
 Czy walki będą nagrywane?
 Sędziują licencjonowani sędziowie PZB.
