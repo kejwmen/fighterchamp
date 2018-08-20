@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 06.08.16
- * Time: 09:51
- */
+
 declare(strict_types=1);
 
 namespace AppBundle\Security;
@@ -62,49 +57,48 @@ class FacebookAuthenticator extends SocialAuthenticator
         /** @var FacebookUser $facebookUser */
         $facebookUser = $this->getFacebookClient()->fetchUserFromToken($credentials);
 
-        file_put_contents('file', $facebookUser);
+        $id = $facebookUser->getId();
 
-//        $id = $facebookUser->getId();
-//
-//        $facebook = $this->em->getRepository(Facebook::class)
-//                    ->findOneBy(['facebookId' => $id]);
-//
-//        $user = $facebook ? $facebook->getUser() : null;
-//
-//        //todo 4 argument sometimes is missing
-//        if(!$user){
-//            $facebook = new Facebook(
-//                    $facebookUser->getId(),
-//                    $facebookUser->getFirstName(),
-//                    $facebookUser->getLastName(),
-//                    $facebookUser->getEmail(),
-//                    $facebookUser->getGender() === 'male'
-//                );
-//
-//
-//            $user = $this->em->getRepository(User::class)
-//                ->findOneBy(['email' => $facebookUser->getEmail()]);
-//
-//            if(!$user) {
-//                $user = new User();
-//                $user->setName($facebook->getName());
-//                $user->setSurname($facebook->getSurname());
-//                $user->setEmail($facebook->getEmail());
-//                $user->setMale($facebook->isMale());
-//                $user->setType(3);
-//                $user->setHash(hash('sha256', md5((string)rand())));
-//
-//                $this->em->persist($user);
-//                $this->em->persist($facebook);
-//                $facebook->setUser($user);
-//            }else{
-//                $user->setFacebook($facebook);
-//            }
-//
-//            $this->em->flush();
-//        }
+        $facebook = $this->em->getRepository(Facebook::class)
+                    ->findOneBy(['id' => $id]);
 
-        return new User();
+        $user = $facebook ? $facebook->getUser() : null;
+
+        //todo 4 argument sometimes is missing
+        if(!$user){
+            $facebook = new Facebook(
+                    $facebookUser->getId(),
+                    $facebookUser->getFirstName(),
+                    $facebookUser->getLastName(),
+                    $facebookUser->getEmail(),
+                   true
+                   // $facebookUser->getGender() === 'male'
+                );
+
+
+            $user = $this->em->getRepository(User::class)
+                ->findOneBy(['email' => $facebookUser->getEmail()]);
+
+            if(!$user) {
+                $user = new User();
+                $user->setName($facebook->getName());
+                $user->setSurname($facebook->getSurname());
+                $user->setEmail($facebook->getEmail());
+                $user->setMale(true);
+                $user->setType(3);
+                $user->setHash(hash('sha256', md5((string)rand())));
+
+                $this->em->persist($user);
+                $this->em->persist($facebook);
+                $facebook->setUser($user);
+            }else{
+                $user->setFacebook($facebook);
+            }
+
+            $this->em->flush();
+        }
+
+        return $user;
     }
 
 

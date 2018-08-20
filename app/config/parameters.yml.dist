@@ -18,7 +18,7 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    fb_client_id: 636490383199278
-    fb_client_secret: 52640f7911d8f29d0c2dec6e1bd5c8ba
+    fb_client_id: 135106026964620
+    fb_client_secret: eb29dcd383256a05e0b046633c871662
 
     jwt_key_pass_phrase: ~
