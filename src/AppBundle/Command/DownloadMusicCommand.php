@@ -27,7 +27,7 @@ class DownloadMusicCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $tournament = $em->getReference(Tournament::class, 6);
+        $tournament = $em->getReference(Tournament::class, 7);
 
         $signUps = $em->getRepository(SignUpTournament::class)->findMusicForTournament($tournament);
 

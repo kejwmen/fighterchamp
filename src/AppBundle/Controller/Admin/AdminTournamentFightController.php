@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 15.09.16
- * Time: 12:28
- */
 
 namespace AppBundle\Controller\Admin;
 
@@ -38,7 +32,7 @@ class AdminTournamentFightController extends Controller
 
         $em->flush();
 
-        return $this->redirectToRoute('admin_tournament_fights', ['id' => 6]);
+        return $this->redirectToRoute('admin_tournament_fights', ['id' => 7]);
     }
 
 
@@ -49,7 +43,7 @@ class AdminTournamentFightController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $tournament = $em->getRepository('AppBundle:Tournament')
-            ->find(6);
+            ->find(7);
 
         $fightsWhereFightersAreNotWeighted = $this->getDoctrine()
             ->getRepository('AppBundle:Fight')
