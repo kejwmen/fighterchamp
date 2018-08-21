@@ -34,8 +34,10 @@
     W cenie wpisowego znajdzie się ubezpieczenie.
     {% endif %}
     Można wpłacać w klubie Legia Fight Club (do wpłaty dołączamy swoje dane ), lub na numer konta:
+        {% if tournament.id > 6 %} 74 1020 1042 0000 8802 0386 8965 PKO BP (odbiorca ORZEŁ I SYRENKA) {% else %}
     97 2490 0005 0000 4000 8002 2034
     (nazwisko odbiorcy Paweł Michalik)
+        {% endif %}
     Uwaga! Jeżeli ktoś po zgłoszeniu nie będzie mógł wziąć udziału w zawodach,
     prosimy o poinformowanie organizatora w ciągu 7 dni do zawodów.
     Jeżeli informacja będzie po terminie, NIE ZWRACAMY wpisowego.

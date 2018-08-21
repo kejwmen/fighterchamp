@@ -136,7 +136,7 @@ class UserController extends Controller
     public function listAction(Request $request, EntityManagerInterface $em,
                                AdapterInterface $cache, SerializerInterface $serializer )
     {
-        $type = $request->query->get('type');
+        $type = $request->query->get('type', 1);
 
 //        $item = $cache->getItem('users');
 
