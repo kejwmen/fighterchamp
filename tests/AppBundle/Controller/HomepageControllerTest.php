@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 29.11.16
- * Time: 15:27
- */
+
 
 namespace AppBundle\Tests\Controller;
 

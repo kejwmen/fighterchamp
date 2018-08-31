@@ -8,12 +8,8 @@ use AppBundle\Entity\Facebook;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
-use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -38,7 +34,6 @@ class FacebookAuthenticator extends SocialAuthenticator
         $this->em = $em;
         $this->router = $router;
         $this->container = $container;
-
     }
 
 
@@ -57,14 +52,13 @@ class FacebookAuthenticator extends SocialAuthenticator
         /** @var FacebookUser $facebookUser */
         $facebookUser = $this->getFacebookClient()->fetchUserFromToken($credentials);
 
-        $id = $facebookUser->getId();
+        $facebookId = $facebookUser->getId();
 
         $facebook = $this->em->getRepository(Facebook::class)
-                    ->findOneBy(['id' => $id]);
+                    ->findOneBy(['facebookId' => $facebookId]);
 
         $user = $facebook ? $facebook->getUser() : null;
 
-        //todo 4 argument sometimes is missing
         if(!$user){
             $facebook = new Facebook(
                     $facebookUser->getId(),
@@ -72,14 +66,8 @@ class FacebookAuthenticator extends SocialAuthenticator
                     $facebookUser->getLastName(),
                     $facebookUser->getEmail(),
                    true
-                   // $facebookUser->getGender() === 'male'
                 );
 
-
-            $user = $this->em->getRepository(User::class)
-                ->findOneBy(['email' => $facebookUser->getEmail()]);
-
-            if(!$user) {
                 $user = new User();
                 $user->setName($facebook->getName());
                 $user->setSurname($facebook->getSurname());
@@ -91,9 +79,6 @@ class FacebookAuthenticator extends SocialAuthenticator
                 $this->em->persist($user);
                 $this->em->persist($facebook);
                 $facebook->setUser($user);
-            }else{
-                $user->setFacebook($facebook);
-            }
 
             $this->em->flush();
         }
