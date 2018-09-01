@@ -106,13 +106,14 @@ class UserController extends Controller
     {
         $user = $this->getUser();
 
-        $form = $this->createForm($this->getFormType($request), $user);
+        $form = $this->createForm($this->getFormType($request), $user, [
+            'action' => $this->generateUrl('api_user_update'),
+            'method' => 'POST'
+        ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $formUser = $form->getData();
 
             $em->flush();
 

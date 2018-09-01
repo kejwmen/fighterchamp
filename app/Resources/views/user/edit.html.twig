@@ -25,7 +25,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
-        initAjaxForm();
 
         $(document).ready(function () {
 
@@ -51,8 +50,12 @@
                         insertForm(checkedValue);
                         $('input[name="' + name+ '"][value="' + SelectdValue + '"]').prop('checked', true);
                     });
+
+                     $('.select2').select2({tags: true});
+                     initAjaxForm();
                 }
-            });
+            })
+
         }
     </script>
 {% endblock %}

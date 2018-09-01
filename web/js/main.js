@@ -4,6 +4,8 @@ function initAjaxForm()
 
         e.preventDefault();
 
+        console.log('initAjaxForm');
+
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),

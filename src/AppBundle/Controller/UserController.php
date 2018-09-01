@@ -79,9 +79,7 @@ class UserController extends Controller
         }
 
 
-        return $this->render('security/register.html.twig',[
-
-        ]);
+        return $this->render('security/register.html.twig');
     }
 
     /**
