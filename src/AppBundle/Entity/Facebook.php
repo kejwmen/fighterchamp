@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="facebook")
+ * @ORM\HasLifecycleCallbacks
  */
 class Facebook
 {
@@ -42,7 +43,7 @@ class Facebook
     private $email;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      * @var string
      */
     private $facebookId;
