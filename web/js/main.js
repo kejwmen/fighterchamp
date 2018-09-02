@@ -2,10 +2,6 @@ function initAjaxForm()
 {
     $('.ajaxForm').on('submit', function (e) {
 
-        e.preventDefault();
-
-        console.log('initAjaxForm');
-
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
@@ -37,6 +33,7 @@ function initAjaxForm()
                 } else {
                     alert(errorThrown);
                 }
+                $(document).find('.select2').select2({tags: true});
             });
     });
 }

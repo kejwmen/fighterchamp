@@ -26,10 +26,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
-
-
         $(document).ready(function () {
-
+            $(document).on('submit', '.ajaxForm', function(e) {
+                e.preventDefault();
+            });
 
                $(".radio-inline").change(function() {
 
@@ -47,8 +47,12 @@
                 url: Routing.generate('user_register_form_view', { type: type}),
                 success: function (data) {
                     $(".js-form-register").html(data);
+                    $('.select2').select2({tags: true});
+                     initAjaxForm();
+
                 }
             });
+
         }
 
 

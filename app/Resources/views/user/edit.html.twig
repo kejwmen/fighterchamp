@@ -27,6 +27,9 @@
     <script>
 
         $(document).ready(function () {
+            $(document).on('submit', '.ajaxForm', function(e) {
+                e.preventDefault();
+            });
 
             $("input:radio").click(function() {
 

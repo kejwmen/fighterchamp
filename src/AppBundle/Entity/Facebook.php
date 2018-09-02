@@ -55,6 +55,7 @@ class Facebook
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
