@@ -19,16 +19,23 @@ class Award
     private $id;
 
     /**
-     * @var UserFight
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserFight", inversedBy="awards")
-     */
-    private $userFight;
-
-    /**
      * @var string
      * @ORM\Column(type="string")
      */
     private $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament", inversedBy="awards")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tournament;
+
+    /**
+     * @var UserFight
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserFight", inversedBy="awards")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $userFight;
 
     public function __construct(UserFight $userFight, string $description)
     {
@@ -41,7 +48,7 @@ class Award
         return $this->id;
     }
 
-    public function getUserFight(): UserFight
+    public function getUserFight(): ?UserFight
     {
         return $this->userFight;
     }

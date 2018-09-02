@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,7 @@ class Tournament
         $this->schedule = new ArrayCollection();
         $this->info = new ArrayCollection();
         $this->fights = new ArrayCollection();
+        $this->awards = new ArrayCollection();
     }
 
     /**
@@ -30,6 +32,12 @@ class Tournament
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Award", mappedBy="tournament")
+     * @ORM\OrderBy({"name" = "ASC"})
+     */
+    private $awards;
 
     /**
      * @ORM\Column(type="string")
@@ -111,9 +119,9 @@ class Tournament
     public function getPaymentInfo(): string
     {
         return
-            (($this->getInfo()->filter(function(Info $info){
-            return $info->getType() === 'singUpPayment';
-        }))->first())->getDescription();
+            (($this->getInfo()->filter(function (Info $info) {
+                return $info->getType() === 'singUpPayment';
+            }))->first())->getDescription();
     }
 
     public function getFacebookEvent(): ?string
@@ -194,7 +202,7 @@ class Tournament
 
     public function __toString()
     {
-        return (string) $this->getName();
+        return (string)$this->getName();
     }
 
 
@@ -292,8 +300,7 @@ class Tournament
         $result = $this->tickets->matching($criteria);
 
 
-        if($result->isEmpty())
-        {
+        if ($result->isEmpty()) {
             return null;
         }
 
@@ -309,8 +316,7 @@ class Tournament
 
         $result = $this->tickets->matching($criteria);
 
-        if($result->isEmpty())
-        {
+        if ($result->isEmpty()) {
             return null;
         }
 
@@ -322,12 +328,17 @@ class Tournament
         return $this->fights;
     }
 
-   public function getFightsReady(): Collection
-   {
-       return $this->fights->matching(
-           TournamentRepository::createFightsReadyCriteria()
-       );
-   }
+    public function getFightsReady(): Collection
+    {
+        return $this->fights->matching(
+            TournamentRepository::createFightsReadyCriteria()
+        );
+    }
+
+    public function getAwards(): Collection
+    {
+        return $this->awards;
+    }
 
 
 }

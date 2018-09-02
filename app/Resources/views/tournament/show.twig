@@ -70,6 +70,16 @@
 
                     </ul>
 
+                    <h3 class="text-uppercase">Nagrody:</h3>
+                    <span>Każdy uczestnik otrzymuję pamiątkowy dyplom oraz medal</span>
+                    <ul>
+                        {% for award in tournament.awards %}
+                        <li>{{ award.name }}
+                            {% if award.userFight %} - <a href="{{ path('user_show', {'id': award.userFight.user. id}) }}">{{ award.userFight.user }}</a> {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+
                     <h3 class="text-uppercase">Sprzęt:</h3>
 
                     <ul>
@@ -97,27 +107,6 @@
                             <li>{{ include(template_from_string(info.description)) }}</li>
                         {% endfor %}
                     </ul>
-
-                    {% if tournament.id == 4 %}
-                        <h3 class="text-uppercase">Nagrody:</h3>
-                        <p>
-                            <strong>KLASA A</strong> <br>
-                            1 - najlepszy zawodnik 300 zł <br>
-                            2 - nagroda rzeczowa <br><br>
-
-                            <strong>KOBIETY</strong> <br>
-                            1 - najlepsza zawodniczka 250 zł <br>
-                            2 - nagroda rzeczowa <br><br>
-
-                            <strong>KLASA B</strong> <br>
-                            1 - najlepszy zawodnik 250 zł <br>
-                            2 - nagroda rzeczowa <br><br>
-
-                            <strong>KLASA C</strong> <br>
-                            1 - najlepszy zawodnik 200 zł <br>
-                            2 - nagroda rzeczowa
-                        </p>
-                    {% endif %}
                 </div>
                 {% if tournament.poster %}
                     <aside class="col-xs-12 col-md-3">

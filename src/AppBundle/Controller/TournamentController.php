@@ -13,7 +13,6 @@ use AppBundle\Entity\Info;
 use AppBundle\Entity\Ticket;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
-use AppBundle\Form\FightType;
 use AppBundle\Form\SignUpTournamentType;
 use AppBundle\Entity\SignUpTournament;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
