@@ -13,9 +13,15 @@ final class ClubRepository
      */
     private $repository;
 
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
     public function __construct(EntityManager $entityManager)
     {
         $this->repository = $entityManager->getRepository(Club::class);
+        $this->entityManager = $entityManager;
     }
 
     public function find(int $id): Club
@@ -25,16 +31,8 @@ final class ClubRepository
 
     public function findAll(): array
     {
-        return $this->repository->createQueryBuilder('club')
-            ->leftJoin('club.users', 'users')
-            ->leftJoin('users.userFights', 'userFights')
-            ->leftJoin('userFights.fight', 'fights')
-            ->leftJoin('userFights.awards', 'awards')
-            ->leftJoin('fights.tournament', 'tournament')
-            ->addSelect('fights')
-            ->addSelect('userFights')
-            ->addSelect('awards')
-            ->addSelect('users')
-            ->getQuery()->execute();
+        return $this->entityManager->getConnection()
+            ->query('SELECT * FROM query_clubs')
+            ->fetchAll();
     }
 }

@@ -29,21 +29,11 @@
                         return "<a href='"+ data.href +"'>" + data.name +"</a>";
                     }},
                 { mData: function (data) {
-
-                        var win = draw = lose = 0;
-
-                        for (var i = 0, len = Object.keys( data.users).length; i < len; i++) {
-
-                            win +=  data.users[i].record.win
-                            draw +=  data.users[i].record.draw
-                            lose +=  data.users[i].record.lose
-                        }
-
-                        return recordClub(win,draw,lose);
+                        return recordClub(data.win,data.draw,data.lose);
                     }},
                 { mData : function (data){
-                        return Object.keys( data.users).length
-                    }},
+                        return data.user_count
+                    }}
             ],
             "columnDefs": [
                 {
