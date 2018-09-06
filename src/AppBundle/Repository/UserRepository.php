@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 10.08.16
- * Time: 19:55
- */
 
 namespace AppBundle\Repository;
 
@@ -19,6 +13,12 @@ class UserRepository extends EntityRepository
             ->where(Criteria::expr()->eq('type', 2));
     }
 
+    public function findAllFighters(): array
+    {
+        return $this->getEntityManager()->getConnection()
+            ->query('SELECT * FROM query_user_fighters')
+            ->fetchAll();
+    }
 
     public function findAllNotSignUpForTournament($tournament)
     {
@@ -45,7 +45,7 @@ class UserRepository extends EntityRepository
             ->addSelect('club')
             ->andWhere('user.type = :type')
             ->setParameter('type', $type)
-//            ->setCacheable(true)
+            ->setCacheable(true)
 //            ->setMaxResults(10)
         ;
 

@@ -43,28 +43,28 @@
                     {
                         title: 'Rekord',
                         mData: function (data) {
-                            return '<span style="color: #5cb85c">' + data.record.win + '</span> ' +
-                                '<span style="color: #f0ad4e">' + data.record.draw + '</span> ' +
-                                '<span style="color: #d9534f">' + data.record.lose + '</span>'
+                            return '<span style="color: #5cb85c">' + data.win + '</span> ' +
+                                '<span style="color: #f0ad4e">' + data.draw + '</span> ' +
+                                '<span style="color: #d9534f">' + data.lose + '</span>'
                         }
                     },
                     {
                         title: 'Płeć',
                         mData: function (data) {
-                            return data.male? 'M' : 'K';
+                            return data.sex;
                         }
                     },
                     {
                         title: 'Wiek',
                         mData: function (data) {
-                            return age(data);
+                            return data.age;
                         }
                     },
                     {
                         title: 'Klub',
                         mData: function (data) {
-                            if (data.club) {
-                                return "<a href='" + data.club.href + "'>" + data.club.name + "</a>";
+                            if (data.club_name) {
+                                return "<a href='" + data.club_href + "'>" + data.club_name + "</a>";
                             }
                             else return '';
                         }

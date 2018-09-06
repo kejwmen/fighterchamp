@@ -155,8 +155,11 @@ class UserController extends Controller
 //
 //        $response = new JsonResponse(['data' => $array]);
 
-        $users = $em->getRepository(User::class)->findAllListAction($type);
-
+        if($type == 1){
+            $users = $em->getRepository(User::class)->findAllFighters();
+        }else{
+            $users = $em->getRepository(User::class)->findAllListAction($type);
+        }
 
         return $users;
     }
