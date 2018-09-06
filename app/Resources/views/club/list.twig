@@ -3,6 +3,15 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
+                <div>
+                    Testowo dodałem punktację:
+                    <ul>
+                        <li>Punktacja nr.1 => wygrana = +3, remis = +1 przegrana = 0</li>
+                        <li>Punktacja nr.2 => wynik z Punktacji nr.1 / liczba walk (liczone dopiero kiedy klub ma conajmniej 3 walki)</li>
+                    </ul>
+                    Co o tym sądzisz? Może masz pomysł jak zrobić to lepiej? => zostaw swój komentarz w dziale <a href="{{ path('pomysly')}}">Pomysły</a>
+
+                </div>
                 <table id="table-clubs" class="table">
                     <thead>
                     <tr>
@@ -10,6 +19,8 @@
                         <th>Nazwa</th>
                         <th>Rekord Zawodników</th>
                         <th>Liczba Zawodników</th>
+                        <th>Punktacja nr.1</th>
+                        <th>Punktacja nr.2</th>
                     </tr>
                     </thead>
                 </table>
@@ -33,6 +44,20 @@
                     }},
                 { mData : function (data){
                         return data.user_count
+                    }},
+                { mData : function (data){
+                        return (data.win * 3 + parseFloat(data.draw))
+                    }},
+                { mData : function (data){
+
+                        var number_of_fights = (parseFloat(data.win) + parseFloat(data.draw) + parseFloat(data.lose));
+                        var result = (data.win * 3 + parseFloat(data.draw)) / number_of_fights;
+
+                        if(number_of_fights < 3 ){
+                            result = 0;
+                        }
+
+                        return (result || 0).toFixed(2);
                     }}
             ],
             "columnDefs": [
