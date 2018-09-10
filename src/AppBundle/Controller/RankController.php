@@ -16,8 +16,6 @@ class RankController extends Controller
     {
         $users = $entityManger->getRepository(User::class)->findAllFightersRank();
 
-        dump($users);
-
         return $this->render('rank/rank.html.twig', [
             'users' => $users
         ]);
