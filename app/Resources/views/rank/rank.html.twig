@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+
+            {% set lastFormula=''  %}
+            {% set lastWeight='' %}
+
+            {% for user in users %}
+                {% if (user.formula != lastFormula or user.weight != lastWeight) %}
+                    <table class="table table-striped">
+                    <caption>{% if user.sex == 'K' %} Kobiety {% else %} Mężczyźni  {% endif %}
+
+                        {{ user.formula }} {{ user.weight }}</caption>
+                    <thead>
+                    <tr>
+                        <th>Nazwisko i Imię</th>
+                        <th>Rekord w Kategorii</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                {% endif %}
+                <tr>
+                    <td><a href="{{ user.href }}">
+                        {{ user.surname }} {{ user.name }}
+                        </a>
+                    </td>
+                    <td> <span style="color: #5cb85c"> {{ user.win }} </span>
+                        <span style="color: #f0ad4e"> {{ user.draw }} </span>
+                        <span style="color: #d9534f"> {{ user.lose }} </span></td>
+                </tr>
+                {% set lastFormula = user.formula %}
+                {% set lastWeight = user.weight %}
+
+                {% if user.formula !=lastFormula or user.weight !=lastWeight %}
+                    </tbody>
+                    </table>
+                {% endif %}
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+{% endblock %}

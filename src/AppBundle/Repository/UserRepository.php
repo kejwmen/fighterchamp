@@ -20,6 +20,13 @@ class UserRepository extends EntityRepository
             ->fetchAll();
     }
 
+    public function findAllFightersRank(): array
+    {
+        return $this->getEntityManager()->getConnection()
+            ->query('SELECT * FROM query_fighters_rank')
+            ->fetchAll();
+    }
+
     public function findAllNotSignUpForTournament($tournament)
     {
         $qb = $this->createQueryBuilder('user')
