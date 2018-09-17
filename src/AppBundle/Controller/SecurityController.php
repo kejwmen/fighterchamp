@@ -98,8 +98,6 @@ class SecurityController extends Controller
                 $encoded_password = $passwordEncoder->encodePassword($user, $new_password);
 
                 $user->setPassword($encoded_password);
-
-                $em = $this->getDoctrine()->getManager();
                 $em->flush();
 
                 $transport = (new Swift_SmtpTransport('smtp.zenbox.pl', 587))
