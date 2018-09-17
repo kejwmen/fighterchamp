@@ -404,12 +404,10 @@ class User implements UserInterface, Serializable
         $this->password = $password;
     }
 
-
     public function getPlainPassword()
     {
         return $this->plain_password;
     }
-
 
     public function setPlainPassword($plain_password)
     {
@@ -431,7 +429,6 @@ class User implements UserInterface, Serializable
 
         return $this->signUpTournaments->matching($criteria)->first();
     }
-
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="user")

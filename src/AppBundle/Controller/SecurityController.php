@@ -13,6 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
+
 
 class SecurityController extends Controller
 {
@@ -72,7 +75,7 @@ class SecurityController extends Controller
     /**
      * @Route("/reset", name="passwordReset")
      */
-    public function passwordReset(Request $request)
+    public function passwordReset(Request $request, UserPasswordEncoder $passwordEncoder)
     {
 
         $form = $this->createForm(PasswordResetType::class);
@@ -88,14 +91,15 @@ class SecurityController extends Controller
             $user = $em->getRepository('AppBundle:User')
                 ->findOneBy(['email' => $userEmail]);
 
-
             if ($user) {
+
                 $new_password = time();
 
-                $user->setPlainPassword($new_password);
+                $encoded_password = $passwordEncoder->encodePassword($user, $new_password);
+
+                $user->setPassword($encoded_password);
 
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
                 $em->flush();
 
                 $transport = (new Swift_SmtpTransport('smtp.zenbox.pl', 587))
