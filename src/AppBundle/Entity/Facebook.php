@@ -60,7 +60,7 @@ class Facebook
      */
     private $user;
 
-        public function __construct(string $facebookId, string $name, string $surname, string $email, bool $male)
+        public function __construct(string $facebookId, string $name, string $surname, ?string $email, bool $male)
         {
             $this->facebookId = $facebookId;
             $this->name = $name;
@@ -84,7 +84,7 @@ class Facebook
         return $this->surname;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
