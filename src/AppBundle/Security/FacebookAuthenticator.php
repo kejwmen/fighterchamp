@@ -68,6 +68,10 @@ class FacebookAuthenticator extends SocialAuthenticator
                    true
                 );
 
+            $user = $this->em->getRepository(User::class)
+                ->findOneBy(['email' => $facebook->getEmail()]);
+
+            if(!$user){
                 $user = new User();
                 $user->setName($facebook->getName());
                 $user->setSurname($facebook->getSurname());
@@ -77,15 +81,17 @@ class FacebookAuthenticator extends SocialAuthenticator
                 $user->setHash(hash('sha256', md5((string)rand())));
 
                 $this->em->persist($user);
-                $this->em->persist($facebook);
-                $facebook->setUser($user);
+            }
+
+            $this->em->persist($facebook);
+            $facebook->setUser($user);
+
 
             $this->em->flush();
         }
 
         return $user;
     }
-
 
     private function getFacebookClient()
     {
