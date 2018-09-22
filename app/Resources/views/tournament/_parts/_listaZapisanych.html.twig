@@ -3,7 +3,21 @@
     <h3>
         Liczba zapisanych: {{ signUpTournament| length }} / {{ tournament.capacity }}
     </h3>
-<table id="table-signups" class="table table-striped">
+
+    {% set A, B, C = 0, 0, 0 %}
+    {% for signUp in signUpTournament %}
+        {% if signUp.formula == 'A' %} {% set A = A + 1 %}  {% endif %}
+        {% if signUp.formula == 'B' %} {% set B = B + 1 %}  {% endif %}
+        {% if signUp.formula == 'C' %} {% set C = C + 1 %}  {% endif %}
+    {% endfor %}
+
+
+    <span>Formuła A : {{ A }}  </span> <br>
+    <span>Formuła B : {{ B }}  </span> <br>
+    <span>Formuła C : {{ C }}  </span> <br>
+
+
+    <table id="table-signups" class="table table-striped">
         <thead>
             <th>Nazwisko i Imię</th>
             <th class="text-center">Rekord</th>
