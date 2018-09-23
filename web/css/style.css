@@ -43,6 +43,10 @@
     color: black;
 }
 
+.belt {
+    width:30px;
+    height:auto;
+}
 
 .logo {
     width:200px;
