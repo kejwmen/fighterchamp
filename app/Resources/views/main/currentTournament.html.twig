@@ -2,6 +2,9 @@
     <div class="col-xs-12 col-md-8 col-md-offset-2">
         <h1 class="text-center">{{ tournament.name }}</h1>
         <h4 class="text-center">{{ tournament.start | date('d-m-Y') }} {{ tournament.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }} </h4>
+        <div>
+            Tego samego dnia odbywa się Maraton Warszawski, oznacza to potężne utrudnienia w ruchu drogowym! <a href="http://pzumaratonwarszawski.com/drogowy/">http://pzumaratonwarszawski.com/drogowy/</a>
+        </div>
 
         <div class="row">
             <div class="col-xs-10 col-md-8 col-md-offset-2">
