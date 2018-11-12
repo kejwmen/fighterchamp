@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 17.04.17
- * Time: 01:53
- */
 
 namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
