@@ -31,8 +31,8 @@ final class RankRepository
 
         $sqlAge = null;
         if ($addAge) {
-            $sqlAge = ($params['age'] == 'junior') ? ' TIMESTAMPDIFF(YEAR, u.birth_day, CURDATE()) < 18 ' :
-                '  TIMESTAMPDIFF(YEAR, u.birth_day, CURDATE()) >= 18 ';
+            $sqlAge = ($params['age'] == 'junior') ? ' TIMESTAMPDIFF(YEAR, u.birth_day, CURDATE()) <= 18 ' :
+                '  TIMESTAMPDIFF(YEAR, u.birth_day, CURDATE()) > 18 ';
         }
 
         if($sqlYear && $sqlAge){
