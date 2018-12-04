@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
+use AppBundle\Repository\SignUpTournamentRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,9 +43,8 @@ class AdminTournamentSignUp extends Controller
 
         $signUpsPaid = $this->getSignUpsPaid($signUpsTournament);
 
-        $signUpsPaidBuTDeleted = $this->getDoctrine()
-            ->getRepository('AppBundle:SignUpTournament')
-            ->findAllSignUpsPaidButDeleted($tournament);
+        $signUpsDeleted = $this->getDoctrine()
+            ->getRepository(SignUpTournament::class)->signUpsDeleted($tournament);
 
 //        $fightsWhereFightersAreNotWeighted = $this->getDoctrine()
 //            ->getRepository('AppBundle:Fight')
@@ -91,10 +91,10 @@ class AdminTournamentSignUp extends Controller
             'tournament' => $tournament,
             'signUpsTournament' => $signUpsTournament,
             'signUpsPaid' => $signUpsPaid,
-            'signUpsPaidBuTDeleted' => $signUpsPaidBuTDeleted,
             'weights' => $weights,
             'howManyWeighted' => $howManyWeighted,
-            'finance' => $finance
+            'finance' => $finance,
+            'signUpsDeleted' => $signUpsDeleted
 //            'fightsWhereFightersAreNotWeighted' => $fightsWhereFightersAreNotWeighted
         ]);
     }

@@ -2,6 +2,8 @@
     <thead>
     <tr>
         <th>Nazwisko i Imię</th>
+        <th>Data skasowania</th>
+        <td>Zapłacone?</td>
         <th>Klasa</th>
         <th>Staż [miesiące]</th>
         <th>Płeć</th>
@@ -14,6 +16,8 @@
         <tr>
             <td><a href="{{ path('user_show', {'id': signUp.User.id }) }}">
                     {{ signUp.User.surname }} {{ signUp.User.name }}</a></td>
+            <td>{{ signUp.deletedAt| date('d-m-Y H:i:s') }}</td>
+            <td>{{ signUp.isPaid ? 'Tak' : 'Nie' }}</td>
             <td> {{ signUp.formula }} </td>
             <td> {{ signUp.trainingTime }}</td>
             <td> {{ signUp.User.male ?  'M' : 'K' }} </td>

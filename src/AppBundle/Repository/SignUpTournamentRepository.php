@@ -70,6 +70,20 @@ class SignUpTournamentRepository extends EntityRepository
         return $query->execute();
     }
 
+    public function signUpsDeleted(Tournament $tournament)
+    {
+        $qb = $this->createQueryBuilder('signUpTournament')
+            ->leftJoin('signUpTournament.user', 'user')
+            ->addSelect('user')
+            ->andWhere('signUpTournament.tournament = :tournament')
+            ->andWhere('signUpTournament.deleted_at is not null')
+            ->setParameter('tournament', $tournament)
+            ->addOrderBy('signUpTournament.deleted_at', 'desc');
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
     public function findAllSignUpButNotPairYet(int $tournamentId)
     {
 

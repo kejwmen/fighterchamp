@@ -84,8 +84,8 @@
                {#style="color: white"> Rozparuj walki zawodników którzy nie zostali zważeni</a></button>#}
         {#<strong>   {{ fightsWhereFightersAreNotWeighted|length }}</strong>#}
 
-        <h3>Zgłoszenia zapłacone ale zawodnik później się wycofał {{ signUpsPaidBuTDeleted|length }}</h3>
-        {% include 'admin/sign-up/_sign_ups.html.twig' with {signUps : signUpsPaidBuTDeleted} %}
+        <h3>Zawodnicy którzy skasowali swoje zgłoszenia {{ signUpsDeleted|length }}</h3>
+        {% include 'admin/sign-up/_sign_ups.html.twig' with {signUps : signUpsDeleted} %}
 
 
     </div>
