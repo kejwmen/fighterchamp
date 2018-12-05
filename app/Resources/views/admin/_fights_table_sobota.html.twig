@@ -1,6 +1,14 @@
 {% import '_macros/macro.html.twig' as macro %}
 <div class="col-xs-12">
     <div>
+        Zawodnicy którzy skasowali swoje zgłoszenia a mają walkę = {{ signUps|length }} <br>
+        {% for signUp in signUps  %}
+            {{ signUp.user.name }} {{ signUp.user.surname }} ,
+        {% endfor %}
+    </div>
+    <br>
+    <br>
+    <div>
         <span class="label label-success">W</span> - Win (Wygrana)
         <span class="label label-warning">D</span> - Draw (Remis)
         <span class="label label-danger">L</span> - Loss (Przegrana)

@@ -71,9 +71,22 @@ class AdminTournamentFightController extends Controller
         $fights = $em->getRepository('AppBundle:Fight')
             ->findAllFightsForTournamentAdmin($tournament);
 
+        $freeSignUpIds = $this->getDoctrine()
+            ->getRepository('AppBundle:SignUpTournament')->findAllDeletedWhichHaveAFight($tournament->getId());
+
+        $signUps = [];
+
+        foreach($freeSignUpIds as $signUp)
+        {
+            $signUps [] = $this->getDoctrine()->getRepository('AppBundle:SignUpTournament')->find($signUp['id']);
+        }
+
+        $normalizeSignUps = $this->get('serializer.my')->normalize($signUps);
+
         return $this->render('admin/fight.html.twig', [
             'fights' => $fights,
             'tournament' => $tournament,
+            'signUps' => $normalizeSignUps
         ]);
     }
 
@@ -89,9 +102,9 @@ class AdminTournamentFightController extends Controller
 
         $signUps = [];
 
-        foreach($freeSignUpIds as $user)
+        foreach($freeSignUpIds as $signUp)
         {
-            $signUps [] = $this->getDoctrine()->getRepository('AppBundle:SignUpTournament')->find($user['id']);
+            $signUps [] = $this->getDoctrine()->getRepository('AppBundle:SignUpTournament')->find($signUp['id']);
         }
 
        $normalizeSignUps = $this->get('serializer.my')->normalize($signUps);

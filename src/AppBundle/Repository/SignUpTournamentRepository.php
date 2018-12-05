@@ -84,6 +84,31 @@ class SignUpTournamentRepository extends EntityRepository
         return $query->execute();
     }
 
+    public function findAllDeletedWhichHaveAFight(int $tournamentId)
+    {
+        $conn = $this->getEntityManager()
+            ->getConnection();
+
+        $stmt = $conn->prepare("
+SELECT sut.id FROM signuptournament sut
+LEFT JOIN user u ON sut.user_id = u.id
+WHERE sut.tournament_id = $tournamentId
+AND sut.deleted_at IS NOT NULL
+AND u.id IN (
+SELECT uu.id FROM user uu
+JOIN user_fight uf ON uf.user_id = uu.id
+JOIN fight f ON uf.fight_id = f.id
+WHERE f.tournament_id = $tournamentId)
+");
+
+
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+    }
+
     public function findAllSignUpButNotPairYet(int $tournamentId)
     {
 
