@@ -74,6 +74,12 @@ class Fight
      */
     private $usersFight;
 
+    /**
+     * @var string
+     * @ORM\Column(type="text")
+     */
+    private $description ='';
+
 
     public function getId(): int
     {
@@ -175,5 +181,10 @@ class Fight
     public function setYoutubeId(string $youtubeId)
     {
         $this->youtubeId = $youtubeId;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }

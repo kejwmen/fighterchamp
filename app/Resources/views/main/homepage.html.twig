@@ -99,7 +99,7 @@
                         mData: function (data) {
                             var temp = (data.youtubeId === null) ? '' : " <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'></a>";
 
-                            return "<a href='" + data.href + "'>Szczegóły</a>" + temp;
+                            return "<a href='" + data.href + "'>Szczegóły</a>" + temp + "<br>" + data.description;
                         }
                     },
                     {
