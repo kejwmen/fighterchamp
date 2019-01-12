@@ -2,6 +2,11 @@
     color: gold;
 }
 
+.expand {
+    cursor:pointer;
+    text-decoration:underline;
+}
+
 .table-center{
     margin: 0 auto;
 }

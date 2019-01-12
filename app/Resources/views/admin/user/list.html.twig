@@ -32,11 +32,32 @@
                     <td>{{ user.male ?  'M' : 'K' }}</td>
                     <td>{{ user.birthDay |getAge }}</td>
                     <td>{{ user.club }}</td>
-                    <td>{{ user.phone }}</td>
+                    <td>
+                        {% if user.phone %}
+                        <span data-div="{{ loop.index }}"
+                              class="expand">Pokaż</span>
+                            <div style="display: none" id="{{ loop.index }}">{{ user.phone }}</div>
+                        {% endif %}
+                    </td>
 
                 </tr>
             {% endfor %}
         </tbody>
         </table>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    window.onload=function() {
+        var links = document.querySelectorAll(".expand");
+        for (var i=0;i<links.length;i++) {
+            links[i].onclick=function(e) {
+                e.preventDefault();
+                var ele = document.getElementById(this.getAttribute("data-div"));
+                if (ele) ele.style.display = ele.style.display == "block"?"none":"block";
+            }
+        }
+    }
+</script>
 {% endblock %}
