@@ -16,9 +16,6 @@ security:
                 admin:
                   password: examplePass
                   roles: 'ROLE_ADMIN'
-                pawelbokslfc:
-                  password: examplePass
-                  roles: 'ROLE_ADMIN'
 
         our_users:
                   entity: {class: AppBundle\Entity\User, property: email}
