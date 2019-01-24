@@ -26,8 +26,8 @@ class SignUpTournamentType extends AbstractType
             ->add('weight', ChoiceType::class, [
                 'choices'  => $trait
                 ])
-            ->add('youtubeId', TextType::class)
-            ->add('musicArtistAndTitle', TextType::class)
+//            ->add('youtubeId', TextType::class)
+//            ->add('musicArtistAndTitle', TextType::class)
 
            ;
     }

@@ -18,7 +18,7 @@ class HomepageController extends Controller
 //            ->findBy(array(), array('date' => 'DESC'));
 //
         $tournament = $em->getRepository(Tournament::class)
-            ->find(8);
+            ->findNewestOne();
 
         return $this->render(':main:homepage.html.twig', [
 //            'news' => $news,

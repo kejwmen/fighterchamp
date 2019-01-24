@@ -8,6 +8,14 @@ use Doctrine\ORM\EntityRepository;
 
 class TournamentRepository extends EntityRepository
 {
+    public function getLastEntity() {
+        return $this->createQueryBuilder('t')->
+        orderBy('t.start', 'DESC')->
+        setMaxResults(1)->
+        getQuery()->
+        getOneOrNullResult();
+    }
+
     public static function createFightsReadyCriteria()
     {
         return Criteria::create()
