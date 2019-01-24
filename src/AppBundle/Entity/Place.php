@@ -86,4 +86,9 @@ class Place
     {
         $this->street = $street;
     }
+
+    public function __toString()
+    {
+        return $this->city . ' ' . $this->street . ' ' . $this->name;
+    }
 }

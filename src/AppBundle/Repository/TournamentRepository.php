@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 21.12.16
- * Time: 22:55
- */
 
 namespace AppBundle\Repository;
 
@@ -26,5 +20,16 @@ class TournamentRepository extends EntityRepository
     {
         return Criteria::create()
         ->where(Criteria::expr()->eq('deleted_at', null));
+    }
+
+    public function findAllForAdmin()
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('t.id, t.name')
+        ->orderBy('t.id', 'DESC');
+
+
+        $query = $qb->getQuery();
+        return $query->execute();
     }
 }

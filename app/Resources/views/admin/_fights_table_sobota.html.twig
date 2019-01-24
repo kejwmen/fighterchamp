@@ -64,7 +64,8 @@
                     {% if loop.index == 2 %}
                         <td>
                             <a href="{{ path("toggle_corners", { 'id' : fight.id }) }}">
-                                <span class="glyphicon glyphicon-resize-horizontal"></span>
+                                {#<span class="glyphicon glyphicon-resize-horizontal"></span>#}
+                               <span style="font-size: 24px;">⮀</span>
                             </a>
                         </td>
                     {% endif %}

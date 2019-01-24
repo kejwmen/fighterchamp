@@ -33,7 +33,7 @@ class AdminTournamentSignUp extends Controller
 
 
     /**
-     * @Route("/turniej/{id}/lista", name="admin_tournament_sign_up")
+     * @Route("/turnieje/{id}/lista", name="admin_tournament_sign_up")
      */
     public function signUp(Tournament $tournament)
     {
@@ -100,7 +100,7 @@ class AdminTournamentSignUp extends Controller
     }
 
     /**
-     * @Route("/turniej/{id}/lista/dodaj", name="admin_create_signUp")
+     * @Route("/turnieje/{id}/lista/dodaj", name="admin_create_signUp")
      */
     public function createSignUp(Request $request, EntityManagerInterface $em, Tournament $tournament,
                                  NormalizerInterface $serializer)

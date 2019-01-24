@@ -47,6 +47,11 @@ admin_api_user_list:
     condition: 'request.isXmlHttpRequest()'
     controller: AppBundle\Controller\Admin\Api\UserController::indexAction
 
+admin_api_tournament_list:
+    path:     /admin/api/tournaments
+#    condition: 'request.isXmlHttpRequest()'
+    controller: AppBundle\Controller\Admin\Api\TournamentController::list
+
 api_image_upload:
     path:     /api/images
     controller: AppBundle\Controller\Api\ImageController::uploadAction

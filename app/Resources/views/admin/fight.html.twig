@@ -14,6 +14,7 @@
 
 {% block javascripts %}
 {{ parent() }}
+    <script src="{{ asset('js/admin_select_tournament.js') }}"></script>
 <script>
 
     $( ".select_day" ).change(function() {

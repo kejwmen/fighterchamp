@@ -48,6 +48,9 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
+
+<script src="{{ asset('js/admin_select_tournament.js') }}"></script>
 <script>
     window.onload=function() {
         var links = document.querySelectorAll(".expand");

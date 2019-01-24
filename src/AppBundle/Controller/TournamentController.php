@@ -77,35 +77,6 @@ class TournamentController extends Controller
         ]);
     }
 
-
-
-//
-//    /**
-//     * Creates a new tournament entity.
-//     *
-//     * @Route("/new", name="tournament_new")
-//     * @Method({"GET", "POST"})
-//     */
-//    public function TournamentNewAction(Request $request)
-//    {
-//        $userAdmin = $this->getUser();
-//        $tournament = new Tournament($userAdmin);
-//        $form = $this->createForm('AppBundle\Form\TournamentType', $tournament);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($tournament);
-//            $em->flush($tournament);
-//
-//            return $this->redirectToRoute('tournament_show', array('id' => $tournament->getId()));
-//        }
-//
-//        return $this->render('admin/tournament/new.html.twig', array(
-//            'tournament' => $tournament,
-//            'form' => $form->createView(),
-//        ));
-//    }
 //    /**
 //     * Displays a form to edit an existing tournament entity.
 //     *
