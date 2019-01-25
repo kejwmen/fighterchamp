@@ -26,8 +26,8 @@
             <th class="text-center">Kat. Wagowa</th>
             <th class="text-center">Wiek</th>
             <th class="text-center">Klub</th>
-            <th class="text-center">Muzyka Wejścia</th>
-            <th class="text-center">Opłata Startowa</th>
+            {#<th class="text-center">Muzyka Wejścia</th>#}
+            {#<th class="text-center">Opłata Startowa</th>#}
         </tr>
         </thead>
         <tbody>
@@ -44,13 +44,13 @@
                 <td class="text-center"> {% if signUp.user.club %}
                     <a href="{{ signUp.user.club.href }}"> {{ signUp.user.club.name }}</a></td>
                 {% endif %}
-                <td class="text-center">
-                    {% if signUp.youtubeId %}
-                      <a target="_blank" href="https://www.youtube.com/watch?v={{ signUp.youtubeId }}">{{ signUp.musicArtistAndTitle }}</a>
-                    {% endif %}
+                {#<td class="text-center">#}
+                    {#{% if signUp.youtubeId %}#}
+                      {#<a target="_blank" href="https://www.youtube.com/watch?v={{ signUp.youtubeId }}">{{ signUp.musicArtistAndTitle }}</a>#}
+                    {#{% endif %}#}
 
-                </td>
-                <td class="text-center"> {{ signUp.isPaid ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' }} </td>
+                {#</td>#}
+                {#<td class="text-center"> {{ signUp.isPaid ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' }} </td>#}
             </tr>
         {% endfor %}
         </tbody>
