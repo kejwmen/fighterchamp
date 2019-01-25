@@ -11,15 +11,15 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Dane potrzebne do Ubezpieczenia</h4>
-                    <span>Wpisz imię Ojca albo Matki oraz Pesel</span>
+                    {#<span>Wpisz imię Ojca albo Matki oraz Pesel</span>#}
                 </div>
                 <div class="modal-body">
-                    {{ form_row(form.fatherName, {
-                        label: 'Imię Ojca',
-                    }) }}
-                    {{ form_row(form.motherName, {
-                        label: 'Imię Matki'
-                    }) }}
+                    {#{{ form_row(form.fatherName, {#}
+                        {#label: 'Imię Ojca',#}
+                    {#}) }}#}
+                    {#{{ form_row(form.motherName, {#}
+                        {#label: 'Imię Matki'#}
+                    {#}) }}#}
                     {{ form_row(form.pesel, {
                         label: 'PESEL'
                     }) }}

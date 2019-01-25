@@ -43,8 +43,8 @@ class CoachType extends AbstractType
             ->add('phone', TextType::class, [
                 'constraints' => [new NotBlank()]
             ])
-            ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
-            ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
+//            ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
+//            ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
             ->add('pesel', TextType::class, ['label' => 'Pesel']);
 
     }

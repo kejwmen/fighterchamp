@@ -18,7 +18,7 @@ class SignUpTournament
     {
         $this->user = $user;
         $this->tournament = $tournament;
-        $this->created_at = new \DateTime('now');
+        $this->created_at = new \DateTime();
     }
 
     /**
@@ -121,7 +121,7 @@ class SignUpTournament
 
     public function delete()
     {
-        $this->deleted_at = new \DateTime('now');
+        $this->deleted_at = new \DateTime();
     }
 
 

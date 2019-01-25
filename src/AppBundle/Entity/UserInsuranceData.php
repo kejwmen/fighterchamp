@@ -11,6 +11,8 @@ namespace AppBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
+//class not used
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="user_insurance_data")

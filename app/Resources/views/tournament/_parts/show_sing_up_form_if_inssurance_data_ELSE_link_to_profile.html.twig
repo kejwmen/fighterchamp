@@ -1,4 +1,5 @@
-{% if app.user.pesel and (app.user.fatherName or app.user.motherName) %}
+{#{% if app.user.pesel and (app.user.fatherName or app.user.motherName) %}#}
+    {% if app.user.pesel %}
     {% include ':tournament/_parts:_sign_up_form.html.twig' %}
 {% else %}
     <p>Aby wysłać swoje zgłoszenie na turniej musisz podać niezbędne dane do obowiązkowego
