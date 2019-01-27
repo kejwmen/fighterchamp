@@ -1,9 +1,10 @@
 #php:
-#  image: php:7.0-apache
+#  image: php:7.2-apache
 #  volumes:
-#    - ./public_html:/var/www/html/
+#    - ./:/var/www/html/
 #  ports:
 #    - "8000:80"
+
 db:
   build: docker/mysql
   ports:
@@ -13,3 +14,13 @@ db:
       MYSQL_USER: "test"
       MYSQL_PASSWORD: "test"
       MYSQL_ROOT_PASSWORD: "test"
+
+#db_test:
+#  build: docker/mysql
+#  ports:
+#    - "3311:3306"
+#  environment:
+#    MYSQL_DATABASE: "test"
+#    MYSQL_USER: "test"
+#    MYSQL_PASSWORD: "test"
+#    MYSQL_ROOT_PASSWORD: "test"

@@ -164,6 +164,15 @@ class UserController extends Controller
         return $users;
     }
 
+    /**
+     * @Route("/ludzie/{id}", name="api_user_delete")
+     * @Method("DELETE")
+     */
+    public function delete(User $user)
+    {
+
+    }
+
 
     private function getFormType(Request $request): string
     {

@@ -23,9 +23,12 @@
             attr: {'class': 'select2'}
         }) }}
 
-<button type="submit" name="submit" class="btn btn-primary" formnovalidate>
+{#{% include 'user/_macros/delete_account.html.twig' %}#}
+
+<button style="float:right" type="submit" name="submit" class="btn btn-primary" formnovalidate>
      Zapisz
 </button>
+
 {{ form_end(form) }}
 
 {#<script>#}
