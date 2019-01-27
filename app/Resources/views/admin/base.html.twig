@@ -1,23 +1,23 @@
 <div>
     <ul class="nav navbar-nav">
         <li><a href="{{ path('admin_user_list') }}">Zawodnicy</a></li>
-        <li><a href="{{ path('admin_tournament_sign_up', { 'id' : 8}) }}"> Zgłoszenia</a></li>
-        <li><a href="{{ path('admin_tournament_pair', { 'id' : 8}) }}"> Parowanie</a></li>
-        <li><a href="{{ path('admin_tournament_fights', { 'id' : 8}) }}"> Walki - Wygrał / Przegrał</a></li>
+        <li><a href="{{ path('admin_tournament_sign_up', { 'id' : 9}) }}"> Zgłoszenia</a></li>
+        <li><a href="{{ path('admin_tournament_pair', { 'id' : 9}) }}"> Parowanie</a></li>
+        <li><a href="{{ path('admin_tournament_fights', { 'id' : 9}) }}"> Walki - Wygrał / Przegrał</a></li>
         {#<li><a href="{{ path('admin_mail') }}">Mail</a></li>#}
         <li><a href="#">Filmy</a></li>
         {#<li ><a href="{{ path('admin_tournament_create') }}">Utwórz nowy turniej</a></li>#}
     </ul>
-    <ul class="nav navbar-nav" style="float: right;  padding-right:30px;">
-        <li >
-            <select style="width: 300px;"
-                    id="js-admin-tournament"
-                    class="form-control"
-                    name="userId"
-                    data-source="{{ path('admin_api_tournament_list') }}"
-                    data-valueKey="id"
-                    data-displayKey="name">
-            </select>
-        </li>
-    </ul>
+    {#<ul class="nav navbar-nav" style="float: right;  padding-right:30px;">#}
+        {#<li >#}
+            {#<select style="width: 300px;"#}
+                    {#id="js-admin-tournament"#}
+                    {#class="form-control"#}
+                    {#name="userId"#}
+                    {#data-source="{{ path('admin_api_tournament_list') }}"#}
+                    {#data-valueKey="id"#}
+                    {#data-displayKey="name">#}
+            {#</select>#}
+        {#</li>#}
+    {#</ul>#}
 </div>
