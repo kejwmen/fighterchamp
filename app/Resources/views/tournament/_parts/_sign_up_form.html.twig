@@ -12,6 +12,9 @@ Klasy zawodników wg. stopnia zaawansowania:<br>
     {{ form_row(form.trainingTime, {
         'label': 'Staż treningowy (opcjonalnie) - liczba miesięcy',
         'attr': {'min': 0, 'max' : 99 }}) }}
+    {{ form_row(form.isLicence, {
+        'label': 'Posiadam ważną licencję PZB'
+    }) }}
 </div>
 <div class="col-md-6" id="yt-video"></div>
 <div class="col-md-6">

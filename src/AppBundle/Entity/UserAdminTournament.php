@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 10.12.16
- * Time: 21:54
- */
 
 namespace AppBundle\Entity;
 
@@ -20,104 +14,74 @@ class UserAdminTournament
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime('now');
+        $this->createdAt = new \DateTime();
     }
-
 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tournamentAdmin")
      * @ORM\JoinColumn(nullable=false)
+     * @var User
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament", inversedBy="userAdmin")
      * @ORM\JoinColumn(nullable=false)
+     * @var Tournament
      */
     private $tournament;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $superAdmin = true;
-
-    /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
     private $createdAt;
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user)
+    public function setUser(User $user): void
     {
         $this->user = $user;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTournament()
+    public function getTournament(): Tournament
     {
         return $this->tournament;
     }
 
-    /**
-     * @param mixed $tournament
-     */
-    public function setTournament($tournament)
+    public function setTournament(Tournament $tournament): void
     {
         $this->tournament = $tournament;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSuperAdmin()
-    {
-        return $this->superAdmin;
-    }
-
-    /**
-     * @param mixed $superAdmin
-     */
-    public function setSuperAdmin($superAdmin)
-    {
-        $this->superAdmin = $superAdmin;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param mixed $createdAt
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
-
-
-
-
 }

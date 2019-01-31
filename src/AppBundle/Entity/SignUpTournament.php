@@ -63,6 +63,11 @@ class SignUpTournament
     private $isPaid = false;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isLicence = false;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $deleted_at;
@@ -100,6 +105,15 @@ class SignUpTournament
      */
     private $musicArtistAndTitle = '';
 
+    public function getIsLicence()
+    {
+        return $this->isLicence;
+    }
+
+    public function setIsLicence($isLicence): void
+    {
+        $this->isLicence = $isLicence;
+    }
 
     public function getTrainingTime()
     {

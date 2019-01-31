@@ -2,7 +2,10 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\SignUpTournament;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,6 +29,7 @@ class SignUpTournamentType extends AbstractType
             ->add('weight', ChoiceType::class, [
                 'choices'  => $trait
                 ])
+            ->add('isLicence', CheckboxType::class)
 //            ->add('youtubeId', TextType::class)
 //            ->add('musicArtistAndTitle', TextType::class)
 
@@ -35,7 +39,7 @@ class SignUpTournamentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\SignUpTournament',
+            'data_class' => SignUpTournament::class,
             'trait_choices' => null,
             'user_id' => null,
             'csrf_protection'   => false,
