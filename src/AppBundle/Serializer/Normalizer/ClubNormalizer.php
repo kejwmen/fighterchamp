@@ -30,9 +30,15 @@ class ClubNormalizer implements NormalizerInterface, SerializerAwareInterface
 
     public function normalize($object, $format = null, array $context = array())
     {
+        /**
+         * @var $object Club
+         */
+
         return [
             'href' => $this->router->generate('club_show',['id' => $object->getId()]),
             'name'   => $object->getName(),
+            'www' => $object->getWww(),
+            'city' => $object->getCity(),
             'record' => $this->countRecordClub($object->getUsers()),
             'users' => $this->serializer->normalize($object->getUsers(), $format, $context)
         ];
