@@ -6,7 +6,7 @@ namespace AppBundle\Form\User;
 use AppBundle\Entity\Club;
 use AppBundle\Entity\User;
 use AppBundle\Form\EventListener\AddTermsAndPlainPasswordFieldsIfNewUser;
-use AppBundle\Form\EventListener\CreateClubIfDosentExist;
+use AppBundle\Form\EventListener\CreateClubIfNotExist;
 use AppBundle\Form\EventListener\CreateCoachIfDosentExist;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -91,7 +91,7 @@ class UserType extends AbstractType
 
         ;
 
-        $builder->addEventSubscriber(new CreateClubIfDosentExist($this->em));;
+        $builder->addEventSubscriber(new CreateClubIfNotExist($this->em));;
         $builder->addEventSubscriber(new AddTermsAndPlainPasswordFieldsIfNewUser());
 
     }

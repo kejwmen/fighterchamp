@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-class CreateClubIfDosentExist implements EventSubscriberInterface
+class CreateClubIfNotExist implements EventSubscriberInterface
 {
     /**
      * @var EntityManagerInterface
@@ -35,15 +35,15 @@ class CreateClubIfDosentExist implements EventSubscriberInterface
 
         $clubId = $data['club'];
 
+        if(!$clubId) {
+            return;
+        }
 
         if ($this->em->getRepository(Club::class)->find($clubId)) {
             return;
         }
 
-        if(!$clubId) {
-            return;
-        }
-        $clubName = $clubId;
+        $clubName = $data['club'];
 
         $club = new Club();
         $club->setName($clubName);
