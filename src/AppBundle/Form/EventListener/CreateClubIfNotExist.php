@@ -43,7 +43,8 @@ class CreateClubIfNotExist implements EventSubscriberInterface
             return;
         }
 
-        $clubName = $data['club'];
+        $clubNameRaw = $data['club'];
+        $clubName = trim($clubNameRaw);
 
         $club = new Club();
         $club->setName($clubName);
