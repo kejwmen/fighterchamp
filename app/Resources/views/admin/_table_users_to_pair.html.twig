@@ -12,6 +12,7 @@
         <th>Kat. Wagowa</th>
         <th>Staż [miesiące]</th>
         <th>Wiek</th>
+        <th>Licencja PZB</th>
         <th>Klub</th>
     </tr>
     </thead>
@@ -34,6 +35,7 @@
                 <td> {{ signUp.weighted ?: signUp.weight }} </td>
                 <td> {{ signUp.trainingTime }} </td>
                 <td> {{ signUp.user.birthDay |getAge }} </td>
+                <td> {{ signUp.isLicence ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' }} </td>
                 <td>
                     {% if signUp.user.club %}
                         <a href="{{ signUp.user.club.href }}"> {{ signUp.user.club.name }} </a>

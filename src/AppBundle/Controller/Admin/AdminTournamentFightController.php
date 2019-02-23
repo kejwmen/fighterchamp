@@ -96,7 +96,7 @@ class AdminTournamentFightController extends Controller
 
 
     /**
-     * @Route("/{id}/parowanie", name="admin_tournament_pair")
+     * @Route("/turnieje/{id}/parowanie", name="admin_tournament_pair")
      * @Method("GET")
      */
     public function pairAction(Tournament $tournament)
