@@ -1,68 +1,75 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     {% include 'tournament/_parts/_panel.twig' %}
-<div class="container-fluid">
-    <div class="main">
-        <section class="tournament-data">
-            <div class="row">
-                <div class="title col-xs-12">
-                    <img src="{{ tournament.logo }}" class="img-responsive center-block">
-                </div>
-                <div class="date col-xs-12 col-sm-6 text-uppercase">
-                    <h3 class="text-center">data</h3>
-                    <div class="row">
-                        <div class="day col-xs-6 text-right">
-                            <p><strong>{{ tournament.start | date('d-m-Y') }} </strong>
-                                <br>
-                                {{ tournament.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
-                            </p>
-                        </div>
-                        <div class="hour col-xs-6">
-                            <p>godzina
-                                <br>
-                                <strong>{{ tournament.start | date('H:i') }}</strong></p>
+    <div class="container-fluid">
+        <div class="main">
+            <section class="tournament-data">
+                <div class="row">
+                    <div class="title col-xs-12">
+                        <img src="{{ tournament.logo }}" class="img-responsive center-block">
+                    </div>
+                    <div class="date col-xs-12 col-sm-6 text-uppercase">
+                        <h3 class="text-center">data</h3>
+                        <div class="row">
+                            <div class="day col-xs-6 text-right">
+                                <p><strong>{{ tournament.start | date('d-m-Y') }} </strong>
+                                    <br>
+                                    {{ tournament.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
+                                </p>
+                            </div>
+                            <div class="hour col-xs-6">
+                                <p>godzina
+                                    <br>
+                                    <strong>{{ tournament.start | date('H:i') }}</strong></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="place col-xs-12 col-sm-6">
-                    <h3 class="text-uppercase text-center">miejsce</h3>
-                    <div class="row">
-                        <div class="building col-xs-6 text-right">
-                            <p><strong>{{ tournament.place.name }}</strong></p>
-                        </div>
-                        <div class="address col-xs-6">
-                            <p>{{ tournament.place.city }}
-                                <br>
-                                {{ tournament.place.street }}
-                            </p>
+                    <div class="place col-xs-12 col-sm-6">
+                        <h3 class="text-uppercase text-center">miejsce</h3>
+                        <div class="row">
+                            <div class="building col-xs-6 text-right">
+                                <p><strong>{{ tournament.place.name }}</strong></p>
+                            </div>
+                            <div class="address col-xs-6">
+                                <p>{{ tournament.place.city }}
+                                    <br>
+                                    {{ tournament.place.street }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="limits col-xs-12 text-center">
-                    <h2>Zapisy do {{ tournament.signUpTill | date('d-m-Y') }}
-                        ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
-                        )</h2>
-                    <h3 class="text-uppercase">uczestnicy</h3>
-                    <p><strong>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</strong></p>
-                </div>
-                <div class="key-points col-xs-12 col-md-9">
+                    <div class="limits col-xs-12 text-center">
+                        <h2>Zapisy do {{ tournament.signUpTill | date('d-m-Y') }}
+                            ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
+                            )</h2>
+                        <h3 class="text-uppercase">uczestnicy</h3>
+                        <p><strong>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</strong></p>
+                    </div>
+                    <span class="key-points col-xs-12 col-md-9">
 
                     <h3 class="text-uppercase">harmonogram</h3>
                     {% set last = '' %}
-                    {% for schedule in tournament.schedule %}
+                        {% for schedule in tournament.schedule %}
 
-                        {% if last != schedule.start | date('d-m-Y') %}
-                            <h4>{{ schedule.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
+                            {% if last != schedule.start | date('d-m-Y') %}
+                                <h4>{{ schedule.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
                                 ({{ schedule.start | date('d-m-Y') }})</h4>
-                        {% endif %}
+                            {% endif %}
 
                         <p><strong>{{ schedule.start| date('H:i') }}</strong>-{{ schedule.end| date('H:i') }}
                             - {{ schedule.description }}</p>
-                        {% set last = schedule.start | date('d-m-Y') %}
-                    {% endfor %}
+                            {% set last = schedule.start | date('d-m-Y') %}
+                        {% endfor %}
 
                     <h3 class="text-uppercase">Walki:</h3>
 
+                    <span> Licencja PZB </span>
+                    <ul>
+                        <li> seniorzy i juniorzy - 3 rundy po 3 minuty </li>
+                        <li> kadeci - 3 rundy po 2 minuty </li>
+                    </ul>
+
+                         <span> Bez licencji </span>
                     <ul>
 
                         <li>klasa A - 3 rundy po 3 minuty</li>
@@ -74,31 +81,46 @@
                     <span>Każdy uczestnik otrzymuję pamiątkowy dyplom oraz medal</span>
                     <ul>
                         {% for award in tournament.awards %}
-                        <li>{{ award.name }}
-                            {% if award.userFight %} - <a href="{{ path('user_show', {'id': award.userFight.user. id}) }}">{{ award.userFight.user }}</a> {% endif %}
-                        </li>
+                            <li>{{ award.name }}
+                                {% if award.userFight %} - <a
+                                        href="{{ path('user_show', {'id': award.userFight.user. id}) }}">{{ award.userFight.user }}</a> {% endif %}
+                            </li>
                         {% endfor %}
                     </ul>
 
                     <h3 class="text-uppercase">Sprzęt:</h3>
+                        <li> rękawice:
+                        <ul>
+                            <li>waga do 69kg włącznie 12oz, powyżej 69kg 14oz</li>
+                        </ul>
+                        </li>
+                           <li>zawodnik musi zapewnić sobie:
+                            <ul>
+                                <li>sportowe buty i strój</li>
+                                <li>ochraniacz na zęby</li>
+                                <li>ochraniacz na krocze</li>
+                                <li>bandaże na ręce</li>
+                            </ul>
+                        </li>
 
+                         <span> Licencja PZB </span> <br>
+                        Sprzęt musi posiadać atest AIBA (tzn. hologram). Prosimy zawodników i kluby by najlepiej posiadały ten sprzęt.
+
+                    <ul>
+
+                        <li> seniorzy bez kasków</li>
+                        <li> kadeci i juniorzy w kaskach </li>
+
+                    </ul>
+
+                         <span> Bez licencji PZB </span>
                     <ul>
 
                         <li>klasa A - obaj zawodnicy bez kasków</li>
                         <li>klasa B - do ustalenia z przeciwnikiem (nie może jeden walczyć w kasku drugi bez)</li>
                         <li>klasa C - obaj zawodnicy w kaskach</li>
                         <li>juniorzy (tzn. do 18 lat) i kobiety w kasku</li>
-                        <li>rękawice i kaski są zapewnione przez organizatora, nie można walczyć we własnym sprzęcie</li>
-                        <ul>
-                            <li>waga do 69kg włącznie 12oz, powyżej 69kg 14oz</li>
-                        </ul>
-                        <li>zawodnik musi zapewnić sobie:
-                            <ul>
-                                <li>sportowe buty i strój </li>
-                                <li>ochraniacz na zęby</li>
-                                <li>ochraniacz na krocze</li>
-                                <li>bandaże na ręce</li>
-                            </ul>
+                        <li>rękawice i kaski są zapewnione przez organizatora, nie można walczyć we własnym sprzęcie
                         </li>
                     </ul>
 
@@ -116,8 +138,8 @@
                         <img src="{{ tournament.poster }}" class="img-responsive center-block">
                     </aside>
                 {% endif %}
-            </div>
+        </div>
         </section>
     </div>
-</div>
+    </div>
 {% endblock %}

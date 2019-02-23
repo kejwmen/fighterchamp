@@ -89,6 +89,20 @@
         });
     });
 
+    $( ".toggle-corner" ).click(function() {
+
+        var fightId = $(this).data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('toggle_corners') }}",
+            data: {fightId: fightId},
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+
 </script>
 {% endblock %}
 

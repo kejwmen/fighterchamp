@@ -24,15 +24,19 @@ class AdminTournamentFightController extends Controller
 {
 
     /**
-     * @Route("/toggle-corner/walki/{id}", name="toggle_corners")
+     * @Route("/toggle-corner", name="toggle_corners")
      */
-    public function toggleCornersAction(Fight $fight, EntityManagerInterface $em, FightService $fightService)
+    public function toggleCornersAction(EntityManagerInterface $em, FightService $fightService, Request $request)
     {
+        $fightId = $request->request->get('fightId');
+
+        $fight = $em->getReference(Fight::class, $fightId);
+
         $fightService->toggleCorners($fight);
 
         $em->flush();
 
-        return $this->redirectToRoute('admin_tournament_fights', ['id' => 8]);
+        return new Response(null, 200);
     }
 
 
