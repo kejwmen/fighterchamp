@@ -11,7 +11,7 @@
                 <th>Nazwisko i Imię</th>
                 <th>Klasa</th>
                 <th>Kat. Wagowa</th>
-                <th>Rekord</th>
+                {#<th>Rekord</th>#}
                 <th>Płeć</th>
                 <th>Wiek</th>
                 <th>Klub</th>
@@ -21,7 +21,14 @@
             {% for user in users %}
                 <tr>
                     <td>
-                        <button class="btn btn-success js-add-sign-up" id="{{ user.id }}"> Dodaj </button>
+                        {#{{ user.getSignUpTournament }}#}
+
+                        {% if user.getSignUpTournament(tournament) %}
+                        Dodany
+                        {% else %}
+                            <button class="btn btn-success js-add-sign-up" id="{{ user.id }}"> Dodaj </button>
+                        {% endif %}
+
                     </td>
                     <td>{{ user.surname }} {{ user.name }}</td>
 
@@ -41,15 +48,16 @@
                             {% endfor %}
                         </select>
                     </td>
-                    <td>
-                        {{ macro.record(user) }}
-                    </td>
+                    {#<td>#}
+                        {#{{ macro.record(user) }}#}
+                    {#</td>#}
                     <td> {{ user.male ?  'M' : 'K' }} </td>
 
                     <td> {{ user.birthDay |getAge }} </td>
                     <td>
                         {% if user.club %}
-                            <a href="{{ user.club.href }}"> {{ user.club.name }} </a>
+                            {#<a href="{{ user.club.href }}"> {{ user.club.name }} </a>#}
+                            {{ user.club.name }}
                         {% endif %}
                     </td>
                 </tr>

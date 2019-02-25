@@ -102,18 +102,18 @@ class AdminTournamentSignUp extends Controller
     /**
      * @Route("/turnieje/{id}/lista/dodaj", name="admin_create_signUp")
      */
-    public function createSignUp(Request $request, EntityManagerInterface $em, Tournament $tournament,
+    public function createSignUp(EntityManagerInterface $em, Tournament $tournament,
                                  NormalizerInterface $serializer)
     {
         $users = $em->getRepository(User::class)
             ->findBy([],['surname' => 'asc']);
 
-        $weights = $this->getDoctrine()
-            ->getRepository('AppBundle:Ruleset')
+        $weights = $em->getRepository('AppBundle:Ruleset')
             ->getWeight();
 
         return $this->render('admin/sign-up/create.html.twig', [
-            'users' => $serializer->normalize($users),
+            'users' => $users,
+               // $serializer->normalize($users),
             'weights' => $weights,
             'tournament' => $tournament
         ]);
