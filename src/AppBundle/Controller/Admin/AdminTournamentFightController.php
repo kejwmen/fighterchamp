@@ -22,6 +22,23 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AdminTournamentFightController extends Controller
 {
+    /**
+     * @Route("/set-is-licence", name="set_is_licence")
+     */
+    public function setLicence(Request $request, EntityManagerInterface $em)
+    {
+        $fightId = $request->request->get('fightId');
+        $isLicence =  $request->request->get('isLicence');
+
+        $fight = $em->getRepository(Fight::class)
+            ->find($fightId);
+
+        $fight->setLicence($isLicence);
+
+        $em->flush();
+
+        return new Response(200);
+    }
 
     /**
      * @Route("/toggle-corner", name="toggle_corners")

@@ -39,7 +39,8 @@
             <tbody>
             {% for signUp in signUpsTournament %}
                 <tr>
-                    <td><select autocomplete="off" class="select_isPaid">
+                    <td>
+                        <select autocomplete="off" class="select_isPaid">
                             {% if signUp.isPaid %}
                                 <option selected value="{{ signUp.id }}|1">Tak</option>
                                 <option value="{{ signUp.id }}|0">Nie</option>

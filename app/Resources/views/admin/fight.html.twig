@@ -103,6 +103,19 @@
         });
     });
 
+    $(".select_is_licence").change(function () {
+        var values = this.value;
+        var arrValues = values.split("|");
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ path('set_is_licence') }}",
+            data: {fightId: arrValues[0], isLicence: arrValues[1]},
+            success: function () {
+                location.reload(); }
+        });
+    });
+
 </script>
 {% endblock %}
 

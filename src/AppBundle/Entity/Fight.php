@@ -80,6 +80,21 @@ class Fight
      */
     private $description ='';
 
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $licence = false;
+
+    public function isLicence(): bool
+    {
+        return $this->licence;
+    }
+
+    public function setLicence(bool $licence): void
+    {
+        $this->licence = $licence;
+    }
 
     public function getId(): int
     {

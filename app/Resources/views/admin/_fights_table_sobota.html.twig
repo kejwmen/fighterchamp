@@ -32,6 +32,7 @@
             <th>Wygrany</th>
             <th>Klasa</th>
             <th>Kat. wagowa</th>
+            <th>Licencja PZB</th>
         </tr>
         </thead>
         <tbody>
@@ -87,7 +88,8 @@
                         <br>
                         {% if signUp %}
                         {{ signUp.isPaid ? '' : 'Niezapłacone'  }}
-                            {{ signUp.weighted ? '' : 'Niezważony' }}
+                            {{ signUp.weighted ? '' : 'Niezważony' }} <br>
+                            {{ signUp.isLicence ? '' : 'PZB' }}
                         {% endif %}
                     </td>
 
@@ -110,8 +112,20 @@
 
                 <td>{{ fight.formula }}</td>
                 <td>{{ fight.weight }}</td>
+                <td>
+                    <select autocomplete="off" class="select_is_licence">
+                        {% if fight.isLicence %}
+                            <option selected value="{{ fight.id }}|1">Tak</option>
+                            <option value="{{ fight.id }}|0">Nie</option>
+                        {% else %}
+                            <option value="{{ fight.id }}|1">Tak</option>
+                            <option selected value="{{ fight.id }}|0">Nie</option>
+                        {% endif %}
+                    </select>
+                </td>
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
     {#<a href="{{ path('allFightsReady', {'id': tournament.id }) }}" class="btn btn-primary"> Opublikuj Wszystkie Walki</a>#}
