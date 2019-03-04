@@ -4,13 +4,19 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <table id="table-clubs" class="table">
+                <table id="table-fights" class="table">
                     <thead>
                     <tr>
                         <th></th>
                         <th></th>
-                        <th>Zawodnik 1</th>
-                        <th>Zawodnik 2</th>
+                        <th>
+                            Zawodnik 1 <br>
+                            <span class="label label-danger">Narożnik Czerwony</span>
+                        </th>
+                        <th>
+                            Zawodnik 2 <br>
+                            <span class="label label-primary">Narożnik Niebieski</span>
+                        </th>
                         <th>Płeć</th>
                         <th>Klasa</th>
                         <th>Kat. Wagowa</th>
@@ -24,16 +30,16 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $(document).ready(function(){
-            var t = $('#table-clubs').DataTable({
-                "ajax": "{{ path('api_fight_list', {id: tournament.id, slug: 'turnieje' })}}",
+        $(document).ready(function () {
+            var t = $('#table-fights').DataTable({
+                "ajax": "{{ path('api_fight_list', {id: tournament.id, slug: 'turnieje' }) }}",
                 "columns": [
                     {data: null},
                     {
                         mData: function (data) {
                             var temp = (data.youtubeId === null) ? '' : " <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'></a>";
 
-                            return "<a href='" + data.href + "'>Szczegóły</a>" + temp;
+                            return "<a href='" + data.href + "'>Szczegóły</a>" + temp + "<br>" + data.description;
                         }
                     },
                     {
@@ -56,7 +62,7 @@
                     },
                     {
                         mData: function (data) {
-                            return data.usersFight[1].user.male? 'M' : 'K';
+                            return data.usersFight[1].user.male ? 'M' : 'K';
                         }
                     },
                     {
@@ -92,9 +98,9 @@
                 result = '<span class="label label-success">W</span>';
             } else if (userFight.result === 'lose') {
                 result = '<span class="label label-danger">L</span>'
-            }else if (userFight.result === 'draw'){
+            } else if (userFight.result === 'draw') {
                 result = '<span class="label label-warning">D</span>';
-            }else if (userFight.result === 'disqualify' ){
+            } else if (userFight.result === 'disqualify') {
                 result = '<span class="label label-dark">DQ</span>';
             }
 
