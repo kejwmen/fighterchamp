@@ -38,6 +38,7 @@ class FightNormalizer implements NormalizerInterface, SerializerAwareInterface
             'isVisible' => $object->getIsVisible(),
             'position' => $object->getPosition(),
             'description' => $object->getDescription(),
+            'isLicence' => $object->isLicence(),
             'usersFight' => array_map(
                 function (UserFight $userFight) {
                     return [
