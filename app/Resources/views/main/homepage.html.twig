@@ -191,7 +191,10 @@
             if (user.birthDay === null) {
                 return '';
             }
-            var age = new Date(new Date - new Date(user.birthDay.date)).getFullYear() - 1970;
+
+            // var age = new Date(new Date - new Date(user.birthDay.date)).getFullYear() - 1970;
+
+            var age = (new Date).getFullYear() - (new Date(user.birthDay.date)).getFullYear();
 
             var temp = '';
             if(age <= 12) {

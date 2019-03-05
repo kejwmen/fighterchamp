@@ -27,11 +27,17 @@ class AppExtension extends Twig_Extension
             return null;
         }
 
-        $referenceDateTimeObject = new \DateTime('now');
+//        $referenceDateTimeObject = new \DateTime('now');
+//
+//        $diff = $referenceDateTimeObject->diff($date);
+//
+//        return $diff->y;
 
-        $diff = $referenceDateTimeObject->diff($date);
+        $date = $date->format('Y');
 
-        return $diff->y;
+        $now = (new \DateTime('now'))->format('Y');
+
+        return $now - $date;
     }
 
     public function getAgeAtTournament($birthday, $tournamentDay)
