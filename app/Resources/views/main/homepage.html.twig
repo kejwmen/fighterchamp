@@ -197,15 +197,17 @@
             var age = (new Date).getFullYear() - (new Date(user.birthDay.date)).getFullYear();
 
             var temp = '';
-            if(age <= 12) {
+            if(age <= 13) {
                 temp = '(adept)';
-            }else if(age == 13 || age == 14){
+            }else if(age == 14){
                 temp = '(młodzik)';
             }else if(age == 15 || age == 16){
                 temp = '(kadet)';
             }else if(age == 17 || age == 18){
                 temp = '(junior)';
-            }else if(age > 18 ){
+            }else if(age >= 19 && age <= 23 ){
+                temp = '(młodzieżowiec)';
+            }else if(age > 23){
                 temp = '(senior)';
             }
 

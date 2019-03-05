@@ -84,19 +84,21 @@
                         {% if user.birthDay %}
                             {% set age = user.birthDay |getAge %}
                             {{ age }} lat
-                            {% if(age <= 12) %}
+                            {% if(age <= 13) %}
                             (adept)
-                            {% elseif(age == 13 or age == 14) %}
+                            {% elseif(age == 14) %}
                             (młodzik)
                             {% elseif(age == 15 or age == 16) %}
                             (kadet)
                             {% elseif(age == 17 or age == 18) %}
                             (junior)
-                            {% elseif(age > 18 ) %}
+                            {% elseif(age >= 19 and age <= 23) %}
+                            (młodzieżowiec)
+                            {% elseif(age > 23 ) %}
                             (senior)
                             {% endif %}
-
                         {% endif %}
+
                         <br>
                         {% if signUp %}
                         {{ signUp.isPaid ? '' : 'Niezapłacone'  }}
