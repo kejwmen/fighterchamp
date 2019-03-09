@@ -5,19 +5,92 @@
 
         <div class="row">
             <div class="col-xs-10 col-md-8 col-md-offset-2">
-                <h3 class="text-uppercase">harmonogram</h3>
-                {% set last = '' %}
-                {% for schedule in tournament.schedule %}
+                <h2 class="text-uppercase">harmonogram</h2>
+                {#{% set last = '' %}#}
+                {#{% for schedule in tournament.schedule %}#}
 
-                    {% if last != schedule.start | date('d-m-Y') %}
-                        <h4>{{ schedule.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}
-                            ({{ schedule.start | date('d-m-Y') }})</h4>
-                    {% endif %}
+                    {#{% if last != schedule.start | date('d-m-Y') %}#}
+                        {#<h4>{{ schedule.start |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}#}
+                            {#({{ schedule.start | date('d-m-Y') }})</h4>#}
+                    {#{% endif %}#}
 
-                    <p><strong>{{ schedule.start| date('H:i') }}</strong>-{{ schedule.end| date('H:i') }}
-                        - {{ schedule.description }}</p>
-                    {% set last = schedule.start | date('d-m-Y') %}
-                {% endfor %}
+                    {#<p><strong>{{ schedule.start| date('H:i') }}</strong>-{{ schedule.end| date('H:i') }}#}
+                        {#- {{ schedule.description }}</p>#}
+                    {#{% set last = schedule.start | date('d-m-Y') %}#}
+                {#{% endfor %}#}
+
+               <h2> sobota (09-03-2019) </h2>
+                13:00-14:00 - waga zawodników (waga dzień wcześniej bez tolerancji, lekarz musi zbadać drugiego dnia)
+
+               <h2> niedziela (10-03-2019) </h2>
+
+                <strong>I SERIA WALK SPARINGOWO - SZKOLENIOWYCH </strong>
+                <ul>
+                    <li>
+                        8:20 - 9:00 = 1 - 4 pojedynki adeptów, młodzików i kadetów
+                    </li>
+                    <li>
+                        9:00 - 10:00 = walki 5 - 11
+                    </li>
+                    <li>
+                        10:00 - 11:00 = walki 12 - 17
+                    </li>
+                    <li>
+                        11:00 - 11:20 = walki 18 - 19
+                    </li>
+                    <li>
+                        11:30 - 11:45 = Rozpoczęcie walk zawodników z licencjami PZB najpierw walka eliminacyjna do mistrzostw Polski juniorów w kategorii 75 kg
+                    </li>
+                </ul>
+                <strong>Otwarcie I MEMORIAŁU ANDRZEJA GMITRUKA. </strong>
+                <ul>
+                <li>
+                        11:45 - 12:10 = Kilka słów wstępu i rozpoczęcie od walk kobiet - kadetek i juniorek.
+                        walki 21 - 22
+                    </li>
+                    <li>
+                        12:10 - 12:50 = walki 23 - 26 - pojedynki młodzików, kadetów i juniorów
+                    </li>
+                    <li>
+                        12:50 -13:20 = walki 27, 28 - dwa pojedynki w kategorii senior na wysokim poziomie, waga 56 kg i 69 kg
+                        W tym jedna bratobójcza walka zawodników z Legia Boks i z Legia Fight Club
+                    </li>
+                    <li>
+                        13:20 - 13:35 = walki 29 - 30 - dwa pojedynki młodzików w wadze 75 kg
+                    </li>
+                    <li>
+                        13:35 - 14:30 = walki 31 - 34 Pojedynki seniorów w wadze 75 kg i 81 kg. Większość zawodników ze sporym bilansem.
+                    </li>
+                    <li>
+                        14:30 - 15:30 = walki 34 - 38 - Pojedynki w wadze ciężkiej. Najpierw walka kadetów potem trzy walki seniorów na naprawdę wysokim poziomie!
+                    </li>
+                    <li>
+                        15:30 - 15:45 = wspomnienie A. Gmitruka
+                    </li>
+                    <li>
+                        15:45 - 16:30 = przerwa, koncerty
+                    </li>
+                </ul>
+                <strong>II SERIA WALK SPARINGOWO - SZKOLENIOWYCH </strong>
+                <ul>
+                    <li>16:30 - 17:30 = walki 39 - 44 </li>
+                    <li> 17:30 - 18:30 =  walki 45 - 50</li>
+                    <li>
+                        Krótka przerwa na koncert (ok. 10 min)
+                    </li>
+                    <li>
+                        18:45 - 19:45 = walki 51 - 56
+                    </li>
+                    <li>
+                        19:45 - 20:45 = walki 57 - 61
+                    </li>
+                    <li>
+                        20:45 - 21:15 = walki 62 - 63
+                    </li>
+                    <li>
+                        21:20 = zakończenie imprezy
+                    </li>
+                </ul>
             </div>
         </div>
 

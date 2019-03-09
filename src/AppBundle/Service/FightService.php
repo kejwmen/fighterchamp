@@ -79,6 +79,7 @@ class FightService
         $fight->setPosition($numberOfFights + 1);
 
         $fight->setDay($tournament->getStart());
+        $fight->setIsVisible(true);
 
         $this->entityManager->persist($fight);
         $this->entityManager->persist($userFightOne);

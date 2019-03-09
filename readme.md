@@ -46,7 +46,6 @@ WHERE signuptournament.tournament_id = 6
 AND signuptournament.deleted_at is null 
 AND signuptournament.deleted_at_by_admin is null
 
-
 *****MUZIK
 
 SELECT 
@@ -68,4 +67,12 @@ WHERE signuptournament.tournament_id = 6
       AND signuptournament.deleted_at_by_admin is null
       AND signuptournament.youtube_id is not null
 ORDER BY nameConcat
+
+//dane walczących zawodników
+
+select u.name, u.surname, u.pesel
+from fight f
+left join user_fight uf on f.id = uf.fight_id
+left join user u on uf.user_id = u.id
+where tournament_id = 9
 
