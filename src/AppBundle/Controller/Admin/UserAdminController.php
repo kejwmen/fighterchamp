@@ -32,13 +32,17 @@ class UserAdminController extends Controller
      */
     public function indexAction()
     {
-
         $users = $this->getDoctrine()->getRepository('AppBundle:User')
             ->findAll();
 
+        $tournament = $this->getDoctrine()
+            ->getRepository(Tournament::class)
+            ->findNewestOne();
+
         return $this->render('admin/user/list.html.twig',
             [
-                'users' => $users
+                'users' => $users,
+                'tournament' => $tournament
             ]
         );
     }

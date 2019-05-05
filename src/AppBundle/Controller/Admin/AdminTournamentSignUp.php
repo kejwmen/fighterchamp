@@ -148,7 +148,9 @@ class AdminTournamentSignUp extends Controller
 
         $em->flush();
 
-        return $this->redirectToRoute('admin_tournament_pair',['id' => 8]); //todo change to 200 and js reload page
+        return $this->redirectToRoute('admin_tournament_pair',[
+            'id' => $signUpTournament->getTournament()->getId()
+        ]); //todo change to 200 and js reload page
     }
 
 

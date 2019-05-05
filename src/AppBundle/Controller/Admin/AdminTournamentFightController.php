@@ -85,7 +85,7 @@ class AdminTournamentFightController extends Controller
 
 
     /**
-     * @Route("/turniej/{id}/walki", name="admin_tournament_fights")
+     * @Route("/turnieje/{id}/walki", name="admin_tournament_fights")
      */
     public function listAction(Tournament $tournament, EntityManagerInterface $em)
     {
@@ -132,6 +132,7 @@ class AdminTournamentFightController extends Controller
 
         return $this->render(':admin:pair.html.twig', array(
             'freeUsers' => $normalizeSignUps,
+            'tournament' => $tournament
         ));
     }
 
