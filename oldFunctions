@@ -20,3 +20,4 @@
 
         return ['W' => $win, 'D' => $draw, 'L' => $lose];
     }
+

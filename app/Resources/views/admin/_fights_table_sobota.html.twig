@@ -18,7 +18,7 @@
         <tr>
             <th></th>
             <th>Opublikowane?</th>
-            {#<th>Dzień</th>#}
+            <th>Dzień</th>
             <th>Kolejność</th>
             <th>
                 Zawodnik 1 <br>
@@ -37,6 +37,8 @@
         </thead>
         <tbody>
         {% for fight in fights %}
+           {% set fightDayString = fight.day|localizeddate('full', 'none', app.request.locale, null, 'EEE')  %}
+
             <tr>
                 <td>
                     <button class="btn btn-danger js-fight-delete" value="{{ fight.id }}">
@@ -46,10 +48,11 @@
                 <td>
                     <input class="checkbox_ready" type="checkbox" {{ fight.isVisible? 'checked' : '' }} value="{{ fight.id }}">
                 </td>
-                {#<td><select class="select_day">#}
-                        {#<option value="{{ fight.id }}|Sobota" {{ fight.day == 'Sobota'? 'selected' }}>Sobota</option>#}
-                        {#<option value="{{ fight.id }}|Niedziela"{{ fight.day == 'Niedziela'? 'selected' }} >Niedziela</option>#}
-                    {#</select></td>#}
+                <td>
+                    <select class="select_day">
+                        <option value="{{ fight.id }}|sob." {{ fightDayString == 'sob.'? 'selected' }} >Sobota</option>
+                        <option value="{{ fight.id }}|niedz." {{ fightDayString == 'niedz.'? 'selected' }} >Niedziela</option>
+                    </select></td>
                 <td><select class="select_order" id="{{ loop.index }}" autocomplete="off">
                         {% for i in 1..fights|length %}
                             <option value="{{ i }}|Sobota" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>

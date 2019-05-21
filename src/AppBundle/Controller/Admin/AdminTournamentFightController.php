@@ -272,43 +272,30 @@ class AdminTournamentFightController extends Controller
         $fightId = $request->request->get('fightId');
         $day = $request->request->get('day');
 
-        $tournament = $em->getRepository('AppBundle:Tournament')
-            ->findOneBy(['id' => 1]);
+        $fight = $em->getRepository(Fight::class)
+            ->find($fightId);
 
-        $fight = $em->getRepository('AppBundle:Fight')
-            ->findOneBy(['id' => $fightId]);
+        $sobota = (new \DateTime())
+            ->setDate(2019,6,1);
 
-        $fight->setDay($day);
-        $fight->setPosition(100);
+        $niedziela = (new \DateTime())
+            ->setDate(2019,6,2);
+
+        if($day == 'sob.') {
+            $fight->setDay($sobota);
+        }else{
+            $fight->setDay($niedziela);
+        }
+
+        $tournament = $fight->getTournament();
+        $fights = $em->getRepository('AppBundle:Fight')
+            ->findAllFightsForTournamentAdmin($tournament);
+
+        $fight->setPosition(count($fights) + 1);
 
         $em->flush();
 
-        $fightsSobota = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament, 'Sobota');
-
-        $i = 1;
-
-        foreach ($fightsSobota as $fight) {
-
-            /**@var Fight $fight */
-            $fight->setPosition($i);
-            $em->flush();
-            $i++;
-        }
-
-
-        $fightsNiedziela = $em->getRepository('AppBundle:Fight')
-            ->findAllFightByDayAdmin($tournament, 'Niedziela');
-
-        $i = 1;
-
-        foreach ($fightsNiedziela as $fight) {
-
-            /**@var Fight $fight */
-            $fight->setPosition($i);
-            $em->flush();
-            $i++;
-        }
+        $this->refreshFightPosition($fights);
 
         return new Response(200);
     }

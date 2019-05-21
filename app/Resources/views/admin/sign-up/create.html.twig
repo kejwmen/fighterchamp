@@ -78,7 +78,7 @@
         $.ajax({
             type: 'POST',
             url: "{{ path('api_signup_new') }}",
-            data: { userId: id, formula: formula, weight: weight, tournamentId: 9 },
+            data: { userId: id, formula: formula, weight: weight, tournamentId: {{ tournament.id }} },
                 success: function (response) {
                     location.reload();
                 }
