@@ -9,9 +9,9 @@
 namespace AppBundle\Controller\Admin;
 
 
+use AppBundle\Entity\Tournament;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -25,22 +25,28 @@ class MailController extends Controller
      */
     public function mailAction()
     {
-//        $em = $this->getDoctrine()->getManager();
-//        $users = $em->getRepository('AppBundle:User')
-//            ->findAll();
-//
-//        $usersQty = count($users);
-//
-//           $sign_up_users = $em->getRepository('AppBundle:SignUpTournament')
-//             ->findAll();
-//
-//        $sing_up_usersQty = count($sign_up_users);
+        $user = $this->getUser();
+        $username = $user->getUsername();
+
+        if($username != 'admin') {
+            $this->denyAccessUnlessGranted('slawek');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('AppBundle:User')
+            ->findAll();
+
+        $tournament = $em->getRepository(Tournament::class)
+            ->findNewestOne();
+
+        $sign_up_users = $em->getRepository('AppBundle:SignUpTournament')
+             ->findAllForTournament($tournament);
 
         return $this->render('admin/mail.html.twig', [
-//            'users' => $users,
-//            'usersQty' => $usersQty,
-//            'sign_up_users' => $sign_up_users,
-//            'sing_up_usersQty' => $sing_up_usersQty
+            'users' => $users,
+            'usersQty' => count($users),
+            'sign_up_users' => $sign_up_users,
+            'sing_up_usersQty' => count($sign_up_users)
         ]);
     }
 }
