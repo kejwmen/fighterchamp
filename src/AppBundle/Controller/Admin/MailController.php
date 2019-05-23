@@ -29,7 +29,7 @@ class MailController extends Controller
         $username = $user->getUsername();
 
         if($username != 'admin') {
-            $this->denyAccessUnlessGranted('slawek');
+            $this->denyAccessUnlessGranted('slawek'); // just gibberish
         }
 
         $em = $this->getDoctrine()->getManager();

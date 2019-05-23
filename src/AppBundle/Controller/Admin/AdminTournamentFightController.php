@@ -8,7 +8,9 @@ use AppBundle\Entity\SignUpTournament;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\UserFight;
 use AppBundle\Service\FightService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use function foo\func;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -104,11 +106,26 @@ class AdminTournamentFightController extends Controller
 
         $normalizeSignUps = $this->get('serializer.my')->normalize($signUps);
 
+//        $fightsSort = $this->splitFightsBasedOnDay($fights);
+
         return $this->render('admin/fight.html.twig', [
             'fights' => $fights,
             'tournament' => $tournament,
             'signUps' => $normalizeSignUps
         ]);
+    }
+
+    public function splitFightsBasedOnDay(array $fights)
+    {
+        $result = [];
+        foreach ($fights as $fight)
+        {
+            $current = $fight->getDay();
+
+            $result[$current->format('Y-m-d')][] = $fight;
+        }
+
+        return array_values($result);
     }
 
 
