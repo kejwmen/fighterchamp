@@ -106,10 +106,10 @@ class AdminTournamentFightController extends Controller
 
         $normalizeSignUps = $this->get('serializer.my')->normalize($signUps);
 
-//        $fightsSort = $this->splitFightsBasedOnDay($fights);
+        $fightsSort = $this->splitFightsBasedOnDay($fights);
 
         return $this->render('admin/fight.html.twig', [
-            'fights' => $fights,
+            'fights' => $fightsSort,
             'tournament' => $tournament,
             'signUps' => $normalizeSignUps
         ]);
@@ -232,14 +232,15 @@ class AdminTournamentFightController extends Controller
      */
     public function changeOrderFight(Request $request, Tournament $tournament)
     {
-
+        $fightId = $request->request->get('fightId');
         $position_to_insert = $request->request->get('wantedPosition');
         $position_element_to_take = $request->request->get('position');
 
-
         $em = $this->getDoctrine()->getManager();
+
+        $fight = $em->getRepository('AppBundle:Fight')->find($fightId);
         $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsForTournamentAdmin($tournament);
+            ->findAllFightByDayAdmin($tournament, $fight->getDay());
 
         $taken_element = array_splice($fights, $position_element_to_take - 1, 1);
 
@@ -306,7 +307,7 @@ class AdminTournamentFightController extends Controller
 
         $tournament = $fight->getTournament();
         $fights = $em->getRepository('AppBundle:Fight')
-            ->findAllFightsForTournamentAdmin($tournament);
+            ->findAllFightByDayAdmin($tournament, $fight->getDay());
 
         $fight->setPosition(count($fights) + 1);
 

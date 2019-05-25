@@ -46,7 +46,7 @@
                 </select></td>
             <td><select class="select_order" id="{{ loop.index }}" autocomplete="off">
                     {% for i in 1..fights|length %}
-                        <option value="{{ i }}|Sobota" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>
+                        <option value="{{ i }}|{{ fight.id }}" {{ fight.position == loop.index ? 'selected' }} >{{ i }}</option>
                     {% endfor %}
                 </select>
             </td>

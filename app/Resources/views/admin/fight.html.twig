@@ -4,13 +4,13 @@
     {% include 'admin/base.html.twig' %}
 <div class="container">
     <div class="row">
-{#<br>#}
-        {#<br>#}
-        {#<h1>Sobota (01.06.2019)</h1>#}
-        {% include 'admin/_fights_table_sobota.html.twig' with {fights : fights, signUps : signUps}  %}
+<br>
+        <br>
+        <h1>Sobota (01.06.2019)</h1>
+        {% include 'admin/_fights_table_sobota.html.twig' with {fights : fights[0], signUps : signUps}  %}
 
-        {#<h1>Niedziela (02.06.2019)</h1>#}
-        {#{% include 'admin/_fights_table_sobota.html.twig' with {fights : fights[1], signUps : signUps}  %}#}
+        <h1>Niedziela (02.06.2019)</h1>
+        {% include 'admin/_fights_table_sobota.html.twig' with {fights : fights[1], signUps : signUps}  %}
 
     </div>
 </div>
@@ -47,7 +47,7 @@
         $.ajax({
             type: 'POST',
             url: "{{ path('changePositionFight', {'id': tournament.id }) }}",
-            data: {wantedPosition: arrValues[0], day:arrValues[1] ,position: this.id},
+            data: {wantedPosition: arrValues[0], fightId:arrValues[1], position: this.id},
             success: function () {
                  location.reload();
             }
