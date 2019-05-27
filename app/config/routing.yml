@@ -13,12 +13,11 @@ api_fight_show:
             id: '\d+'
 
 api_fight_list:
-    path:     /api/walki/{slug}/{id}
+    path:     /api/turnieje/walki
     controller: AppBundle\Controller\Api\FightController::listAction
     condition: 'request.isXmlHttpRequest()'
-    defaults:
-            slug: turnieje
-            id: all
+    requirements:
+        id: '\d+'
 
 api_signup_show:
     path:     /api/zapisy/{id}
@@ -41,6 +40,27 @@ api_tournament_show:
     path:     /api/turnieje/{id}
     condition: 'request.isXmlHttpRequest()'
     controller: AppBundle\Controller\Api\TournamentController::showAction
+
+api_tournament_fight_list:
+    path:     /api/turnieje/{id}/walki
+    controller: AppBundle\Controller\Api\TournamentController::showFights
+#    condition: 'request.isXmlHttpRequest()'
+    requirements:
+        id: '\d+'
+
+api_tournament_fight_list_sobota:
+    path:     /api/turnieje/{id}/walki/sobota
+    controller: AppBundle\Controller\Api\TournamentController::sobota
+#    condition: 'request.isXmlHttpRequest()'
+    requirements:
+        id: '\d+'
+
+api_tournament_fight_list_niedziela:
+    path:     /api/turnieje/{id}/walki/niedziela
+    controller: AppBundle\Controller\Api\TournamentController::niedziela
+#    condition: 'request.isXmlHttpRequest()'
+    requirements:
+        id: '\d+'
 
 admin_api_user_list:
     path:     /admin/api/users

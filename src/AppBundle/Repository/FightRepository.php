@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 16.08.16
- * Time: 15:20
- */
 
 namespace AppBundle\Repository;
 use AppBundle\Entity\SignUpTournament;
@@ -22,8 +16,8 @@ class FightRepository extends EntityRepository
             ->addOrderBy('fight.position')
             ->andWhere('fight.tournament = :tournament')
             ->setParameter('tournament', $tournament)
-
         ;
+        
         $query = $qb->getQuery();
         return $query->execute();
 
@@ -68,6 +62,22 @@ class FightRepository extends EntityRepository
             ->andWhere('fight.tournament = :tournament')
             ->setParameter('isVisible', true)
             ->setParameter('tournament', $tournament)
+            ->addOrderBy('fight.position')
+        ;
+
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+
+    public function fightReadyDayOrderBy(Tournament $tournament, $day)
+    {
+        $qb = $this->createQueryBuilder('fight')
+            ->andWhere('fight.isVisible = :isVisible')
+            ->andWhere('fight.tournament = :tournament')
+            ->andWhere('fight.day = :day')
+            ->setParameter('isVisible', true)
+            ->setParameter('tournament', $tournament)
+            ->setParameter('day', $day)
             ->addOrderBy('fight.position')
         ;
 

@@ -18,4 +18,31 @@ class TournamentController extends Controller
 
         return new JsonResponse(['data' => $result]);
     }
+
+    public function sobota(Tournament $tournament, SerializerInterface $serializer, EntityManagerInterface $em)
+    {
+        $result = $em->getRepository(Fight::class)
+            ->fightReadyDayOrderBy($tournament, date_create('2019-06-01'));
+        
+        $result = $serializer->normalize($result, 'json');
+
+        return new JsonResponse(['data' => $result]);
+    }
+
+    public function niedziela(Tournament $tournament, SerializerInterface $serializer, EntityManagerInterface $em)
+    {
+        $result = $em->getRepository(Fight::class)
+            ->fightReadyDayOrderBy($tournament, date_create('2019-06-02'));
+        
+        $result = $serializer->normalize($result, 'json');
+
+        return new JsonResponse(['data' => $result]);
+    }
+
+    public function showFights(Tournament $tournament, SerializerInterface $serializer)
+    {
+        $result = $serializer->normalize($tournament->getFightsReady(), 'json');
+
+        return new JsonResponse(['data' => $result]);
+    }
 }

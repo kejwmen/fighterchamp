@@ -19,17 +19,10 @@ class FightController extends Controller
         return new Response($result, 200, ['Content-Type' => 'application/json']);
     }
 
-    public function listAction($id, EntityManagerInterface $em, SerializerInterface $serializer)
+    public function listAction(EntityManagerInterface $em, SerializerInterface $serializer)
     {
-        if((int)$id > 0){
-            $tournament = $em->getRepository(Tournament::class)->find($id);
-
-            $fights = $em->getRepository(Fight::class)
-                ->findBy(['tournament' => $tournament, 'isVisible' => true],['position'=>'ASC']);
-        }else{
-
-            $fights = $em->getRepository(Fight::class)->findBy(['isVisible' => true]);
-        }
+        $fights = $em->getRepository(Fight::class)
+            ->findBy(['isVisible' => true],['position'=>'ASC']);
 
         $result = $serializer->normalize($fights, 'json');
 

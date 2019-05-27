@@ -90,9 +90,10 @@
 {{ parent() }}
 
     <script>
-        $(document).ready(function () {
+      $(document).ready(function () {
+	  
             var t = $('#table-fights').DataTable({
-                "ajax": "{{ path('api_fight_list', {id: tournament.id, slug: 'turnieje' }) }}",
+                "ajax": "{{ path('api_tournament_fight_list_sobota', {id: tournament.id}) }}",
                 "columns": [
                     {data: null},
                     {
@@ -148,8 +149,71 @@
                     cell.innerHTML = i + 1;
                 });
             }).draw();
-        });
 
+	  var tz = $('#table-fights-2').DataTable({
+                "ajax": "{{ path('api_tournament_fight_list_niedziela', {id: tournament.id}) }}",
+                "columns": [
+                    {data: null},
+                    {
+                        mData: function (data) {
+                            var temp = (data.youtubeId === null) ? '' : " <img class='youtube-icon' src='{{ asset('img/YouTube-icon-full_color.png') }}'></a>";
+
+                            return "<a href='" + data.href + "'>Szczegóły</a>" + temp + "<br>" + data.description + isLicence(data);
+                        }
+                    },
+                    {
+                        mData: function (data) {
+
+                            return record(data.usersFight[0].user) + '<br>' +
+                                "<a href='" + data.usersFight[0].user.href + "'>" + data.usersFight[0].user.surname + ' ' + data.usersFight[0].user.name + '</a> ' +
+                                fightResult(data.usersFight[0]) + club(data.usersFight[0].user) + '<br>' + age(data.usersFight[0].user)
+                                ;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+
+                            return record(data.usersFight[1].user) + '<br>' +
+                                "<a href='" + data.usersFight[1].user.href + "'>" + data.usersFight[1].user.surname + ' ' + data.usersFight[1].user.name + '</a> ' +
+                                fightResult(data.usersFight[1]) + club(data.usersFight[1].user) + '<br>' + age(data.usersFight[1].user)
+                                ;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return data.usersFight[1].user.male ? 'M' : 'K';
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return data.formula;
+                        }
+                    },
+                    {
+                        mData: function (data) {
+                            return data.weight;
+                        }
+                    }
+                ],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+                },
+                "bPaginate": false,
+                "dom": 'lifrtp'
+            });
+
+            tz.on('order.dt search.dt', function () {
+                tz.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+
+
+      });
+
+
+
+      
         function isLicence(data) {
             return data.isLicence ? 'Licencja PZB' : ''
         }
