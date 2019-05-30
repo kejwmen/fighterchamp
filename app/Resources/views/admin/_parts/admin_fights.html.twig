@@ -111,6 +111,10 @@
                             {{ userFight.user.surname }} {{ userFight.user.name }}
                         </option>
 
+                        <option {{ userFight.result == 'win_ko' ? 'selected' }} value="{{ userFight.id }}|win_ko">
+                            {{ userFight.user.surname }} {{ userFight.user.name }} (KO)
+                        </option>
+
                     {% endfor %}
 
                     <option {{ fight.usersFight[0].result == 'draw' ? 'selected' : '' }} value="{{ fight.usersFight[0].id }}|draw" >Remis</option>

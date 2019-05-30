@@ -212,6 +212,10 @@ class AdminTournamentFightController extends Controller
                 $userFight1->setResult(UserFightResult::WIN());
                 $userFight2->setResult(UserFightResult::LOSE());
                 break;
+            case 'win_ko':
+                $userFight1->setResult(UserFightResult::WIN_KO());
+                $userFight2->setResult(UserFightResult::LOSE());
+                break;
             case 'draw':
                 $userFight1->setResult(UserFightResult::DRAW());
                 $userFight2->setResult(UserFightResult::DRAW());

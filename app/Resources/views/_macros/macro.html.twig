@@ -13,7 +13,7 @@
 
 {% macro fightResultForUserFight(userFight) %}
 
-    {% if userFight.result == 'win' %}
+    {% if userFight.result == 'win' or userFight.result == 'win_ko' %}
         <span class="label label-success">W</span>
     {% elseif userFight.result == 'lose' %}
         <span class="label label-danger">L</span>
