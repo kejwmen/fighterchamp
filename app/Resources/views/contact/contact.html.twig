@@ -22,73 +22,80 @@
                 </div>
             {% endfor %}
 
-        <address class="text-center col-xs-12">
-            <i class="fa fa-facebook" ><a href="https://www.facebook.com/FighterChampPL/">
-                    Strona na Facebooku</a></i><br/>
-                slawomir.grochowski@gmail.com
-        </address>
+		<address class="text-center col-xs-12">
+		  Organizator Warszawskiej Grandy Na Pięści  <br>  Paweł Michalik orzelsyrenka@gmail.com 533 287 765
+		  
+            <!-- <i class="fa fa-facebook" ><a href="https://www.facebook.com/FighterChampPL/"> -->
+            <!--         Strona na Facebooku</a></i><br/> -->
+            <!--     slawomir.grochowski@gmail.com -->
+		</address>
+		<address class="text-center col-xs-12">
+		  Administrator Systemu FighterChamp.pl <br>
+		  Sławomir Grochowski slawomir.grochowski@gmail.com
+		</address>
+		
         </div>
 
-        <div class="row">
-            <div class="text-center col-xs-12">
-                <h1>NASZ ZESPÓŁ</h1>
-            </div>
-        </div>
+        <!-- <div class="row"> -->
+        <!--     <div class="text-center col-xs-12"> -->
+        <!--         <h1>NASZ ZESPÓŁ</h1> -->
+        <!--     </div> -->
+        <!-- </div> -->
 
-        <div class="row team">
-            <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member">
-                <img src="{{ asset('img/about/slawomir_grochowski.jpg') }}">
-                <h4>Sławomir Grochowski</h4>
-                <h5>Back-end Developer</h5>
-            </div>
-            <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member">
-                <img src="{{ asset('img/about/paulina.jpg') }}">
-                <h4>Paulina Wanda Wojtas</h4>
-                <h5>Front-end Developer</h5>
-            </div>
-            <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member">
-                <img src="{{ asset('img/about/rafal_zielu.jpg') }}">
-                <h4>Rafał Zieliński</h4>
-                <h5>Graphic Designer</h5>
-            </div>
-            <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member">
-                <img src="{{ asset('img/about/mateusz_nurzynski.jpg') }}">
-                <h4>Mateusz Nurzyński</h4>
-                <h5>Legal Support</h5>
-            </div>
-        </div>
-        <div class="row">
-            <div class="text-center col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
-                <p>Jeśli chciałbyś pomóc w rozwoju serwisu. Dołącz do nas!</p>
-                <p>Podaj swój email a z pewnością odezwiemy się do Ciebie!</p>
-            {{ form_start(form) }}
-               {{ form_row(form.email) }}
-            <input type="submit" class="btn btn-primary" value="Wyślij" formnovalidate>
-            {{ form_end(form) }}
-            </div>
+        <!-- <div class="row team"> -->
+        <!--     <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member"> -->
+        <!--         <img src="{{ asset('img/about/slawomir_grochowski.jpg') }}"> -->
+        <!--         <h4>Sławomir Grochowski</h4> -->
+        <!--         <h5>Back-end Developer</h5> -->
+        <!--     </div> -->
+        <!--     <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member"> -->
+        <!--         <img src="{{ asset('img/about/paulina.jpg') }}"> -->
+        <!--         <h4>Paulina Wanda Wojtas</h4> -->
+        <!--         <h5>Front-end Developer</h5> -->
+        <!--     </div> -->
+        <!--     <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member"> -->
+        <!--         <img src="{{ asset('img/about/rafal_zielu.jpg') }}"> -->
+        <!--         <h4>Rafał Zieliński</h4> -->
+        <!--         <h5>Graphic Designer</h5> -->
+        <!--     </div> -->
+        <!--     <div class="text-center col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-2 member"> -->
+        <!--         <img src="{{ asset('img/about/mateusz_nurzynski.jpg') }}"> -->
+        <!--         <h4>Mateusz Nurzyński</h4> -->
+        <!--         <h5>Legal Support</h5> -->
+        <!--     </div> -->
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+        <!--     <div class="text-center col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3"> -->
+        <!--         <p>Jeśli chciałbyś pomóc w rozwoju serwisu. Dołącz do nas!</p> -->
+        <!--         <p>Podaj swój email a z pewnością odezwiemy się do Ciebie!</p> -->
+        <!--     {{ form_start(form) }} -->
+        <!--        {{ form_row(form.email) }} -->
+        <!--     <input type="submit" class="btn btn-primary" value="Wyślij" formnovalidate> -->
+        <!--     {{ form_end(form) }} -->
+        <!--     </div> -->
 
         </div>
     </div>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="http://malsup.github.com/jquery.form.js"></script>
-<script>
-    $(document).ready(function(){
+ {% block javascripts %}
+<!--     {{ parent() }} -->
+<!--     <script src="http://malsup.github.com/jquery.form.js"></script> -->
+<!-- <script> -->
+<!--     $(document).ready(function(){ -->
 
 
-        $('#image_upload').on('change',function(){
-            $('#image_upload_form').ajaxForm({
-                success: function(data, statusText, xhr) {
+<!--         $('#image_upload').on('change',function(){ -->
+<!--             $('#image_upload_form').ajaxForm({ -->
+<!--                 success: function(data, statusText, xhr) { -->
 
-                    status.html(xhr.responseText);
-                },
-                error: function(xhr, statusText, err) {
-                    status.html(err || statusText);
-                }
-            }).submit();
-        });
-    });
-</script>
-{% endblock %}
+<!--                     status.html(xhr.responseText); -->
+<!--                 }, -->
+<!--                 error: function(xhr, statusText, err) { -->
+<!--                     status.html(err || statusText); -->
+<!--                 } -->
+<!--             }).submit(); -->
+<!--         }); -->
+<!--     }); -->
+<!-- </script> -->
+ {% endblock %}
