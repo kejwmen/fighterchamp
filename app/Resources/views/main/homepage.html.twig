@@ -222,7 +222,7 @@
 
             var result = '';
 
-            if (userFight.result === 'win') {
+            if (userFight.result === 'win' || userFight.result === 'win_ko') {
                 result = '<span class="label label-success">W</span>';
             } else if (userFight.result === 'lose') {
                 result = '<span class="label label-danger">L</span>'
