@@ -17,6 +17,9 @@ trait CountRecordTrait
                 case 'win':
                     $userRecord->addWin();
                     break;
+				case 'win_ko':
+					$userRecord->addWin();
+					break;
                 case 'draw':
                     $userRecord->addDraw();
                     break;

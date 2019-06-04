@@ -32,7 +32,14 @@ final class ClubRepository
     public function findAll(): array
     {
         return $this->entityManager->getConnection()
-            ->query('SELECT * FROM query_clubs')
+            ->query('SELECT CONCAT(\'/kluby/\', c.id) as href, c.name, count(distinct(u.id)) as user_count
+  ,sum(case when uf.result = \'win\' then 1 else 0 end) as win
+  ,sum(case when uf.result = \'draw\' then 1 else 0 end) as draw
+  ,sum(case when uf.result = \'lose\' or uf.result = \'disqualified\' then 1 else 0 end) as lose
+FROM club c
+  LEFT JOIN user u ON u.club_id = c.id
+  LEFT JOIN user_fight AS uf ON uf.user_id = u.id
+group by c.id;SELECT * FROM query_clubs')
             ->fetchAll();
     }
 }

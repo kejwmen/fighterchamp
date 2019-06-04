@@ -21,7 +21,7 @@ final class RankRepository
 
     public function findAllByYearAndAge(array $params)
     {
-        $addYear = ($params['year'] == '2017' || $params['year'] == '2018');
+        $addYear = ($params['year'] == '2017' || $params['year'] == '2018' || $params['year'] == '2019');
         $addAge = ($params['age'] == 'junior' || $params['age'] == 'senior');
 
         $sqlYear = null;
@@ -45,7 +45,7 @@ final class RankRepository
         $stmt = $this->connection->prepare("SELECT u.surname, u.name, f.formula, f.weight,
     CONCAT('/kluby/', c.id) as club_href, c.name as club_name, IF(u.male,'M','K') as sex,
     TIMESTAMPDIFF(YEAR, u.birth_day, CURDATE()) as age,CONCAT('/ludzie/',u.id) href,
-    IFNULL(sum(uf.result = 'win'), 0) AS win,
+    IFNULL(sum(uf.result = 'win' or uf.result = 'win_ko'), 0) AS win,
     IFNULL(sum(uf.result = 'draw'), 0) AS draw,
     IFNULL(sum(uf.result = 'lose' OR uf.result = 'disqualified'), 0) as lose
   from fight f
@@ -53,7 +53,7 @@ final class RankRepository
     left join user u on uf.user_id = u.id
     LEFT JOIN club c on u.club_id = c.id "
     . $sqlYear . ' ' . $sqlAge .
-    " 
+    "
     group by formula, weight, u.id
     order by u.male, formula, weight, win desc, draw desc, lose");
 
