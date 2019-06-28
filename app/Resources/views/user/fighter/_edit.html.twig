@@ -19,8 +19,6 @@
             {{ form_row(form.phone, {
                 label: 'Telefon'
             }) }}
-
-
         {{ form_row(form.club, {
             label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy',
             placeholder: 'Bez klubu',
@@ -48,8 +46,3 @@
         initAjaxForm();
     });
 </script>
-<script type="text/javascript" src="{{ asset('js/upload_image.js') }}"></script>
-
-          {#{% if user.imageName %}#}
-              {#<button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>#}
-          {#{% endif %}#}

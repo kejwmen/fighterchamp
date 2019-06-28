@@ -74,4 +74,4 @@ admin_api_tournament_list:
 
 api_image_upload:
     path:     /api/images
-    controller: AppBundle\Controller\Api\ImageController::uploadAction
+    controller: AppBundle\Controller\Api\ImageController::upload

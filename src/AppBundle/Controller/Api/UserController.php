@@ -9,6 +9,7 @@ use AppBundle\Event\UserEvent;
 use AppBundle\Form\User\CoachType;
 use AppBundle\Form\User\UserType;
 use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Sluggable\Util\Urlizer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -111,8 +112,6 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $formUser = $form->getData();
 
             $em->flush();
 

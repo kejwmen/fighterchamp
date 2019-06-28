@@ -51,6 +51,7 @@ class UserType extends AbstractType
         $builder
             ->add('type', HiddenType::class,[
                 'data' => 3])
+            ->add('imageName', HiddenType::class)
             ->add('email', EmailType::class,
                 [
                     'constraints' => [
@@ -71,13 +72,6 @@ class UserType extends AbstractType
             ->add('surname', TextType::class,[
                 'constraints' => [new NotBlank()]
             ])
-
-//            ->add('imageFile', VichImageType::class,[
-//                'required'      => false,
-//                    'allow_delete'  => true, // not mandatory, default is true
-//                    'download_link' => true, // not mandatory, default is true
-//                ]
-//            )
 
             ->add('club', EntityType::class, [
                 'required' => false,

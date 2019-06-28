@@ -14,9 +14,7 @@
         {{ form_row(form.surname, {
             label: 'Nazwisko'
         }) }}
-        {#{{ form_row(form.imageFile, {#}
-            {#label : 'Zdjęcie Profilowe (opcjonalnie)'#}
-        {#}) }}#}
+
         {{ form_row(form.club, {
             label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy',
             placeholder: 'Wybierz klub albo wpisz nowy',
@@ -30,18 +28,3 @@
 </button>
 
 {{ form_end(form) }}
-
-{#<script>#}
-    {#$(document).ready(function () {#}
-
-        {#$('.select2').select2({tags: true});#}
-        {#initAjaxForm();#}
-
-
-        {#console.log('Z widoku');#}
-    {#});#}
-{#</script>#}
-
-          {#{% if user.imageName %}#}
-              {#<button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>#}
-          {#{% endif %}#}

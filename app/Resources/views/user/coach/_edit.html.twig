@@ -2,7 +2,6 @@
 {{ form_start(form, {
     attr : { 'class': 'ajaxForm' } }) }}
 
-
 {{ form_row(form.email) }}
         {{ form_row(form.male, {
             label: 'Płeć',
@@ -20,9 +19,6 @@
             {{ form_row(form.phone, {
                 label: 'Telefon'
             }) }}
-        {#{{ form_row(form.imageFile, {#}
-            {#label : 'Zdjęcie Profilowe (opcjonalnie)'#}
-        {#}) }}#}
         {{ form_row(form.club, {
             label: 'Klub (opcjonalnie) - wybierz albo wpisz nowy',
             placeholder: 'Wybierz klub albo wpisz nowy',
@@ -45,7 +41,3 @@
 
     });
 </script>
-
-          {#{% if user.imageName %}#}
-              {#<button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>#}
-          {#{% endif %}#}
