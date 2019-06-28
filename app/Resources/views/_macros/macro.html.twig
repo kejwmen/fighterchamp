@@ -28,16 +28,10 @@
 {% macro fightResult(usersFight) %}
     {% for userFight in usersFight %}
 {% if app.request.pathinfo == userFight.user.href %}
-
-    {% if userFight.result == 'win' %}
-            <span class="label label-success">W</span>
-        {% elseif userFight.result == 'lose' %}
-            <span class="label label-danger">L</span>
-        {% elseif userFight.result == 'draw' %}
-         <span class="label label-warning">D</span>
-        {% elseif userFight.result == 'disqualify'%}
-        <span class="label label-dark">DQ</span>
-    {% endif %}
+	
+	{% import _self as macro %}
+	
+	{{ macro.fightResultForUserFight(userFight) }}
 
 {% endif %}
     {% endfor %}
