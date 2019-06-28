@@ -54,6 +54,8 @@
                     });
                     this.on("success", function (file, response) {
                         $('input[name="user[imageName]"]').val(response);
+                        $('input[name="fighter[imageName]"]').val(response);
+                        $('input[name="coach[imageName]"]').val(response);
                     });
                 }
             });
