@@ -6,6 +6,13 @@
                 {% include '_messages/success.html.twig' %}
                 {{ include('user/fighter/_profile.html.twig') }}
 
+                {% if user.imageName %}
+                    <button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>
+                {% endif %} <br> <br>
+                <form action="{{ path('api_image_upload', {
+                }) }}" method="POST" enctype="multipart/form-data" class="dropzone">
+                </form>
+
                 <div class="col-sm-6 col-sm-offset-3 user-type">
                     {% include '_parts/choose-user.html.twig' %}
                 </div>

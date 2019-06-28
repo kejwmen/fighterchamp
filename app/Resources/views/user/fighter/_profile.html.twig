@@ -26,18 +26,6 @@
              >
             {% endif %}
         </td>
-        <tr>
-    <td>
-        {% if user.imageName %}
-            <button class="btn btn-danger setNullOnImage" formnovalidate>Usuń Zdjęcie</button>
-        {% endif %} <br> <br>
-        <form action="{{ path('api_image_upload', {
-        }) }}" method="POST" enctype="multipart/form-data" class="dropzone">
-        </form>
-    </td>
-
-    </tr>
-
     </tr>
     {% if user.type == 1 %}
     <tr>
