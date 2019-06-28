@@ -34,6 +34,7 @@ class CoachType extends AbstractType
         $builder
             ->add('type', HiddenType::class, [
                 'data' => 2])
+            ->add('imageName', HiddenType::class)
             ->add('birthDay', BirthdayType::class, [
                 'translation_domain' => true,
                 'constraints' => [

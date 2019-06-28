@@ -34,6 +34,7 @@ class FighterType extends AbstractType
         $builder
             ->add('type', HiddenType::class, [
                 'data' => 1])
+            ->add('imageName', HiddenType::class)
             ->add('birthDay', BirthdayType::class, [
                 'translation_domain' => true,
                 'constraints' => [
