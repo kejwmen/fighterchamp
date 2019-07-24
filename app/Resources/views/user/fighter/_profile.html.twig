@@ -1,14 +1,6 @@
 {% import "_macros/macro.html.twig" as macro %}
 <table class="table table-condensed text-center table-borderless">
-    {% if user.type == 1 %}
-    <tr>
-        <td>
-            <h3>
-                {{ macro.recordLabel(user) }}
-            </h3>
-        </td>
-    </tr>
-    {% endif %}
+
     <tr>
         <td>
             <h1> {{ user.name }} {{ user.surname }}</h1>

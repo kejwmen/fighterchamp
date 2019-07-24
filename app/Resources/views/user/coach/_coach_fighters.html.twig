@@ -1,9 +1,8 @@
 {% import '_macros/macro.html.twig' as macro %}
-<div class="col-xs-12 col-sm-6">
 
     <div class="col-xs-6 col-xs-offset-3">
 
-        <h3>
+        <h3 class="text-center">
             <span class="label label-success">W: {{ user.usersRecord.win }}</span>
             <span class="label label-warning">D: {{ user.usersRecord.draw }}</span>
             <span class="label label-danger">L: {{ user.usersRecord.lose }}</span>
@@ -43,5 +42,4 @@
             </tr>
         {% endfor %}
     </table>
-</div>
 {% endif %}

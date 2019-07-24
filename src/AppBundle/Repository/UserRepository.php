@@ -24,7 +24,7 @@ class UserRepository extends EntityRepository
 FROM user u
   LEFT JOIN user_fight ON u.id = user_fight.user_id
   LEFT JOIN club c on u.club_id = c.id
-WHERE u.type = 1
+WHERE u.type = 1 OR (u.type = 2 AND user_fight.id is not null) 
 GROUP BY u.id')
             ->fetchAll();
     }
