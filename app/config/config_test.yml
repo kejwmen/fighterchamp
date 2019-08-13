@@ -1,9 +1,9 @@
 imports:
     - { resource: config_dev.yml }
 
-doctrine:
-    dbal:
-        url: 'sqlite:///%kernel.project_dir%/var/data/test.sqlite'
+#doctrine:
+#    dbal:
+#        url: 'sqlite:///%kernel.project_dir%/var/data/test.sqlite'
 
 framework:
     test: true
@@ -21,4 +21,10 @@ swiftmailer:
 
 doctrine:
     dbal:
-        dbname:   fighterchamp_test
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8

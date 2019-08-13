@@ -48,7 +48,7 @@ class FighterType extends AbstractType
                 'required' => false,
                 'empty_data' => null,
                 'class' => 'AppBundle:User',
-//                'data' => $user ? $user->getCoach() : null,
+                'data' => $user ? $user->getCoach() : null,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->andWhere('u.type = 2')

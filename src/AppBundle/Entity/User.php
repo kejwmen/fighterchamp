@@ -26,6 +26,10 @@ class User implements UserInterface, Serializable
 {
     use TimestampableTrait;
 
+    public const TYPE_FIGHTER = 1;
+    public const TYPE_COACH = 2;
+    public const TYPE_FAN = 3;
+
     public function __construct()
     {
         $this->signUpTournaments = new ArrayCollection();
@@ -130,10 +134,9 @@ class User implements UserInterface, Serializable
     private $phone;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="boolean")
      */
-    private $male;
+    private $male = true;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -151,7 +154,7 @@ class User implements UserInterface, Serializable
     private $signUpTournaments;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $type = 1;
@@ -190,6 +193,21 @@ class User implements UserInterface, Serializable
      * @ORM\Column(type="simple_array")
      */
     private $roles = ['ROLE_USER'];
+
+    public function isFighter(): bool
+    {
+        return self::TYPE_FIGHTER === 1;
+    }
+
+    public function isCoach(): bool
+    {
+        return self::TYPE_FIGHTER === 2;
+    }
+
+    public function isFan(): bool
+    {
+        return self::TYPE_FIGHTER === 3;
+    }
 
     public function isValid(): bool
     {
@@ -441,20 +459,15 @@ class User implements UserInterface, Serializable
             return;
         }
 
-        $coach = $this->getCoach();
 
-        if($coach){
+        if($coach = $this->getCoach()){
             $this->removeUser($coach);
         }
 
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addUser($this);
-        }
+        $this->addUser($user);
     }
 
-
-    public function addUser(User $user)
+    public function addUser(?User $user)
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
@@ -470,6 +483,9 @@ class User implements UserInterface, Serializable
         }
     }
 
+    /**
+     * @return User|false
+     */
     public function getCoach()
     {
         return $this->users->matching(UserRepository::createCoachCriteria())->first();

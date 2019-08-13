@@ -118,9 +118,8 @@ class UserController extends Controller
     {
         switch ($type) {
             case '1':
-                return 'user/fighter/_edit.html.twig';
             case '2':
-                return 'user/coach/_edit.html.twig';
+                return 'user/fighter/_edit.html.twig';
             case '3':
                 return 'user/fan/_edit.html.twig';
             default:
@@ -133,9 +132,8 @@ class UserController extends Controller
     {
         switch ($type) {
             case '1':
-                return 'user/fighter/_form.html.twig';
             case '2':
-                return 'user/coach/_form.html.twig';
+                return 'user/fighter/_form.html.twig';
             case '3':
                 return 'user/fan/_form.html.twig';
             default:
