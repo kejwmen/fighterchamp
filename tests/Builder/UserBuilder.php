@@ -39,6 +39,7 @@ class UserBuilder extends Builder
         $user->setName($this->name);
         $user->setSurname($this->surname);
         $user->setHash($this->faker->sha1);
+        $user->setType($this->type);
 
         return $user;
     }

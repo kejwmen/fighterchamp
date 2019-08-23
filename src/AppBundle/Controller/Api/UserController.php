@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserCoach;
 use AppBundle\Event\Events;
 use AppBundle\Event\UserCreatedEvent;
 use AppBundle\Event\UserEvent;
@@ -59,9 +60,13 @@ class UserController extends Controller
              * @var $user User
              */
             $user = $form->getData();
+            $coachId = $form->get('coachId')->getData();
 
-            if($coach = $user->getCoach()){
-                if(!$user->getType() === 1) $user->removeUser($coach);
+            if ($coachId) {
+                $coach = $em->getRepository(User::class)
+                    ->find($coachId);
+                $userCoach = new UserCoach($user, $coach);
+                $em->persist($userCoach);
             }
 
 
@@ -113,11 +118,32 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            /**
+             * @var $user User
+             */
+            $user = $form->getData();
+
+            if ($form->has('coachId')) {
+                $coachId = $form->get('coachId')->getData();
+                if ($coachId) {
+                    $coach = $em->getRepository(User::class)
+                        ->find($coachId);
+                    $userCoach = new UserCoach($user, $coach);
+                    $em->persist($userCoach);
+                }
+            }
+
+            if ($coach = $user->getCoaches()->first()) {
+                $userCoachOld = $em->getRepository(UserCoach::class)
+                    ->findOneBy(['coach' => $coach, 'fighter' => $user]);
+                $em->remove($userCoachOld);
+            }
+
             $em->flush();
 
             $this->addFlash('success', 'Sukces! Zmiany na twoim profilu zostały zapisane!!');
 
-            return new JsonResponse(null,200);
+            return new JsonResponse(null, 200);
         }
 
 
@@ -134,7 +160,7 @@ class UserController extends Controller
      * @Method("GET")
      */
     public function listAction(Request $request, EntityManagerInterface $em,
-                               AdapterInterface $cache, SerializerInterface $serializer )
+                               AdapterInterface $cache, SerializerInterface $serializer)
     {
         $type = $request->query->get('type', 1);
 
@@ -154,9 +180,9 @@ class UserController extends Controller
 //
 //        $response = new JsonResponse(['data' => $array]);
 
-        if($type == 1){
+        if ($type == 1) {
             $users = $em->getRepository(User::class)->findAllFighters();
-        }else{
+        } else {
             $users = $em->getRepository(User::class)->findAllListAction($type);
         }
 

@@ -3,15 +3,15 @@
     <div class="col-xs-6 col-xs-offset-3">
 
         <h3 class="text-center">
-            <span class="label label-success">W: {{ user.usersRecord.win }}</span>
-            <span class="label label-warning">D: {{ user.usersRecord.draw }}</span>
-            <span class="label label-danger">L: {{ user.usersRecord.lose }}</span>
+            <span class="label label-success">W: {{ user.fightersRecord.win }}</span>
+            <span class="label label-warning">D: {{ user.fightersRecord.draw }}</span>
+            <span class="label label-danger">L: {{ user.fightersRecord.lose }}</span>
         </h3>
 
 
     </div>
 
-    {% if user.users|length == 0 %} <h4 class="text-center">Brak przypisanych zawodników</h4>
+    {% if user.fighters|length == 0 %} <h4 class="text-center">Brak przypisanych zawodników</h4>
     {% else %}
 
     <table class="table">
@@ -23,7 +23,7 @@
             <th class="text-center">Wiek</th>
             <th class="text-center">Klub</th>
         </tr>
-        {% for user in user.users %}
+        {% for user in user.fighters %}
             <tr>
                 <td> {{ loop.index }}</td>
                 <td class="text-center">

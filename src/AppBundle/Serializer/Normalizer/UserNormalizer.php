@@ -38,22 +38,22 @@ class UserNormalizer implements NormalizerInterface
             'imageName' => $object->getImageName(),
             'record' => $this->countRecord($object),
             'club' => $this->club($object),
-            'coach' => $this->coach($object),
+            'coaches' => $this->coach($object),
             'type' => $object->getType(),
-            'users' => array_map(
+            'fighters' => array_map(
                 function (User $user) {
                     return [
-                            'href' => $this->router->generate('user_show', ['id' => $user->getId()]),
-                            'name' => $user->getName(),
-                            'surname' => $user->getSurname(),
-                            'male' => $user->getMale(),
-                            'birthDay' => $user->getBirthDay(),
-                            'record' => $this->countRecord($user),
-                            'club' => $this->club($user),
-                            'type' => $user->getType(),
+                        'href' => $this->router->generate('user_show', ['id' => $user->getId()]),
+                        'name' => $user->getName(),
+                        'surname' => $user->getSurname(),
+                        'male' => $user->getMale(),
+                        'birthDay' => $user->getBirthDay(),
+                        'record' => $this->countRecord($user),
+                        'club' => $this->club($user),
+                        'type' => $user->getType(),
                     ];
-                }, $object->getUsers()->toArray()),
-            'usersRecord' => $this->countUsersRecordCouch($object),
+                }, $object->getFighters()->toArray()),
+            'fightersRecord' => $this->getFightersRecord($object),
             'fights' => array_map(
                 function (Fight $fight) {
                     return [
@@ -71,7 +71,7 @@ class UserNormalizer implements NormalizerInterface
                                     'isRedCorner' => $userFight->isRedCorner(),
                                     'result' => $userFight->getResult(),
                                     'awards' => array_map(
-                                        function (Award $award){
+                                        function (Award $award) {
                                             return [
                                                 'name' => $award->getName(),
                                             ];
@@ -84,7 +84,6 @@ class UserNormalizer implements NormalizerInterface
                                         'birthDay' => $userFight->getUser()->getBirthDay(),
                                         'record' => $this->countRecord($userFight->getUser()),
                                         'club' => $this->club($userFight->getUser()),
-                                        'coach' => $this->coach($userFight->getUser()),
                                         'type' => $userFight->getUser()->getType(),
                                     ]
                                 ];
@@ -95,13 +94,12 @@ class UserNormalizer implements NormalizerInterface
     }
 
 
-
-
     private function club(User $user)
     {
-        if(!$user->getClub()){
+        if (!$user->getClub()) {
             return null;
         }
+
         return [
             'href' => $this->router->generate('club_show', ['id' => $user->getClub()->getId()]),
             'name' => $user->getClub()->getName(),
@@ -110,14 +108,17 @@ class UserNormalizer implements NormalizerInterface
 
     private function coach(User $user)
     {
-        if(!$user->getCoach()){
+        if ($user->getCoaches()->isEmpty()) {
             return null;
         }
-        return [
-            'href' => $this->router->generate('user_show', ['id' => $user->getCoach()->getId()]),
-            'name' => $user->getCoach()->getName(),
-            'surname' => $user->getCoach()->getSurname()
-        ];
+
+        return $user->getCoaches()->map(function (User $coach) {
+            return [
+                'href' => $this->router->generate('user_show', ['id' => $coach->getId()]),
+                'name' => $coach->getName(),
+                'surname' => $coach->getSurname()
+            ];
+        });
     }
 
     public function supportsNormalization($data, $format = null): bool
@@ -125,7 +126,7 @@ class UserNormalizer implements NormalizerInterface
         return $data instanceof User;
     }
 
-    private function countUsersRecordCouch(User $object)
+    private function getFightersRecord(User $object)
     {
         $result = [
             'win' => 0,
@@ -134,8 +135,7 @@ class UserNormalizer implements NormalizerInterface
         ];
 
 
-        foreach ($object->getUsers() as $user)
-        {
+        foreach ($object->getFighters() as $user) {
 
             $temp = $this->countRecord($user);
 

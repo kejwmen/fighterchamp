@@ -11,7 +11,7 @@ use Tests\Builder\UserBuilder;
 use Tests\Database;
 use Tests\DatabaseHelper;
 
-class UserTest extends KernelTestCase
+class UserCoachTest extends KernelTestCase
 {
     /**
      * @var EntityManagerInterface
@@ -38,15 +38,15 @@ class UserTest extends KernelTestCase
         $this->databaseHelper->truncateAllTables();
     }
 
-    /* @test */ function add_coach_to_fighter()
+    /** @test */ function add_coach_to_fighter()
     {
         $fighter = $this->userBuilder
-            ->withName('Fighter 1')
+            ->withName('Fighter')
             ->build();
 
         $coach = $this->userBuilder
             ->withType(User::TYPE_COACH)
-            ->withName('Coach 1')
+            ->withName('Coach')
             ->build();
 
         $this->em->persist($fighter);
@@ -60,7 +60,7 @@ class UserTest extends KernelTestCase
         $this->em->refresh($fighter);
         $this->em->refresh($coach);
 
-        $this->assertNotEmpty($fighter->getCoaches());
-        $this->assertNotEmpty($coach->getFighters());
+        $this->assertEquals('Coach', $fighter->getCoaches()->first()->getName());
+        $this->assertEquals('Fighter', $coach->getFighters()->first()->getName());
     }
 }

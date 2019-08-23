@@ -9,6 +9,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,7 +38,8 @@ class User implements UserInterface, Serializable
         $this->signUpTournaments = new ArrayCollection();
         $this->tournamentAdmin = new ArrayCollection();
         $this->userFights = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->userCoachCoaches = new ArrayCollection();
+        $this->userCoachFighters = new ArrayCollection();
     }
 
     /**
@@ -91,7 +95,20 @@ class User implements UserInterface, Serializable
             ) = unserialize($serialized);
     }
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="user")
+     */
+    private $userFights;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserCoach", mappedBy="fighter")
+     */
+    private $userCoachCoaches;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserCoach", mappedBy="coach")
+     */
+    private $userCoachFighters;
 
     /**
      * @ORM\ManyToMany(targetEntity="User")
@@ -102,6 +119,11 @@ class User implements UserInterface, Serializable
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTask", mappedBy="user")
      */
     private $userTasks;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserAdminTournament", mappedBy="user")
+     */
+    private $tournamentAdmin;
 
     /**
      * @ORM\Column(type="string", unique=true, nullable=true)
@@ -259,14 +281,11 @@ class User implements UserInterface, Serializable
         $this->motherName = $motherName;
     }
 
-
-
 //    /**
 //     * @var UserInsuranceData
 //     * @ORM\OneToOne(targetEntity="AppBundle\Entity\UserInsuranceData")
 //     */
 //    private $insuranceData;
-
 
     public function updateInsuranceData(UserInsuranceData $insuranceData)
     {
@@ -361,18 +380,15 @@ class User implements UserInterface, Serializable
         $this->club = $club;
     }
 
-
     public function getPhone()
     {
         return $this->phone;
     }
 
-
     public function setPhone($phone)
     {
         $this->phone = $phone;
     }
-
 
     public function getMale()
     {
@@ -410,15 +426,19 @@ class User implements UserInterface, Serializable
         return $this->signUpTournaments->matching($criteria)->first();
     }
 
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserFight", mappedBy="user")
-     */
-    private $userFights;
+    public function getCoaches(): ArrayCollection
+    {
+        return $this->userCoachCoaches->map(function (UserCoach $userCoach){
+           return $userCoach->getCoach();
+        });
+    }
 
-    /**
-     * @ORM\OneToMany(targetEntity="UserAdminTournament", mappedBy="user")
-     */
-    private $tournamentAdmin;
+    public function getFighters(): ArrayCollection
+    {
+        return $this->userCoachFighters->map(function (UserCoach $userCoach){
+            return $userCoach->getFighter();
+        });
+    }
 
     public function getTournamentAdmin()
     {
@@ -448,47 +468,6 @@ class User implements UserInterface, Serializable
     public function getUsers()
     {
         return $this->users;
-    }
-
-    public function setUsers(?User $user)
-    {
-        if(!$user){
-            if($this->getCoach()){
-                $this->removeUser($this->getCoach());
-            }
-            return;
-        }
-
-
-        if($coach = $this->getCoach()){
-            $this->removeUser($coach);
-        }
-
-        $this->addUser($user);
-    }
-
-    public function addUser(?User $user)
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addUser($this);
-        }
-    }
-
-    public function removeUser(User $user)
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            $user->removeUser($this);
-        }
-    }
-
-    /**
-     * @return User|false
-     */
-    public function getCoach()
-    {
-        return $this->users->matching(UserRepository::createCoachCriteria())->first();
     }
 
     public function setEmail($email): void

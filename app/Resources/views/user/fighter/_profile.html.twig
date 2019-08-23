@@ -41,18 +41,24 @@
     <tr>
         <td>
             <b>Trener: </b>
-            {% if user.coach %}
-                <a href="{{ user.coach.href }}">{{ user.coach.name }} {{ user.coach.surname }} </a>
+            {% if user.coaches %}
+                {% for coach in user.coaches %}
+                     <a href="{{ coach.href }}">{{ coach.name }} {{ coach.surname }} </a>
+                    {% if not loop.last %},{% endif %}
+                {% endfor %}
             {% else %}
                 bez trenera
             {% endif %}
         </td>
     </tr>
-{% elseif user.type == 2 and user.coach %}
+{% elseif user.type == 2 and user.coaches %}
     <tr>
         <td>
             <b>Trener: </b>
-                <a href="{{ user.coach.href }}">{{ user.coach.name }} {{ user.coach.surname }} </a>
+            {% for coach in user.coaches %}
+                <a href="{{ coach.href }}">{{ coach.name }} {{ coach.surname }} </a>
+                {% if not loop.last %},{% endif %}
+            {% endfor %}
         </td>
     </tr>
 {% endif %}

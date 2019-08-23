@@ -35,6 +35,8 @@ class UserController extends Controller
     {
         $json = $this->get('serializer.my')->normalize($user);
 
+    //    dump($user->getCoaches()->first()->getName());
+
         return $this->render($this->getShowViewType($user),
             [
                 'user' => $json

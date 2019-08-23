@@ -25,7 +25,7 @@
             attr: {'class': 'select2'}
         }) }}
 
-    {{ form_row(form.users, {
+    {{ form_row(form.coachId, {
         label: 'Trener (opcjonalnie)',
         placeholder: 'Bez trenera'
     }) }}
@@ -39,10 +39,10 @@
 </button>
 {{ form_end(form) }}
 
-<script>
-    $(document).ready(function () {
+{#<script>#}
+    {#$(document).ready(function () {#}
 
-        $('.select2').select2({tags: true});
-        initAjaxForm();
-    });
-</script>
+        {#$('.select2').select2({tags: true});#}
+        {#initAjaxForm();#}
+    {#});#}
+{#</script>#}

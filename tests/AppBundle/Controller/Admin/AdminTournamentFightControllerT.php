@@ -4,14 +4,6 @@ use AppBundle\Controller\Admin\AdminTournamentFightController;
 use AppBundle\Entity\UserFight;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Created by PhpStorm.
- * User: slk
- * Date: 9/20/17
- * Time: 3:20 PM
- */
-
-
 class AdminTournamentFightControllerT extends TestCase
 {
     /**

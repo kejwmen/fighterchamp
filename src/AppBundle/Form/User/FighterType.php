@@ -44,21 +44,19 @@ class FighterType extends AbstractType
             ->add('phone', TextType::class, [
                 'constraints' => [new NotBlank()]
             ])
-            ->add('users', EntityType::class, [
+            ->add('coachId', EntityType::class, [
                 'required' => false,
                 'empty_data' => null,
+                'mapped' => false,
                 'class' => 'AppBundle:User',
-                'data' => $user ? $user->getCoach() : null,
+                'data' => $user ? $user->getCoaches()->first() : null,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->andWhere('u.type = 2')
                         ->orderBy('u.name', 'ASC');
                 }])
-//            ->add('motherName', TextType::class, ['label' => 'Imię Matki'])
-//            ->add('fatherName', TextType::class, ['label' => 'Imię Ojca'])
             ->add('pesel', TextType::class, ['label' => 'Pesel']);
 
-              $builder->addEventSubscriber(new CreateCoachIfDosentExist($this->em));
     }
 
 

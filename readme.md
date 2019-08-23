@@ -76,3 +76,4 @@ left join user_fight uf on f.id = uf.fight_id
 left join user u on uf.user_id = u.id
 where tournament_id = 9
 
+https://dba.stackexchange.com/questions/7887/best-way-to-design-tournament-database

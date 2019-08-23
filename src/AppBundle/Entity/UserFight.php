@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Enum\UserFightResult;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -104,7 +105,7 @@ class UserFight
         $this->isRedCorner = $isRedCorner;
     }
 
-    public function getAwards()
+    public function getAwards(): Collection
     {
         return $this->awards;
     }

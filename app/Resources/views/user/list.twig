@@ -90,15 +90,15 @@
                     {
                         title: 'Rekord Zawodników',
                         mData: function (data) {
-                            return '<span style="color: #5cb85c">' + data.usersRecord.win + '</span> ' +
-                                '<span style="color: #f0ad4e">' + data.usersRecord.draw + '</span> ' +
-                                '<span style="color: #d9534f">' + data.usersRecord.lose + '</span>'
+                            return '<span style="color: #5cb85c">' + data.fightersRecord.win + '</span> ' +
+                                '<span style="color: #f0ad4e">' + data.fightersRecord.draw + '</span> ' +
+                                '<span style="color: #d9534f">' + data.fightersRecord.lose + '</span>'
                         }
                     },
                     {
                         title: 'l. Zawodników',
                         mData: function (data) {
-                            return data.users.length;
+                            return data.fighters.length;
                         }
                     },
                     {
