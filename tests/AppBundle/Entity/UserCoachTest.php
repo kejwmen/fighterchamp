@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk
- * Date: 12/25/17
- * Time: 6:02 AM
- */
 
 namespace AppBundle\Tests;
 
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserCoach;
 use AppKernel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -33,7 +28,7 @@ class UserTest extends KernelTestCase
      */
     private $databaseHelper;
 
-    public function setUp()
+    function setUp()
     {
         $kernel = new AppKernel('test', true);
         $kernel->boot();
@@ -43,16 +38,7 @@ class UserTest extends KernelTestCase
         $this->databaseHelper->truncateAllTables();
     }
 
-    public function testUserEditWithoutSetters()
-    {
-
-    }
-
-
-    /**
-     * @test
-     */
-    public function add_coach_to_fighter()
+    /* @test */ function add_coach_to_fighter()
     {
         $fighter = $this->userBuilder
             ->withName('Fighter 1')
@@ -66,39 +52,15 @@ class UserTest extends KernelTestCase
         $this->em->persist($fighter);
         $this->em->persist($coach);
 
-        $fighter->setUsers($coach);
+        $userCoach = new UserCoach($fighter, $coach);
+        $this->em->persist($userCoach);
 
         $this->em->flush();
 
-        $this->assertEquals('Coach 1', $fighter->getCoach()->getName());
+        $this->em->refresh($fighter);
+        $this->em->refresh($coach);
 
-        $this->assertEquals('Fighter 1', $coach->getUsers()->first()->getName());
-    }
-
-    /**
-     * @test
-     */
-    public function add_coach_to_coach()
-    {
-        $coach1 = $this->userBuilder
-            ->withType(User::TYPE_COACH)
-            ->withName('Coach 1')
-            ->build();
-
-        $coach2 = $this->userBuilder
-            ->withType(User::TYPE_COACH)
-            ->withName('Coach 2')
-            ->build();
-
-        $this->em->persist($coach1);
-        $this->em->persist($coach2);
-
-        $coach1->setUsers($coach2);
-
-        $this->em->flush();
-
-        $this->assertEquals('Coach 2', $coach1->getCoach()->getName());
-
-        $this->assertEquals('Coach 1', $coach2->getUsers()->first()->getName());
+        $this->assertNotEmpty($fighter->getCoaches());
+        $this->assertNotEmpty($coach->getFighters());
     }
 }
