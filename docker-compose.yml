@@ -2,6 +2,8 @@ php:
   build: docker/php
   volumes:
     - ./:/var/www/html/
+  links:
+    - db
 
 nginx:
   build: docker/nginx
