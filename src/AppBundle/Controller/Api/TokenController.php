@@ -20,14 +20,12 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class TokenController extends Controller
 {
-
     /**
      * @Route("/api/tokens")
      * @Method("POST")
      */
     public function newTokenAction(Request $request, EntityManager $em)
     {
-
         $user = $em->getRepository(User::class)->findOneBy(['name' => $request->getUser()]);
 
         if(!$user) {
@@ -45,6 +43,5 @@ class TokenController extends Controller
         return new JsonResponse([
             'token' => $token
         ]);
-
     }
 }

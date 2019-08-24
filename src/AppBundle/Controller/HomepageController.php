@@ -14,14 +14,10 @@ class HomepageController extends Controller
      */
     public function resultAction(EntityManagerInterface $em)
     {
-//        $news = $em->getRepository('AppBundle:News')
-//            ->findBy(array(), array('date' => 'DESC'));
-//
         $tournament = $em->getRepository(Tournament::class)
             ->findNewestOne();
 
         return $this->render(':main:homepage.html.twig', [
-//            'news' => $news,
             'tournament' => $tournament
         ]);
     }

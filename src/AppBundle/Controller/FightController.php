@@ -34,6 +34,4 @@ class FightController extends Controller
     {
         return $this->render('fight/list.html.twig');
     }
-
-
 }

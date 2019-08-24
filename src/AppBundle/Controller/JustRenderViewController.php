@@ -21,7 +21,6 @@ class JustRenderViewController extends Controller
         return $this->render('contact/contact.html.twig');
     }
 
-
     /**
      * @Route("/regulamin", name="rules")
      */
@@ -45,6 +44,5 @@ class JustRenderViewController extends Controller
     {
         return $this->render('about/index.html.twig');
     }
-
 }
 

@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SignUpController extends Controller
 {
-    public function listAction(EntityManagerInterface $em)
-    {
-
-    }
-
     public function showAction(SignUpTournament $signUp)
     {
         $result = $this->get('serializer.my')->serialize($signUp, 'json');

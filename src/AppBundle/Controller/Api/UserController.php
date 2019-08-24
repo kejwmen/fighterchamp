@@ -159,26 +159,9 @@ class UserController extends Controller
      * @Route("/ludzie", name="api_user_list")
      * @Method("GET")
      */
-    public function listAction(Request $request, EntityManagerInterface $em,
-                               AdapterInterface $cache, SerializerInterface $serializer)
+    public function listAction(Request $request, EntityManagerInterface $em)
     {
         $type = $request->query->get('type', 1);
-
-//        $item = $cache->getItem('users');
-
-//        if (!$item->isHit()) {
-//            $users = $em->getRepository(User::class)->findAllListAction();
-//
-//            $item->set(
-//                $users
-//            );
-//            $cache->save($item);
-//        }
-//        $users = $item->get();
-//
-//        $array = $serializer->normalize($users);
-//
-//        $response = new JsonResponse(['data' => $array]);
 
         if ($type == 1) {
             $users = $em->getRepository(User::class)->findAllFighters();
