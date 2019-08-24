@@ -1,9 +1,18 @@
-#php:
-#  image: php:7.2-apache
-#  volumes:
-#    - ./:/var/www/html/
-#  ports:
-#    - "8000:80"
+php:
+  build: docker/php
+  volumes:
+    - ./:/var/www/html/
+
+nginx:
+  build: docker/nginx
+  ports:
+    - 80:80
+  volumes_from:
+    - php
+  volumes:
+    - ./var/logs/nginx/:/var/log/nginx
+  links:
+    - php
 
 db:
   build: docker/mysql
