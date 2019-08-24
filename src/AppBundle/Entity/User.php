@@ -111,11 +111,6 @@ class User implements UserInterface, Serializable
     private $userCoachFighters;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User")
-     **/
-    private $users;
-
-    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserTask", mappedBy="user")
      */
     private $userTasks;
@@ -463,11 +458,6 @@ class User implements UserInterface, Serializable
     public function setType(int $type): void
     {
         $this->type = $type;
-    }
-
-    public function getUsers()
-    {
-        return $this->users;
     }
 
     public function setEmail($email): void
