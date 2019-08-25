@@ -1,6 +1,6 @@
 {
   "name": "slk500/box3",
-  "license": "proprietary",
+  "license": "gpl-3.0",
   "type": "project",
   "autoload": {
     "psr-4": {
