@@ -1,4 +1,4 @@
-    <?php
+<?php
 
     use AppBundle\AppCompilerPass;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
