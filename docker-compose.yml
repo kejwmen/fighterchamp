@@ -1,9 +1,20 @@
-#php:
-#  image: php:7.2-apache
-#  volumes:
-#    - ./:/var/www/html/
-#  ports:
-#    - "8000:80"
+php:
+  build: docker/php
+  volumes:
+    - ./:/var/www/html/
+  links:
+    - db
+
+nginx:
+  build: docker/nginx
+  ports:
+    - 80:80
+  volumes_from:
+    - php
+  volumes:
+    - ./var/logs/nginx/:/var/log/nginx
+  links:
+    - php
 
 db:
   build: docker/mysql
@@ -24,13 +35,3 @@ db_test:
     MYSQL_USER: "test"
     MYSQL_PASSWORD: "test"
     MYSQL_ROOT_PASSWORD: "test"
-
-#db_test:
-#  build: docker/mysql
-#  ports:
-#    - "3311:3306"
-#  environment:
-#    MYSQL_DATABASE: "test"
-#    MYSQL_USER: "test"
-#    MYSQL_PASSWORD: "test"
-#    MYSQL_ROOT_PASSWORD: "test"
