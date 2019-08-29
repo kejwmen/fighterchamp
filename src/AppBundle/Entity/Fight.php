@@ -59,7 +59,7 @@ class Fight
     private $isVisible = false;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="date", nullable=false)
      */
     private $day;
 

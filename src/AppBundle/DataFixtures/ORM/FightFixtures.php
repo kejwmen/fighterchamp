@@ -28,6 +28,7 @@ class FightFixtures extends BaseFixture implements DependentFixtureInterface
 
                 $fight->setTournament($this->getReference(Tournament::class . '_' . $tournamentReference));
                 $fight->setIsVisible(true);
+                $fight->setDay(new \DateTime);
 
                 $manager->persist($fight);
 
