@@ -4,6 +4,8 @@ COMPOSE_EXEC_CONSOLE = ${COMPOSE_EXEC_PHP} bin/console
 up:
 	docker-compose up -d
 
+rebuild: docker-build up
+
 docker-build:
 	docker-compose build
 
@@ -12,6 +14,9 @@ composer-install:
 
 composer-update:
 	${COMPOSE_EXEC_PHP} composer update
+
+composer:
+	${COMPOSE_EXEC_PHP} composer ${a}
 
 db-migrate:
 	${COMPOSE_EXEC_CONSOLE} doctrine:migrations:migrate

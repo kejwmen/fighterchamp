@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests;
+namespace Tests\AppBundle;
 
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserCoach;

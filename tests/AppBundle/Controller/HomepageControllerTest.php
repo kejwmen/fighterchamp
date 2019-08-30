@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AppBundle\Tests\Controller;
+namespace Tests\AppBundle\Controller;
 
 
 
@@ -25,28 +25,28 @@ class HomepageControllerTest extends WebTestCase
 //
 //        $em->persist($user);
 //        $em->flush();
-
-        $client->request('POST', '/api/dupa');
-
-        $client->request(
-            'POST',
-            '/api/dupa',
-            [],
-            [],
-            [
-                'CONTENT_TYPE'          => 'application/json',
-                'HTTP_X-Requested-With' => 'XMLHttpRequest'
-            ],
-            json_encode(['name' => 'Mariusz Słonko'])
-        );
-
-
-        $html = $client->getResponse()->getContent();
-
-
-        var_dump($html);
-
-        $this->assertTrue($client->getResponse()->isSuccessful());
+//
+//        $client->request('POST', '/api/dupa');
+//
+//        $client->request(
+//            'POST',
+//            '/api/dupa',
+//            [],
+//            [],
+//            [
+//                'CONTENT_TYPE'          => 'application/json',
+//                'HTTP_X-Requested-With' => 'XMLHttpRequest'
+//            ],
+//            json_encode(['name' => 'Mariusz Słonko'])
+//        );
+//
+//
+//        $html = $client->getResponse()->getContent();
+//
+//
+//        var_dump($html);
+//
+//        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testDisplay2()

@@ -6,7 +6,7 @@
  * Time: 1:27 PM
  */
 
-namespace AppBundle\Tests;
+namespace Tests\AppBundle;
 
 use AppBundle\Entity\Enum\UserFightResult;
 use AppBundle\Entity\Fight;

@@ -6,9 +6,10 @@
  * Time: 23:50
  */
 
-namespace AppBundle\Tests;
+namespace Tests\AppBundle;
 
 
+use AppBundle\Entity\User;
 use AppBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -21,7 +22,7 @@ class RegistrationTypeTest extends WebTestCase
 
         $container = self::$kernel->getContainer();
         $em = $container->get('doctrine')->getManager();
-        $userRepo = $em->getRepository('AppBundle:User');
+        $userRepo = $em->getRepository(User::class);
         $userRepo->createQueryBuilder('user')
             ->delete()
             ->getQuery()

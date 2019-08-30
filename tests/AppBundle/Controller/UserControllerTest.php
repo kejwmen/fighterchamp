@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Controller;
+namespace Tests\AppBundle\Controller;
 
 use Goutte\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
