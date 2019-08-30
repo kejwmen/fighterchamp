@@ -24,9 +24,9 @@ class FightFixtures extends BaseFixture implements DependentFixtureInterface
                     $this->faker->numberBetween(50, 100)
                 );
 
-                $tournamentReference = ($i % 10 === 0)? 10 : $i % 10;
-
-                $fight->setTournament($this->getReference(Tournament::class . '_' . $tournamentReference));
+                $fight->setTournament(
+                    $this->getReference(Tournament::class . '_' .
+                        $this->faker->numberBetween(1, 10)));
                 $fight->setIsVisible(true);
                 $fight->setDay(new \DateTime);
 
