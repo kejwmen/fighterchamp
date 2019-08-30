@@ -25,6 +25,9 @@ db-update-schema:
 db-drop:
 	${COMPOSE_EXEC_CONSOLE} doctrine:database:drop --force
 
+db-load-fixtures:
+	${COMPOSE_EXEC_CONSOLE} doctrine:fixtures:load
+
 test:
 	${COMPOSE_EXEC_PHP} vendor/bin/phpunit
 
