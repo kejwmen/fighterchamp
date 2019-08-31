@@ -11,7 +11,7 @@ use AppBundle\Form\PairType;
 use AppBundle\Form\RegistrationType;
 use AppBundle\Form\SignUpTournamentType;
 use AppBundle\Entity\SignUpTournament;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

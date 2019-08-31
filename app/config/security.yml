@@ -20,6 +20,7 @@ security:
 
         main:
             anonymous: ~
+            provider: chain_provider
             guard:
                 authenticator:
                    - app.security.login_form_authenticator

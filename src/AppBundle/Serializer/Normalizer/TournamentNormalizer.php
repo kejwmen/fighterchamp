@@ -13,7 +13,7 @@ use AppBundle\Entity\Fight;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserFight;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerAwareTrait;
@@ -25,7 +25,7 @@ class TournamentNormalizer implements NormalizerInterface, SerializerAwareInterf
 
     private $router;
 
-    public function __construct(Router $router)
+    public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }

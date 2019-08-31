@@ -13,7 +13,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
   AppBundle\:
     resource: '../../src/AppBundle/*'
-    exclude: '../../src/AppBundle/{Entity,Repository,Tests,Twig}'
+    exclude: '../../src/AppBundle/{Entity,Event,Repository,Tests,Twig}'
 
   AppBundle\Repository\:
     resource: '../../src/AppBundle/Repository/ClubRepository.php'

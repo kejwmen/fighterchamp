@@ -10,7 +10,7 @@ namespace AppBundle\Security;
 
 
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,11 +30,11 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     private $jwtEncoder;
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(JWTEncoderInterface $jwtEncoder, EntityManager $em)
+    public function __construct(JWTEncoderInterface $jwtEncoder, EntityManagerInterface $em)
     {
         $this->jwtEncoder = $jwtEncoder;
         $this->em = $em;
@@ -47,13 +47,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
             'Authorization'
         );
 
-        $token = $extractor->extract($request);
-
-        if (!$token) {
-            return;
-        }
-
-        return $token;
+        return $extractor->extract($request);
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
@@ -94,5 +88,22 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
         // TODO: Implement start() method.
+    }
+
+    /**
+     * Does the authenticator support the given Request?
+     *
+     * If this returns false, the authenticator will be skipped.
+     *
+     * @return bool
+     */
+    public function supports(Request $request)
+    {
+        $extractor = new AuthorizationHeaderTokenExtractor(
+            'Bearer',
+            'Authorization'
+        );
+
+        return $extractor->extract($request);
     }
 }

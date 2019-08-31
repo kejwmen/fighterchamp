@@ -4,6 +4,8 @@ php:
     - ./:/var/www/html/
   links:
     - db
+  env_file:
+    - .env
 
 nginx:
   build: docker/nginx
