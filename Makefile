@@ -24,3 +24,17 @@ db-update-schema:
 
 db-drop:
 	${COMPOSE_EXEC_CONSOLE} doctrine:database:drop --force
+
+db-load-fixtures:
+	${COMPOSE_EXEC_CONSOLE} doctrine:fixtures:load
+
+test:
+	${COMPOSE_EXEC_PHP} vendor/bin/phpunit
+
+test-fail-fast:
+	${COMPOSE_EXEC_PHP} vendor/bin/phpunit --stop-on-failure
+
+setup-keys:
+	mkdir -p var/jwt
+	openssl genpkey -out var/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+	openssl pkey -in var/jwt/private.pem -out var/jwt/public.pem -pubout
