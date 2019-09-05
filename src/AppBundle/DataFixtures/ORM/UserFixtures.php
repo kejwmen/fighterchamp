@@ -2,12 +2,9 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-
 use AppBundle\DataFixtures\BaseFixture;
 use AppBundle\Entity\User;
-
 use Doctrine\Common\Persistence\ObjectManager;
-
 
 class UserFixtures extends BaseFixture
 {
@@ -22,6 +19,7 @@ class UserFixtures extends BaseFixture
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPlainPassword('password');
 
+        $manager->persist($user);
 
         foreach (range(1,10) as $i) {
             $user = new User();
@@ -34,7 +32,6 @@ class UserFixtures extends BaseFixture
             $manager->persist($user);
 
             $this->addReference(User::class . '_' . $i, $user);
-
         }
 
         $manager->flush();
