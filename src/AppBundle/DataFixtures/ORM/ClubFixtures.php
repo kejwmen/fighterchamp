@@ -3,7 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\DataFixtures\BaseFixture;
-use AppBundle\Factory\ClubFactory;
+use AppBundle\Entity\Club;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use AppBundle\Entity\User;
@@ -13,12 +13,11 @@ class ClubFixtures extends BaseFixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach (range(1, 2) as $i) {
-            $club = ClubFactory::createClub(
-                $this->faker->company,
-                $this->faker->city,
-                $this->faker->streetAddress,
-                $this->faker->url
-            );
+            $club = new Club();
+            $club->setName($this->faker->company);
+            $club->setCity($this->faker->city);
+            $club->setStreet($this->faker->streetAddress);
+            $club->setWww($this->faker->url);
             if ($i === 1) {
                 foreach (range(1, 2) as $i) {
                     /** @var User $user */
