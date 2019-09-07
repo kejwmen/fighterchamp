@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk500
- * Date: 7/26/19
- * Time: 10:39 AM
- */
 
 namespace Tests\Builder;
 
