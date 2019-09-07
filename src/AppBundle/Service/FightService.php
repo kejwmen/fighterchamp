@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk
- * Date: 4/16/18
- * Time: 10:13 AM
- */
 
 namespace AppBundle\Service;
 
@@ -25,34 +19,13 @@ class FightService
         $this->entityManager = $entityManager;
     }
 
-    public function toggleCorners(Fight $fight): void
+    public function toggleCorners(Fight $fight): array
     {
-        $usersFight = $fight->getUsersFight();
+        $fight->getUsersFight()->map(function (UserFight $userFight){
+           $userFight->changeCorner();
+        });
 
-        $userOneFight = $usersFight[0];
-        $userTwoFight = $usersFight[1];
-
-        $one = $userOneFight->isRedCorner();
-        $two = $userTwoFight->isRedCorner();
-
-        $this->convertNullToFalse($one);
-        $this->convertNullToFalse($two);
-
-        if($one === $two){
-            $one = true;
-            $two = false;
-        }
-
-        $one = ($one === true) ? false : true;
-        $two = ($two === false) ? true : false;
-
-        $userOneFight->setIsRedCorner($one);
-        $userTwoFight->setIsRedCorner($two);
-    }
-
-    private function convertNullToFalse(&$arg)
-    {
-        $arg = $arg ?? false;
+        return $fight->getUsersFight()->toArray();
     }
 
     public function createFightFromSignUps(SignUpTournament $signUp1, SignUpTournament $signUp2): void

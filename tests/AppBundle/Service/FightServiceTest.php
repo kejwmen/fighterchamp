@@ -2,101 +2,58 @@
 
 namespace Tests\AppBundle\Service;
 
-use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
 use AppBundle\Service\FightService;
-use AppKernel;
-use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
-use Tests\Builder\TournamentBuilder;
-use Tests\Builder\UserBuilder;
-use Tests\Database;
-use Tests\DatabaseHelper;
+
 
 class FightServiceTest extends TestCase
 {
     /**
-     * @var EntityManagerInterface
+     * @dataProvider additionProvider
      */
-    private $em;
-
-    /**
-     * @var UserBuilder
-     */
-    private $userBuilder;
-
-    /**
-     * @var TournamentBuilder
-     */
-    private $tournamentBuilder;
-
-    /**
-     * @var FightService
-     */
-    private $fightService;
-
-    /**
-     * @var DatabaseHelper
-     */
-    private $databaseHelper;
-
-    public function setUp()
+    public function testGetHighestFormula($signUp0Formula,$signUp1Formula, $expected)
     {
-        $kernel = new AppKernel('test', true);
-        $kernel->boot();
+        $signUp = $this->getMockBuilder(SignUpTournament::class)
+            ->setMethods(['getFormula'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $container = $kernel->getContainer();
-        $this->em = $container->get('doctrine')->getManager();
-        $this->fightService = $container->get(FightService::class);
+        $fightService = $this->getMockBuilder(FightService::class)
+            ->setMethodsExcept(['getHighestFormula'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->userBuilder = new UserBuilder();
-        $this->tournamentBuilder = new TournamentBuilder();
+        /**
+         * @var $signUp0\AppBundle\Entity\SignUpTournament
+         */
+        $signUp0 = clone $signUp;
 
-        $this->databaseHelper = new DatabaseHelper(new Database());
-        $this->databaseHelper->truncateAllTables();
+        /**
+         * @var $signUp1\AppBundle\Entity\SignUpTournament
+         */
+        $signUp1 = clone $signUp;
+
+        $signUp0->method('getFormula')->willReturn($signUp0Formula);
+        $signUp1->method('getFormula')->willReturn($signUp1Formula);
+
+        $result = $fightService->getHighestFormula($signUp0, $signUp1);
+
+        $this->assertEquals($result, $expected);
     }
 
-    /**
-     * @test
-     */
-    public function createFightFromSignUps()
+    public function additionProvider()
     {
-        $user1 = $this->userBuilder
-            ->withName('user1')
-            ->build();
-
-        $user2 = $this->userBuilder
-            ->withName('user2')
-            ->build();
-
-        $tournament = $this->tournamentBuilder
-            ->build();
-
-        $signUp1 = new SignUpTournament($user1,  $tournament);
-        $signUp1->setWeight(69);
-        $signUp1->setFormula('A');
-        $signUp2 = new SignUpTournament($user2,  $tournament);
-        $signUp2->setWeight(69);
-        $signUp2->setFormula('A');
-
-        $this->em->persist($user1);
-        $this->em->persist($user2);
-        $this->em->persist($tournament);
-        $this->em->persist($signUp1);
-        $this->em->persist($signUp2);
-        $this->em->flush();
-
-        $this->fightService->createFightFromSignUps($signUp1, $signUp2);
-
-        $fight = $this->em->getRepository(Fight::class)
-            ->find(1);
-        $this->em->refresh($fight);
-
-        $usersFight = $fight->getUsersFight();
-
-        $this->assertNotEmpty($fight);
-        $this->assertEquals(1, $usersFight[0]->getId());
-        $this->assertTrue($usersFight[0]->isRedCorner());
-        $this->assertEquals(2, $usersFight[1]->getId());
+        return [
+            ['A', 'A', 'A'],
+            ['A', 'B', 'A'],
+            ['A', 'C', 'A'],
+            ['B', 'A', 'A'],
+            ['B', 'B', 'B'],
+            ['B', 'C', 'B'],
+            ['C', 'A', 'A'],
+            ['C', 'B', 'B'],
+            ['C', 'C', 'C'],
+        ];
     }
 }

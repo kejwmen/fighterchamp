@@ -114,4 +114,9 @@ class UserFight
     {
         $this->awards = $awards;
     }
+
+    public function changeCorner(): void
+    {
+        $this->isRedCorner = !$this->isRedCorner;
+    }
 }

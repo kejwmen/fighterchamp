@@ -1,0 +1,104 @@
+<?php
+
+namespace Tests\AppBundle\Service;
+
+use AppBundle\Entity\Fight;
+use AppBundle\Entity\SignUpTournament;
+use AppBundle\Entity\UserFight;
+use AppBundle\Service\FightService;
+use AppKernel;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\TestCase;
+use Tests\Builder\TournamentBuilder;
+use Tests\Builder\UserBuilder;
+use Tests\Database;
+use Tests\DatabaseHelper;
+
+class FightServiceIntegrationTest extends TestCase
+{
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * @var UserBuilder
+     */
+    private $userBuilder;
+
+    /**
+     * @var TournamentBuilder
+     */
+    private $tournamentBuilder;
+
+    /**
+     * @var FightService
+     */
+    private $fightService;
+
+    /**
+     * @var DatabaseHelper
+     */
+    private $databaseHelper;
+
+    public function setUp()
+    {
+        $kernel = new AppKernel('test', true);
+        $kernel->boot();
+
+        $container = $kernel->getContainer();
+        $this->em = $container->get('doctrine')->getManager();
+        $this->fightService = $container->get(FightService::class);
+
+        $this->userBuilder = new UserBuilder();
+        $this->tournamentBuilder = new TournamentBuilder();
+
+        $this->databaseHelper = new DatabaseHelper(new Database());
+        $this->databaseHelper->truncateAllTables();
+    }
+
+    /**
+     * @test
+     */
+    public function createFightFromSignUps()
+    {
+        $user1 = $this->userBuilder
+            ->withName('user1')
+            ->build();
+
+        $user2 = $this->userBuilder
+            ->withName('user2')
+            ->build();
+
+        $tournament = $this->tournamentBuilder
+            ->build();
+
+        $signUp1 = new SignUpTournament($user1,  $tournament);
+        $signUp1->setWeight(69);
+        $signUp1->setFormula('A');
+        $signUp2 = new SignUpTournament($user2,  $tournament);
+        $signUp2->setWeight(69);
+        $signUp2->setFormula('A');
+
+        $this->em->persist($user1);
+        $this->em->persist($user2);
+        $this->em->persist($tournament);
+        $this->em->persist($signUp1);
+        $this->em->persist($signUp2);
+        $this->em->flush();
+
+        $this->fightService->createFightFromSignUps($signUp1, $signUp2);
+
+        $fight = $this->em->getRepository(Fight::class)
+            ->find(1);
+        $this->em->refresh($fight);
+
+        $usersFight = $fight->getUsersFight();
+
+        $this->assertNotEmpty($fight);
+        $this->assertEquals(1, $usersFight[0]->getId());
+        $this->assertTrue($usersFight[0]->isRedCorner());
+        $this->assertEquals(2, $usersFight[1]->getId());
+    }
+}
