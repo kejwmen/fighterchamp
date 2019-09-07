@@ -1,64 +1,102 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk
- * Date: 6/1/18
- * Time: 10:33 AM
- */
 
 namespace Tests\AppBundle\Service;
 
+use AppBundle\Entity\Fight;
 use AppBundle\Entity\SignUpTournament;
-use AppBundle\Entity\Tournament;
-use AppBundle\Entity\User;
-use AppBundle\Repository\SignUpTournamentRepository;
 use AppBundle\Service\FightService;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManager;
+use AppKernel;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\Builder\TournamentBuilder;
+use Tests\Builder\UserBuilder;
+use Tests\Database;
+use Tests\DatabaseHelper;
 
 class FightServiceTest extends TestCase
 {
-    public function testCreateFight()
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * @var UserBuilder
+     */
+    private $userBuilder;
+
+    /**
+     * @var TournamentBuilder
+     */
+    private $tournamentBuilder;
+
+    /**
+     * @var FightService
+     */
+    private $fightService;
+
+    /**
+     * @var DatabaseHelper
+     */
+    private $databaseHelper;
+
+    public function setUp()
     {
-        $user0 = new User();
-        $user0->setName('User 0');
+        $kernel = new AppKernel('test', true);
+        $kernel->boot();
 
-        $user1 = new User();
-        $user1->setName('User 1');
+        $container = $kernel->getContainer();
+        $this->em = $container->get('doctrine')->getManager();
+        $this->fightService = $container->get(FightService::class);
 
-        $tournament = new Tournament();
-        $tournament->setName('Tuournament');
-        $tournament->setStart(new \DateTime('now'));
+        $this->userBuilder = new UserBuilder();
+        $this->tournamentBuilder = new TournamentBuilder();
 
-        $signUp0 = new SignUpTournament($user0, $tournament);
-        $signUp0->setFormula('A');
-        $signUp0->setWeight('80');
+        $this->databaseHelper = new DatabaseHelper(new Database());
+        $this->databaseHelper->truncateAllTables();
+    }
 
-        $signUp1 = new SignUpTournament($user1, $tournament);
+    /**
+     * @test
+     */
+    public function createFightFromSignUps()
+    {
+        $user1 = $this->userBuilder
+            ->withName('user1')
+            ->build();
+
+        $user2 = $this->userBuilder
+            ->withName('user2')
+            ->build();
+
+        $tournament = $this->tournamentBuilder
+            ->build();
+
+        $signUp1 = new SignUpTournament($user1,  $tournament);
+        $signUp1->setWeight(69);
         $signUp1->setFormula('A');
-        $signUp1->setWeight('80');
+        $signUp2 = new SignUpTournament($user2,  $tournament);
+        $signUp2->setWeight(69);
+        $signUp2->setFormula('A');
 
-        $signUpRepository = $this->createMock(SignUpTournamentRepository::class);
+        $this->em->persist($user1);
+        $this->em->persist($user2);
+        $this->em->persist($tournament);
+        $this->em->persist($signUp1);
+        $this->em->persist($signUp2);
+        $this->em->flush();
 
-        $signUpRepository->expects($this->any())
-            ->method('find')
-            ->will($this->onConsecutiveCalls($signUp0, $signUp1));
+        $this->fightService->createFightFromSignUps($signUp1, $signUp2);
 
-        $entityManager = $this->createMock(EntityManager::class);
+        $fight = $this->em->getRepository(Fight::class)
+            ->find(1);
+        $this->em->refresh($fight);
 
-        $entityManager->expects($this->any())
-            ->method('getRepository')
-            ->willReturn($signUpRepository);
+        $usersFight = $fight->getUsersFight();
 
-        $data = ['ids' => [1,2]];
-
-        $fightService = new FightService($entityManager);
-        $fight = $fightService->createFight($data);
-
-        $this->assertEquals($tournament, $fight->getTournament());
-        $this->assertEquals('A', $fight->getFormula());
-        $this->assertEquals('80', $fight->getWeight());
+        $this->assertNotEmpty($fight);
+        $this->assertEquals(1, $usersFight[0]->getId());
+        $this->assertTrue($usersFight[0]->isRedCorner());
+        $this->assertEquals(2, $usersFight[1]->getId());
     }
 }

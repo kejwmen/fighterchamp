@@ -55,37 +55,30 @@ class FightService
         $arg = $arg ?? false;
     }
 
-    public function createFight(array $data) : Fight
+    public function createFightFromSignUps(SignUpTournament $signUp1, SignUpTournament $signUp2): void
     {
-        $signUpRepo = $this->entityManager->getRepository(SignUpTournament::class);
-
-        $signUp0 = $signUpRepo->find($data['ids'][0]);
-        $signUp1 = $signUpRepo->find($data['ids'][1]);
-
-        $formula = $this->getHighestFormula($signUp0, $signUp1);
-        $weight = $this->getHighestWeight($signUp0, $signUp1);
+        $formula = $this->getHighestFormula($signUp1, $signUp2);
+        $weight = $this->getHighestWeight($signUp1, $signUp2);
 
         $fight = new Fight($formula, $weight);
 
-        $userFightOne = new UserFight($signUp0->getUser(), $fight);
-        $userFightTwo = new UserFight($signUp1->getUser(), $fight);
+        $userFight1 = new UserFight($signUp1->getUser(), $fight);
+        $userFight1->setIsRedCorner(true);
+        $userFight2 = new UserFight($signUp2->getUser(), $fight);
 
-        $tournament = $signUp0->getTournament();
+        $tournament = $signUp1->getTournament(); //todo should take both signUps
 
         $fight->setTournament($tournament);
 
-        $numberOfFights = $tournament->getSignUpTournament()->count();
+        $numberOfFights = $tournament->getSignUpTournament()->count(); //todo should count fights not signups
 
         $fight->setPosition($numberOfFights + 1);
-
         $fight->setDay($tournament->getStart());
 
         $this->entityManager->persist($fight);
-        $this->entityManager->persist($userFightOne);
-        $this->entityManager->persist($userFightTwo);
+        $this->entityManager->persist($userFight1);
+        $this->entityManager->persist($userFight2);
         $this->entityManager->flush();
-
-        return $fight;
     }
 
     public function getHighestFormula(SignUpTournament $signUp0, SignUpTournament $signUp1): string
