@@ -3,8 +3,12 @@
 namespace Tests\AppBundle\Controller\Api;
 
 use AppBundle\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Tests\Builder\UserBuilder;
+use Tests\Database;
+use Tests\DatabaseHelper;
 
 class TokenControllerTest extends WebTestCase
 {
@@ -13,12 +17,45 @@ class TokenControllerTest extends WebTestCase
      */
     private $client;
 
+    /**
+     * @var UserBuilder
+     */
+    private $userBuilder;
+
+    /**
+     * @var DatabaseHelper
+     */
+    private $databaseHelper;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
     public function setUp()
     {
-        $this->markTestSkipped();
+        $this->markTestSkipped('This behaviour is not implemented');
+
         $this->client = $this->makeClient();
+        $this->userBuilder = new UserBuilder();
+
+        $this->em = $this->getContainer()->get('doctrine')->getManager();
+
+        $this->databaseHelper = new DatabaseHelper(new Database());
+        $this->databaseHelper->truncateAllTables();
+
+        $user = $this->userBuilder
+            ->withName('admin')
+            ->withPassword('password')
+            ->build();
+
+        $this->em->persist($user);
+        $this->em->flush();
     }
 
+    /**
+     * @covers \AppBundle\Controller\Api\TokenController
+     */
     public function testPOSTCreateToken()
     {
         $this->client->request('POST','/api/tokens',[],[],[
@@ -27,6 +64,7 @@ class TokenControllerTest extends WebTestCase
         ]);
 
         $response = $this->client->getResponse();
+
         $data = json_decode($response->getContent(), true);
 
         $this->assertArrayHasKey('token', $data);
@@ -34,7 +72,7 @@ class TokenControllerTest extends WebTestCase
         $this->assertStatusCode(200, $this->client);
     }
 
-    public function testisValid()
+    public function testIsValid()
     {
         $em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -45,6 +83,9 @@ class TokenControllerTest extends WebTestCase
         $this->assertTrue($isValid);
     }
 
+    /**
+     * @covers \AppBundle\Controller\Api\TokenController
+     */
     public function testIsLogIn()
     {
         $token = $this->client->getContainer()

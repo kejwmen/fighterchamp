@@ -9,6 +9,7 @@ class UserBuilder extends Builder
 {
     public const DEFAULT_NAME = 'DefaultName';
     public const DEFAULT_SURNAME = 'DefaultSurname';
+    public const DEFAULT_PASSWORD = 'password';
     public const DEFAULT_TYPE = User::TYPE_FIGHTER;
 
     /**
@@ -26,6 +27,10 @@ class UserBuilder extends Builder
      */
     private $type = self::DEFAULT_TYPE;
 
+    /**
+     * @var string
+     */
+    private $password = self::DEFAULT_PASSWORD;
 
     public function build(): User
     {
@@ -34,6 +39,7 @@ class UserBuilder extends Builder
         $user->setSurname($this->surname);
         $user->setHash($this->faker->sha1);
         $user->setType($this->type);
+        $user->setPlainPassword($this->password);
 
         return $user;
     }
@@ -53,6 +59,12 @@ class UserBuilder extends Builder
     public function withType(int $type): self
     {
         $this->type = $type;
+        return $this;
+    }
+
+    public function withPassword(string $password): self
+    {
+        $this->password = $password;
         return $this;
     }
 }
