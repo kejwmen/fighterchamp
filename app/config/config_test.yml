@@ -1,10 +1,6 @@
 imports:
     - { resource: config_dev.yml }
 
-#doctrine:
-#    dbal:
-#        url: 'sqlite:///%kernel.project_dir%/var/data/test.sqlite'
-
 framework:
     test: true
     session:
@@ -21,10 +17,8 @@ swiftmailer:
 
 doctrine:
     dbal:
-        driver:   pdo_mysql
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  UTF8
+        host:     "%database_test_host%"
+        port:     "%database_test_port%"
+        dbname:   "%database_test_name%"
+        user:     "%database_test_user%"
+        password: "%database_test_password%"

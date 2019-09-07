@@ -4,6 +4,7 @@ php:
     - ./:/var/www/html/
   links:
     - db
+    - db_test
 
 nginx:
   build: docker/nginx
