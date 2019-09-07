@@ -38,7 +38,10 @@ class UserCoachTest extends KernelTestCase
         $this->databaseHelper->truncateAllTables();
     }
 
-    /** @test */ function add_coach_to_fighter()
+    /**
+     * @test
+     */
+    function add_coach_to_fighter()
     {
         $fighter = $this->userBuilder
             ->withName('Fighter')
