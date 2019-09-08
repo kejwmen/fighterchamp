@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TQMController extends Controller
 {
     /**
-     * @Route("/pomysly", name="pomysly")
+     * @Route("/pomysly", name="ideas")
      */
     public function listAction(EntityManagerInterface $em, Request $request)
     {
@@ -45,7 +45,7 @@ class TQMController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirectToRoute('pomysly');
+            return $this->redirectToRoute('ideas');
         }
 
         return $this->render('tqm/news.html.twig', [
@@ -54,29 +54,4 @@ class TQMController extends Controller
             'form' => $form->createView()
         ]);
     }
-
-    /**
-     * @Route("/tqm/task/{id}", options={"expose"=true}, name="tqm_i_will_help", condition="request.isXmlHttpRequest()")
-     */
-    public function iWillHelpAction(Task $task)
-    {
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-            $user = $this->getUser();
-
-            $taskUser = new UserTask();
-            $taskUser->setUser($user);
-            $taskUser->setTask($task);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($taskUser);
-            $em->flush();
-
-            return new Response(200);
-        }
-
-        return new Response(403);
-    }
-
-
 }
