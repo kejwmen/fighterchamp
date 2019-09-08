@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk
- * Date: 5/23/18
- * Time: 6:34 PM
- */
 
 namespace Tests;
 
-use Shopsys\HttpSmokeTesting\Auth\BasicHttpAuth;
+
 use Shopsys\HttpSmokeTesting\HttpSmokeTestCase;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
 use Shopsys\HttpSmokeTesting\RouteConfig;
@@ -18,10 +12,27 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SmokeTest extends HttpSmokeTestCase
 {
+    public static function setUpBeforeClass()
+    {
+        $databaseHelper = new DatabaseHelper(new Database());
+        $databaseHelper->truncateAllTables();
+
+        $kernel = new \AppKernel("test", true);
+        $kernel->boot();
+        $application = new \Symfony\Bundle\FrameworkBundle\Console\Application($kernel);
+        $application->setAutoExit(false);
+
+        $options["-e"] = "test";
+        $options["-q"] = null;
+        $options = array_merge($options, array('command' => "doctrine:fixtures:load"));
+        $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
+    }
+
 
     protected function setUp()
     {
-        $this->markTestSkipped();
+        $this->markTestSkipped('need auth & more fixtures');
+
         parent::setUp();
 
         static::bootKernel([
@@ -68,33 +79,39 @@ class SmokeTest extends HttpSmokeTestCase
                     'connect_facebook_check',
                     'logout',
                     'user_edit_view',
+                    'tournament_show',// no fixtures yet
+                    'admin_api_user_list',
+                    'admin_api_tournament_list',
+                    'admin_tournament_fights',
+                    'allFightsReady'
                 ];
 
                 $postRoute = [
-                  'user_create',
+                    'user_create',
                     'api_user_update',
                     'setNullOnImage',
                     'api_image_upload',
-                    'admin_user_list'
+                    'admin_user_list',
+                    'admin_tournament_create',
+                    'set_is_licence',
+                    'toggle_corners',
+                    'api_signup_new'
+                ];
+
+                $requireId = [
+                    'admin_tournament_fights',
+                    'fight_show',
+                    'api_user_show'
                 ];
 
                 // This function will be called on every RouteConfig provided by RouterAdapter
                 if ($info->getRouteName()[0] === '_') {
-                    // You can use RouteConfig to change expected behavior or skip testing particular routes
                     $config->skipRoute();
                 }
 
 
-//                if($info->getRouteName() === 'admin_tournament_fights'){
-//                    $config->addExtraRequestDataSet('Edit product that is a main variant (ID 149).')
-//                        ->setParameter('id', 1);
-//                }
-
-                if($info->getRouteName() === 'tournament_show'){
-                    $config->addExtraRequestDataSet('Edit product that is a main variant (ID 149).')
+                $config->addExtraRequestDataSet()
                         ->setParameter('id', 1);
-                }
-
 
                 if(in_array($info->getRouteName(), $redirectsRoute)) $config->skipRoute();
                 if(in_array($info->getRouteName(), $postRoute)) $config->skipRoute();
@@ -103,12 +120,9 @@ class SmokeTest extends HttpSmokeTestCase
                     $config->skipRoute('IS_AUTHENTICATED_FULLY');
                 }
 
-
                 if (!$info->isHttpMethodAllowed('GET')) {
                     $config->skipRoute('Only routes supporting GET method are tested.');
                 }
-
-
             });
     }
 
