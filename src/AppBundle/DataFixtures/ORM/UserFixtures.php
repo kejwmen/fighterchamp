@@ -22,6 +22,7 @@ class UserFixtures extends BaseFixture
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPlainPassword('password');
 
+        $manager->persist($user);
 
         foreach (range(1,10) as $i) {
             $user = new User();
