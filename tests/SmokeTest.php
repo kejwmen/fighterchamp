@@ -31,8 +31,6 @@ class SmokeTest extends HttpSmokeTestCase
 
     protected function setUp()
     {
-        $this->markTestSkipped('need auth & more fixtures');
-
         parent::setUp();
 
         static::bootKernel([
@@ -64,7 +62,7 @@ class SmokeTest extends HttpSmokeTestCase
         $routeConfigCustomizer
             ->customize(function (RouteConfig $config, RouteInfo $info) {
 
-                $redirectsRoute = [
+                $skipRoutes = [
                     'fights_not_weighted_remove',
                     'setWinner',
                     'toggleFightReady',
@@ -79,11 +77,16 @@ class SmokeTest extends HttpSmokeTestCase
                     'connect_facebook_check',
                     'logout',
                     'user_edit_view',
-                    'tournament_show',// no fixtures yet
                     'admin_api_user_list',
                     'admin_api_tournament_list',
                     'admin_tournament_fights',
-                    'allFightsReady'
+                    'allFightsReady',
+                    'changeOrderFight',
+                    'changePositionFight', // need more parameters
+                    'admin_tournament_toggle_delete_by_admin', // todo remove redirect from controller, just js reload page
+                    'club_list', // need fixtures
+                    'club_show', // need fixtures
+                    'user_create_view'
                 ];
 
                 $postRoute = [
@@ -104,26 +107,32 @@ class SmokeTest extends HttpSmokeTestCase
                     'api_user_show'
                 ];
 
-                // This function will be called on every RouteConfig provided by RouterAdapter
-                if ($info->getRouteName()[0] === '_') {
-                    $config->skipRoute();
-                }
-
-
-                $config->addExtraRequestDataSet()
-                        ->setParameter('id', 1);
-
-                if(in_array($info->getRouteName(), $redirectsRoute)) $config->skipRoute();
-                if(in_array($info->getRouteName(), $postRoute)) $config->skipRoute();
-
-                if($info->getRouteName() === 'user_create_view'){
-                    $config->skipRoute('IS_AUTHENTICATED_FULLY');
-                }
+                $requireType = [
+                  'user_register_form_view',
+                  'user_update_form_view'
+                ];
 
                 if (!$info->isHttpMethodAllowed('GET')) {
                     $config->skipRoute('Only routes supporting GET method are tested.');
                 }
+
+                // skip debug routes
+                if ($info->getRouteName()[0] === '_') {
+                    $config->skipRoute();
+                }
+
+                if(in_array($info->getRouteName(), $requireType)) {
+                    $config->changeDefaultRequestDataSet()
+                        ->setParameter('type', 1);
+                }
+
+                $config->changeDefaultRequestDataSet()
+                        ->setParameter('id', 1);
+
+
+
+                if(in_array($info->getRouteName(), $skipRoutes)) $config->skipRoute();
+                if(in_array($info->getRouteName(), $postRoute)) $config->skipRoute();
             });
     }
-
 }
