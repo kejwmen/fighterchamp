@@ -16,9 +16,7 @@ class SignUpController extends Controller
 {
     public function showAction(SignUpTournament $signUp)
     {
-        $result = $this->get('serializer.my')->serialize($signUp, 'json');
-
-        return $result;
+        return $signUp;
     }
 
     public function newAction(Request $request, EntityManagerInterface $entityManager)

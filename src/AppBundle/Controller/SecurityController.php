@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 
@@ -75,7 +76,7 @@ class SecurityController extends Controller
     /**
      * @Route("/reset", name="passwordReset")
      */
-    public function passwordReset(Request $request, UserPasswordEncoder $passwordEncoder)
+    public function passwordReset(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
 
         $form = $this->createForm(PasswordResetType::class);

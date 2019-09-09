@@ -11,6 +11,7 @@ namespace AppBundle\Security;
 
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,10 +35,22 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     private $em;
 
-    public function __construct(JWTEncoderInterface $jwtEncoder, EntityManager $em)
+    public function __construct(JWTEncoderInterface $jwtEncoder, EntityManagerInterface $em)
     {
         $this->jwtEncoder = $jwtEncoder;
         $this->em = $em;
+    }
+
+    public function supports(Request $request)
+    {
+        $extractor = new AuthorizationHeaderTokenExtractor(
+            'Bearer',
+            'Authorization'
+        );
+
+        $token = $extractor->extract($request);
+
+        return (bool) $token; //todo check is it works
     }
 
     public function getCredentials(Request $request)
@@ -48,10 +61,6 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         );
 
         $token = $extractor->extract($request);
-
-        if (!$token) {
-            return;
-        }
 
         return $token;
     }

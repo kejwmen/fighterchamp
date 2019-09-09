@@ -12,9 +12,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class FightController extends Controller
 {
-    public function showAction(Fight $fight)
+    public function showAction(Fight $fight, SerializerInterface $serializer)
     {
-        $result = $this->get('serializer.my')->serialize($fight, 'json');
+        $result = $serializer->serialize($fight, 'json');
 
         return new Response($result, 200, ['Content-Type' => 'application/json']);
     }

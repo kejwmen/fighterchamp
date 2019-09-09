@@ -20,12 +20,13 @@ security:
 
         main:
             anonymous: ~
+            logout_on_user_change: true
             guard:
                 authenticator:
-                   - app.security.login_form_authenticator
-                   - app.security.facebook_authenticator
+                   - AppBundle\Security\LoginFormAuthenticator
+                   - AppBundle\Security\FacebookAuthenticator
                    - AppBundle\Security\JwtTokenAuthenticator
-                entry_point: app.security.login_form_authenticator
+                entry_point: AppBundle\Security\LoginFormAuthenticator
 
             logout:
               path: /logout

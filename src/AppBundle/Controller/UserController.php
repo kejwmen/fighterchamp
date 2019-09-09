@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/ludzie")
@@ -31,15 +32,11 @@ class UserController extends Controller
      * @Route("/{id}", name="user_show", requirements={"id": "\d+"}, options={"expose"=true})
      * @Method("GET")
      */
-    public function showAction(User $user)
+    public function showAction(User $user, SerializerInterface $serializer)
     {
-        $json = $this->get('serializer.my')->normalize($user);
-
-    //    dump($user->getCoaches()->first()->getName());
-
         return $this->render($this->getShowViewType($user),
             [
-                'user' => $json
+                'user' => $serializer->normalize($user)
             ]);
     }
 

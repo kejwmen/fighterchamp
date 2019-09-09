@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AppBundle\Security;
 
 use AppBundle\Entity\Facebook;
+use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -28,7 +29,7 @@ class FacebookAuthenticator extends SocialAuthenticator
     private $container;
 
     public function __construct(ClientRegistry $clientRegistry,
-        ContainerInterface $container, EntityManager $em, RouterInterface $router)
+        ContainerInterface $container, EntityManagerInterface $em, RouterInterface $router)
     {
         $this->clientRegistry = $clientRegistry;
         $this->em = $em;
@@ -36,14 +37,13 @@ class FacebookAuthenticator extends SocialAuthenticator
         $this->container = $container;
     }
 
+    public function supports(Request $request)
+    {
+        return $request->getPathInfo() == '/connect/facebook/check';
+    }
 
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() != '/connect/facebook/check') {
-
-            return null;
-        }
-
         return $this->fetchAccessToken($this->getFacebookClient());
     }
 

@@ -9,6 +9,7 @@ use AppBundle\Event\UserCreatedEvent;
 use AppBundle\Event\UserEvent;
 use AppBundle\Form\User\CoachType;
 use AppBundle\Form\User\UserType;
+use AppBundle\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Sluggable\Util\Urlizer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -45,7 +46,8 @@ class UserController extends Controller
      * @Route("/user-create", name="user_create")
      * @Method("POST")
      */
-    public function createAction(Request $request, EntityManagerInterface $em, EventDispatcherInterface $eventDispatcher)
+    public function createAction(Request $request, EntityManagerInterface $em,
+                                 EventDispatcherInterface $eventDispatcher, LoginFormAuthenticator $loginFormAuthenticator)
     {
         $form = $this->createForm($this->getFormType($request), null, [
             'method' => 'POST',
@@ -88,7 +90,7 @@ class UserController extends Controller
                 ->authenticateUserAndHandleSuccess(
                     $user,
                     $request,
-                    $this->get('app.security.login_form_authenticator'),
+                    $loginFormAuthenticator,
                     'main'
                 );
 

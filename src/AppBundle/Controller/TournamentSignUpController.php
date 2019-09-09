@@ -8,6 +8,7 @@ use AppBundle\Entity\SignUpTournament;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Serializer\SerializerInterface;
 
 //todo REFACTOR!!!
 
@@ -19,7 +20,7 @@ class TournamentSignUpController extends Controller
     /**
      * @Route("/{id}/zapisy", name="tournament_sign_up")
      */
-    public function signUpAction(Tournament $tournament, Request $request)
+    public function signUpAction(Tournament $tournament, SerializerInterface $serializer, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -140,7 +141,7 @@ class TournamentSignUpController extends Controller
                 'date_diff' => $date_diff,
                 'isUserRegister' => $isUserRegister,
                 'fights' => $fights,
-                'signUpTournament' => $this->get('serializer.my')->normalize($signUpTournament),
+                'signUpTournament' => $serializer->normalize($signUpTournament),
             ));
 
         }
@@ -150,7 +151,7 @@ class TournamentSignUpController extends Controller
             'users' => $users,
             'fights' => $fights,
             'isUserRegister' => null,
-            'signUpTournament' => $this->get('serializer.my')->normalize($signUpTournament),
+            'signUpTournament' => $serializer->normalize($signUpTournament),
         ));
 
     }

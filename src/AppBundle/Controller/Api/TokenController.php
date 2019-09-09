@@ -11,6 +11,7 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,7 +25,7 @@ class TokenController extends Controller
      * @Route("/api/tokens")
      * @Method("POST")
      */
-    public function newTokenAction(Request $request, EntityManager $em)
+    public function newTokenAction(Request $request, EntityManagerInterface $em)
     {
         $user = $em->getRepository(User::class)->findOneBy(['name' => $request->getUser()]);
 

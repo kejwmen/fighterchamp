@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 /**
@@ -133,7 +134,7 @@ class AdminTournamentFightController extends Controller
      * @Route("/turnieje/{id}/parowanie", name="admin_tournament_pair")
      * @Method("GET")
      */
-    public function pairAction(Tournament $tournament)
+    public function pairAction(Tournament $tournament, SerializerInterface $serializer)
     {
         $freeSignUpIds = $this->getDoctrine()
             ->getRepository('AppBundle:SignUpTournament')->findAllSignUpButNotPairYet($tournament->getId());
@@ -145,10 +146,8 @@ class AdminTournamentFightController extends Controller
             $signUps [] = $this->getDoctrine()->getRepository('AppBundle:SignUpTournament')->find($signUp['id']);
         }
 
-       $normalizeSignUps = $this->get('serializer.my')->normalize($signUps);
-
         return $this->render(':admin:pair.html.twig', array(
-            'freeUsers' => $normalizeSignUps,
+            'freeUsers' => $serializer->normalize($signUps),
             'tournament' => $tournament
         ));
     }

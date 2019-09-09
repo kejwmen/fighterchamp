@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/walki")
@@ -18,14 +19,11 @@ class FightController extends Controller
      * @Route("/{id}", name="fight_show")
      * @Method("GET")
      */
-    public function showAction(Fight $fight)
+    public function showAction(Fight $fight, SerializerInterface $serializer)
     {
-        $fight = $this->get('serializer.my')->normalize($fight);
-
-
         return $this->render('fight/show.html.twig',
             [
-                'fight' => $fight,
+                'fight' => $serializer->normalize($fight)
             ]);
     }
 
