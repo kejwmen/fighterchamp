@@ -22,8 +22,6 @@ class ClubController extends Controller
 
     /**
      * @Route("/{id}", name="club_show", options={"expose"=true})
-     * @param Club $club
-     * @param NormalizerInterface $normalizer
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Club $club, NormalizerInterface $normalizer)

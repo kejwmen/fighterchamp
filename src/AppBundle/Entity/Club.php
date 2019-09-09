@@ -15,8 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Club
 {
-    use TimestampableTrait;
-
     /**
      *
      * @ORM\Column(name="id", type="integer")
@@ -57,9 +55,15 @@ class Club
      */
     private $users;
 
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
     public function __construct()
     {
-        $this->created_at = new \DateTime();
+        $this->createdAt = new \DateTimeImmutable();
         $this->users = new ArrayCollection();
     }
 
@@ -91,7 +95,7 @@ class Club
     }
 
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -105,13 +109,13 @@ class Club
     }
 
 
-    public function getStreet(): string
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
 
-    public function getImageName(): string
+    public function getImageName(): ?string
     {
         return $this->imageName;
     }
@@ -135,23 +139,18 @@ class Club
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
      * @return User[]|Collection
      */
     public function getUsers(): Collection
     {
         return $this->users;
-    }
-
-    /**
-     * @param User $user
-     * @return $this
-     */
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setClub($this);
-        }
-        return $this;
     }
 }

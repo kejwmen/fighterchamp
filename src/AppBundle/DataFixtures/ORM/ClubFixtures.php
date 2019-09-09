@@ -5,45 +5,23 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\DataFixtures\BaseFixture;
 use AppBundle\Entity\Club;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use AppBundle\Entity\User;
 
-class ClubFixtures extends BaseFixture implements DependentFixtureInterface
+class ClubFixtures extends BaseFixture
 {
     public function load(ObjectManager $manager)
     {
         foreach (range(1, 2) as $i) {
+
             $club = new Club();
             $club->setName($this->faker->company);
             $club->setCity($this->faker->city);
             $club->setStreet($this->faker->streetAddress);
             $club->setWww($this->faker->url);
-            if ($i === 1) {
-                foreach (range(1, 2) as $i) {
-                    /** @var User $user */
-                    $user = $this->getReference(User::class . '_' . $i);
-                    $club->addUser($user);
-                }
-            }
 
-            if ($i === 2) {
-                foreach (range(3, 10) as $i) {
-                    /** @var User $user */
-                    $user = $this->getReference(User::class . '_' . $i);
-                    $club->addUser($user);
-                }
-            }
-
+            $this->addReference(Club::class . '_' . $i, $club);
 
             $manager->persist($club);
             $manager->flush();
         }
-    }
-
-    public function getDependencies()
-    {
-        return [
-            UserFixtures::class,
-        ];
     }
 }
