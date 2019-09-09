@@ -8,10 +8,7 @@ services:
 
   AppBundle\:
     resource: '../../src/AppBundle/*'
-    exclude: '../../src/AppBundle/{Entity,Repository,Tests,Twig}'
-
-  AppBundle\Repository\:
-    resource: '../../src/AppBundle/Repository/ClubRepository.php'
+    exclude: '../../src/AppBundle/{Entity,Tests,Twig}'
 
   AppBundle\Controller\:
     resource: '../../src/AppBundle/Controller'
