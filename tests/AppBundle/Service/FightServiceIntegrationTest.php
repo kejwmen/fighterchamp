@@ -49,7 +49,7 @@ class FightServiceIntegrationTest extends TestCase
 
         $container = $kernel->getContainer();
         $this->em = $container->get('doctrine')->getManager();
-        $this->fightService = $container->get(FightService::class);
+        $this->fightService = new FightService($this->em);
 
         $this->userBuilder = new UserBuilder();
         $this->tournamentBuilder = new TournamentBuilder();
