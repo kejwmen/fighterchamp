@@ -2,14 +2,13 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-
 use AppBundle\DataFixtures\BaseFixture;
+use AppBundle\Entity\Club;
 use AppBundle\Entity\User;
-
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-
-class UserFixtures extends BaseFixture
+class UserFixtures extends BaseFixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -31,14 +30,21 @@ class UserFixtures extends BaseFixture
             $user->setName($this->faker->firstName);
             $user->setSurname($this->faker->lastName);
             $user->setMale($this->faker->boolean());
-
+            $user->setClub($this->getReference(Club::class . '_' . rand(1,2)));
             $manager->persist($user);
 
             $this->addReference(User::class . '_' . $i, $user);
-
         }
 
         $manager->flush();
     }
+
+    public function getDependencies()
+    {
+        return [
+          ClubFixtures::class
+        ];
+    }
+
 
 }

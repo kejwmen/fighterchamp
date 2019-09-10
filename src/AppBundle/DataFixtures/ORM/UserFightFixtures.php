@@ -2,7 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-
 use AppBundle\DataFixtures\BaseFixture;
 use AppBundle\Entity\Enum\UserFightResult;
 use AppBundle\Entity\Fight;
@@ -10,7 +9,6 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\UserFight;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-
 
 class UserFightFixtures extends BaseFixture implements DependentFixtureInterface
 {

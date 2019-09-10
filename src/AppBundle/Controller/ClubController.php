@@ -22,14 +22,11 @@ class ClubController extends Controller
 
     /**
      * @Route("/{id}", name="club_show", options={"expose"=true})
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Club $club, NormalizerInterface $normalizer)
     {
-        $club = $normalizer->normalize($club);
-
         return $this->render('club/show.twig',
-            [
-             'club' => $club
-            ]);
+            ['club' => $normalizer->normalize($club)]);
     }
 }

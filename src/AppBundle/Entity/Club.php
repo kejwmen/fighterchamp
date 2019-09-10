@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,12 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Club
 {
-    public function __construct()
-    {
-        $this->created_at = new \DateTime('now');
-        $this->users = new ArrayCollection();
-    }
-
     /**
      *
      * @ORM\Column(name="id", type="integer")
@@ -55,19 +52,28 @@ class Club
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="club")
-     * @var Collection|User[]
      */
     private $users;
 
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->users = new ArrayCollection();
+    }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
 
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
 
@@ -75,13 +81,13 @@ class Club
     }
 
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
 
-    public function setCity($city)
+    public function setCity(string $city)
     {
         $this->city = $city;
 
@@ -89,13 +95,13 @@ class Club
     }
 
 
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
 
-    public function setStreet($street)
+    public function setStreet(string $street)
     {
         $this->street = $street;
 
@@ -103,50 +109,48 @@ class Club
     }
 
 
-    public function getStreet()
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
 
-    public function getImageName()
+    public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
 
-    public function setImageName($imageName)
+    public function setImageName(string $imageName)
     {
         $this->imageName = $imageName;
     }
 
 
-    public function getWww()
+    public function getWww(): string
     {
         return $this->www;
     }
 
 
-    public function setWww($www)
+    public function setWww(string $www)
     {
         $this->www = $www;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
 
-    public function getUsers()
+    /**
+     * @return User[]|Collection
+     */
+    public function getUsers(): Collection
     {
         return $this->users;
     }
-
-
-    public function setUsers($users)
-    {
-        $this->users = $users;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
-    }
 }
-
