@@ -7,4 +7,6 @@ RUN apt-get install -y libpq-dev zlib1g-dev libicu-dev zip git \
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+COPY php.ini "$PHP_INI_DIR/php.ini"
+
 USER 1000

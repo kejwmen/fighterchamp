@@ -2,7 +2,7 @@ COMPOSE_EXEC_PHP = docker-compose exec php
 COMPOSE_EXEC_CONSOLE = ${COMPOSE_EXEC_PHP} bin/console
 
 up:
-	docker-compose up -d
+	docker-compose up -d $(a)
 
 docker-build:
 	docker-compose build
