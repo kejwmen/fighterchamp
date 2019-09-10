@@ -1,5 +1,5 @@
 {
-  "name": "slk500/box3",
+  "name": "slk500/fighterchamp",
   "license": "gpl-3.0",
   "type": "project",
   "autoload": {
@@ -26,7 +26,7 @@
     "doctrine/doctrine-cache-bundle": "^1.2",
     "doctrine/doctrine-migrations-bundle": "^1.1",
     "doctrine/orm": "^2.5",
-    "friendsofsymfony/jsrouting-bundle": "^1.6",
+    "friendsofsymfony/jsrouting-bundle": "^2.4",
     "gedmo/doctrine-extensions": "^2.4",
     "incenteev/composer-parameter-handler": "^2.0",
     "knpuniversity/oauth2-client-bundle": "^1.3",
@@ -36,13 +36,12 @@
     "myclabs/php-enum": "^1.5",
     "paragonie/random_compat": "^2.0",
     "pear/console_table": "^1.3",
-    "sensio/distribution-bundle": "^5.0",
-    "sensio/framework-extra-bundle": "^3.0.2",
-    "symfony/monolog-bundle": "^2.8",
+    "sensio/framework-extra-bundle": "^5.4",
+    "symfony/monolog-bundle": "^3.4",
     "symfony/polyfill-apcu": "^1.0",
-    "symfony/swiftmailer-bundle": "^2.3",
-    "symfony/symfony": "3.4.*",
-    "symfony/var-dumper": "3.*",
+    "symfony/swiftmailer-bundle": "^3.2",
+    "symfony/symfony": "^4.0",
+    "symfony/var-dumper": "^4.0",
     "twig/extensions": "^1.4",
     "vich/uploader-bundle": "^1.3"
   },
@@ -60,11 +59,10 @@
     "doctrine/data-fixtures": "^1.3",
     "doctrine/doctrine-fixtures-bundle": "dev-master",
     "fzaninotto/faker": "^1.7",
-    "liip/functional-test-bundle": "~1.9.5",
+    "liip/functional-test-bundle": "^3.1",
     "phpmd/phpmd": "@dev",
-    "phpunit/phpunit": "^6.0",
-    "sensio/generator-bundle": "^3.0",
-    "shopsys/http-smoke-testing": "dev-master",
+    "phpunit/phpunit": "^7.0",
+    "shopsys/http-smoke-testing": "^8.0",
     "symfony/phpunit-bridge": "^4.0"
   },
   "scripts": {
@@ -94,6 +92,10 @@
     "symfony-assets-install": "relative",
     "incenteev-parameters": {
       "file": "app/config/parameters.yml"
+    },
+    "symfony": {
+      "allow-contrib": true,
+      "require": "4.3.*"
     }
   }
 }
