@@ -127,7 +127,7 @@ class Club
     }
 
 
-    public function getWww(): string
+    public function getWww(): ?string
     {
         return $this->www;
     }
