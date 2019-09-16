@@ -109,7 +109,7 @@ class SecurityController extends Controller
 
                 $mailer = new Swift_Mailer($transport);
 
-                $message = \Swift_Message::newInstance()
+                $message = (new \Swift_Message())
                     ->setSubject('Password Reset')
                     ->setFrom('fighterchamp@fighterchamp.pl', 'FighterChamp')
                     ->setTo($userEmail)
