@@ -103,7 +103,9 @@ class SecurityController extends Controller
 
                 $transport = (new Swift_SmtpTransport('smtp.zenbox.pl', 587))
                     ->setUsername('fighterchamp@fighterchamp.pl')
-                    ->setPassword('Cortez1634');
+                    ->setPassword(
+                        $this->container->getParameter('mailer_password')
+                    );
 
                 $mailer = new Swift_Mailer($transport);
 

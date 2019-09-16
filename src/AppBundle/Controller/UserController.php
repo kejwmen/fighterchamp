@@ -44,18 +44,16 @@ class UserController extends Controller
     /**
      * @Route("/mojprofil", name="user_edit_view")
      */
-    public function updateAction()
+    public function updateAction(SerializerInterface $serializer)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
 
             return $this->redirectToRoute("login");
         }
 
-        $json = $this->get('serializer.my')->normalize($this->getUser());
-
         return $this->render('user/edit.html.twig',
             [
-                'user' => $json
+                'user' => $serializer->normalize($this->getUser())
             ]);
     }
 
