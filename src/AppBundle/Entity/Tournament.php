@@ -121,6 +121,12 @@ class Tournament
      */
     private $capacity = 0;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $discipline;
+
     public function getPaymentInfo(): string
     {
         return
@@ -355,6 +361,17 @@ class Tournament
     public function setSignUpStart($signUpStart): void
     {
         $this->signUpStart = $signUpStart;
+    }
+
+
+    public function getDiscipline(): string
+    {
+        return $this->discipline;
+    }
+
+    public function setDiscipline(string $discipline): void
+    {
+        $this->discipline = $discipline;
     }
 }
 

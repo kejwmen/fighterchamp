@@ -3,6 +3,7 @@
     <tr>
         <th class="text-center">#</th>
         <th class="text-center">Nazwa</th>
+        <th class="text-center">Dyscypliny</th>
         <th class="text-center">Liczba Uczestników</th>
         <th class="text-center">Data</th>
         <th class="text-center">Miasto</th>
@@ -15,15 +16,9 @@
         <tr>
             <td>{{ loop.revindex }}</td>
             <td><a href="{{ path('tournament_show', {'id': tournament.id }) }}">{{ tournament.name }}</a></td>
+            <td>{{ tournament.discipline }}</td>
             <td>{{ tournament.getSignUpTournament| length }} / {{ tournament.capacity }}</td>
             <td>{{ tournament.start|date('d-m-Y') }}</td>
-            {#{% for schedule in tournament.schedule %}#}
-                {#{% if schedule.type == 'final' %}#}
-               {#<td>{{ schedule.start|date('d-m-Y') }}</td>#}
-                {#{% elseif schedule.type == 'month' %}#}
-               {#<td>{{ schedule.start|date('m-Y') }} month</td>#}
-                {#{% endif %}#}
-            {#{% endfor %}#}
             <td>{{ tournament.place.city }}</td>
             <td>{{ tournament.place.name }}</td>
             <td>{{ tournament.place.street }}</td>
