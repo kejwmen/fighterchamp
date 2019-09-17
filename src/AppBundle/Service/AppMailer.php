@@ -25,7 +25,7 @@ class AppMailer
 
     public function sendEmail($to, $subject, $body): int
     {
-            $message = \Swift_Message::newInstance()
+            $message = (new \Swift_Message())
                 ->setSubject($subject)
                 ->setFrom('fighterchamp@fighterchamp.pl', 'FighterChamp')
                 ->setTo($to)
