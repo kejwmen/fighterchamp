@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% import '_macros/macro.html.twig' as macro %}
-{% set signUpOpen = "now"|date('Y-m-d') <= tournament.signUpTill|date('Y-m-d') %}
+{% set signUpOpen = "now"|date('Y-m-d') <= tournament.signUpTill|date('Y-m-d') and tournament.signUpStart <= "now"|date('Y-m-d') %}
 {% set isAvailableSeats = signUpTournament|length < tournament.capacity %}
 {% set isTournamentEnded = tournament.end|date('Y-m-d') < "now"|date('Y-m-d') %}
 
@@ -14,27 +14,27 @@
 
                 {% if tournament.signUpStart <= "now"|date('Y-m-d') %}
 
-                    {% if signUpOpen %}
-                        <p class="text-center">
-                            Zgłoszenia przyjmowane są do {{ macro.formatYMDdzienTygodnia(tournament.signUpTill) }}
-                        </p>
-                    {% else %}
-                        {% if isTournamentEnded %}
+                        {% if signUpOpen %}
                             <p class="text-center">
-                                Turniej zakończył się {{ macro.formatYMDdzienTygodnia(tournament.end) }}
+                                Zgłoszenia przyjmowane są do {{ macro.formatYMDdzienTygodnia(tournament.signUpTill) }}
                             </p>
                         {% else %}
-                            <p class="text-center">
-                                Termin przyjmowania zgłoszeń
-                                minął {{ macro.formatYMDdzienTygodnia(tournament.signUpTill) }}
-                            </p>
+                            {% if isTournamentEnded %}
+                                <p class="text-center">
+                                    Turniej zakończył się {{ macro.formatYMDdzienTygodnia(tournament.end) }}
+                                </p>
+                            {% else %}
+                                <p class="text-center">
+                                    Termin przyjmowania zgłoszeń
+                                    minął {{ macro.formatYMDdzienTygodnia(tournament.signUpTill) }}
+                                </p>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
 
-                {% else %}
-                    <p class="text-center">
-                        Zgłoszenia przyjmowane są od {{ macro.formatYMDdzienTygodnia(tournament.signUpStart) }}
-                    </p>
+                    {% else %}
+                        <p class="text-center">
+                            Zgłoszenia przyjmowane są od {{ macro.formatYMDdzienTygodnia(tournament.signUpStart) }}
+                        </p>
                 {% endif %}
 
 
