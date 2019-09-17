@@ -77,6 +77,11 @@ class Tournament
     private $signUpTill;
 
     /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $signUpStart;
+
+    /**
      * @var $logo string
      * @ORM\Column(type="string", nullable=true)
      */
@@ -341,5 +346,15 @@ class Tournament
     }
 
 
+    public function getSignUpStart()
+    {
+        return $this->signUpStart;
+    }
+
+
+    public function setSignUpStart($signUpStart): void
+    {
+        $this->signUpStart = $signUpStart;
+    }
 }
 
