@@ -2,54 +2,8 @@
 {% block body %}
     {% include 'tournament/_parts/_panel.twig' %}
 
-    <div class="col-xs-12  col-md-10 col-md-offset-1">
-    <h2>Organizator</h2>
-    Głównym organizatorem turnieju jest LEGIA FIGHT CLUB, 02-449 Warszawa, ul. Łazienkowska 6A
-    <a href="http://www.lfc.waw.pl">www.lfc.waw.pl</a> Osoba odpowiedzialna za organizację - Paweł Michalik - 505 266
-    615
-    <h2>Zgłoszenia</h2>
-    <ul>
-    <li>
-        Zgłoszenia do turnieju odbywają się elektronicznie poprzez rejestrację w serwisie
-        <a href="{{ path('login') }}">fighterchamp.pl</a> i wysłanie swojego
-        zgłoszenia na stronie turnieju.
-    </li>
-    <li>
-        Wszyscy zawodnicy muszą posiadać zaświadczenie lekarskie (może być od lekarza pierwszego kontaktu),
-        że nie ma przeciwskazań do uprawiania dyscypliny jaką jest boks.
-    </li>
-    <li>
-        Zawodnicy niepełnoletni muszą posiadać badania sportowo - lekarskie oraz podpisane
-        <a href="{{ asset('documents/oświadczenie-Granda-dziecko.docx') }}">oświadczenie dla opiekunów prawnych
-            zawodników niepełnoletnich</a>
-    </li>
-    <li>
-        Wszyscy zawodnicy podpisują oświadczenia przed startem.
-    </li>
-    <li>
-    Warunkiem zgłoszenia jest także wpłata wpisowego - {{ tournament.getTicketFighterAdult().price }} zł
-    {% if tournament.getTicketFighterChild() %}
-        dla osób pełnoletnich oraz {{ tournament.getTicketFighterChild().price }} zł dla niepełnoletnich{% endif %}.
-        {% if tournament.getTicketFighterAdult().insurance %}
-    W cenie wpisowego znajdzie się ubezpieczenie.
-    {% endif %}
-    Można wpłacać w klubie Legia Fight Club (do wpłaty dołączamy swoje dane ), lub na numer konta:
-        {% if tournament.id > 6 %} 74 1020 1042 0000 8802 0386 8965 PKO BP (odbiorca ORZEŁ I SYRENKA) {% else %}
-    97 2490 0005 0000 4000 8002 2034
-    (nazwisko odbiorcy Paweł Michalik)
-        {% endif %}
-    Uwaga! Jeżeli ktoś po zgłoszeniu nie będzie mógł wziąć udziału w zawodach,
-    prosimy o poinformowanie organizatora w ciągu 7 dni do zawodów.
-    Jeżeli informacja będzie po terminie, NIE ZWRACAMY wpisowego.
-    </li>
-    <li>
-        Zgłoszenia przyjmowane są do {{ tournament.signUpTill | date('d-m-Y') }}
-        ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}).
-    </li>
-    </ul>
-    </div>
+    {% set infoDir =  'Granda' in tournament.name ? 'granda_na_piesci' : 'kuznia' %}
 
-    {{ include('tournament/_parts/rules/podzialZawodnikow.html.twig') }}
-    {{ include('tournament/_parts/rules/ochronaDanychOsobowych.html.twig') }}
+    {% include 'tournament/info/' ~ infoDir ~ '/rules.twig' %}
 
-    {% endblock %}
+{% endblock %}

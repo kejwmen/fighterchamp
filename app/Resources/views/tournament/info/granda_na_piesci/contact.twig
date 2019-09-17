@@ -1,0 +1,26 @@
+<address class="text-center col-xs-12">
+    <i class="fa fa-phone"></i> 533 287 765<br/>
+    {% if tournament.facebookEvent %}
+        <i class="fa fa-facebook"></i><a href="https://web.facebook.com/events/{{ tournament.facebookEvent }}">
+        Strona wydarzenia na Facebooku</a><br/>
+    {% endif %}
+    LEGIA FIGHT CLUB, 02-449 Warszawa, ul. Łazienkowska 6A
+</address>
+<div id="google-map" class="google-map col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"></div>
+
+
+<script type="text/javascript">
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('google-map'), {
+            center: {lat: 52.2232, lng: 21.0425},
+            zoom: 16
+        });
+        var marker = new google.maps.Marker({
+            position: {lat: 52.222320, lng: 21.041749},
+            map: map
+        });
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGtu16D8pKTbgxy9dEIQwkONpcInDkufc&callback=initMap"
+        async defer></script>

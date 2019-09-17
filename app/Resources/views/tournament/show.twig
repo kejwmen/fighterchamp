@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+
+    {% set infoDir =  'Granda' in tournament.name ? 'granda_na_piesci' : 'kuznia' %}
+
     {% include 'tournament/_parts/_panel.twig' %}
     <div class="container-fluid">
         <div class="main">
@@ -61,112 +64,28 @@
                             {% set last = schedule.start | date('d-m-Y') %}
                         {% endfor %}
 
-                    <h3 class="text-uppercase">Walki:</h3>
+                    <div class="fights">
+                        <h3 class="text-uppercase">Walki:</h3>
 
-                    <span> Licencja PZB </span>
-                    <ul>
-                        <li> seniorzy i juniorzy - 3 rundy po 3 minuty </li>
-                        <li> kadeci - 3 rundy po 2 minuty </li>
-                    </ul>
+                        {% include 'tournament/info/' ~ infoDir ~ '/fights.twig' %}
 
-                         <span> Bez licencji </span>
-                    <ul>
+                    </div>
 
-                        <li>klasa A - 3 rundy po 3 minuty</li>
-                        <li>klasa C i B - 3 rundy po 2 minuty</li>
+                    <div class="awards">
+                        <h3 class="text-uppercase">Nagrody:</h3>
+                        {% include 'tournament/info/' ~ infoDir ~ '/awards.twig' %}
+                    </div>
 
-                    </ul>
+                    <div class="gear">
+                        <h3 class="text-uppercase">Sprzęt:</h3>
+                        {% include 'tournament/info/' ~ infoDir ~ '/gear.twig' %}
+                    </div>
 
-                    <h3 class="text-uppercase">Nagrody:</h3>
-                    <span>Każdy uczestnik otrzymuję pamiątkowy dyplom oraz medal</span>
-                    <ul>
-                        {% for award in tournament.awards %}
-                            <li>{{ award.name }}
-                                {% if award.userFight %} - <a
-                                        href="{{ path('user_show', {'id': award.userFight.user. id}) }}">{{ award.userFight.user }}</a> {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="requirements">
+                        <h3 class="text-uppercase">Wymagane:</h3>
+                        {% include 'tournament/info/' ~ infoDir ~ '/requirements.twig' %}
+                    </div>
 
-                    <h3 class="text-uppercase">Sprzęt:</h3>
-                           <li>zawodnik musi zapewnić sobie:
-                            <ul>
-                                <li>sportowe buty i strój</li>
-                                <li>ochraniacz na zęby</li>
-                                <li>ochraniacz na krocze</li>
-                                <li>bandaże na ręce</li>
-                            </ul>
-                        </li>
-
-                         <span> Licencja PZB </span> <br>
-                        Sprzęt musi posiadać atest AIBA (tzn. hologram). Prosimy zawodników i kluby by najlepiej posiadały ten sprzęt.
-
-                    <ul>
-
-                        <li> seniorzy bez kasków</li>
-                        <li> kadeci i juniorzy w kaskach </li>
-                        <li> rękawice - waga do 69kg włącznie 10oz, powyżej 69kg 12oz</li>
-
-                    </ul>
-
-                         <span> Bez licencji PZB </span>
-                    <ul>
-
-                        <li>klasa A - obaj zawodnicy bez kasków</li>
-                        <li>klasa B - do ustalenia z przeciwnikiem (nie może jeden walczyć w kasku drugi bez)</li>
-                        <li>klasa C - obaj zawodnicy w kaskach</li>
-                        <li>juniorzy (tzn. do 18 lat) i kobiety w kasku</li>
-                        <li>rękawice i kaski są zapewnione przez organizatora, nie można walczyć we własnym sprzęcie</li>
-                        <li>rękawice - waga do 69kg włącznie 12oz, powyżej 69kg 14oz </li>
-
-                        </li>
-                    </ul>
-
-
-                    <h3 class="text-uppercase">Wymagane:</h3>
-
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Pełnoletni</th>
-                                <th>Niepełnoletni</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>badania</td>
-                                <td>zaświadczenie lekarskie (może być od lekarza pierwszego kontaktu),
-                                    że nie ma przeciwskazań do uprawiania dyscypliny jaką jest boks
-                                    albo badania sportowo - lekarskie</td>
-                                <td>badania sportowo - lekarskie</td>
-                            </tr>
-                            <tr>
-                                <td>oświadczenie</td>
-                                <td><a href="{{ asset('documents/oświadczenie-Granda-kobiety.docx') }}">
-                                        wersja dla kobiet</a> albo <a href="{{ asset('documents/oświadczenie-Granda.docx') }}">
-                                        wersja dla mężczyzn</a></td>
-                                <td><a href="{{ asset('documents/oświadczenie-Granda-dziecko.docx') }}">
-                                        oświadczenie podpisane przez prawnego opiekuna</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>wpisowe</td>
-                                <td> {{ tournament.ticketFighterAdult ? tournament.ticketFighterAdult.price }} zł</td>
-                                <td> {{ tournament.ticketFighterChild ? tournament.ticketFighterChild.price }} zł</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        W cenie wpisowego jest ubezpieczenie dla zawodnika.<br>Wpłata na  numer konta: 74 1020 1042 0000 8802 0386 8965 PKO BP (proszę podać swoje imię i nazwisko, a odbiorcą jest firma ORZEŁ I SYRENKA).
-                        Wpłaty są przyjmowane do {{ tournament.signUpTill | date('d-m-Y') }} ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})
-                        Uwaga! Jeżeli ktoś po zgłoszeniu nie będzie mógł wziąć udziału w zawodach, prosimy o skasowanie zgłoszenia. Jeżeli nastąpi to po terminie {{ tournament.signUpTill | date('d-m-Y') }} ({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}), NIE ZWRACAMY wpisowego.
-
-                    {#<ul>#}
-                        {#{% for info in tournament.info %}#}
-                            {#<li>{{ include(template_from_string(info.description)) }}</li>#}
-                        {#{% endfor %}#}
-                    {#</ul>#}
                 </div>
                 {% if tournament.poster %}
                     <aside class="col-xs-12 col-md-3">

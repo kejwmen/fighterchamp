@@ -1,0 +1,40 @@
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Pełnoletni</th>
+        <th>Niepełnoletni</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>badania</td>
+        <td>zaświadczenie lekarskie (może być od lekarza pierwszego kontaktu),
+            że nie ma przeciwskazań do uprawiania dyscypliny jaką jest boks
+            albo badania sportowo - lekarskie</td>
+        <td>badania sportowo - lekarskie</td>
+    </tr>
+    <tr>
+        <td>oświadczenie</td>
+        <td><a href="{{ asset('documents/oświadczenie-Granda-kobiety.docx') }}">
+                wersja dla kobiet</a> albo <a href="{{ asset('documents/oświadczenie-Granda.docx') }}">
+                wersja dla mężczyzn</a></td>
+        <td><a href="{{ asset('documents/oświadczenie-Granda-dziecko.docx') }}">
+                oświadczenie podpisane przez prawnego opiekuna</a>
+        </td>
+    </tr>
+    <tr>
+        <td>wpisowe</td>
+        <td> {{ (tournament.ticketFighterAdult ? tournament.ticketFighterAdult.price)|raw }} zł</td>
+        <td> {{ tournament.ticketFighterChild ? tournament.ticketFighterChild.price }} zł</td>
+    </tr>
+    </tbody>
+</table>
+
+W cenie wpisowego jest ubezpieczenie dla zawodnika.<br>Wpłata na  numer konta: 74 1020 1042 0000 8802 0386 8965 PKO BP
+(proszę podać swoje imię i nazwisko, a odbiorcą jest firma ORZEŁ I SYRENKA).
+Wpłaty są przyjmowane do {{ tournament.signUpTill | date('d-m-Y') }}
+({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }})
+Uwaga! Jeżeli ktoś po zgłoszeniu nie będzie mógł wziąć udziału w zawodach, prosimy o skasowanie zgłoszenia.
+Jeżeli nastąpi to po terminie {{ tournament.signUpTill | date('d-m-Y') }}
+({{ tournament.signUpTill |localizeddate('none', 'full', app.request.locale, null, 'cccc') }}), NIE ZWRACAMY wpisowego.
