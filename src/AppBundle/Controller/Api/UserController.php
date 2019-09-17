@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Form\User\FighterType;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -46,8 +47,8 @@ class UserController extends Controller
      * @Route("/user-create", name="user_create")
      * @Method("POST")
      */
-    public function createAction(Request $request, EntityManagerInterface $em,
-                                 EventDispatcherInterface $eventDispatcher, LoginFormAuthenticator $loginFormAuthenticator)
+    public function createAction(Request $request, EntityManagerInterface $em, EventDispatcherInterface $eventDispatcher,
+                                 LoginFormAuthenticator $loginFormAuthenticator, GuardAuthenticatorHandler $guardAuthenticatorHandler)
     {
         $form = $this->createForm($this->getFormType($request), null, [
             'method' => 'POST',
@@ -86,7 +87,7 @@ class UserController extends Controller
             $this->addFlash('danger',
                 "Na twój email {$user->getEmail()} został wysłany link który musisz kliknąć aby twoje konto było aktywne");
 
-            $this->get('security.authentication.guard_handler')
+            $guardAuthenticatorHandler
                 ->authenticateUserAndHandleSuccess(
                     $user,
                     $request,
