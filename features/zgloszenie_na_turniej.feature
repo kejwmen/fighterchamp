@@ -1,1 +1,0 @@
-Po dacie zapisów na turniej. Użytkownik nie może edytować swojego zgłoszenie. Tylko je skasować.

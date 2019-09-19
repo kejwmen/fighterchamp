@@ -64,11 +64,6 @@ class FeatureContext extends RawMinkContext implements Context
 
     }
 
-//    private function getEntityManager(): EntityManagerInterface
-//    {
-//        return $this->getContainer()->get('doctrine')->getManager();
-//    }
-
     /**
      * Pauses the scenario until the user presses a key. Useful when debugging a scenario.
      *
@@ -82,5 +77,4 @@ class FeatureContext extends RawMinkContext implements Context
         fwrite(STDOUT, "\033[u");
         return;
     }
-
 }
