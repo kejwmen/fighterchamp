@@ -38,3 +38,16 @@ setup-keys:
 	mkdir -p var/jwt
 	openssl genpkey -out var/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
 	openssl pkey -in var/jwt/private.pem -out var/jwt/public.pem -pubout
+
+setup-project:
+	docker-compose build
+	docker-compose up -d
+	docker-compose exec php composer install
+	docker-compose exec php php bin/console cache:clear --env=dev
+	docker-compose exec php php bin/console cache:clear --env=test
+	docker-compose exec php php bin/console do:da:c --if-not-exists --env=dev
+	docker-compose exec php php bin/console do:da:c --if-not-exists --env=test
+	docker-compose exec php php bin/console do:sch:up --force
+	docker-compose exec php php bin/console do:mi:mi --no-interaction --allow-no-migration --env=dev
+	docker-compose exec php php bin/console do:mi:mi --no-interaction --allow-no-migration --env=test
+
