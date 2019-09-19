@@ -18,7 +18,8 @@ class HomepageController extends Controller
             ->findNewestOne();
 
         return $this->render(':main:homepage.html.twig', [
-            'tournament' => $tournament
+            'tournament' => $tournament,
+            'tournamentId' => isset($tournament) ? $tournament->id() : 0
         ]);
     }
 }

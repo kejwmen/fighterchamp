@@ -19,7 +19,7 @@
       $(document).ready(function () {
 	  
             var t = $('#table-fights').DataTable({
-                "ajax": "{{ path('api_tournament_fight_list', {id: tournament.id}) }}",
+                "ajax": "{{ path('api_tournament_fight_list', {id: tournamentId}) }}",
                 "columns": [
                     {data: null},
                     {
