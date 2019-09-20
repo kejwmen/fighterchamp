@@ -6,7 +6,7 @@ parameters:
     database_port: 3306
     database_name: test
     database_user: test
-    database_password: ~
+    database_password: test
 
     database_test_host: db_test
     database_test_port: 3306
