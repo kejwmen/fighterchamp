@@ -21,7 +21,7 @@ class TournamentFixtures extends BaseFixture implements DependentFixtureInterfac
 
             $tournament->setName('Turniej ' . $i);
             $tournament->setStart(new \DateTime());
-            $tournament->setStart(new \DateTime());
+            $tournament->setDiscipline($this->faker->randomElement(['boks','MMA', 'kick-boxing']));
 
             $tournament->setPlace($this->getReference(Place::class . '_' . $i));
 
